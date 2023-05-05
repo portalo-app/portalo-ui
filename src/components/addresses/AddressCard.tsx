@@ -19,11 +19,7 @@ const AddressCard: React.FC<AddressCardProps> = ({ addressData, ...props }) => {
   const { color, icon, name, alias, notes, entity, address } = addressData;
 
   return (
-    <Card
-      variant="outlined"
-      sx={{ borderLeft: `4px solid ${color}` }}
-      {...props}
-    >
+    <Card sx={{ borderLeft: `4px solid ${color}` }} {...props}>
       <CardActionArea>
         <CardContent>
           <Stack direction="row" alignItems="center" gap={1} mb={1}>

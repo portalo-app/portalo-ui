@@ -42,6 +42,40 @@ export const mockCryptoAddresses: CryptoAddress[] = [
     name: 'Main',
     type: 'non-custodial',
   },
+  {
+    color: '#5c6bc0',
+    icon: 'ethereum',
+    entity: 'Ethereum',
+    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+    name: 'Social',
+    alias: 'defiargentina.eth',
+    type: 'non-custodial',
+  },
+  {
+    color: '#6c49b8',
+    icon: 'polygon',
+    entity: 'Polygon',
+    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+    name: 'Main',
+    type: 'non-custodial',
+  },
+  {
+    color: '#5c6bc0',
+    icon: 'ethereum',
+    entity: 'Ethereum',
+    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+    name: 'Social',
+    alias: 'defiargentina.eth',
+    type: 'non-custodial',
+  },
+  {
+    color: '#6c49b8',
+    icon: 'polygon',
+    entity: 'Polygon',
+    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+    name: 'Main',
+    type: 'non-custodial',
+  },
 ];
 
 export const mockFIATAddresses: FIATAddress[] = [

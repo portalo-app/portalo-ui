@@ -1,10 +1,28 @@
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, Fab, Stack, Typography } from '@mui/material';
 
 interface PageLayoutProps {
   children: React.ReactNode;
   title: string;
-  action?: { label: string; icon: React.ReactNode; onClick: () => void };
+  action?: ActionData;
 }
+
+interface ActionData {
+  icon: React.ReactNode;
+  onClick: () => void;
+  label?: string;
+}
+
+const Action: React.FC<ActionData> = ({ label, icon, onClick }) => {
+  return label ? (
+    <Button variant="contained" startIcon={icon} onClick={onClick}>
+      {label}
+    </Button>
+  ) : (
+    <Fab size="small" color="primary" onClick={onClick}>
+      {icon}
+    </Fab>
+  );
+};
 
 const PageLayout: React.FC<PageLayoutProps> = ({ children, title, action }) => {
   return (
@@ -15,17 +33,9 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children, title, action }) => {
         justifyContent="space-between"
         mb={2}
       >
-        <Typography variant="h2">{title}</Typography>
+        <Typography variant="h4">{title}</Typography>
 
-        {action && (
-          <Button
-            variant="contained"
-            startIcon={action.icon}
-            onClick={action.onClick}
-          >
-            {action.label}
-          </Button>
-        )}
+        {action && <Action {...action} />}
       </Stack>
 
       {children}

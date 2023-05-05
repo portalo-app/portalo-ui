@@ -26,7 +26,7 @@ const GlobalStyles: React.FC<GlobalStylesProps> = () => {
 
         .MuiBackdrop-root {
           backdrop-filter: blur(8px);
-          background-color: rgb(0, 0, 0, 0.1) !important;
+          background-color: rgb(0, 0, 0, 0.5) !important;
         }
       `}
     />

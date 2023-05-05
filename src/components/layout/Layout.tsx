@@ -13,6 +13,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <main>
         <Container maxWidth="sm">{children}</Container>
       </main>
+
+      <Navbar />
     </>
   );
 };
