@@ -10,12 +10,18 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { QRCodeSVG } from 'qrcode.react';
 
 interface AddressCardProps extends CardProps {
   addressData: CryptoAddress | FIATAddress;
+  showQR?: boolean;
 }
 
-const AddressCard: React.FC<AddressCardProps> = ({ addressData, ...props }) => {
+const AddressCard: React.FC<AddressCardProps> = ({
+  addressData,
+  showQR,
+  ...props
+}) => {
   const { color, icon, name, alias, notes, entity, address } = addressData;
 
   return (
@@ -37,6 +43,12 @@ const AddressCard: React.FC<AddressCardProps> = ({ addressData, ...props }) => {
           <Typography variant="caption" fontSize={12}>
             {address}
           </Typography>
+
+          {showQR && (
+            <Stack mt={2} alignItems="center">
+              <QRCodeSVG includeMargin value={address} size={256} />
+            </Stack>
+          )}
         </CardContent>
       </CardActionArea>
     </Card>

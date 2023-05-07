@@ -32,9 +32,6 @@ export const THEME: ThemeOptions = {
     h5: headingFonts,
     h6: headingFonts,
   },
-  shape: {
-    borderRadius: 16,
-  },
   components: {
     MuiButton: {
       defaultProps: {

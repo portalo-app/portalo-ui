@@ -2,6 +2,7 @@ export const ROUTES = {
   HOME: '/',
   APP: '/app',
   APP_PROFILE: '/app/profile',
+  APP_CREATE_PROFILE: '/app/create-profile',
 } as const;
 
 export type ObjectValues<T> = T[keyof T];

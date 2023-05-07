@@ -8,6 +8,7 @@ import {
   createTheme,
   responsiveFontSizes,
 } from '@mui/material';
+import { RecoilRoot } from 'recoil';
 import Layout from './Layout';
 
 interface RootProps {
@@ -28,17 +29,19 @@ const Root: React.FC<RootProps> = ({
 }) => {
   return (
     <>
-      <CacheProvider value={emotionCache}>
-        {globalStyles}
+      <RecoilRoot>
+        <CacheProvider value={emotionCache}>
+          {globalStyles}
 
-        <ThemeProvider theme={responsiveFontSizes(createTheme(THEME))}>
-          <CssBaseline enableColorScheme />
+          <ThemeProvider theme={responsiveFontSizes(createTheme(THEME))}>
+            <CssBaseline enableColorScheme />
 
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </ThemeProvider>
-      </CacheProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ThemeProvider>
+        </CacheProvider>
+      </RecoilRoot>
     </>
   );
 };

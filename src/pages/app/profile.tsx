@@ -1,17 +1,17 @@
 import AddressList from '@/components/addresses/AddressList';
 import PageLayout from '@/components/layout/PageLayout';
-import { mockCryptoAddresses, mockFIATAddresses } from '@/lib/model/address';
+import profilesState from '@/lib/store/profiles.atom';
 import AddIcon from '@mui/icons-material/Add';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Tab, styled } from '@mui/material';
 import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
 interface ProfilePageProps {}
 
 const ProfilePage: React.FC<ProfilePageProps> = () => {
   const [addressType, setAddressType] = useState('1');
-
-  const profileName = 'John Doe';
+  const profiles = useRecoilValue(profilesState);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setAddressType(newValue);
@@ -24,7 +24,7 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
 
   return (
     <PageLayout
-      title={profileName}
+      title={profiles[0].name}
       action={{
         icon: <AddIcon />,
         onClick: handleCreateAddress,
@@ -41,11 +41,11 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
         </StyledTabs>
 
         <TabPanel value="1" sx={{ p: 0 }}>
-          <AddressList addresses={mockCryptoAddresses} />
+          <AddressList addresses={profiles[0].cryptoAddresses} />
         </TabPanel>
 
         <TabPanel value="2" sx={{ p: 0 }}>
-          <AddressList addresses={mockFIATAddresses} />
+          <AddressList addresses={profiles[0].fiatAddresses} />
         </TabPanel>
       </TabContext>
     </PageLayout>

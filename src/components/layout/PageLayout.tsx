@@ -1,9 +1,12 @@
-import { Button, Fab, Stack, Typography } from '@mui/material';
+import { NextLinkComposed } from '@/core/components/Link';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Button, Fab, IconButton, Stack, Typography } from '@mui/material';
 
 interface PageLayoutProps {
   children: React.ReactNode;
   title: string;
   action?: ActionData;
+  backPath?: string;
 }
 
 interface ActionData {
@@ -24,7 +27,12 @@ const Action: React.FC<ActionData> = ({ label, icon, onClick }) => {
   );
 };
 
-const PageLayout: React.FC<PageLayoutProps> = ({ children, title, action }) => {
+const PageLayout: React.FC<PageLayoutProps> = ({
+  children,
+  title,
+  action,
+  backPath,
+}) => {
   return (
     <Stack>
       <Stack
@@ -33,7 +41,19 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children, title, action }) => {
         justifyContent="space-between"
         mb={2}
       >
-        <Typography variant="h4">{title}</Typography>
+        <Stack direction="row" gap={1} alignItems="center">
+          {backPath && (
+            <IconButton
+              component={NextLinkComposed}
+              to={{
+                pathname: backPath,
+              }}
+            >
+              <ArrowBackIcon />
+            </IconButton>
+          )}
+          <Typography variant="h4">{title}</Typography>
+        </Stack>
 
         {action && <Action {...action} />}
       </Stack>

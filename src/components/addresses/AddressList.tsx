@@ -14,6 +14,7 @@ type Address = CryptoAddress | FIATAddress;
 
 const AddressList: React.FC<AddressListProps> = ({ addresses }) => {
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
+  const [showingQR, setShowingQR] = useState(false);
 
   const emptyMessage = 'No addresses found';
 
@@ -40,9 +41,16 @@ const AddressList: React.FC<AddressListProps> = ({ addresses }) => {
       </Stack>
 
       <AnimatedModal open={Boolean(selectedAddress)} onClose={handleMenuClose}>
-        {selectedAddress && <AddressCard addressData={selectedAddress} />}
+        {selectedAddress && (
+          <AddressCard addressData={selectedAddress} showQR={showingQR} />
+        )}
 
-        {selectedAddress && <AddressMenu selectedAddress={selectedAddress} />}
+        {selectedAddress && (
+          <AddressMenu
+            selectedAddress={selectedAddress}
+            handleQR={() => setShowingQR(!showingQR)}
+          />
+        )}
       </AnimatedModal>
     </>
   );

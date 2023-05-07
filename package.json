@@ -22,8 +22,11 @@
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.4",
     "next": "13.3.4",
+    "qrcode.react": "^3.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.9",
+    "recoil": "^0.7.7",
     "typescript": "5.0.4"
   }
 }
