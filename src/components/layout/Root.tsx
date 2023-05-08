@@ -8,6 +8,7 @@ import {
   createTheme,
   responsiveFontSizes,
 } from '@mui/material';
+import { Suspense } from 'react';
 import { RecoilRoot } from 'recoil';
 import Layout from './Layout';
 
@@ -37,7 +38,9 @@ const Root: React.FC<RootProps> = ({
             <CssBaseline enableColorScheme />
 
             <Layout>
-              <Component {...pageProps} />
+              <Suspense fallback={'Loading...'}>
+                <Component {...pageProps} />
+              </Suspense>
             </Layout>
           </ThemeProvider>
         </CacheProvider>

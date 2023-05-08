@@ -1,17 +1,38 @@
 import AddressList from '@/components/addresses/AddressList';
 import PageLayout from '@/components/layout/PageLayout';
-import profilesState from '@/lib/store/profiles.atom';
+import { ROUTES } from '@/lib/constants/routes.const';
+import { Profile } from '@/lib/model/profile';
+import { profilesState } from '@/lib/store/profiles.atom';
 import AddIcon from '@mui/icons-material/Add';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Tab, styled } from '@mui/material';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 interface ProfilePageProps {}
 
 const ProfilePage: React.FC<ProfilePageProps> = () => {
+  const profilesData = useRecoilValue(profilesState);
   const [addressType, setAddressType] = useState('1');
-  const profiles = useRecoilValue(profilesState);
+  const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    const { id } = router.query;
+    if (!id) return;
+
+    const profile = profilesData.find((profile) => profile.id === id);
+
+    if (!profile) {
+      router.push('/404');
+      return;
+    }
+
+    setSelectedProfile(profile);
+  }, [profilesData, router, router.isReady, router.query]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setAddressType(newValue);
@@ -22,9 +43,11 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
     console.log('Create address');
   };
 
+  // TODO: Implement loading state
   return (
     <PageLayout
-      title={profiles[0].name}
+      title={selectedProfile?.name || 'Loading...'}
+      backPath={ROUTES.APP}
       action={{
         icon: <AddIcon />,
         onClick: handleCreateAddress,
@@ -36,16 +59,22 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
           onChange={handleChange}
           aria-label="Address type tabs"
         >
-          <Tab label="Crypto" value="1" />
-          <Tab label="FIAT" value="2" />
+          <Tab
+            value="1"
+            label={`CRYPTO (${selectedProfile?.cryptoAddresses?.length || 0})`}
+          />
+          <Tab
+            value="2"
+            label={`FIAT (${selectedProfile?.fiatAddresses?.length || 0})`}
+          />
         </StyledTabs>
 
         <TabPanel value="1" sx={{ p: 0 }}>
-          <AddressList addresses={profiles[0].cryptoAddresses} />
+          <AddressList addresses={selectedProfile?.cryptoAddresses || []} />
         </TabPanel>
 
         <TabPanel value="2" sx={{ p: 0 }}>
-          <AddressList addresses={profiles[0].fiatAddresses} />
+          <AddressList addresses={selectedProfile?.fiatAddresses || []} />
         </TabPanel>
       </TabContext>
     </PageLayout>

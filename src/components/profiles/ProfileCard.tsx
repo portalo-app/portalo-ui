@@ -17,14 +17,14 @@ interface ProfileCardProps {
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
   const margin = 2;
-  const { name, cryptoAddresses, fiatAddresses } = profile;
+  const { id, name, cryptoAddresses, fiatAddresses } = profile;
 
   return (
     <Card
       variant="outlined"
       component={NextLinkComposed}
       to={{
-        pathname: ROUTES.APP_PROFILE,
+        pathname: ROUTES.APP_PROFILE + '/' + id,
       }}
     >
       <CardActionArea>

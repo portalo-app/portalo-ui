@@ -2,19 +2,25 @@ import PageLayout from '@/components/layout/PageLayout';
 import ProfileCard from '@/components/profiles/ProfileCard';
 import State from '@/core/components/State';
 import { ROUTES } from '@/lib/constants/routes.const';
-import profilesState from '@/lib/store/profiles.atom';
+import { Profile } from '@/lib/model/profile';
+import { profilesState } from '@/lib/store/profiles.atom';
 import AddIcon from '@mui/icons-material/Add';
 import { Stack } from '@mui/material';
 import { useRouter } from 'next/router';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 interface AppPageProps {}
 
 const AppPage: FunctionComponent<AppPageProps> = () => {
   const emptyMessage = "You don't have any profiles yet";
-  const profiles = useRecoilValue(profilesState);
+  const profilesData = useRecoilValue(profilesState);
+  const [profiles, setProfiles] = useState<Profile[]>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    setProfiles(profilesData);
+  }, [profilesData]);
 
   const handleCreateProfile = () => {
     router.push(ROUTES.APP_CREATE_PROFILE);

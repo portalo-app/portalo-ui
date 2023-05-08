@@ -2,7 +2,7 @@ import PageLayout from '@/components/layout/PageLayout';
 import FormInputText from '@/core/components/FormInputText';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { Profile } from '@/lib/model/profile';
-import profilesState from '@/lib/store/profiles.atom';
+import { profilesState } from '@/lib/store/profiles.atom';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Button, IconButton, InputAdornment, Stack } from '@mui/material';
@@ -39,6 +39,7 @@ const CreateProfile: React.FC<CreateProfileProps> = () => {
     const { name, password } = data;
 
     const profile: Profile = {
+      id: Date.now().toString(),
       name,
       cryptoAddresses: [],
       fiatAddresses: [],
