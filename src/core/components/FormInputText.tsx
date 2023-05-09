@@ -31,11 +31,13 @@ const FormInputText: React.FC<FormInputTextProps> = ({
     <Controller
       name={name}
       control={control}
-      defaultValue={!!defaultValue || ''}
+      defaultValue={defaultValue || ''}
       rules={rules}
       render={({ field }) => (
         <TextField
           {...field}
+          fullWidth
+          size="small"
           autoComplete="off"
           type={type}
           error={!!error?.message}

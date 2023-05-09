@@ -13,6 +13,7 @@ import { useRecoilValue } from 'recoil';
 interface AppPageProps {}
 
 const AppPage: FunctionComponent<AppPageProps> = () => {
+  const profilesTitle = 'Profiles';
   const emptyMessage = "You don't have any profiles yet";
   const profilesData = useRecoilValue(profilesState);
   const [profiles, setProfiles] = useState<Profile[]>([]);
@@ -28,7 +29,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
 
   return (
     <PageLayout
-      title="Profiles"
+      title={profilesTitle}
       action={{
         icon: <AddIcon />,
         onClick: handleCreateProfile,

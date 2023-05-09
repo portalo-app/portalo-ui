@@ -1,15 +1,28 @@
-import { NextLinkComposed } from '@/core/components/Link';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { Profile } from '@/lib/model/profile';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
-  Avatar,
   Card,
   CardActionArea,
   CardContent,
   Divider,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  MenuList,
   Stack,
   Typography,
 } from '@mui/material';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import DeleteModal from './DeleteModal';
+import EditModal from './EditModal';
 
 interface ProfileCardProps {
   profile: Profile;
@@ -17,45 +30,155 @@ interface ProfileCardProps {
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
   const margin = 2;
+  const cryptoLabel = 'CRYPTO';
+  const fiatLabel = 'FIAT';
+
   const { id, name, cryptoAddresses, fiatAddresses } = profile;
+  const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const router = useRouter();
+
+  const handleMenuClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleEdit = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    setAnchorEl(null);
+    setIsEditing(true);
+  };
+
+  const handleDelete = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    setAnchorEl(null);
+    setIsDeleting(true);
+  };
 
   return (
-    <Card
-      variant="outlined"
-      component={NextLinkComposed}
-      to={{
-        pathname: ROUTES.APP_PROFILE + '/' + id,
-      }}
-    >
-      <CardActionArea>
-        <CardContent>
-          <Stack direction="row" mb={margin} alignItems="center" gap={margin}>
-            <Avatar sx={{ width: 24, height: 24 }} />
+    <>
+      <Card>
+        <CardActionArea
+          disableRipple
+          component="div"
+          onClick={() => router.push(`${ROUTES.APP_PROFILE}/${id}`)}
+        >
+          <CardContent>
+            <Stack
+              direction="row"
+              mb={margin}
+              alignItems="center"
+              justifyContent="space-between"
+              gap={margin}
+            >
+              <Stack direction="row" alignItems="center" gap={1}>
+                <Typography variant="h6" fontWeight="bold">
+                  {name}
+                </Typography>
+              </Stack>
 
-            <Typography fontWeight="bold">{name}</Typography>
-          </Stack>
-
-          <Divider sx={{ mx: -margin }} />
-
-          <Stack direction="row" gap={4} mt={margin}>
-            <Stack flex="1" alignItems="center">
-              <Typography variant="body2">
-                {cryptoAddresses.length} CRYPTO
-              </Typography>
+              <IconButton onClick={(event) => handleMenuClick(event)}>
+                <MoreVertIcon fontSize="small" />
+              </IconButton>
             </Stack>
 
-            <Divider orientation="vertical" flexItem sx={{ my: -margin }} />
+            <Divider sx={{ mx: -margin }} />
 
-            <Stack flex="1" alignItems="center">
-              <Typography variant="body2">
-                {fiatAddresses.length} FIAT
-              </Typography>
+            <Stack direction="row" mt={margin} gap={margin * 2}>
+              <Stack direction="row" alignItems="center" gap={1}>
+                <MonetizationOnIcon color="warning" fontSize="large" />
+
+                <Stack>
+                  <Typography fontWeight="bold">
+                    {cryptoAddresses.length}
+                  </Typography>
+
+                  <Typography variant="caption">{cryptoLabel}</Typography>
+                </Stack>
+              </Stack>
+
+              <Stack direction="row" alignItems="center" gap={1}>
+                <AccountBalanceIcon color="info" fontSize="large" />
+
+                <Stack>
+                  <Typography fontWeight="bold">
+                    {fiatAddresses.length}
+                  </Typography>
+
+                  <Typography variant="caption">{fiatLabel}</Typography>
+                </Stack>
+              </Stack>
             </Stack>
-          </Stack>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+
+      <DeleteModal
+        profile={profile}
+        open={isDeleting}
+        onClose={() => setIsDeleting(false)}
+      />
+
+      <EditModal
+        profile={profile}
+        open={isEditing}
+        onClose={() => setIsEditing(false)}
+      />
+
+      <MenuItems
+        anchorEl={anchorEl}
+        setAnchorEl={setAnchorEl}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
+    </>
   );
 };
 
 export default ProfileCard;
+
+const MenuItems: React.FC<any> = ({
+  anchorEl,
+  setAnchorEl,
+  handleEdit,
+  handleDelete,
+}) => {
+  const editLabel = 'Edit';
+  const deleteLabel = 'Delete';
+
+  return (
+    <Menu
+      id="basic-menu"
+      anchorEl={anchorEl}
+      open={Boolean(anchorEl)}
+      onClose={() => setAnchorEl(null)}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}
+    >
+      <MenuList>
+        <MenuItem onClick={handleEdit}>
+          <ListItemIcon>
+            <EditIcon fontSize="small" />
+          </ListItemIcon>
+
+          <ListItemText>{editLabel}</ListItemText>
+        </MenuItem>
+
+        <MenuItem onClick={handleDelete}>
+          <ListItemIcon>
+            <DeleteIcon color="error" fontSize="small" />
+          </ListItemIcon>
+
+          <ListItemText primaryTypographyProps={{ color: 'error' }}>
+            {deleteLabel}
+          </ListItemText>
+        </MenuItem>
+      </MenuList>
+    </Menu>
+  );
+};
