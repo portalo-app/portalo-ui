@@ -21,8 +21,8 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import DeleteModal from './DeleteModal';
-import EditModal from './EditModal';
+import DeleteProfileModal from './DeleteProfileModal';
+import EditProfileModal from './EditProfileModal';
 
 interface ProfileCardProps {
   profile: Profile;
@@ -87,8 +87,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 
             <Divider sx={{ mx: -margin }} />
 
-            <Stack direction="row" mt={margin} gap={margin * 2}>
-              <Stack direction="row" alignItems="center" gap={1}>
+            <Stack direction="row" mt={margin} gap={margin}>
+              <Stack flex="1" direction="row" alignItems="center" gap={1}>
                 <MonetizationOnIcon color="warning" fontSize="large" />
 
                 <Stack>
@@ -100,7 +100,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
                 </Stack>
               </Stack>
 
-              <Stack direction="row" alignItems="center" gap={1}>
+              <Stack flex="1" direction="row" alignItems="center" gap={1}>
                 <AccountBalanceIcon color="info" fontSize="large" />
 
                 <Stack>
@@ -116,13 +116,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
         </CardActionArea>
       </Card>
 
-      <DeleteModal
+      <DeleteProfileModal
         profile={profile}
         open={isDeleting}
         onClose={() => setIsDeleting(false)}
       />
 
-      <EditModal
+      <EditProfileModal
         profile={profile}
         open={isEditing}
         onClose={() => setIsEditing(false)}

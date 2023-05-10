@@ -10,7 +10,7 @@ interface DeleteModalProps {
   onClose: () => void;
 }
 
-const DeleteModal: React.FC<DeleteModalProps> = ({
+const DeleteProfileModal: React.FC<DeleteModalProps> = ({
   profile,
   open,
   onClose,
@@ -50,4 +50,4 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
   );
 };
 
-export default DeleteModal;
+export default DeleteProfileModal;

@@ -16,7 +16,11 @@ type FormData = {
   name: string;
 };
 
-const EditModal: React.FC<EditModalProps> = ({ profile, open, onClose }) => {
+const EditProfileModal: React.FC<EditModalProps> = ({
+  profile,
+  open,
+  onClose,
+}) => {
   const editTitle = 'Edit Profile';
   const saveLabel = 'Save';
   const nameLabel = 'Name';
@@ -84,4 +88,4 @@ const EditModal: React.FC<EditModalProps> = ({ profile, open, onClose }) => {
   );
 };
 
-export default EditModal;
+export default EditProfileModal;

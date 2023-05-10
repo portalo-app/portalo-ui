@@ -1,22 +1,22 @@
 import FormInputText from '@/core/components/FormInputText';
-import { ROUTES } from '@/lib/constants/routes.const';
 import { Profile } from '@/lib/model/profile';
 import { profilesState } from '@/lib/store/profiles.atom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Button, IconButton, InputAdornment, Stack } from '@mui/material';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSetRecoilState } from 'recoil';
 
-interface CreateProfileFormProps {}
+interface CreateProfileFormProps {
+  onCreate: () => void;
+}
 
 type FormData = {
   name: string;
   password: string;
 };
 
-const CreateProfileForm: React.FC<CreateProfileFormProps> = () => {
+const CreateProfileForm: React.FC<CreateProfileFormProps> = ({ onCreate }) => {
   const createLabel = 'Create';
   const requiredMessage = 'Name is required';
   const maxLengthMessage = 'Name is too long';
@@ -30,7 +30,6 @@ const CreateProfileForm: React.FC<CreateProfileFormProps> = () => {
   } = useForm<FormData>({ mode: 'all' });
   const [showPassword, setShowPassword] = useState(false);
   const setProfiles = useSetRecoilState(profilesState);
-  const router = useRouter();
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -50,7 +49,8 @@ const CreateProfileForm: React.FC<CreateProfileFormProps> = () => {
     };
 
     setProfiles((profiles) => [...profiles, profile]);
-    router.push(ROUTES.APP);
+
+    onCreate && onCreate();
   };
 
   return (

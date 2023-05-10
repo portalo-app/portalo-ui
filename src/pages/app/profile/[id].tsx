@@ -1,11 +1,13 @@
 import AddressList from '@/components/addresses/AddressList';
+import CreateAddressForm from '@/components/addresses/CreateAddressForm';
 import PageLayout from '@/components/layout/PageLayout';
+import DraggableDrawer from '@/core/components/DraggableDrawer';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { Profile } from '@/lib/model/profile';
 import { profilesState } from '@/lib/store/profiles.atom';
 import AddIcon from '@mui/icons-material/Add';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Tab, styled } from '@mui/material';
+import { Button, Tab, styled } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -16,7 +18,9 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
   const profilesData = useRecoilValue(profilesState);
   const [addressType, setAddressType] = useState('1');
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+  const [openCreateAddress, setOpenCreateAddress] = useState(false);
   const router = useRouter();
+  const createAddressTitle = 'Create Address';
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -39,8 +43,7 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
   };
 
   const handleCreateAddress = () => {
-    // TODO: Implement
-    console.log('Create address');
+    setOpenCreateAddress(true);
   };
 
   // TODO: Implement loading state
@@ -71,12 +74,44 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
 
         <TabPanel value="1" sx={{ p: 0 }}>
           <AddressList addresses={selectedProfile?.cryptoAddresses || []} />
+
+          <Button
+            variant="outlined"
+            fullWidth
+            startIcon={<AddIcon />}
+            onClick={handleCreateAddress}
+            sx={{ mt: 2 }}
+          >
+            {createAddressTitle}
+          </Button>
         </TabPanel>
 
         <TabPanel value="2" sx={{ p: 0 }}>
           <AddressList addresses={selectedProfile?.fiatAddresses || []} />
+
+          <Button
+            variant="outlined"
+            fullWidth
+            startIcon={<AddIcon />}
+            onClick={handleCreateAddress}
+            sx={{ mt: 2 }}
+          >
+            {createAddressTitle}
+          </Button>
         </TabPanel>
       </TabContext>
+
+      <DraggableDrawer
+        open={openCreateAddress}
+        onClose={() => setOpenCreateAddress(false)}
+        onOpen={() => setOpenCreateAddress(true)}
+      >
+        <PageLayout title={createAddressTitle}>
+          <CreateAddressForm
+            addressType={addressType === '1' ? 'CRYPTO' : 'FIAT'}
+          />
+        </PageLayout>
+      </DraggableDrawer>
     </PageLayout>
   );
 };
