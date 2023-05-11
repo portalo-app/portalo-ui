@@ -1,4 +1,3 @@
-import EntityIcon from '@/components/entities/EntityIcon';
 import {
   Autocomplete,
   AutocompleteRenderInputParams,
@@ -29,8 +28,8 @@ const FormInputAutocomplete: React.FC<FormInputAutocompleteProps> = ({
   options,
   rules,
   error,
+  iconRenderer,
 }) => {
-  // TODO: Update icon management
   return (
     <Controller
       name={name}
@@ -50,7 +49,7 @@ const FormInputAutocomplete: React.FC<FormInputAutocompleteProps> = ({
           onChange={(_, value) => field.onChange(value)}
           renderOption={(props, option) => (
             <Stack component="li" direction="row" gap={1} {...props}>
-              <EntityIcon entity={option.value} />
+              {iconRenderer && iconRenderer(option)}
               {option.label}
             </Stack>
           )}
@@ -63,7 +62,7 @@ const FormInputAutocomplete: React.FC<FormInputAutocompleteProps> = ({
               placeholder={label}
               InputProps={{
                 ...params.InputProps,
-                startAdornment: <EntityIcon entity={field?.value?.value} />,
+                startAdornment: iconRenderer && iconRenderer(field.value),
               }}
             />
           )}

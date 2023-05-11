@@ -73,7 +73,11 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
         </StyledTabs>
 
         <TabPanel value="1" sx={{ p: 0 }}>
-          <AddressList addresses={selectedProfile?.cryptoAddresses || []} />
+          <AddressList
+            profileId={selectedProfile?.id || ''}
+            addresses={selectedProfile?.cryptoAddresses || []}
+            addressType="CRYPTO"
+          />
 
           <Button
             variant="outlined"
@@ -87,7 +91,11 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
         </TabPanel>
 
         <TabPanel value="2" sx={{ p: 0 }}>
-          <AddressList addresses={selectedProfile?.fiatAddresses || []} />
+          <AddressList
+            profileId={selectedProfile?.id || ''}
+            addresses={selectedProfile?.fiatAddresses || []}
+            addressType="FIAT"
+          />
 
           <Button
             variant="outlined"
@@ -108,7 +116,9 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
       >
         <PageLayout title={createAddressTitle}>
           <CreateAddressForm
+            profileId={selectedProfile?.id || ''}
             addressType={addressType === '1' ? 'CRYPTO' : 'FIAT'}
+            onCreate={() => setOpenCreateAddress(false)}
           />
         </PageLayout>
       </DraggableDrawer>

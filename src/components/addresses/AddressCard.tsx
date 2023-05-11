@@ -16,17 +16,24 @@ import EntityIcon from '../entities/EntityIcon';
 interface AddressCardProps extends CardProps {
   addressData: CryptoAddress | FIATAddress;
   showQR?: boolean;
+  inModal?: boolean;
 }
 
 const AddressCard: React.FC<AddressCardProps> = ({
   addressData,
   showQR,
+  inModal,
   ...props
 }) => {
   const { name, alias, notes, entity, address } = addressData;
 
   return (
-    <Card sx={{ borderLeft: `4px solid ${entity.color}` }} {...props}>
+    <Card
+      sx={{
+        [inModal ? 'borderTop' : 'borderLeft']: `4px solid ${entity.color}`,
+      }}
+      {...props}
+    >
       <CardActionArea>
         <CardContent>
           <Stack direction="row" alignItems="center" gap={1} mb={1}>

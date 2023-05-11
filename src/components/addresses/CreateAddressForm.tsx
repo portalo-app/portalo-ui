@@ -1,11 +1,16 @@
 import FormInputAutocomplete from '@/core/components/FormInputAutocomplete';
 import FormInputText from '@/core/components/FormInputText';
-import { Entity, chains } from '@/lib/model/entities';
+import useCreateAddress from '@/lib/hooks/addresses/useCreateAddress';
+import { CryptoAddress, FIATAddress } from '@/lib/model/address';
+import { Entity, banks, chains } from '@/lib/model/entities';
 import { Button, Stack } from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
+import EntityIcon from '../entities/EntityIcon';
 
 interface CreateAddressFormProps {
+  profileId: string;
   addressType: 'CRYPTO' | 'FIAT';
+  onCreate?: () => void;
 }
 
 type FormData = {
@@ -16,17 +21,21 @@ type FormData = {
 };
 
 const CreateAddressForm: React.FC<CreateAddressFormProps> = ({
+  profileId,
   addressType,
+  onCreate,
 }) => {
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<FormData>({ mode: 'all' });
+  const createAddress = useCreateAddress();
 
   const createLabel = 'Create';
 
-  const requiredChainMessage = 'Chain is required';
+  const requiredEntityMessage =
+    addressType === 'CRYPTO' ? 'Chain is required' : 'Bank is required';
 
   const nameLabel = 'Name';
   const requiredNameMessage = 'Name is required';
@@ -37,13 +46,17 @@ const CreateAddressForm: React.FC<CreateAddressFormProps> = ({
   const maxLengthAddressMessage = 'Address is too long';
 
   const aliasLabel = 'Alias';
-  const requiredAliasMessage = 'Alias is required';
   const maxLengthAliasMessage = 'Alias is too long';
 
   const onSubmit = ({ address, alias, entity, name }: FormData) => {
-    // TODO: Create address
+    createAddress(profileId, addressType, {
+      address,
+      alias,
+      entity,
+      name,
+    } as CryptoAddress | FIATAddress);
 
-    console.log({ address, alias, chain: entity.value, name });
+    onCreate && onCreate();
   };
 
   // TODO: Update validations
@@ -52,11 +65,12 @@ const CreateAddressForm: React.FC<CreateAddressFormProps> = ({
       <FormInputAutocomplete
         control={control}
         name="entity"
-        label="Chain"
-        options={[...chains]}
-        error={errors?.entity?.value}
+        label={addressType === 'CRYPTO' ? 'Chain' : 'Bank'}
+        options={addressType === 'CRYPTO' ? [...chains] : [...banks]}
+        iconRenderer={(option) => <EntityIcon entity={option?.value} />}
+        error={errors?.entity as FieldError}
         rules={{
-          required: { value: true, message: requiredChainMessage },
+          required: { value: true, message: requiredEntityMessage },
         }}
       />
 
@@ -88,7 +102,6 @@ const CreateAddressForm: React.FC<CreateAddressFormProps> = ({
         label={aliasLabel}
         error={errors.alias}
         rules={{
-          required: { value: true, message: requiredAliasMessage },
           maxLength: { value: 30, message: maxLengthAliasMessage },
         }}
       />

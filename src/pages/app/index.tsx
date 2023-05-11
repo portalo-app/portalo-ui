@@ -4,7 +4,7 @@ import ProfileCard from '@/components/profiles/ProfileCard';
 import DraggableDrawer from '@/core/components/DraggableDrawer';
 import State from '@/core/components/State';
 import { ROUTES } from '@/lib/constants/routes.const';
-import useIsMobile from '@/lib/hooks/useIsMobile';
+import useIsMobile from '@/lib/hooks/common/useIsMobile';
 import { Profile } from '@/lib/model/profile';
 import { profilesState } from '@/lib/store/profiles.atom';
 import AddIcon from '@mui/icons-material/Add';

@@ -1,11 +1,9 @@
 import FormInputText from '@/core/components/FormInputText';
-import { Profile } from '@/lib/model/profile';
-import { profilesState } from '@/lib/store/profiles.atom';
+import useCreateProfile from '@/lib/hooks/profiles/useCreateProfile';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Button, IconButton, InputAdornment, Stack } from '@mui/material';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSetRecoilState } from 'recoil';
 
 interface CreateProfileFormProps {
   onCreate: () => void;
@@ -17,19 +15,19 @@ type FormData = {
 };
 
 const CreateProfileForm: React.FC<CreateProfileFormProps> = ({ onCreate }) => {
-  const createLabel = 'Create';
-  const requiredMessage = 'Name is required';
-  const maxLengthMessage = 'Name is too long';
-  const nameLabel = 'Name';
-  const passwordLabel = 'Password';
-
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<FormData>({ mode: 'all' });
   const [showPassword, setShowPassword] = useState(false);
-  const setProfiles = useSetRecoilState(profilesState);
+  const createProfile = useCreateProfile();
+
+  const createLabel = 'Create';
+  const requiredMessage = 'Name is required';
+  const maxLengthMessage = 'Name is too long';
+  const nameLabel = 'Name';
+  const passwordLabel = 'Password';
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -39,16 +37,9 @@ const CreateProfileForm: React.FC<CreateProfileFormProps> = ({ onCreate }) => {
   };
 
   const onSubmit = (data: FormData) => {
-    const { name, password } = data;
+    const { name } = data;
 
-    const profile: Profile = {
-      id: Date.now().toString(),
-      name,
-      cryptoAddresses: [],
-      fiatAddresses: [],
-    };
-
-    setProfiles((profiles) => [...profiles, profile]);
+    createProfile(name);
 
     onCreate && onCreate();
   };

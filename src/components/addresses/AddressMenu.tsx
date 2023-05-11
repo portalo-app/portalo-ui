@@ -9,11 +9,15 @@ import { Fab, Stack, styled } from '@mui/material';
 interface AddressMenuProps {
   selectedAddress: Address;
   handleQR: () => void;
+  handleDelete: () => void;
+  handleEdit: () => void;
 }
 
 const AddressMenu: React.FC<AddressMenuProps> = ({
   selectedAddress,
   handleQR,
+  handleDelete,
+  handleEdit,
 }) => {
   const handleCopy = () => {
     // Copy selectedAddress.address to clipboard
@@ -26,12 +30,6 @@ const AddressMenu: React.FC<AddressMenuProps> = ({
       text: selectedAddress?.address || '',
     });
   };
-
-  // TODO: Implement
-  const handleEdit = () => {};
-
-  // TODO: Implement
-  const handleDelete = () => {};
 
   const items = [
     {

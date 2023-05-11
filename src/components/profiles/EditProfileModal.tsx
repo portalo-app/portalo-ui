@@ -1,10 +1,9 @@
 import AnimatedModal from '@/core/components/AnimatedModal';
 import FormInputText from '@/core/components/FormInputText';
+import useEditProfile from '@/lib/hooks/profiles/useEditProfile';
 import { Profile } from '@/lib/model/profile';
-import { profilesState } from '@/lib/store/profiles.atom';
 import { Button, Paper, Stack, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useRecoilState } from 'recoil';
 
 interface EditModalProps {
   profile: Profile;
@@ -21,13 +20,13 @@ const EditProfileModal: React.FC<EditModalProps> = ({
   open,
   onClose,
 }) => {
+  const editProfile = useEditProfile();
+
   const editTitle = 'Edit Profile';
   const saveLabel = 'Save';
   const nameLabel = 'Name';
   const requiredMessage = 'Name is required';
   const maxLengthMessage = 'Name is too long';
-
-  const [profiles, setProfiles] = useRecoilState(profilesState);
 
   const {
     handleSubmit,
@@ -36,19 +35,8 @@ const EditProfileModal: React.FC<EditModalProps> = ({
   } = useForm<FormData>({ mode: 'all' });
 
   const onSubmit = (data: FormData) => {
-    const newProfile = {
-      ...profile,
-      name: data.name,
-    };
+    editProfile(profile.id, data.name);
 
-    const newProfiles = profiles.map((p) => {
-      if (p.id === profile.id) {
-        return newProfile;
-      }
-      return p;
-    });
-
-    setProfiles(newProfiles);
     onClose();
   };
 
