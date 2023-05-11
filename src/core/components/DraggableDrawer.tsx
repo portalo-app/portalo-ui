@@ -16,7 +16,9 @@ const DraggableDrawer: React.FC<DraggableDrawerProps> = ({
 }) => {
   return (
     <SwipeableDrawer
+      disableDiscovery
       disableBackdropTransition
+      disableSwipeToOpen
       anchor="bottom"
       open={open}
       onClose={onClose}
@@ -28,6 +30,9 @@ const DraggableDrawer: React.FC<DraggableDrawerProps> = ({
           p: 4,
           pb: 8,
         },
+      }}
+      ModalProps={{
+        keepMounted: false,
       }}
     >
       <Puller />

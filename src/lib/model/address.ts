@@ -1,7 +1,7 @@
+import { Entity, banks, chains } from './entities';
+
 export interface Address {
-  color: string;
-  icon: string;
-  entity: string; // Bank, exchange, wallet OR BTC, ETH, etc.
+  entity: Entity; // Bank, exchange, wallet OR BTC, ETH, etc.
   address: string;
   name?: string;
   alias?: string;
@@ -18,60 +18,20 @@ export interface FIATAddress extends Address {
 
 export const mockCryptoAddresses: CryptoAddress[] = [
   {
-    color: '#f7931a',
-    icon: 'bitcoin',
-    entity: 'Bitcoin',
+    entity: chains[0],
     address: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
     name: 'Safe',
     type: 'custodial',
   },
   {
-    color: '#5c6bc0',
-    icon: 'ethereum',
-    entity: 'Ethereum',
+    entity: chains[1],
     address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
     name: 'Social',
     alias: 'defiargentina.eth',
     type: 'non-custodial',
   },
   {
-    color: '#6c49b8',
-    icon: 'polygon',
-    entity: 'Polygon',
-    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-    name: 'Main',
-    type: 'non-custodial',
-  },
-  {
-    color: '#5c6bc0',
-    icon: 'ethereum',
-    entity: 'Ethereum',
-    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-    name: 'Social',
-    alias: 'defiargentina.eth',
-    type: 'non-custodial',
-  },
-  {
-    color: '#6c49b8',
-    icon: 'polygon',
-    entity: 'Polygon',
-    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-    name: 'Main',
-    type: 'non-custodial',
-  },
-  {
-    color: '#5c6bc0',
-    icon: 'ethereum',
-    entity: 'Ethereum',
-    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-    name: 'Social',
-    alias: 'defiargentina.eth',
-    type: 'non-custodial',
-  },
-  {
-    color: '#6c49b8',
-    icon: 'polygon',
-    entity: 'Polygon',
+    entity: chains[2],
     address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
     name: 'Main',
     type: 'non-custodial',
@@ -80,9 +40,7 @@ export const mockCryptoAddresses: CryptoAddress[] = [
 
 export const mockFIATAddresses: FIATAddress[] = [
   {
-    color: '#e60000',
-    icon: 'santander',
-    entity: 'Santander',
+    entity: banks[0],
     address: '0290000100000000058382',
     name: 'Checking account',
     currency: 'ARS',

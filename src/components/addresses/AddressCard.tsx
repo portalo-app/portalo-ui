@@ -11,6 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import { QRCodeSVG } from 'qrcode.react';
+import EntityIcon from '../entities/EntityIcon';
 
 interface AddressCardProps extends CardProps {
   addressData: CryptoAddress | FIATAddress;
@@ -22,17 +23,19 @@ const AddressCard: React.FC<AddressCardProps> = ({
   showQR,
   ...props
 }) => {
-  const { color, icon, name, alias, notes, entity, address } = addressData;
+  const { name, alias, notes, entity, address } = addressData;
 
   return (
-    <Card sx={{ borderLeft: `4px solid ${color}` }} {...props}>
+    <Card sx={{ borderLeft: `4px solid ${entity.color}` }} {...props}>
       <CardActionArea>
         <CardContent>
           <Stack direction="row" alignItems="center" gap={1} mb={1}>
-            <Avatar sx={{ width: 24, height: 24 }} />
+            <Avatar sx={{ width: 24, height: 24 }}>
+              <EntityIcon entity={entity.value} />
+            </Avatar>
 
             <Stack direction="row" gap={1} alignItems="center">
-              <Typography variant="subtitle2">{entity}</Typography>
+              <Typography variant="subtitle2">{entity.label}</Typography>
 
               {alias && <Chip size="small" label={alias} />}
             </Stack>
