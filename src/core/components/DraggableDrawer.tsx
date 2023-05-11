@@ -29,6 +29,8 @@ const DraggableDrawer: React.FC<DraggableDrawerProps> = ({
           borderRadius: '24px 24px 0 0',
           p: 4,
           pb: 8,
+          maxWidth: '800px',
+          margin: '0 auto',
         },
       }}
       ModalProps={{

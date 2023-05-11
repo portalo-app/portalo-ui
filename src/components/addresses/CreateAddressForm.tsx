@@ -76,23 +76,23 @@ const CreateAddressForm: React.FC<CreateAddressFormProps> = ({
 
       <FormInputText
         control={control}
+        name="address"
+        label={addressLabel}
+        error={errors.address}
+        rules={{
+          required: { value: true, message: requiredAddressMessage },
+          maxLength: { value: 100, message: maxLengthAddressMessage },
+        }}
+      />
+
+      <FormInputText
+        control={control}
         name="name"
         label={nameLabel}
         error={errors.name}
         rules={{
           required: { value: true, message: requiredNameMessage },
           maxLength: { value: 30, message: maxLengthNameMessage },
-        }}
-      />
-
-      <FormInputText
-        control={control}
-        name="address"
-        label={addressLabel}
-        error={errors.address}
-        rules={{
-          required: { value: true, message: requiredAddressMessage },
-          maxLength: { value: 30, message: maxLengthAddressMessage },
         }}
       />
 
