@@ -1,16 +1,19 @@
 import FormInputAutocomplete from '@/core/components/FormInputAutocomplete';
 import FormInputText from '@/core/components/FormInputText';
 import useCreateAddress from '@/lib/hooks/addresses/useCreateAddress';
+import useEditAddress from '@/lib/hooks/addresses/useEditAddress';
 import { CryptoAddress, FIATAddress } from '@/lib/model/address';
 import { Entity, banks, chains } from '@/lib/model/entities';
 import { Button, Stack } from '@mui/material';
 import { FieldError, useForm } from 'react-hook-form';
 import EntityIcon from '../entities/EntityIcon';
 
-interface CreateAddressFormProps {
+interface AddressFormProps {
+  action: 'CREATE' | 'EDIT';
   profileId: string;
   addressType: 'CRYPTO' | 'FIAT';
-  onCreate?: () => void;
+  address?: CryptoAddress | FIATAddress;
+  onComplete?: () => void;
 }
 
 type FormData = {
@@ -20,10 +23,12 @@ type FormData = {
   alias: string;
 };
 
-const CreateAddressForm: React.FC<CreateAddressFormProps> = ({
+const AddressForm: React.FC<AddressFormProps> = ({
+  action,
   profileId,
   addressType,
-  onCreate,
+  address: originalAddress,
+  onComplete,
 }) => {
   const {
     handleSubmit,
@@ -31,8 +36,9 @@ const CreateAddressForm: React.FC<CreateAddressFormProps> = ({
     formState: { errors },
   } = useForm<FormData>({ mode: 'all' });
   const createAddress = useCreateAddress();
+  const editAddress = useEditAddress();
 
-  const createLabel = 'Create';
+  const actionLabel = action === 'CREATE' ? 'Create Address' : 'Edit Address';
 
   const requiredEntityMessage =
     addressType === 'CRYPTO' ? 'Chain is required' : 'Bank is required';
@@ -49,14 +55,24 @@ const CreateAddressForm: React.FC<CreateAddressFormProps> = ({
   const maxLengthAliasMessage = 'Alias is too long';
 
   const onSubmit = ({ address, alias, entity, name }: FormData) => {
-    createAddress(profileId, addressType, {
-      address,
-      alias,
-      entity,
-      name,
-    } as CryptoAddress | FIATAddress);
+    if (action === 'EDIT') {
+      editAddress(profileId, addressType, {
+        id: originalAddress?.id,
+        address,
+        alias,
+        entity,
+        name,
+      } as CryptoAddress | FIATAddress);
+    } else {
+      createAddress(profileId, addressType, {
+        address,
+        alias,
+        entity,
+        name,
+      } as CryptoAddress | FIATAddress);
+    }
 
-    onCreate && onCreate();
+    onComplete && onComplete();
   };
 
   // TODO: Update validations
@@ -79,6 +95,7 @@ const CreateAddressForm: React.FC<CreateAddressFormProps> = ({
         name="address"
         label={addressLabel}
         error={errors.address}
+        defaultValue={action === 'EDIT' ? originalAddress?.address : undefined}
         rules={{
           required: { value: true, message: requiredAddressMessage },
           maxLength: { value: 100, message: maxLengthAddressMessage },
@@ -90,6 +107,7 @@ const CreateAddressForm: React.FC<CreateAddressFormProps> = ({
         name="name"
         label={nameLabel}
         error={errors.name}
+        defaultValue={action === 'EDIT' ? originalAddress?.name : undefined}
         rules={{
           required: { value: true, message: requiredNameMessage },
           maxLength: { value: 30, message: maxLengthNameMessage },
@@ -101,6 +119,7 @@ const CreateAddressForm: React.FC<CreateAddressFormProps> = ({
         name="alias"
         label={aliasLabel}
         error={errors.alias}
+        defaultValue={action === 'EDIT' ? originalAddress?.alias : undefined}
         rules={{
           maxLength: { value: 30, message: maxLengthAliasMessage },
         }}
@@ -111,10 +130,10 @@ const CreateAddressForm: React.FC<CreateAddressFormProps> = ({
         disabled={Object.keys(errors).length > 0}
         onClick={handleSubmit(onSubmit)}
       >
-        {createLabel}
+        {actionLabel}
       </Button>
     </Stack>
   );
 };
 
-export default CreateAddressForm;
+export default AddressForm;

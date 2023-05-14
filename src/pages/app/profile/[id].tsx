@@ -1,5 +1,5 @@
+import AddressForm from '@/components/addresses/AddressForm';
 import AddressList from '@/components/addresses/AddressList';
-import CreateAddressForm from '@/components/addresses/CreateAddressForm';
 import PageLayout from '@/components/layout/PageLayout';
 import DraggableDrawer from '@/core/components/DraggableDrawer';
 import { ROUTES } from '@/lib/constants/routes.const';
@@ -115,10 +115,11 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
         onOpen={() => setOpenCreateAddress(true)}
       >
         <PageLayout title={createAddressTitle}>
-          <CreateAddressForm
+          <AddressForm
+            action="CREATE"
             profileId={selectedProfile?.id || ''}
             addressType={addressType === '1' ? 'CRYPTO' : 'FIAT'}
-            onCreate={() => setOpenCreateAddress(false)}
+            onComplete={() => setOpenCreateAddress(false)}
           />
         </PageLayout>
       </DraggableDrawer>
