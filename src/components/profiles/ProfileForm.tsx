@@ -51,11 +51,11 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
 
     // TODO: Add password as param
     if (action === 'CREATE') {
-      createProfile(name);
+      createProfile(name, password);
     } else {
       if (!profile?.id) return;
 
-      editProfile(profile?.id || '', name);
+      editProfile(profile?.id || '', name, password);
     }
 
     onComplete && onComplete();
