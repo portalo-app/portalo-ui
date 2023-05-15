@@ -1,6 +1,6 @@
 import PageLayout from '@/components/layout/PageLayout';
-import CreateProfileForm from '@/components/profiles/CreateProfileForm';
 import ProfileCard from '@/components/profiles/ProfileCard';
+import ProfileForm from '@/components/profiles/ProfileForm';
 import DraggableDrawer from '@/core/components/DraggableDrawer';
 import State from '@/core/components/State';
 import { ROUTES } from '@/lib/constants/routes.const';
@@ -70,7 +70,10 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
         onOpen={() => setOpenCreateProfile(true)}
       >
         <PageLayout title={createProfileTitle}>
-          <CreateProfileForm onCreate={() => setOpenCreateProfile(false)} />
+          <ProfileForm
+            action="CREATE"
+            onComplete={() => setOpenCreateProfile(false)}
+          />
         </PageLayout>
       </DraggableDrawer>
     </PageLayout>

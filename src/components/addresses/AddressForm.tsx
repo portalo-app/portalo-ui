@@ -83,6 +83,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
         name="entity"
         label={addressType === 'CRYPTO' ? 'Chain' : 'Bank'}
         options={addressType === 'CRYPTO' ? [...chains] : [...banks]}
+        defaultValue={action === 'EDIT' ? originalAddress?.entity : undefined}
         iconRenderer={(option) => <EntityIcon entity={option?.value} />}
         error={errors?.entity as FieldError}
         rules={{

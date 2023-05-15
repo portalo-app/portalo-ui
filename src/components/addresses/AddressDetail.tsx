@@ -26,7 +26,6 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
 }) => {
   const [action, setAction] = useState<Action | null>(null);
 
-  // Action handlers
   const deleteAddress = useDeleteAddress();
 
   const deleteTitle = 'Delete Address';

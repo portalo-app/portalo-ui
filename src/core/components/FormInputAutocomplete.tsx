@@ -19,6 +19,7 @@ interface FormInputAutocompleteProps {
   rules?: RegisterOptions;
   error?: FieldError;
   iconRenderer?: (option: any) => JSX.Element;
+  defaultValue?: any;
 }
 
 const FormInputAutocomplete: React.FC<FormInputAutocompleteProps> = ({
@@ -29,13 +30,14 @@ const FormInputAutocomplete: React.FC<FormInputAutocompleteProps> = ({
   rules,
   error,
   iconRenderer,
+  defaultValue,
 }) => {
   return (
     <Controller
       name={name}
       control={control}
       rules={rules}
-      defaultValue={options[0]}
+      defaultValue={defaultValue || options[0]}
       render={({ field }) => (
         <Autocomplete
           {...field}

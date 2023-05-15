@@ -1,12 +1,16 @@
 import FormInputText from '@/core/components/FormInputText';
 import useCreateProfile from '@/lib/hooks/profiles/useCreateProfile';
+import useEditProfile from '@/lib/hooks/profiles/useEditProfile';
+import { Profile } from '@/lib/model/profile';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Button, IconButton, InputAdornment, Stack } from '@mui/material';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-interface CreateProfileFormProps {
-  onCreate: () => void;
+interface ProfileFormProps {
+  action: 'CREATE' | 'EDIT';
+  onComplete: () => void;
+  profile?: Profile;
 }
 
 type FormData = {
@@ -14,7 +18,11 @@ type FormData = {
   password: string;
 };
 
-const CreateProfileForm: React.FC<CreateProfileFormProps> = ({ onCreate }) => {
+const ProfileForm: React.FC<ProfileFormProps> = ({
+  action,
+  profile,
+  onComplete,
+}) => {
   const {
     handleSubmit,
     control,
@@ -22,11 +30,13 @@ const CreateProfileForm: React.FC<CreateProfileFormProps> = ({ onCreate }) => {
   } = useForm<FormData>({ mode: 'all' });
   const [showPassword, setShowPassword] = useState(false);
   const createProfile = useCreateProfile();
+  const editProfile = useEditProfile();
 
-  const createLabel = 'Create';
-  const requiredMessage = 'Name is required';
-  const maxLengthMessage = 'Name is too long';
+  const actionLabel = action === 'CREATE' ? 'Create' : 'Edit';
   const nameLabel = 'Name';
+  const nameRequiredMessage = 'Name is required';
+  const nameMaxLengthMessage = 'Name is too long';
+
   const passwordLabel = 'Password';
 
   const handleMouseDownPassword = (
@@ -37,11 +47,18 @@ const CreateProfileForm: React.FC<CreateProfileFormProps> = ({ onCreate }) => {
   };
 
   const onSubmit = (data: FormData) => {
-    const { name } = data;
+    const { name, password } = data;
 
-    createProfile(name);
+    // TODO: Add password as param
+    if (action === 'CREATE') {
+      createProfile(name);
+    } else {
+      if (!profile?.id) return;
 
-    onCreate && onCreate();
+      editProfile(profile?.id || '', name);
+    }
+
+    onComplete && onComplete();
   };
 
   return (
@@ -51,9 +68,10 @@ const CreateProfileForm: React.FC<CreateProfileFormProps> = ({ onCreate }) => {
         name="name"
         label={nameLabel}
         error={errors.name}
+        defaultValue={action === 'EDIT' ? profile?.name : ''}
         rules={{
-          required: { value: true, message: requiredMessage },
-          maxLength: { value: 30, message: maxLengthMessage },
+          required: { value: true, message: nameRequiredMessage },
+          maxLength: { value: 30, message: nameMaxLengthMessage },
         }}
       />
 
@@ -62,6 +80,7 @@ const CreateProfileForm: React.FC<CreateProfileFormProps> = ({ onCreate }) => {
         control={control}
         label={passwordLabel}
         type={showPassword ? 'text' : 'password'}
+        defaultValue={action === 'EDIT' ? profile?.password : undefined}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
@@ -81,10 +100,10 @@ const CreateProfileForm: React.FC<CreateProfileFormProps> = ({ onCreate }) => {
         disabled={Object.keys(errors).length > 0}
         onClick={handleSubmit(onSubmit)}
       >
-        {createLabel}
+        {actionLabel}
       </Button>
     </Stack>
   );
 };
 
-export default CreateProfileForm;
+export default ProfileForm;

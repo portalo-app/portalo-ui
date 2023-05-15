@@ -1,5 +1,5 @@
 import PageLayout from '@/components/layout/PageLayout';
-import CreateProfileForm from '@/components/profiles/CreateProfileForm';
+import ProfileForm from '@/components/profiles/ProfileForm';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { useRouter } from 'next/router';
 
@@ -11,7 +11,7 @@ const CreateProfile: React.FC<CreateProfileProps> = () => {
 
   return (
     <PageLayout title={createProfileTitle} backPath={ROUTES.APP}>
-      <CreateProfileForm onCreate={() => router.push(ROUTES.APP)} />
+      <ProfileForm action="CREATE" onComplete={() => router.push(ROUTES.APP)} />
     </PageLayout>
   );
 };

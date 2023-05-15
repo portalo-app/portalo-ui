@@ -1,3 +1,4 @@
+import AnimatedModal from '@/core/components/AnimatedModal';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { Profile } from '@/lib/model/profile';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
@@ -16,13 +17,15 @@ import {
   Menu,
   MenuItem,
   MenuList,
+  Paper,
   Stack,
   Typography,
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import PageLayout from '../layout/PageLayout';
 import DeleteProfileModal from './DeleteProfileModal';
-import EditProfileModal from './EditProfileModal';
+import ProfileForm from './ProfileForm';
 
 interface ProfileCardProps {
   profile: Profile;
@@ -122,11 +125,17 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
         onClose={() => setIsDeleting(false)}
       />
 
-      <EditProfileModal
-        profile={profile}
-        open={isEditing}
-        onClose={() => setIsEditing(false)}
-      />
+      <AnimatedModal open={isEditing} onClose={() => setIsEditing(false)}>
+        <Paper sx={{ p: 2 }}>
+          <PageLayout title="Edit Profile">
+            <ProfileForm
+              profile={profile}
+              action="EDIT"
+              onComplete={() => setIsEditing(false)}
+            />
+          </PageLayout>
+        </Paper>
+      </AnimatedModal>
 
       <MenuItems
         anchorEl={anchorEl}
@@ -151,7 +160,7 @@ const MenuItems: React.FC<any> = ({
 
   return (
     <Menu
-      id="basic-menu"
+      id="profile-menu"
       anchorEl={anchorEl}
       open={Boolean(anchorEl)}
       onClose={() => setAnchorEl(null)}
