@@ -92,7 +92,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 
             <Stack direction="row" mt={margin} gap={margin}>
               <Stack flex="1" direction="row" alignItems="center" gap={1}>
-                <MonetizationOnIcon color="warning" fontSize="large" />
+                <MonetizationOnIcon color="disabled" fontSize="large" />
 
                 <Stack>
                   <Typography fontWeight="bold">
@@ -104,7 +104,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
               </Stack>
 
               <Stack flex="1" direction="row" alignItems="center" gap={1}>
-                <AccountBalanceIcon color="info" fontSize="large" />
+                <AccountBalanceIcon color="disabled" fontSize="large" />
 
                 <Stack>
                   <Typography fontWeight="bold">

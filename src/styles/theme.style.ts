@@ -1,24 +1,24 @@
 import { ThemeOptions } from '@mui/material';
 import { Montserrat } from 'next/font/google';
 
-const nunito = Montserrat({
+const montserrat = Montserrat({
   subsets: ['latin'],
 });
 
 export const bodyFonts = {
-  fontFamily: nunito.style.fontFamily,
+  fontFamily: montserrat.style.fontFamily,
 };
 
 export const headingFonts = {
-  fontFamily: nunito.style.fontFamily,
+  fontFamily: montserrat.style.fontFamily,
 };
 
 export const buttonFonts = {
-  fontFamily: nunito.style.fontFamily,
+  fontFamily: montserrat.style.fontFamily,
 };
 
 export const numberFonts = {
-  fontFamily: nunito.style.fontFamily,
+  fontFamily: montserrat.style.fontFamily,
 };
 
 export const THEME: ThemeOptions = {

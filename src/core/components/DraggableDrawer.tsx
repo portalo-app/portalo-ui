@@ -35,6 +35,9 @@ const DraggableDrawer: React.FC<DraggableDrawerProps> = ({
       }}
       ModalProps={{
         keepMounted: false,
+        sx: {
+          zIndex: ({ zIndex }) => zIndex.drawer + 1,
+        },
       }}
     >
       <Puller />
