@@ -8,7 +8,7 @@ import useIsMobile from '@/lib/hooks/common/useIsMobile';
 import { Profile } from '@/lib/model/profile';
 import { profilesState } from '@/lib/store/profiles.atom';
 import AddIcon from '@mui/icons-material/Add';
-import { Button, Stack } from '@mui/material';
+import { Button, Fade, Stack } from '@mui/material';
 import { useRouter } from 'next/router';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -50,7 +50,11 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
       {profiles.length > 0 && (
         <Stack gap={2}>
           {profiles.map((profile, index) => (
-            <ProfileCard profile={profile} key={index} />
+            <Fade key={index} in timeout={{ enter: 200 * (index + 1) }}>
+              <div>
+                <ProfileCard profile={profile} />
+              </div>
+            </Fade>
           ))}
         </Stack>
       )}

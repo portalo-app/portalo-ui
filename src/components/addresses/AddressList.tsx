@@ -1,6 +1,6 @@
 import State from '@/core/components/State';
 import { AddressType, CryptoAddress, FIATAddress } from '@/lib/model/address';
-import { Stack } from '@mui/material';
+import { Fade, Stack } from '@mui/material';
 import { useState } from 'react';
 import AddressCard from './AddressCard';
 import AddressDetail from './AddressDetail';
@@ -32,11 +32,14 @@ const AddressList: React.FC<AddressListProps> = ({
     <>
       <Stack gap={2}>
         {addresses.map((address, index) => (
-          <AddressCard
-            key={index}
-            addressData={address}
-            onClick={() => handleAddressClick(address)}
-          />
+          <Fade key={index} in timeout={{ enter: 200 * (index + 1) }}>
+            <div>
+              <AddressCard
+                addressData={address}
+                onClick={() => handleAddressClick(address)}
+              />
+            </div>
+          </Fade>
         ))}
       </Stack>
 
