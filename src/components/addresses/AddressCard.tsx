@@ -50,7 +50,7 @@ const AddressCard: React.FC<AddressCardProps> = ({
 
           <Typography variant="h6">{name || 'Wallet'}</Typography>
 
-          <Typography variant="caption" fontSize={12}>
+          <Typography variant="mono" fontSize={12}>
             {address}
           </Typography>
 

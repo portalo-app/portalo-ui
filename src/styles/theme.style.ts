@@ -1,12 +1,20 @@
 import { ThemeOptions } from '@mui/material';
-import { Montserrat } from 'next/font/google';
+import { Inter, Montserrat, Roboto_Mono } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+});
 
 const montserrat = Montserrat({
   subsets: ['latin'],
 });
 
+const robotoMono = Roboto_Mono({
+  subsets: ['latin'],
+});
+
 export const bodyFonts = {
-  fontFamily: montserrat.style.fontFamily,
+  fontFamily: inter.style.fontFamily,
 };
 
 export const headingFonts = {
@@ -14,11 +22,11 @@ export const headingFonts = {
 };
 
 export const buttonFonts = {
-  fontFamily: montserrat.style.fontFamily,
+  fontFamily: inter.style.fontFamily,
 };
 
-export const numberFonts = {
-  fontFamily: montserrat.style.fontFamily,
+export const monoFonts = {
+  fontFamily: robotoMono.style.fontFamily,
 };
 
 export const THEME: ThemeOptions = {
@@ -44,6 +52,14 @@ export const THEME: ThemeOptions = {
           fontSize: '1rem',
         },
       },
+    },
+    MuiTypography: {
+      variants: [
+        {
+          props: { variant: 'mono' },
+          style: monoFonts,
+        },
+      ],
     },
   },
   palette: {
