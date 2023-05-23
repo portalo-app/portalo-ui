@@ -95,7 +95,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
                 <MonetizationOnIcon color="disabled" fontSize="large" />
 
                 <Stack>
-                  <Typography fontWeight="bold">
+                  <Typography variant="mono" fontWeight="bold">
                     {cryptoAddresses.length}
                   </Typography>
 
@@ -107,7 +107,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
                 <AccountBalanceIcon color="disabled" fontSize="large" />
 
                 <Stack>
-                  <Typography fontWeight="bold">
+                  <Typography variant="mono" fontWeight="bold">
                     {fiatAddresses.length}
                   </Typography>
 

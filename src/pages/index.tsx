@@ -1,28 +1,36 @@
 import { NextLinkComposed } from '@/core/components/Link';
 import { ROUTES } from '@/lib/constants/routes.const';
-import { Button, Typography } from '@mui/material';
-import { Inter } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'] });
+import { Button, Stack, Typography } from '@mui/material';
 
 export default function Home() {
   return (
     <>
-      <Typography variant="h1">Take your addresses anywhere</Typography>
+      <Typography variant="h2">Your tree of financial addresses</Typography>
+      <Typography>
+        Take your addresses anywhere and share them with your clients and
+        friends
+      </Typography>
 
-      <Button variant="contained" color="secondary">
-        View demo
-      </Button>
-
-      <Button
-        variant="contained"
-        component={NextLinkComposed}
-        to={{
-          pathname: ROUTES.APP,
-        }}
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        sx={{ '.MuiButton-root': { flex: 1 } }}
+        gap={2}
       >
-        Go to app
-      </Button>
+        <Button variant="contained" color="secondary">
+          View demo
+        </Button>
+
+        <Button
+          variant="contained"
+          component={NextLinkComposed}
+          to={{
+            pathname: ROUTES.APP,
+          }}
+        >
+          Start now!
+        </Button>
+      </Stack>
     </>
   );
 }

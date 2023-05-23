@@ -26,11 +26,11 @@ const Navbar: React.FC<NavbarProps> = () => {
     'Are you sure you want to clear the account data? This will remove every profile and all the data associated with them. This action cannot be undone.';
 
   const resetAccount = () => {
+    router.push(ROUTES.APP);
     resetProfiles();
+
     setResetAccountModalOpen(false);
     setIsDrawerOpen(false);
-
-    router.push(ROUTES.APP);
   };
 
   return (

@@ -28,6 +28,21 @@ const GlobalStyles: React.FC<GlobalStylesProps> = () => {
           backdrop-filter: blur(8px);
           background-color: rgb(0, 0, 0, 0.5) !important;
         }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        a {
+          opacity: 0.87;
+        }
+
+        p,
+        span {
+          opacity: 0.6;
+        }
       `}
     />
   );

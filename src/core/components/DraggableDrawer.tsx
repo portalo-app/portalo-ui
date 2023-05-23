@@ -49,12 +49,13 @@ const DraggableDrawer: React.FC<DraggableDrawerProps> = ({
 
 export default DraggableDrawer;
 
-const Puller = styled(Box)(({ theme }) => ({
-  width: 30,
-  height: 6,
-  backgroundColor: theme.palette.mode === 'light' ? grey[300] : grey[900],
-  borderRadius: 3,
-  position: 'absolute',
-  top: 8,
-  left: 'calc(50% - 15px)',
-}));
+const Puller = styled(Box)`
+  width: 30px;
+  height: 6px;
+  background-color: ${({ theme }) =>
+    theme.palette.mode === 'light' ? grey[200] : grey[800]};
+  border-radius: 3px;
+  position: absolute;
+  top: 8px;
+  left: calc(50% - 15px);
+`;

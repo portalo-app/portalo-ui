@@ -1,28 +1,24 @@
 import { ThemeOptions } from '@mui/material';
-import { Inter, Montserrat, Roboto_Mono } from 'next/font/google';
-
-const inter = Inter({
-  subsets: ['latin'],
-});
-
-const montserrat = Montserrat({
-  subsets: ['latin'],
-});
+import { Roboto_Mono, Work_Sans } from 'next/font/google';
 
 const robotoMono = Roboto_Mono({
   subsets: ['latin'],
 });
 
+const workSans = Work_Sans({
+  subsets: ['latin'],
+});
+
 export const bodyFonts = {
-  fontFamily: inter.style.fontFamily,
+  fontFamily: workSans.style.fontFamily,
 };
 
 export const headingFonts = {
-  fontFamily: montserrat.style.fontFamily,
+  fontFamily: workSans.style.fontFamily,
 };
 
 export const buttonFonts = {
-  fontFamily: inter.style.fontFamily,
+  fontFamily: workSans.style.fontFamily,
 };
 
 export const monoFonts = {
@@ -65,31 +61,22 @@ export const THEME: ThemeOptions = {
   palette: {
     mode: 'dark',
     primary: {
-      main: '#7C4DFF',
+      main: '#5271FF',
     },
     secondary: {
-      main: '#F9A826',
-    },
-    error: {
-      main: '#F44336',
-    },
-    warning: {
-      main: '#FFC107',
-    },
-    info: {
-      main: '#2196F3',
-    },
-    success: {
-      main: '#00C853',
+      main: '#8952ff',
     },
     background: {
       default: '#121212',
-      paper: '#1E1E1E',
+      paper: '#121212',
     },
     text: {
       primary: '#FFFFFF',
       secondary: '#B0BEC5',
       disabled: '#757575',
     },
+  },
+  shape: {
+    borderRadius: 16,
   },
 };

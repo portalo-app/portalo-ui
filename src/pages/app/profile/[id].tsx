@@ -31,7 +31,7 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
     const profile = profilesData.find((profile) => profile.id === id);
 
     if (!profile) {
-      router.push('/404');
+      router.push(ROUTES.APP);
       return;
     }
 
@@ -133,10 +133,12 @@ const StyledTabs = styled(TabList)`
   background: ${({ theme }) => theme.palette.background.paper};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   margin-bottom: 1rem;
+  border: 1px solid ${({ theme }) => theme.palette.divider};
 
   .MuiTabs-indicator {
     height: 100%;
-    background-color: ${({ theme }) => theme.palette.grey[900]};
+    background-color: ${({ theme }) => theme.palette.background.paper};
+    filter: brightness(0.8);
     z-index: 1;
   }
 
