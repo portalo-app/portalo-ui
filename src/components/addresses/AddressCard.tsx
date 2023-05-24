@@ -31,7 +31,7 @@ const AddressCard: React.FC<AddressCardProps> = ({
   return (
     <Card
       sx={{
-        [inModal ? 'borderTop' : 'borderLeft']: `4px solid ${entity.color}`,
+        [inModal ? 'borderTop' : 'borderLeft']: `3px solid ${entity.color}`,
       }}
       {...props}
     >

@@ -80,7 +80,7 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
 
         {isEditing && (
           <Paper sx={{ p: 2 }}>
-            <PageLayout title="Edit Address">
+            <PageLayout title="Edit Address" backClick={() => setAction(null)}>
               <AddressForm
                 action="EDIT"
                 profileId={profileId}

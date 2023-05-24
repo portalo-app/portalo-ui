@@ -7,6 +7,7 @@ interface PageLayoutProps {
   title: string;
   action?: ActionData;
   backPath?: string;
+  backClick?: () => void;
 }
 
 interface ActionData {
@@ -32,6 +33,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   title,
   action,
   backPath,
+  backClick,
 }) => {
   return (
     <Stack>
@@ -52,6 +54,13 @@ const PageLayout: React.FC<PageLayoutProps> = ({
               <ArrowBackIcon />
             </IconButton>
           )}
+
+          {backClick && (
+            <IconButton onClick={backClick}>
+              <ArrowBackIcon />
+            </IconButton>
+          )}
+
           <Typography variant="h4">{title}</Typography>
         </Stack>
 
