@@ -35,7 +35,7 @@ const AddressCard: React.FC<AddressCardProps> = ({
       }}
       {...props}
     >
-      <CardActionArea>
+      <CardActionArea disabled={inModal}>
         <CardContent>
           <Stack direction="row" alignItems="center" gap={1} mb={1}>
             <Avatar sx={{ width: 24, height: 24 }}>
@@ -57,7 +57,12 @@ const AddressCard: React.FC<AddressCardProps> = ({
 
           <Grow in={showQR} mountOnEnter unmountOnExit>
             <Stack mt={2} alignItems="center">
-              <QRCodeSVG includeMargin value={address} size={256} />
+              <QRCodeSVG
+                includeMargin
+                value={address}
+                size={256}
+                style={{ borderRadius: 8 }}
+              />
             </Stack>
           </Grow>
         </CardContent>

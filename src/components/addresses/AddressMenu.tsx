@@ -1,10 +1,13 @@
 import { Address } from '@/lib/model/address';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DoneIcon from '@mui/icons-material/Done';
 import EditIcon from '@mui/icons-material/Edit';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import ShareIcon from '@mui/icons-material/Share';
 import { Fade, IconButton, Stack, styled } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { useState } from 'react';
 
 interface AddressMenuProps {
   selectedAddress: Address;
@@ -19,9 +22,21 @@ const AddressMenu: React.FC<AddressMenuProps> = ({
   handleDelete,
   handleEdit,
 }) => {
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const copiedMessage = 'Address copied!';
+
   const handleCopy = () => {
     // Copy selectedAddress.address to clipboard
-    navigator?.clipboard?.writeText(selectedAddress?.address || '');
+    navigator?.clipboard?.writeText(selectedAddress?.address || '').then(() => {
+      enqueueSnackbar(copiedMessage, {
+        variant: 'success',
+        onClose: () => setSnackbarOpen(false),
+        onEnter: () => setSnackbarOpen(true),
+        onExited: () => setSnackbarOpen(false),
+      });
+    });
   };
 
   const handleShare = () => {
@@ -33,10 +48,11 @@ const AddressMenu: React.FC<AddressMenuProps> = ({
 
   const items = [
     {
-      icon: <ContentCopyIcon />,
+      icon: snackbarOpen ? <DoneIcon /> : <ContentCopyIcon />,
       label: 'Copy',
       action: handleCopy,
       color: 'default' as 'default',
+      disabled: snackbarOpen,
     },
     {
       icon: <QrCodeIcon />,
@@ -65,24 +81,27 @@ const AddressMenu: React.FC<AddressMenuProps> = ({
   ];
 
   return (
-    <StyledMenu direction="row" gap={2} justifyContent="center">
-      {items.map(({ label, icon, action, color }, index) => (
-        <Fade in key={index} timeout={index * 200}>
-          <IconButton
-            size="large"
-            aria-label={label}
-            onClick={action}
-            color={color}
-            sx={{
-              border: '1px solid',
-              borderColor: 'divider',
-            }}
-          >
-            {icon}
-          </IconButton>
-        </Fade>
-      ))}
-    </StyledMenu>
+    <>
+      <StyledMenu direction="row" gap={2} justifyContent="center">
+        {items.map(({ label, icon, action, color, disabled }, index) => (
+          <Fade in key={index} timeout={index * 200}>
+            <IconButton
+              size="large"
+              aria-label={label}
+              onClick={action}
+              color={color}
+              disabled={disabled}
+              sx={{
+                border: '1px solid',
+                borderColor: 'divider',
+              }}
+            >
+              {icon}
+            </IconButton>
+          </Fade>
+        ))}
+      </StyledMenu>
+    </>
   );
 };
 

@@ -1,3 +1,4 @@
+import useIsMobile from '@/lib/hooks/common/useIsMobile';
 import createEmotionCache from '@/styles/createEmotionCache';
 import GlobalStyles from '@/styles/globals.style';
 import { THEME } from '@/styles/theme.style';
@@ -8,6 +9,7 @@ import {
   createTheme,
   responsiveFontSizes,
 } from '@mui/material';
+import { SnackbarProvider } from 'notistack';
 import { Suspense } from 'react';
 import { RecoilRoot } from 'recoil';
 import Layout from './Layout';
@@ -28,6 +30,8 @@ const Root: React.FC<RootProps> = ({
   pageProps,
   emotionCache = clientSideEmotionCache,
 }) => {
+  const isMobile = useIsMobile();
+
   return (
     <>
       <RecoilRoot>
@@ -39,7 +43,17 @@ const Root: React.FC<RootProps> = ({
 
             <Layout>
               <Suspense fallback={'Loading...'}>
-                <Component {...pageProps} />
+                <SnackbarProvider
+                  autoHideDuration={3000}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: isMobile ? 'center' : 'left',
+                  }}
+                  dense={isMobile}
+                  disableWindowBlurListener
+                >
+                  <Component {...pageProps} />
+                </SnackbarProvider>
               </Suspense>
             </Layout>
           </ThemeProvider>
