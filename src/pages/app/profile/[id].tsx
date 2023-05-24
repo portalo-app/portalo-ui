@@ -2,12 +2,13 @@ import AddressForm from '@/components/addresses/AddressForm';
 import AddressList from '@/components/addresses/AddressList';
 import PageLayout from '@/components/layout/PageLayout';
 import DraggableDrawer from '@/core/components/DraggableDrawer';
+import PulseButton from '@/core/components/PulseButton';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { Profile } from '@/lib/model/profile';
 import { profilesState } from '@/lib/store/profiles.atom';
 import AddIcon from '@mui/icons-material/Add';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Button, Tab, styled } from '@mui/material';
+import { Tab, styled } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -79,15 +80,16 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
             addressType="CRYPTO"
           />
 
-          <Button
+          <PulseButton
             variant="outlined"
+            pulse={(selectedProfile?.cryptoAddresses || []).length === 0}
             fullWidth
             startIcon={<AddIcon />}
             onClick={handleCreateAddress}
             sx={{ mt: 2 }}
           >
             {createAddressTitle}
-          </Button>
+          </PulseButton>
         </TabPanel>
 
         <TabPanel value="2" sx={{ p: 0 }}>
@@ -97,15 +99,16 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
             addressType="FIAT"
           />
 
-          <Button
+          <PulseButton
             variant="outlined"
+            pulse={(selectedProfile?.fiatAddresses || []).length === 0}
             fullWidth
             startIcon={<AddIcon />}
             onClick={handleCreateAddress}
             sx={{ mt: 2 }}
           >
             {createAddressTitle}
-          </Button>
+          </PulseButton>
         </TabPanel>
       </TabContext>
 
