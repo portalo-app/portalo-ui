@@ -1,4 +1,5 @@
 import { ThemeOptions } from '@mui/material';
+import { amber, blue, green, red } from '@mui/material/colors';
 import { Roboto_Mono, Work_Sans } from 'next/font/google';
 
 const robotoMono = Roboto_Mono({
@@ -65,6 +66,18 @@ export const THEME: ThemeOptions = {
     },
     secondary: {
       main: '#8952ff',
+    },
+    info: {
+      main: blue[600],
+    },
+    warning: {
+      main: amber[600],
+    },
+    success: {
+      main: green[600],
+    },
+    error: {
+      main: red[600],
     },
     background: {
       default: '#121212',
