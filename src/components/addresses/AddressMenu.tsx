@@ -69,6 +69,7 @@ const AddressMenu: React.FC<AddressMenuProps> = ({
       {items.map(({ label, icon, action, color }, index) => (
         <Fade in key={index} timeout={index * 200}>
           <IconButton
+            size="large"
             aria-label={label}
             onClick={action}
             color={color}
