@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import ShareIcon from '@mui/icons-material/Share';
-import { Fab, Fade, Stack, styled } from '@mui/material';
+import { Fade, IconButton, Stack, styled } from '@mui/material';
 
 interface AddressMenuProps {
   selectedAddress: Address;
@@ -36,25 +36,25 @@ const AddressMenu: React.FC<AddressMenuProps> = ({
       icon: <ContentCopyIcon />,
       label: 'Copy',
       action: handleCopy,
-      color: 'primary' as 'primary',
+      color: 'default' as 'default',
     },
     {
       icon: <QrCodeIcon />,
       label: 'QR Code',
       action: handleQR,
-      color: 'primary' as 'primary',
+      color: 'default' as 'default',
     },
     {
       icon: <ShareIcon />,
       label: 'Share',
       action: handleShare,
-      color: 'secondary' as 'secondary',
+      color: 'default' as 'default',
     },
     {
       icon: <EditIcon />,
       label: 'Edit',
       action: handleEdit,
-      color: 'info' as 'info',
+      color: 'default' as 'default',
     },
     {
       icon: <DeleteIcon />,
@@ -68,9 +68,17 @@ const AddressMenu: React.FC<AddressMenuProps> = ({
     <StyledMenu direction="row" gap={2} justifyContent="center">
       {items.map(({ label, icon, action, color }, index) => (
         <Fade in key={index} timeout={index * 200}>
-          <Fab size="medium" aria-label={label} onClick={action} color={color}>
+          <IconButton
+            aria-label={label}
+            onClick={action}
+            color={color}
+            sx={{
+              border: '1px solid',
+              borderColor: 'divider',
+            }}
+          >
             {icon}
-          </Fab>
+          </IconButton>
         </Fade>
       ))}
     </StyledMenu>
