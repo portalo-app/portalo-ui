@@ -7,6 +7,7 @@ import {
   CardContent,
   CardProps,
   Chip,
+  Grow,
   Stack,
   Typography,
 } from '@mui/material';
@@ -54,11 +55,11 @@ const AddressCard: React.FC<AddressCardProps> = ({
             {address}
           </Typography>
 
-          {showQR && (
+          <Grow in={showQR} mountOnEnter unmountOnExit>
             <Stack mt={2} alignItems="center">
               <QRCodeSVG includeMargin value={address} size={256} />
             </Stack>
-          )}
+          </Grow>
         </CardContent>
       </CardActionArea>
     </Card>

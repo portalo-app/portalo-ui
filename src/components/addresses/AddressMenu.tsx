@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import ShareIcon from '@mui/icons-material/Share';
-import { Fab, Stack, styled } from '@mui/material';
+import { Fab, Fade, Stack, styled } from '@mui/material';
 
 interface AddressMenuProps {
   selectedAddress: Address;
@@ -67,15 +67,11 @@ const AddressMenu: React.FC<AddressMenuProps> = ({
   return (
     <StyledMenu direction="row" gap={2} justifyContent="center">
       {items.map(({ label, icon, action, color }, index) => (
-        <Fab
-          size="medium"
-          key={index}
-          aria-label={label}
-          onClick={action}
-          color={color}
-        >
-          {icon}
-        </Fab>
+        <Fade in key={index} timeout={index * 200}>
+          <Fab size="medium" aria-label={label} onClick={action} color={color}>
+            {icon}
+          </Fab>
+        </Fade>
       ))}
     </StyledMenu>
   );

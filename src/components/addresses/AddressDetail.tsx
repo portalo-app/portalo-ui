@@ -69,7 +69,9 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
 
             <AddressMenu
               selectedAddress={address}
-              handleQR={() => setAction('qr')}
+              handleQR={() =>
+                setAction((action) => (action === 'qr' ? null : 'qr'))
+              }
               handleDelete={() => setAction('delete')}
               handleEdit={() => setAction('edit')}
             />
