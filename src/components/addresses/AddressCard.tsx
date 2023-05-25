@@ -34,6 +34,8 @@ const AddressCard: React.FC<AddressCardProps> = ({
         [inModal ? 'borderTop' : 'borderLeft']: `3px solid ${entity.color}`,
       }}
       {...props}
+      elevation={inModal ? 0 : 2}
+      variant={inModal ? 'outlined' : 'elevation'}
     >
       <CardActionArea disabled={inModal}>
         <CardContent>

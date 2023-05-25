@@ -63,7 +63,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 
   return (
     <>
-      <Card>
+      <Card elevation={2}>
         <CardActionArea
           disableRipple
           component="div"
