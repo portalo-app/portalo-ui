@@ -1,6 +1,7 @@
 export const ROUTES = {
   HOME: '/',
   APP: '/app',
+  APP_HELP: '/app/help',
   APP_PROFILE: '/app/profile',
   APP_CREATE_PROFILE: '/app/create-profile',
 } as const;

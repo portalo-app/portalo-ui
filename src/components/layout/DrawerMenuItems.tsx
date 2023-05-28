@@ -33,8 +33,8 @@ const menuItems = [
     icon: <GroupIcon />,
   },
   {
-    label: 'FAQs',
-    href: ROUTES.APP,
+    label: 'Help',
+    href: ROUTES.APP_HELP,
     icon: <FAQIcon />,
   },
   {
