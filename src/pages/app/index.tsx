@@ -1,11 +1,8 @@
 import PageLayout from '@/components/layout/PageLayout';
 import ProfileCard from '@/components/profiles/ProfileCard';
-import ProfileForm from '@/components/profiles/ProfileForm';
-import DraggableDrawer from '@/core/components/DraggableDrawer';
 import PulseButton from '@/core/components/PulseButton';
 import State from '@/core/components/State';
 import { ROUTES } from '@/lib/constants/routes.const';
-import useIsMobile from '@/lib/hooks/common/useIsMobile';
 import { Profile } from '@/lib/model/profile';
 import { profilesState } from '@/lib/store/profiles.atom';
 import AddIcon from '@mui/icons-material/Add';
@@ -22,8 +19,6 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
   const createProfileTitle = 'Create Profile';
   const profilesData = useRecoilValue(profilesState);
   const [profiles, setProfiles] = useState<Profile[]>([]);
-  const [openCreateProfile, setOpenCreateProfile] = useState(false);
-  const isMobile = useIsMobile();
   const router = useRouter();
 
   useEffect(() => {
@@ -33,11 +28,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
   const hasProfiles = profiles && profiles.length > 0;
 
   const handleCreateProfile = () => {
-    if (isMobile) {
-      setOpenCreateProfile(true);
-    } else {
-      router.push(ROUTES.APP_CREATE_PROFILE);
-    }
+    router.push(ROUTES.APP_CREATE_PROFILE);
   };
 
   return (
@@ -71,19 +62,6 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
       >
         {createProfileTitle}
       </PulseButton>
-
-      <DraggableDrawer
-        open={openCreateProfile}
-        onClose={() => setOpenCreateProfile(false)}
-        onOpen={() => setOpenCreateProfile(true)}
-      >
-        <PageLayout title={createProfileTitle}>
-          <ProfileForm
-            action="CREATE"
-            onComplete={() => setOpenCreateProfile(false)}
-          />
-        </PageLayout>
-      </DraggableDrawer>
     </PageLayout>
   );
 };

@@ -8,10 +8,11 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { NextPage } from 'next';
 
 interface HelpPageProps {}
 
-const HelpPage: React.FC<HelpPageProps> = () => {
+const HelpPage: NextPage<HelpPageProps> = () => {
   const helpTitle = 'Help';
 
   const faqs = [

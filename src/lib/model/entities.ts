@@ -20,8 +20,8 @@ export const banks = [
     value: 'SANTANDER',
     label: 'Santander',
   },
-  { color: '#e60000', icon: 'galicia', value: 'GALICIA', label: 'Galicia' },
-  { color: '#e60000', icon: 'bbva', value: 'BBVA', label: 'BBVA' },
+  { color: '#f7931a', icon: 'galicia', value: 'GALICIA', label: 'Galicia' },
+  { color: '#1e3096', icon: 'bbva', value: 'BBVA', label: 'BBVA' },
 ] as const;
 
 export type BankValue = (typeof banks)[number]['value'];
