@@ -4,6 +4,9 @@ import useCreateAddress from '@/lib/hooks/addresses/useCreateAddress';
 import useEditAddress from '@/lib/hooks/addresses/useEditAddress';
 import { CryptoAddress, FIATAddress } from '@/lib/model/address';
 import { Entity, banks, chains } from '@/lib/model/entities';
+import { pasteFromClipboard } from '@/lib/utils/clipboard';
+import { navigatorIsFirefox } from '@/lib/utils/navigator';
+import { ContentPaste } from '@mui/icons-material';
 import { Button, Stack } from '@mui/material';
 import { FieldError, useForm } from 'react-hook-form';
 import EntityIcon from '../entities/EntityIcon';
@@ -32,6 +35,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
 }) => {
   const {
     handleSubmit,
+    setValue,
     control,
     formState: { errors },
   } = useForm<FormData>({ mode: 'all' });
@@ -101,6 +105,17 @@ const AddressForm: React.FC<AddressFormProps> = ({
           required: { value: true, message: requiredAddressMessage },
           maxLength: { value: 100, message: maxLengthAddressMessage },
         }}
+        endAdornment={
+          // Firefox is the only browser that doesn't support reading the clipboard
+          !navigatorIsFirefox && (
+            <ContentPaste
+              cursor="pointer"
+              onClick={async () =>
+                setValue('address', await pasteFromClipboard())
+              }
+            />
+          )
+        }
       />
 
       <FormInputText
