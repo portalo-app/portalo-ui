@@ -107,7 +107,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
         }}
         endAdornment={
           // Firefox is the only browser that doesn't support reading the clipboard
-          !navigatorIsFirefox && (
+          !navigatorIsFirefox() && (
             <ContentPaste
               cursor="pointer"
               onClick={async () =>
