@@ -11,21 +11,10 @@ const chainsSymbols = [
   'BTC',
   'ETH',
   'MATIC',
-  'USDT',
   'DOT',
-  'AAVE',
-  'ADA',
   'ALGO',
-  'AVAX',
-  'BNB',
-  'BUSD',
-  'DAI',
-  'DOGE',
-  'FTM',
-  'NEAR',
   'SOL',
   'UNI',
-  'USDC',
 ] as const;
 
 const filteredUniqueChains = Object.values(
