@@ -50,6 +50,7 @@ export const chains = filteredUniqueChains.map((chain) => ({
 export type ChainValue = (typeof chains)[number]['value'];
 
 export const banks = [
+  { color: '#007894', icon: 'nacion', value: 'NACION', label: 'Nacion' },
   {
     color: '#e60000',
     icon: 'santander',
@@ -58,6 +59,8 @@ export const banks = [
   },
   { color: '#f7931a', icon: 'galicia', value: 'GALICIA', label: 'Galicia' },
   { color: '#1e3096', icon: 'bbva', value: 'BBVA', label: 'BBVA' },
+  { color: '#003057', icon: 'macro', value: 'MACRO', label: 'Macro' },
+  { color: '#db0011', icon: 'hsbc', value: 'HSBC', label: 'Hsbc' },
 ] as const;
 
 export type BankValue = (typeof banks)[number]['value'];

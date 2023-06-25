@@ -1,4 +1,4 @@
-import { BankValue, ChainValue } from '@/lib/model/entities';
+import { BankValue, ChainValue, banks } from '@/lib/model/entities';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { SvgIcon } from '@mui/material';
 import Algo from 'cryptocurrency-icons/svg/color/algo.svg';
@@ -8,12 +8,13 @@ import Btc from 'cryptocurrency-icons/svg/icon/btc.svg';
 import Dot from 'cryptocurrency-icons/svg/icon/dot.svg';
 import Eth from 'cryptocurrency-icons/svg/icon/eth.svg';
 import Matic from 'cryptocurrency-icons/svg/icon/matic.svg';
+import Image from 'next/image';
 
 interface EntityIconProps {
   entity: ChainValue | BankValue;
 }
 
-const icons: {
+const chainIcons: {
   [key in ChainValue]: React.ReactNode;
 } = {
   BTC: <Btc />,
@@ -25,10 +26,32 @@ const icons: {
   UNI: <Uni />,
 };
 
-const EntityIcon: React.FC<EntityIconProps> = ({ entity }) => {
-  const icon = icons[entity as ChainValue] || <AccountBalanceIcon />;
+const bankIcons: {
+  [key in BankValue]?: React.ReactNode;
+} = {};
+banks.forEach((bank) =>
+  Object.assign(bankIcons, {
+    [bank.value]: (
+      <Image
+        alt={bank.icon}
+        src={`/assets/icons/banks/${bank.icon}.png`}
+        width={32}
+        height={32}
+        style={{ objectFit: 'contain' }}
+      />
+    ),
+  })
+);
 
-  return <SvgIcon viewBox="0 0 32 32">{icon}</SvgIcon>;
+const EntityIcon: React.FC<EntityIconProps> = ({ entity }) => {
+  const icon = chainIcons[entity as ChainValue] ||
+    bankIcons[entity as BankValue] || <AccountBalanceIcon />;
+
+  return bankIcons[entity as BankValue] ? (
+    (icon as JSX.Element)
+  ) : (
+    <SvgIcon viewBox="0 0 32 32">{icon}</SvgIcon>
+  );
 };
 
 export default EntityIcon;
