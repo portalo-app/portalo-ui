@@ -40,7 +40,9 @@ const AddressCard: React.FC<AddressCardProps> = ({
       <CardActionArea disabled={inModal}>
         <CardContent>
           <Stack direction="row" alignItems="center" gap={1} mb={1}>
-            <Avatar sx={{ width: 24, height: 24 }}>
+            <Avatar
+              sx={{ width: 32, height: 32, backgroundColor: 'transparent' }}
+            >
               <EntityIcon entity={entity.value} />
             </Avatar>
 
