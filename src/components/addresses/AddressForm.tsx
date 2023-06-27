@@ -110,9 +110,11 @@ const AddressForm: React.FC<AddressFormProps> = ({
           !navigatorIsFirefox() && (
             <ContentPaste
               cursor="pointer"
-              onClick={async () =>
-                setValue('address', await pasteFromClipboard())
-              }
+              onClick={async () => {
+                setValue('address', await pasteFromClipboard(), {
+                  shouldValidate: true,
+                });
+              }}
             />
           )
         }
