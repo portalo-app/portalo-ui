@@ -16,7 +16,7 @@ const CreateAddressPage: NextPage<CreateAddressPageProps> = () => {
 
   const createAddressTitle = 'Create Address';
   const backPath = profileId
-    ? `${ROUTES.APP_PROFILE}/${profileId}`
+    ? `${ROUTES.APP_PROFILE}/${profileId}/${addressType}`
     : ROUTES.APP;
 
   // TODO: Handle invalid slug data

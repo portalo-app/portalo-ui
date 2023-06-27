@@ -2,6 +2,7 @@ import AddressList from '@/components/addresses/AddressList';
 import PageLayout from '@/components/layout/PageLayout';
 import PulseButton from '@/core/components/PulseButton';
 import { ROUTES } from '@/lib/constants/routes.const';
+import { AddressType } from '@/lib/model/address';
 import { Profile } from '@/lib/model/profile';
 import { profilesState } from '@/lib/store/profiles.atom';
 import AddIcon from '@mui/icons-material/Add';
@@ -24,7 +25,13 @@ const ProfilePage: NextPage<ProfilePageProps> = () => {
   useEffect(() => {
     if (!router.isReady) return;
 
-    const { id } = router.query;
+    const { slug } = router.query;
+
+    const id = slug && slug[0];
+    const type: AddressType = (slug && slug[1]) as AddressType;
+
+    if (type) setAddressType(type === 'FIAT' ? '2' : '1');
+
     if (!id) return;
 
     const selectedProfile = profilesData.find((profile) => profile.id === id);

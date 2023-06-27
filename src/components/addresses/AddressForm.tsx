@@ -82,18 +82,20 @@ const AddressForm: React.FC<AddressFormProps> = ({
   // TODO: Update validations
   return (
     <Stack gap={2}>
-      <FormInputAutocomplete
-        control={control}
-        name="entity"
-        label={addressType === 'CRYPTO' ? 'Chain' : 'Bank'}
-        options={addressType === 'CRYPTO' ? [...chains] : [...banks]}
-        defaultValue={action === 'EDIT' ? originalAddress?.entity : undefined}
-        iconRenderer={(option) => <EntityIcon entity={option?.value} />}
-        error={errors?.entity as FieldError}
-        rules={{
-          required: { value: true, message: requiredEntityMessage },
-        }}
-      />
+      {addressType && (
+        <FormInputAutocomplete
+          control={control}
+          name="entity"
+          label={addressType === 'CRYPTO' ? 'Chain' : 'Bank'}
+          options={addressType === 'CRYPTO' ? [...chains] : [...banks]}
+          defaultValue={action === 'EDIT' ? originalAddress?.entity : undefined}
+          iconRenderer={(option) => <EntityIcon entity={option?.value} />}
+          error={errors?.entity as FieldError}
+          rules={{
+            required: { value: true, message: requiredEntityMessage },
+          }}
+        />
+      )}
 
       <FormInputText
         control={control}
@@ -110,9 +112,11 @@ const AddressForm: React.FC<AddressFormProps> = ({
           !navigatorIsFirefox() && (
             <ContentPaste
               cursor="pointer"
-              onClick={async () =>
-                setValue('address', await pasteFromClipboard())
-              }
+              onClick={async () => {
+                setValue('address', await pasteFromClipboard(), {
+                  shouldValidate: true,
+                });
+              }}
             />
           )
         }
