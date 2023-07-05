@@ -48,6 +48,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const createAddress = useCreateAddress();
   const editAddress = useEditAddress();
   const entityValue = watch('entity');
+  const addressValue = watch('address');
 
   const actionLabel = action === 'CREATE' ? 'Create Address' : 'Edit Address';
 
@@ -74,8 +75,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
       },
     });
 
-    if (dirtyFields.address) trigger('address');
-  }, [entityValue, dirtyFields, register, trigger]);
+    if (dirtyFields.address || addressValue) trigger('address');
+  }, [addressValue, entityValue, dirtyFields, register, trigger]);
 
   const onSubmit = ({ address, alias, entity, name }: FormData) => {
     if (action === 'EDIT') {
