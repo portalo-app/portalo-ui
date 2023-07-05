@@ -1,9 +1,5 @@
-import {
-  CryptoAddress,
-  FIATAddress,
-  mockCryptoAddresses,
-  mockFIATAddresses,
-} from './address';
+import { CryptoAddress, FIATAddress } from './address';
+import { mockCryptoAddresses, mockFIATAddresses } from './entities';
 
 export interface Profile {
   id: string;
