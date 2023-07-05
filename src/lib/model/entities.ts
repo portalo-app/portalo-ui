@@ -1,13 +1,15 @@
 import chainsList from 'cryptocurrency-icons/manifest.json';
+import { CryptoAddressesRegex } from './address';
 
 export interface Entity {
   color: string;
   icon: string;
   value: ChainValue | BankValue;
   label: string;
+  addressRegex?: RegExp;
 }
 
-const chainsSymbols = [
+export const chainsSymbols = [
   'BTC',
   'ETH',
   'MATIC',
@@ -40,14 +42,16 @@ const filteredUniqueChains = Object.values(
     )
 );
 
-export const chains = filteredUniqueChains.map((chain) => ({
+export const chains: Entity[] = filteredUniqueChains.map((chain) => ({
   color: chain.color,
   icon: chain.symbol.toLowerCase(),
-  value: chain.symbol,
+  value: chain.symbol as ChainValue,
   label: chain.name,
+  addressRegex:
+    CryptoAddressesRegex[chain.symbol as keyof typeof CryptoAddressesRegex],
 }));
 
-export type ChainValue = (typeof chains)[number]['value'];
+export type ChainValue = (typeof chainsSymbols)[number];
 
 export const banks = [
   { color: '#007894', icon: 'nacion', value: 'NACION', label: 'Nacion' },

@@ -1,4 +1,4 @@
-import { Entity, banks, chains } from './entities';
+import { Entity, banks, chains, chainsSymbols } from './entities';
 
 export interface Address {
   id: string;
@@ -53,3 +53,15 @@ export const mockFIATAddresses: FIATAddress[] = [
     currency: 'ARS',
   },
 ];
+
+export const CryptoAddressesRegex: {
+  [key in (typeof chainsSymbols)[number]]: RegExp;
+} = {
+  ALGO: /^([A-Za-z0-9]{58})$/,
+  BTC: /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/,
+  DOT: /^1[0-9a-zA-Z]{47}/,
+  ETH: /^0x[a-fA-F0-9]{40}$/,
+  MATIC: /^0x[a-fA-F0-9]{40}$/,
+  SOL: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/,
+  UNI: /^0x[a-fA-F0-9]{40}$/,
+};
