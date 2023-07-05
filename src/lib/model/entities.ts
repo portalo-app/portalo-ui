@@ -54,17 +54,48 @@ export const chains: Entity[] = filteredUniqueChains.map((chain) => ({
 export type ChainValue = (typeof chainsSymbols)[number];
 
 export const banks = [
-  { color: '#007894', icon: 'nacion', value: 'NACION', label: 'Nacion' },
+  {
+    color: '#007894',
+    icon: 'nacion',
+    value: 'NACION',
+    label: 'Nacion',
+    addressRegex: /^[0-9]{22}$/,
+  },
   {
     color: '#e60000',
     icon: 'santander',
     value: 'SANTANDER',
     label: 'Santander',
+    addressRegex: /^[0-9]{22}$/,
   },
-  { color: '#f7931a', icon: 'galicia', value: 'GALICIA', label: 'Galicia' },
-  { color: '#1e3096', icon: 'bbva', value: 'BBVA', label: 'BBVA' },
-  { color: '#003057', icon: 'macro', value: 'MACRO', label: 'Macro' },
-  { color: '#db0011', icon: 'hsbc', value: 'HSBC', label: 'Hsbc' },
+  {
+    color: '#f7931a',
+    icon: 'galicia',
+    value: 'GALICIA',
+    label: 'Galicia',
+    addressRegex: /^[0-9]{22}$/,
+  },
+  {
+    color: '#1e3096',
+    icon: 'bbva',
+    value: 'BBVA',
+    label: 'BBVA',
+    addressRegex: /^[0-9]{22}$/,
+  },
+  {
+    color: '#003057',
+    icon: 'macro',
+    value: 'MACRO',
+    label: 'Macro',
+    addressRegex: /^[0-9]{22}$/,
+  },
+  {
+    color: '#db0011',
+    icon: 'hsbc',
+    value: 'HSBC',
+    label: 'Hsbc',
+    addressRegex: /^[0-9]{22}$/,
+  },
 ] as const;
 
 export type BankValue = (typeof banks)[number]['value'];
