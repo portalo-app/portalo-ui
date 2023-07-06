@@ -51,7 +51,7 @@ export const chains: Entity[] = filteredUniqueChains.map((chain) => ({
     CryptoAddressesRegex[chain.symbol as keyof typeof CryptoAddressesRegex],
 }));
 
-export type ChainValue = (typeof chainsSymbols)[number];
+const CBU_REGEX = /^[0-9]{22}$/;
 
 export const banks = [
   {
@@ -59,45 +59,46 @@ export const banks = [
     icon: 'nacion',
     value: 'NACION',
     label: 'Nacion',
-    addressRegex: /^[0-9]{22}$/,
+    addressRegex: CBU_REGEX,
   },
   {
     color: '#e60000',
     icon: 'santander',
     value: 'SANTANDER',
     label: 'Santander',
-    addressRegex: /^[0-9]{22}$/,
+    addressRegex: CBU_REGEX,
   },
   {
     color: '#f7931a',
     icon: 'galicia',
     value: 'GALICIA',
     label: 'Galicia',
-    addressRegex: /^[0-9]{22}$/,
+    addressRegex: CBU_REGEX,
   },
   {
     color: '#1e3096',
     icon: 'bbva',
     value: 'BBVA',
     label: 'BBVA',
-    addressRegex: /^[0-9]{22}$/,
+    addressRegex: CBU_REGEX,
   },
   {
     color: '#003057',
     icon: 'macro',
     value: 'MACRO',
     label: 'Macro',
-    addressRegex: /^[0-9]{22}$/,
+    addressRegex: CBU_REGEX,
   },
   {
     color: '#db0011',
     icon: 'hsbc',
     value: 'HSBC',
     label: 'Hsbc',
-    addressRegex: /^[0-9]{22}$/,
+    addressRegex: CBU_REGEX,
   },
 ] as const;
 
+export type ChainValue = (typeof chainsSymbols)[number];
 export type BankValue = (typeof banks)[number]['value'];
 
 export const mockCryptoAddresses: CryptoAddress[] = [
