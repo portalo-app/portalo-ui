@@ -10,6 +10,7 @@ import {
 } from '@/lib/utils/clipboard';
 import { ContentPaste } from '@mui/icons-material';
 import { Button, Stack } from '@mui/material';
+import { useEffect } from 'react';
 import { FieldError, useForm } from 'react-hook-form';
 import EntityIcon from '../entities/EntityIcon';
 
@@ -37,12 +38,17 @@ const AddressForm: React.FC<AddressFormProps> = ({
 }) => {
   const {
     handleSubmit,
+    register,
     setValue,
+    watch,
+    trigger,
     control,
-    formState: { errors },
+    formState: { errors, dirtyFields },
   } = useForm<FormData>({ mode: 'all' });
   const createAddress = useCreateAddress();
   const editAddress = useEditAddress();
+  const entityValue = watch('entity');
+  const addressValue = watch('address');
 
   const actionLabel = action === 'CREATE' ? 'Create Address' : 'Edit Address';
 
@@ -59,6 +65,18 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   const aliasLabel = 'Alias';
   const maxLengthAliasMessage = 'Alias is too long';
+
+  useEffect(() => {
+    register('address', {
+      required: 'Required',
+      pattern: {
+        value: entityValue?.addressRegex!,
+        message: 'Invalid address',
+      },
+    });
+
+    if (dirtyFields.address || addressValue) trigger('address');
+  }, [addressValue, entityValue, dirtyFields, register, trigger]);
 
   const onSubmit = ({ address, alias, entity, name }: FormData) => {
     if (action === 'EDIT') {
@@ -116,6 +134,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
               onClick={async () => {
                 setValue('address', await pasteFromClipboard(), {
                   shouldValidate: true,
+                  shouldDirty: true,
                 });
               }}
             />
