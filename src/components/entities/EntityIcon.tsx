@@ -35,8 +35,8 @@ banks.forEach((bank) =>
       <Image
         alt={bank.icon}
         src={`/assets/icons/banks/${bank.icon}.png`}
-        width={32}
-        height={32}
+        width={64}
+        height={64}
         style={{ objectFit: 'contain' }}
       />
     ),
@@ -50,7 +50,9 @@ const EntityIcon: React.FC<EntityIconProps> = ({ entity }) => {
   return bankIcons[entity as BankValue] ? (
     (icon as JSX.Element)
   ) : (
-    <SvgIcon viewBox="0 0 32 32">{icon}</SvgIcon>
+    <SvgIcon viewBox="0 0 32 32" sx={{ width: '100%', height: '100%' }}>
+      {icon}
+    </SvgIcon>
   );
 };
 

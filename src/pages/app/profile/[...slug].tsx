@@ -51,7 +51,7 @@ const ProfilePage: NextPage<ProfilePageProps> = () => {
   const handleCreateAddress = () => {
     const type = addressType === '1' ? 'CRYPTO' : 'FIAT';
 
-    router.push(`${ROUTES.APP_CREATE_ADDRESS}/${profile?.id}/${type}`);
+    router.push(`${ROUTES.APP_SELECT_ENTITY}/${profile?.id}/${type}`);
   };
 
   // TODO: Implement loading state

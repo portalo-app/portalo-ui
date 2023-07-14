@@ -61,7 +61,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
             </IconButton>
           )}
 
-          <Typography variant="h4">{title}</Typography>
+          <Typography variant="h6">{title}</Typography>
         </Stack>
 
         {action && <Action {...action} />}

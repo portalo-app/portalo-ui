@@ -1,17 +1,21 @@
-import FormInputAutocomplete from '@/core/components/FormInputAutocomplete';
 import FormInputText from '@/core/components/FormInputText';
+import { ROUTES } from '@/lib/constants/routes.const';
 import useCreateAddress from '@/lib/hooks/addresses/useCreateAddress';
 import useEditAddress from '@/lib/hooks/addresses/useEditAddress';
 import { CryptoAddress, FIATAddress } from '@/lib/model/address';
-import { Entity, banks, chains } from '@/lib/model/entities';
+import { Entity } from '@/lib/model/entities';
+import { addressFormState } from '@/lib/store/address-form.atom';
 import {
   canPasteFormClipboard,
   pasteFromClipboard,
 } from '@/lib/utils/clipboard';
+import styled from '@emotion/styled';
 import { ContentPaste } from '@mui/icons-material';
-import { Button, Stack } from '@mui/material';
+import { Button, Chip, Stack } from '@mui/material';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { FieldError, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { useRecoilValue } from 'recoil';
 import EntityIcon from '../entities/EntityIcon';
 
 interface AddressFormProps {
@@ -22,7 +26,19 @@ interface AddressFormProps {
   onComplete?: () => void;
 }
 
-type FormData = {
+const EntityIconContainer = styled.div`
+  &&,
+  img {
+    &&,
+    svg {
+      margin-left: 0;
+    }
+    width: 1.5em;
+    height: 1.5em;
+  }
+`;
+
+export type AddressFormData = {
   entity: Entity;
   address: string;
   name: string;
@@ -44,16 +60,20 @@ const AddressForm: React.FC<AddressFormProps> = ({
     trigger,
     control,
     formState: { errors, dirtyFields },
-  } = useForm<FormData>({ mode: 'all' });
+  } = useForm<AddressFormData>({ mode: 'all' });
+  const router = useRouter();
+
   const createAddress = useCreateAddress();
   const editAddress = useEditAddress();
-  const entityValue = watch('entity');
+
+  const entityValue = useRecoilValue(addressFormState).entity;
   const addressValue = watch('address');
 
-  const actionLabel = action === 'CREATE' ? 'Create Address' : 'Edit Address';
+  if (!entityValue) {
+    router.push(`${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`);
+  }
 
-  const requiredEntityMessage =
-    addressType === 'CRYPTO' ? 'Chain is required' : 'Bank is required';
+  const actionLabel = action === 'CREATE' ? 'Create Address' : 'Edit Address';
 
   const nameLabel = 'Name';
   const requiredNameMessage = 'Name is required';
@@ -78,7 +98,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
     if (dirtyFields.address || addressValue) trigger('address');
   }, [addressValue, entityValue, dirtyFields, register, trigger]);
 
-  const onSubmit = ({ address, alias, entity, name }: FormData) => {
+  const onSubmit = ({ address, alias, entity, name }: AddressFormData) => {
     if (action === 'EDIT') {
       editAddress(profileId, addressType, {
         id: originalAddress?.id,
@@ -102,7 +122,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
   // TODO: Update validations
   return (
     <Stack gap={2}>
-      {addressType && (
+      {/* {addressType && (
         <FormInputAutocomplete
           control={control}
           name="entity"
@@ -115,7 +135,26 @@ const AddressForm: React.FC<AddressFormProps> = ({
             required: { value: true, message: requiredEntityMessage },
           }}
         />
-      )}
+      )} */}
+
+      <div>
+        <Chip
+          icon={
+            <EntityIconContainer>
+              <EntityIcon entity={entityValue?.value!} />
+            </EntityIconContainer>
+          }
+          label={entityValue?.label}
+          variant="outlined"
+          size="medium"
+          sx={{
+            borderColor: entityValue?.color,
+            marginY: '1.25em',
+            fontSize: '1em',
+            padding: '0.25em',
+          }}
+        />
+      </div>
 
       <FormInputText
         control={control}
