@@ -9,14 +9,13 @@ import {
   canPasteFormClipboard,
   pasteFromClipboard,
 } from '@/lib/utils/clipboard';
-import styled from '@emotion/styled';
 import { ContentPaste } from '@mui/icons-material';
-import { Button, Chip, Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
-import EntityIcon from '../entities/EntityIcon';
+import EntityChip from '../entities/EntityChip';
 
 interface AddressFormProps {
   action: 'CREATE' | 'EDIT';
@@ -25,18 +24,6 @@ interface AddressFormProps {
   address?: CryptoAddress | FIATAddress;
   onComplete?: () => void;
 }
-
-const EntityIconContainer = styled.div`
-  &&,
-  img {
-    &&,
-    svg {
-      margin-left: 0;
-    }
-    width: 1.5em;
-    height: 1.5em;
-  }
-`;
 
 export type AddressFormData = {
   entity: Entity;
@@ -133,25 +120,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
   return (
     <Stack gap={2}>
       {addressForm.entity && (
-        <div>
-          <Chip
-            icon={
-              <EntityIconContainer>
-                <EntityIcon entity={addressForm.entity.value!} />
-              </EntityIconContainer>
-            }
-            label={addressForm.entity.label}
-            variant="outlined"
-            size="medium"
-            onDelete={handleEntityDelete}
-            sx={{
-              borderColor: addressForm.entity.color,
-              marginY: '1.25em',
-              fontSize: '1em',
-              padding: '0.25em',
-            }}
-          />
-        </div>
+        <EntityChip entity={addressForm.entity} onDelete={handleEntityDelete} />
       )}
 
       <FormInputText
