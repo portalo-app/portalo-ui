@@ -39,10 +39,16 @@ const AddressForm: React.FC<AddressFormProps> = ({
   address: originalAddress,
   onComplete,
 }) => {
+  const router = useRouter();
+
   const createAddress = useCreateAddress();
   const editAddress = useEditAddress();
 
   const [addressForm, setAddressForm] = useRecoilState(addressFormState);
+
+  if (!addressForm.entity) {
+    router.push(`${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`);
+  }
 
   const {
     handleSubmit,
@@ -53,13 +59,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
     control,
     formState: { errors, dirtyFields },
   } = useForm<AddressFormData>({ mode: 'all', defaultValues: addressForm });
-  const router = useRouter();
 
   const addressValue = watch('address');
-
-  // if (!addressForm.entity) {
-  //   router.push(`${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`);
-  // }
 
   const actionLabel = action === 'CREATE' ? 'Create Address' : 'Edit Address';
 
