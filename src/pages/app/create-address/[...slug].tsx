@@ -26,7 +26,9 @@ const CreateAddressPage: NextPage<CreateAddressPageProps> = () => {
         action="CREATE"
         profileId={profileId || ''}
         addressType={addressType}
-        onComplete={() => router.push(backPath)}
+        onComplete={() =>
+          router.push(`${ROUTES.APP_PROFILE}/${profileId}/${addressType}`)
+        }
       />
     </PageLayout>
   );

@@ -67,6 +67,11 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const editAddress = useEditAddress();
 
   const entityValue = useRecoilValue(addressFormState).entity;
+
+  useEffect(() => {
+    if (entityValue) setValue('entity', entityValue);
+  });
+
   const addressValue = watch('address');
 
   if (!entityValue) {
