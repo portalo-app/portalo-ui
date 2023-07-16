@@ -37,7 +37,6 @@ const EntitySelect: FC<EntitySelectProps> = ({ entityType, profileId }) => {
   const router = useRouter();
   const [_, setAddressFormState] = useRecoilState(addressFormState);
   const handleEntityClick = (entity: Entity) => {
-    console.log(entity);
     setAddressFormState((current) => ({ ...current, entity }));
 
     router.push(`${ROUTES.APP_CREATE_ADDRESS}/${profileId}/${entityType}`);

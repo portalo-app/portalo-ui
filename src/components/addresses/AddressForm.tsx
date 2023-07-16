@@ -90,6 +90,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const handleEntityDelete = () => {
     setAddressForm((currentValue) => ({
       ...currentValue,
+      ...watch(),
       entity: undefined,
     }));
 
