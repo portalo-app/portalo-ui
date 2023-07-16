@@ -18,7 +18,8 @@ const CreateAddressPage: NextPage<CreateAddressPageProps> = () => {
   const profileId = slug && slug[0];
   const addressType: AddressType = (slug && slug[1]) as AddressType;
 
-  const createAddressTitle = 'Create Address';
+  const createAddressTitle =
+    action === 'CREATE' ? 'Create Address' : 'Edit Address';
   const backPath = profileId
     ? `${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`
     : ROUTES.APP;
