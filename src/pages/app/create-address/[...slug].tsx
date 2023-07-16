@@ -5,7 +5,7 @@ import { AddressType } from '@/lib/model/address';
 import { addressFormState } from '@/lib/store/address-form.atom';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 interface CreateAddressPageProps {}
 
@@ -13,7 +13,7 @@ const CreateAddressPage: NextPage<CreateAddressPageProps> = () => {
   const router = useRouter();
   const { slug } = router.query;
 
-  const action = useRecoilValue(addressFormState).action || 'CREATE';
+  const [{ action }, setAddressForm] = useRecoilState(addressFormState);
 
   const profileId = slug && slug[0];
   const addressType: AddressType = (slug && slug[1]) as AddressType;
@@ -27,12 +27,13 @@ const CreateAddressPage: NextPage<CreateAddressPageProps> = () => {
   return (
     <PageLayout title={createAddressTitle} backPath={backPath}>
       <AddressForm
-        action={action}
+        action={action || 'CREATE'}
         profileId={profileId || ''}
         addressType={addressType}
-        onComplete={() =>
-          router.push(`${ROUTES.APP_PROFILE}/${profileId}/${addressType}`)
-        }
+        onComplete={() => {
+          router.push(`${ROUTES.APP_PROFILE}/${profileId}/${addressType}`);
+          setAddressForm({});
+        }}
       />
     </PageLayout>
   );

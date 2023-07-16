@@ -70,9 +70,9 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   const addressValue = watch('address');
 
-  if (!addressForm.entity) {
-    router.push(`${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`);
-  }
+  // if (!addressForm.entity) {
+  //   router.push(`${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`);
+  // }
 
   const actionLabel = action === 'CREATE' ? 'Create Address' : 'Edit Address';
 
@@ -127,7 +127,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
     }
 
     onComplete && onComplete();
-    setAddressForm({});
   };
 
   // TODO: Update validations
