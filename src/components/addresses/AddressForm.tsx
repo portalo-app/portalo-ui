@@ -46,10 +46,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   const [addressForm, setAddressForm] = useRecoilState(addressFormState);
 
-  if (!addressForm.entity) {
-    router.push(`${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`);
-  }
-
   const {
     handleSubmit,
     register,

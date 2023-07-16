@@ -5,6 +5,7 @@ import { AddressType } from '@/lib/model/address';
 import { addressFormState } from '@/lib/store/address-form.atom';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 interface CreateAddressPageProps {}
@@ -13,7 +14,7 @@ const CreateAddressPage: NextPage<CreateAddressPageProps> = () => {
   const router = useRouter();
   const { slug } = router.query;
 
-  const [{ action }, setAddressForm] = useRecoilState(addressFormState);
+  const [{ action, entity }, setAddressForm] = useRecoilState(addressFormState);
 
   const profileId = slug && slug[0];
   const addressType: AddressType = (slug && slug[1]) as AddressType;
@@ -23,6 +24,10 @@ const CreateAddressPage: NextPage<CreateAddressPageProps> = () => {
   const backPath = profileId
     ? `${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`
     : ROUTES.APP;
+
+  useEffect(() => {
+    if (!entity) router.push(backPath);
+  }, []);
 
   // TODO: Handle invalid slug data
   return (
