@@ -50,12 +50,13 @@ const PageLayout: React.FC<PageLayoutProps> = ({
               to={{
                 pathname: backPath,
               }}
+              onClick={() => backClick && backClick()}
             >
               <ArrowBackIcon />
             </IconButton>
           )}
 
-          {backClick && (
+          {backClick && !backPath && (
             <IconButton onClick={backClick}>
               <ArrowBackIcon />
             </IconButton>
