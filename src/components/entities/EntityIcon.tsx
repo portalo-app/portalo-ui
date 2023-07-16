@@ -37,7 +37,7 @@ banks.forEach((bank) =>
         src={`/assets/icons/banks/${bank.icon}.png`}
         width={64}
         height={64}
-        style={{ objectFit: 'contain' }}
+        style={{ objectFit: 'contain', height: '100%' }}
       />
     ),
   })

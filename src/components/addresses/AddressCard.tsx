@@ -1,5 +1,6 @@
 import { CryptoAddress, FIATAddress } from '@/lib/model/address';
 
+import styled from '@emotion/styled';
 import {
   Avatar,
   Card,
@@ -19,6 +20,12 @@ interface AddressCardProps extends CardProps {
   showQR?: boolean;
   inModal?: boolean;
 }
+
+const EntityIconContainer = styled.div`
+  && img {
+    width: 100%;
+  }
+`;
 
 const AddressCard: React.FC<AddressCardProps> = ({
   addressData,
@@ -43,7 +50,9 @@ const AddressCard: React.FC<AddressCardProps> = ({
             <Avatar
               sx={{ width: 32, height: 32, backgroundColor: 'transparent' }}
             >
-              <EntityIcon entity={entity.value} />
+              <EntityIconContainer>
+                <EntityIcon entity={entity.value} />
+              </EntityIconContainer>
             </Avatar>
 
             <Stack direction="row" gap={1} alignItems="center">
