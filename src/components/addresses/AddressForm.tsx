@@ -15,7 +15,7 @@ import { Button, Chip, Stack } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import EntityIcon from '../entities/EntityIcon';
 
 interface AddressFormProps {
@@ -52,6 +52,11 @@ const AddressForm: React.FC<AddressFormProps> = ({
   address: originalAddress,
   onComplete,
 }) => {
+  const createAddress = useCreateAddress();
+  const editAddress = useEditAddress();
+
+  const [addressForm, setAddressForm] = useRecoilState(addressFormState);
+
   const {
     handleSubmit,
     register,
@@ -60,21 +65,12 @@ const AddressForm: React.FC<AddressFormProps> = ({
     trigger,
     control,
     formState: { errors, dirtyFields },
-  } = useForm<AddressFormData>({ mode: 'all' });
+  } = useForm<AddressFormData>({ mode: 'all', defaultValues: addressForm });
   const router = useRouter();
-
-  const createAddress = useCreateAddress();
-  const editAddress = useEditAddress();
-
-  const entityValue = useRecoilValue(addressFormState).entity;
-
-  useEffect(() => {
-    if (entityValue) setValue('entity', entityValue);
-  });
 
   const addressValue = watch('address');
 
-  if (!entityValue) {
+  if (!addressForm.entity) {
     router.push(`${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`);
   }
 
@@ -95,18 +91,27 @@ const AddressForm: React.FC<AddressFormProps> = ({
     register('address', {
       required: 'Required',
       pattern: {
-        value: entityValue?.addressRegex!,
+        value: addressForm.entity?.addressRegex || new RegExp(''),
         message: 'Invalid address',
       },
     });
 
     if (dirtyFields.address || addressValue) trigger('address');
-  }, [addressValue, entityValue, dirtyFields, register, trigger]);
+  }, [addressValue, addressForm.entity, dirtyFields, register, trigger]);
+
+  const handleEntityDelete = () => {
+    setAddressForm((currentValue) => ({
+      ...currentValue,
+      entity: undefined,
+    }));
+
+    router.push(`${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`);
+  };
 
   const onSubmit = ({ address, alias, entity, name }: AddressFormData) => {
     if (action === 'EDIT') {
       editAddress(profileId, addressType, {
-        id: originalAddress?.id,
+        id: addressForm.addressId,
         address,
         alias,
         entity,
@@ -122,44 +127,33 @@ const AddressForm: React.FC<AddressFormProps> = ({
     }
 
     onComplete && onComplete();
+    setAddressForm({});
   };
 
   // TODO: Update validations
   return (
     <Stack gap={2}>
-      {/* {addressType && (
-        <FormInputAutocomplete
-          control={control}
-          name="entity"
-          label={addressType === 'CRYPTO' ? 'Chain' : 'Bank'}
-          options={addressType === 'CRYPTO' ? [...chains] : [...banks]}
-          defaultValue={action === 'EDIT' ? originalAddress?.entity : undefined}
-          iconRenderer={(option) => <EntityIcon entity={option?.value} />}
-          error={errors?.entity as FieldError}
-          rules={{
-            required: { value: true, message: requiredEntityMessage },
-          }}
-        />
-      )} */}
-
-      <div>
-        <Chip
-          icon={
-            <EntityIconContainer>
-              <EntityIcon entity={entityValue?.value!} />
-            </EntityIconContainer>
-          }
-          label={entityValue?.label}
-          variant="outlined"
-          size="medium"
-          sx={{
-            borderColor: entityValue?.color,
-            marginY: '1.25em',
-            fontSize: '1em',
-            padding: '0.25em',
-          }}
-        />
-      </div>
+      {addressForm.entity && (
+        <div>
+          <Chip
+            icon={
+              <EntityIconContainer>
+                <EntityIcon entity={addressForm.entity.value!} />
+              </EntityIconContainer>
+            }
+            label={addressForm.entity.label}
+            variant="outlined"
+            size="medium"
+            onDelete={handleEntityDelete}
+            sx={{
+              borderColor: addressForm.entity.color,
+              marginY: '1.25em',
+              fontSize: '1em',
+              padding: '0.25em',
+            }}
+          />
+        </div>
+      )}
 
       <FormInputText
         control={control}

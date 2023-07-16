@@ -4,6 +4,7 @@ import PulseButton from '@/core/components/PulseButton';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { AddressType } from '@/lib/model/address';
 import { Profile } from '@/lib/model/profile';
+import { addressFormState } from '@/lib/store/address-form.atom';
 import { profilesState } from '@/lib/store/profiles.atom';
 import AddIcon from '@mui/icons-material/Add';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
@@ -11,12 +12,13 @@ import { Tab, styled } from '@mui/material';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 interface ProfilePageProps {}
 
 const ProfilePage: NextPage<ProfilePageProps> = () => {
   const profilesData = useRecoilValue(profilesState);
+  const [_, setAddressForm] = useRecoilState(addressFormState);
   const [addressType, setAddressType] = useState('1');
   const [profile, setProfile] = useState<Profile | null>(null);
   const router = useRouter();
@@ -51,6 +53,7 @@ const ProfilePage: NextPage<ProfilePageProps> = () => {
   const handleCreateAddress = () => {
     const type = addressType === '1' ? 'CRYPTO' : 'FIAT';
 
+    setAddressForm((currentValue) => ({ ...currentValue, action: 'CREATE' }));
     router.push(`${ROUTES.APP_SELECT_ENTITY}/${profile?.id}/${type}`);
   };
 
