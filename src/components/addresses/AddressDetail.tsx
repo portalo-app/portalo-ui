@@ -1,7 +1,7 @@
 import AnimatedModal from '@/core/components/AnimatedModal';
 import DeleteModal from '@/core/components/DeleteModal';
 import useDeleteAddress from '@/lib/hooks/addresses/useDeleteAddress';
-import { CryptoAddress, FIATAddress } from '@/lib/model/address';
+import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
 import { addressFormState } from '@/lib/store/address-form.atom';
 import { Paper } from '@mui/material';
 import { useState } from 'react';
@@ -13,7 +13,7 @@ import AddressMenu from './AddressMenu';
 
 interface AddressDetailProps {
   profileId: string;
-  addressType: 'CRYPTO' | 'FIAT';
+  addressType: ADDRESS_TYPE;
   address: CryptoAddress | FIATAddress;
   onComplete?: () => void;
 }

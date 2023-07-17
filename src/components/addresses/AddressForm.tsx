@@ -2,7 +2,7 @@ import FormInputText from '@/core/components/FormInputText';
 import { ROUTES } from '@/lib/constants/routes.const';
 import useCreateAddress from '@/lib/hooks/addresses/useCreateAddress';
 import useEditAddress from '@/lib/hooks/addresses/useEditAddress';
-import { CryptoAddress, FIATAddress } from '@/lib/model/address';
+import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
 import { Entity } from '@/lib/model/entities';
 import { addressFormState } from '@/lib/store/address-form.atom';
 import {
@@ -20,7 +20,7 @@ import EntityChip from '../entities/EntityChip';
 interface AddressFormProps {
   action: 'CREATE' | 'EDIT';
   profileId: string;
-  addressType: 'CRYPTO' | 'FIAT';
+  addressType: ADDRESS_TYPE;
   address?: CryptoAddress | FIATAddress;
   onComplete?: () => void;
 }

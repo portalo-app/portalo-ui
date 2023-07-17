@@ -7,10 +7,6 @@ import EntityIcon from './EntityIcon';
 const EntityIconContainer = styled.div`
   &&,
   img {
-    &&,
-    svg {
-      margin-left: 0;
-    }
     width: 1.5em;
     height: 1.5em;
   }

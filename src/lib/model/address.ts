@@ -17,7 +17,10 @@ export interface FIATAddress extends Address {
   currency?: string; // USD, EUR, etc.
 }
 
-export type AddressType = 'CRYPTO' | 'FIAT';
+export enum ADDRESS_TYPE {
+  CRYPTO = 'CRYPTO',
+  FIAT = 'FIAT',
+}
 
 export const CryptoAddressesRegex: {
   [key in (typeof chainsSymbols)[number]]: RegExp;

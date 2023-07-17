@@ -1,5 +1,5 @@
 import { ROUTES } from '@/lib/constants/routes.const';
-import { AddressType } from '@/lib/model/address';
+import { ADDRESS_TYPE } from '@/lib/model/address';
 import { Entity, banks, chains } from '@/lib/model/entities';
 import { addressFormState } from '@/lib/store/address-form.atom';
 import {
@@ -19,7 +19,7 @@ import EntityIcon from './EntityIcon';
 
 interface EntitySelectProps {
   profileId: string;
-  entityType: AddressType;
+  entityType: ADDRESS_TYPE;
 }
 
 const StyledListItemIcon = styled(ListItemIcon)`
@@ -44,7 +44,7 @@ const EntitySelect: FC<EntitySelectProps> = ({ entityType, profileId }) => {
 
   return (
     <List>
-      {(entityType === 'CRYPTO' ? chains : banks).map((entity) => (
+      {(entityType === ADDRESS_TYPE.CRYPTO ? chains : banks).map((entity) => (
         <>
           <ListItem key={entity.value} sx={{ paddingLeft: 0 }}>
             <ListItemButton onClick={() => handleEntityClick(entity)}>
