@@ -43,7 +43,7 @@ const EntitySelect: FC<EntitySelectProps> = ({ entityType, profileId }) => {
   };
 
   return (
-    <List sx={{ height: '70vh', overflow: 'auto' }}>
+    <List>
       {(entityType === 'CRYPTO' ? chains : banks).map((entity) => (
         <>
           <ListItem key={entity.value} sx={{ paddingLeft: 0 }}>
