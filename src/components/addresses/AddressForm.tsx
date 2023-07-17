@@ -118,7 +118,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
   return (
     <Stack gap={2}>
       {addressForm.entity && (
-        <EntityChip entity={addressForm.entity} onDelete={handleEntityDelete} />
+        <EntityChip entity={addressForm.entity} onClick={handleEntityDelete} />
       )}
 
       <FormInputText

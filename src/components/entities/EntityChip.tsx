@@ -16,9 +16,9 @@ const EntityIconContainer = styled.div`
   }
 `;
 
-const EntityChip: FC<{ entity: Entity; onDelete: () => void }> = ({
+const EntityChip: FC<{ entity: Entity; onClick: () => void }> = ({
   entity,
-  onDelete,
+  onClick,
 }) => (
   <Chip
     icon={
@@ -29,13 +29,12 @@ const EntityChip: FC<{ entity: Entity; onDelete: () => void }> = ({
     label={entity.label}
     variant="outlined"
     size="medium"
-    onDelete={onDelete}
+    onClick={onClick}
     sx={{
-      borderColor: entity.color,
-      marginY: '1.25em',
-      fontSize: '1em',
-      padding: '0.25em',
-      width: 'fit-content',
+      borderWidth: 0,
+      marginY: '1rem',
+      fontSize: '1rem',
+      padding: '1rem',
     }}
   />
 );
