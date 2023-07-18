@@ -1,16 +1,7 @@
 import { Entity } from '@/lib/model/entities';
-import styled from '@emotion/styled';
 import Chip from '@mui/material/Chip';
 import { FC } from 'react';
 import EntityIcon from './EntityIcon';
-
-const EntityIconContainer = styled.div`
-  &&,
-  img {
-    width: 1.5em;
-    height: 1.5em;
-  }
-`;
 
 const EntityChip: FC<{ entity: Entity; onClick: () => void }> = ({
   entity,
@@ -18,9 +9,13 @@ const EntityChip: FC<{ entity: Entity; onClick: () => void }> = ({
 }) => (
   <Chip
     icon={
-      <EntityIconContainer>
-        <EntityIcon entity={entity.value} />
-      </EntityIconContainer>
+      <EntityIcon
+        entity={entity.value}
+        width="1.5rem"
+        height="1.5rem"
+        svgWidth="1.5rem"
+        svgHeight="1.5rem"
+      />
     }
     label={entity.label}
     variant="outlined"

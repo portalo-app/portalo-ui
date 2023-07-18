@@ -25,12 +25,8 @@ interface EntitySelectProps {
 const StyledListItemIcon = styled(ListItemIcon)`
   display: flex;
   justify-content: center;
-
-  &&,
-  img {
-    width: 2em;
-    height: 2em;
-  }
+  width: 2em;
+  height: 2em;
 `;
 
 const EntitySelect: FC<EntitySelectProps> = ({ entityType, profileId }) => {
@@ -49,7 +45,7 @@ const EntitySelect: FC<EntitySelectProps> = ({ entityType, profileId }) => {
           <ListItem key={entity.value} sx={{ paddingLeft: 0 }}>
             <ListItemButton onClick={() => handleEntityClick(entity)}>
               <StyledListItemIcon>
-                <EntityIcon entity={entity?.value} />
+                <EntityIcon entity={entity?.value} width="2em" svgWidth="2em" />
               </StyledListItemIcon>
               <Stack marginLeft={1}>
                 <Typography variant="h6">{entity.label}</Typography>
