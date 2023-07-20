@@ -29,7 +29,7 @@ const SelectEntityPage: NextPage<SelecteEntityPageProps> = () => {
     >
       <EntitySelect
         profileId={profileId || ''}
-        entityType={addressType}
+        addressType={addressType}
       ></EntitySelect>
     </PageLayout>
   );

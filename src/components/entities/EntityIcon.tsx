@@ -1,6 +1,7 @@
 import { BankValue, ChainValue, banks } from '@/lib/model/entities';
 import styled from '@emotion/styled';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { SvgIcon } from '@mui/material';
 import Algo from 'cryptocurrency-icons/svg/color/algo.svg';
 import Sol from 'cryptocurrency-icons/svg/color/sol.svg';
@@ -10,9 +11,8 @@ import Dot from 'cryptocurrency-icons/svg/icon/dot.svg';
 import Eth from 'cryptocurrency-icons/svg/icon/eth.svg';
 import Matic from 'cryptocurrency-icons/svg/icon/matic.svg';
 import Image from 'next/image';
-
 interface EntityIconProps {
-  entity: ChainValue | BankValue;
+  entity: ChainValue | BankValue | 'DEFAULT_BANK' | 'DEFAULT_CHAIN';
   width?: string;
   height?: string;
   svgWidth?: string;
@@ -61,6 +61,7 @@ const BankIconContainer = styled.div<
   svg {
     width: ${(props) => props.svgWidth};
     height: ${(props) => props.svgHeight};
+    color: white;
   }
 `;
 
@@ -71,8 +72,14 @@ const EntityIcon: React.FC<EntityIconProps> = ({
   svgWidth = '100%',
   svgHeight = '100%',
 }) => {
-  const icon = chainIcons[entity as ChainValue] ||
-    bankIcons[entity as BankValue] || <AccountBalanceIcon />;
+  const icon =
+    chainIcons[entity as ChainValue] ||
+    bankIcons[entity as BankValue] ||
+    (entity === 'DEFAULT_BANK' ? (
+      <AccountBalanceIcon />
+    ) : (
+      <AccountBalanceWalletIcon />
+    ));
 
   return (
     <BankIconContainer
