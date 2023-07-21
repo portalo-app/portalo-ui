@@ -22,13 +22,6 @@ interface EntitySelectProps {
   entityType: ADDRESS_TYPE;
 }
 
-const StyledListItemIcon = styled(ListItemIcon)`
-  display: flex;
-  justify-content: center;
-  width: 2em;
-  height: 2em;
-`;
-
 const EntitySelect: FC<EntitySelectProps> = ({ entityType, profileId }) => {
   const router = useRouter();
   const [_, setAddressFormState] = useRecoilState(addressFormState);
@@ -63,3 +56,10 @@ const EntitySelect: FC<EntitySelectProps> = ({ entityType, profileId }) => {
 };
 
 export default EntitySelect;
+
+const StyledListItemIcon = styled(ListItemIcon)`
+  display: flex;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+`;
