@@ -5,6 +5,7 @@ export const ROUTES = {
   APP_PROFILE: '/app/profile',
   APP_CREATE_PROFILE: '/app/create-profile',
   APP_CREATE_ADDRESS: '/app/create-address',
+  APP_SELECT_ENTITY: '/app/select-entity',
 } as const;
 
 export type ObjectValues<T> = T[keyof T];

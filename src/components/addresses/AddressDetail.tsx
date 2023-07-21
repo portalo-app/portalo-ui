@@ -1,9 +1,11 @@
 import AnimatedModal from '@/core/components/AnimatedModal';
 import DeleteModal from '@/core/components/DeleteModal';
 import useDeleteAddress from '@/lib/hooks/addresses/useDeleteAddress';
-import { CryptoAddress, FIATAddress } from '@/lib/model/address';
+import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
+import { addressFormState } from '@/lib/store/address-form.atom';
 import { Paper } from '@mui/material';
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import PageLayout from '../layout/PageLayout';
 import AddressCard from './AddressCard';
 import AddressForm from './AddressForm';
@@ -11,7 +13,7 @@ import AddressMenu from './AddressMenu';
 
 interface AddressDetailProps {
   profileId: string;
-  addressType: 'CRYPTO' | 'FIAT';
+  addressType: ADDRESS_TYPE;
   address: CryptoAddress | FIATAddress;
   onComplete?: () => void;
 }
@@ -25,6 +27,7 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
   onComplete,
 }) => {
   const [action, setAction] = useState<Action | null>(null);
+  const [_, setAddressForm] = useRecoilState(addressFormState);
 
   const deleteAddress = useDeleteAddress();
 
@@ -73,7 +76,14 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
                 setAction((action) => (action === 'qr' ? null : 'qr'))
               }
               handleDelete={() => setAction('delete')}
-              handleEdit={() => setAction('edit')}
+              handleEdit={() => {
+                setAddressForm({
+                  ...address,
+                  addressId: address.id,
+                  action: 'EDIT',
+                });
+                setAction('edit');
+              }}
             />
           </>
         )}

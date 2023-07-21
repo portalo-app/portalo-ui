@@ -1,10 +1,10 @@
-import { AddressType, CryptoAddress, FIATAddress } from '@/lib/model/address';
+import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
 import { profilesState } from '@/lib/store/profiles.atom';
 import { useRecoilState } from 'recoil';
 
 type EditAddress = (
   profileId: string,
-  addressType: AddressType,
+  addressType: ADDRESS_TYPE,
   newAddress: CryptoAddress | FIATAddress
 ) => void;
 
@@ -20,7 +20,7 @@ const useEditAddress: UseEditAddress = () => {
 
     const newProfile = { ...profile };
 
-    if (addressType === 'CRYPTO') {
+    if (addressType === ADDRESS_TYPE.CRYPTO) {
       newProfile.cryptoAddresses = profile.cryptoAddresses.map((address) =>
         address.id === newAddress.id ? newAddress : address
       );

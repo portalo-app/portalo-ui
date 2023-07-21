@@ -1,5 +1,5 @@
 import State from '@/core/components/State';
-import { AddressType, CryptoAddress, FIATAddress } from '@/lib/model/address';
+import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
 import { Fade, Stack } from '@mui/material';
 import { useState } from 'react';
 import AddressCard from './AddressCard';
@@ -7,7 +7,7 @@ import AddressDetail from './AddressDetail';
 
 interface AddressListProps {
   profileId: string;
-  addressType: AddressType;
+  addressType: ADDRESS_TYPE;
   addresses: CryptoAddress[] | FIATAddress[];
 }
 

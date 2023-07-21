@@ -1,28 +1,31 @@
-import FormInputAutocomplete from '@/core/components/FormInputAutocomplete';
 import FormInputText from '@/core/components/FormInputText';
+import { ROUTES } from '@/lib/constants/routes.const';
 import useCreateAddress from '@/lib/hooks/addresses/useCreateAddress';
 import useEditAddress from '@/lib/hooks/addresses/useEditAddress';
-import { CryptoAddress, FIATAddress } from '@/lib/model/address';
-import { Entity, banks, chains } from '@/lib/model/entities';
+import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
+import { Entity } from '@/lib/model/entities';
+import { addressFormState } from '@/lib/store/address-form.atom';
 import {
   canPasteFormClipboard,
   pasteFromClipboard,
 } from '@/lib/utils/clipboard';
 import { ContentPaste } from '@mui/icons-material';
 import { Button, Stack } from '@mui/material';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { FieldError, useForm } from 'react-hook-form';
-import EntityIcon from '../entities/EntityIcon';
+import { useForm } from 'react-hook-form';
+import { useRecoilState } from 'recoil';
+import EntityChip from '../entities/EntityChip';
 
 interface AddressFormProps {
   action: 'CREATE' | 'EDIT';
   profileId: string;
-  addressType: 'CRYPTO' | 'FIAT';
+  addressType: ADDRESS_TYPE;
   address?: CryptoAddress | FIATAddress;
   onComplete?: () => void;
 }
 
-type FormData = {
+export type AddressFormData = {
   entity: Entity;
   address: string;
   name: string;
@@ -36,6 +39,13 @@ const AddressForm: React.FC<AddressFormProps> = ({
   address: originalAddress,
   onComplete,
 }) => {
+  const router = useRouter();
+
+  const createAddress = useCreateAddress();
+  const editAddress = useEditAddress();
+
+  const [addressForm, setAddressForm] = useRecoilState(addressFormState);
+
   const {
     handleSubmit,
     register,
@@ -44,16 +54,11 @@ const AddressForm: React.FC<AddressFormProps> = ({
     trigger,
     control,
     formState: { errors, dirtyFields },
-  } = useForm<FormData>({ mode: 'all' });
-  const createAddress = useCreateAddress();
-  const editAddress = useEditAddress();
-  const entityValue = watch('entity');
+  } = useForm<AddressFormData>({ mode: 'all', defaultValues: addressForm });
+
   const addressValue = watch('address');
 
   const actionLabel = action === 'CREATE' ? 'Create Address' : 'Edit Address';
-
-  const requiredEntityMessage =
-    addressType === 'CRYPTO' ? 'Chain is required' : 'Bank is required';
 
   const nameLabel = 'Name';
   const requiredNameMessage = 'Name is required';
@@ -70,18 +75,28 @@ const AddressForm: React.FC<AddressFormProps> = ({
     register('address', {
       required: 'Required',
       pattern: {
-        value: entityValue?.addressRegex!,
+        value: addressForm.entity?.addressRegex || new RegExp(''),
         message: 'Invalid address',
       },
     });
 
     if (dirtyFields.address || addressValue) trigger('address');
-  }, [addressValue, entityValue, dirtyFields, register, trigger]);
+  }, [addressValue, addressForm.entity, dirtyFields, register, trigger]);
 
-  const onSubmit = ({ address, alias, entity, name }: FormData) => {
+  const handleEntityDelete = () => {
+    setAddressForm((currentValue) => ({
+      ...currentValue,
+      ...watch(),
+      entity: undefined,
+    }));
+
+    router.push(`${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`);
+  };
+
+  const onSubmit = ({ address, alias, entity, name }: AddressFormData) => {
     if (action === 'EDIT') {
       editAddress(profileId, addressType, {
-        id: originalAddress?.id,
+        id: addressForm.addressId,
         address,
         alias,
         entity,
@@ -102,19 +117,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
   // TODO: Update validations
   return (
     <Stack gap={2}>
-      {addressType && (
-        <FormInputAutocomplete
-          control={control}
-          name="entity"
-          label={addressType === 'CRYPTO' ? 'Chain' : 'Bank'}
-          options={addressType === 'CRYPTO' ? [...chains] : [...banks]}
-          defaultValue={action === 'EDIT' ? originalAddress?.entity : undefined}
-          iconRenderer={(option) => <EntityIcon entity={option?.value} />}
-          error={errors?.entity as FieldError}
-          rules={{
-            required: { value: true, message: requiredEntityMessage },
-          }}
-        />
+      {addressForm.entity && (
+        <EntityChip entity={addressForm.entity} onClick={handleEntityDelete} />
       )}
 
       <FormInputText

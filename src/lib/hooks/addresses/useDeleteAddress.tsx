@@ -1,11 +1,11 @@
-import { AddressType } from '@/lib/model/address';
+import { ADDRESS_TYPE } from '@/lib/model/address';
 import { profilesState } from '@/lib/store/profiles.atom';
 import { useSetRecoilState } from 'recoil';
 
 type DeleteAddress = (
   profileId: string,
   addressId: string,
-  addressType: AddressType
+  addressType: ADDRESS_TYPE
 ) => void;
 
 type UseDeleteAddress = () => DeleteAddress;
@@ -16,14 +16,14 @@ const useDeleteAddress: UseDeleteAddress = () => {
   const deleteAddress = (
     profileId: string,
     addressId: string,
-    addressType: AddressType
+    addressType: ADDRESS_TYPE
   ) => {
     setProfiles((profiles) => {
       const profile = profiles.find((p) => p.id === profileId);
       if (!profile) return profiles;
 
       let updatedProfile = null;
-      if (addressType === 'CRYPTO') {
+      if (addressType === ADDRESS_TYPE.CRYPTO) {
         updatedProfile = {
           ...profile,
           cryptoAddresses: profile.cryptoAddresses.filter(

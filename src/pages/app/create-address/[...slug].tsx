@@ -1,9 +1,12 @@
 import AddressForm from '@/components/addresses/AddressForm';
 import PageLayout from '@/components/layout/PageLayout';
 import { ROUTES } from '@/lib/constants/routes.const';
-import { AddressType } from '@/lib/model/address';
+import { ADDRESS_TYPE } from '@/lib/model/address';
+import { addressFormState } from '@/lib/store/address-form.atom';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 
 interface CreateAddressPageProps {}
 
@@ -11,22 +14,32 @@ const CreateAddressPage: NextPage<CreateAddressPageProps> = () => {
   const router = useRouter();
   const { slug } = router.query;
 
-  const profileId = slug && slug[0];
-  const addressType: AddressType = (slug && slug[1]) as AddressType;
+  const [{ action, entity }, setAddressForm] = useRecoilState(addressFormState);
 
-  const createAddressTitle = 'Create Address';
+  const profileId = slug && slug[0];
+  const addressType: ADDRESS_TYPE = (slug && slug[1]) as ADDRESS_TYPE;
+
+  const createAddressTitle =
+    action === 'CREATE' ? 'Create Address' : 'Edit Address';
   const backPath = profileId
-    ? `${ROUTES.APP_PROFILE}/${profileId}/${addressType}`
+    ? `${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`
     : ROUTES.APP;
+
+  useEffect(() => {
+    if (!entity) router.push(backPath);
+  }, []);
 
   // TODO: Handle invalid slug data
   return (
     <PageLayout title={createAddressTitle} backPath={backPath}>
       <AddressForm
-        action="CREATE"
+        action={action || 'CREATE'}
         profileId={profileId || ''}
         addressType={addressType}
-        onComplete={() => router.push(backPath)}
+        onComplete={() => {
+          router.push(`${ROUTES.APP_PROFILE}/${profileId}/${addressType}`);
+          setAddressForm({});
+        }}
       />
     </PageLayout>
   );
