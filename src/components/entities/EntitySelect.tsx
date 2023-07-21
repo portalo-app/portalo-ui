@@ -15,7 +15,7 @@ import {
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { useRecoilState } from 'recoil';
-import EntityCustom from './EntityCustom';
+import CustomEntityInput from './EntityCustom';
 import EntityIcon from './EntityIcon';
 
 interface EntitySelectProps {
@@ -59,7 +59,7 @@ const EntitySelect: FC<EntitySelectProps> = ({ addressType, profileId }) => {
           <Divider />
         </>
       ))}
-      <EntityCustom
+      <CustomEntityInput
         addressType={addressType}
         onSumbitEntity={handleEntityClick}
       />

@@ -8,18 +8,11 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import EntityIcon from './EntityIcon';
 
-const StyledListItemIcon = styled(ListItemIcon)`
-  display: flex;
-  justify-content: center;
-  width: 2em;
-  height: 2em;
-`;
-
 interface CustomEntityForm {
   entityName: string;
 }
 
-const EntityCustom: FC<{
+const CustomEntityInput: FC<{
   addressType: ADDRESS_TYPE;
   onSumbitEntity: (entity: Entity) => void;
 }> = ({ addressType, onSumbitEntity }) => {
@@ -74,4 +67,11 @@ const EntityCustom: FC<{
   );
 };
 
-export default EntityCustom;
+export default CustomEntityInput;
+
+const StyledListItemIcon = styled(ListItemIcon)`
+  display: flex;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+`;
