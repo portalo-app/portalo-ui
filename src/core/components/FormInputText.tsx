@@ -15,7 +15,6 @@ interface FormInputTextProps {
   error?: FieldError;
   rules?: RegisterOptions;
   endAdornment?: React.ReactNode;
-  withHelperText?: boolean;
 }
 
 const FormInputText: React.FC<FormInputTextProps> = ({
@@ -27,7 +26,6 @@ const FormInputText: React.FC<FormInputTextProps> = ({
   error,
   rules,
   endAdornment,
-  withHelperText = true,
 }) => {
   return (
     <Controller
@@ -43,7 +41,7 @@ const FormInputText: React.FC<FormInputTextProps> = ({
           autoComplete="off"
           type={type}
           error={!!error?.message}
-          helperText={withHelperText ? error?.message || ' ' : undefined}
+          helperText={error?.message || ' '}
           label={label}
           InputProps={{ endAdornment: endAdornment }}
         />

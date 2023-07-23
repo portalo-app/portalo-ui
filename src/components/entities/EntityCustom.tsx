@@ -16,12 +16,22 @@ const CustomEntityInput: FC<{
   addressType: ADDRESS_TYPE;
   onSumbitEntity: (entity: Entity) => void;
 }> = ({ addressType, onSumbitEntity }) => {
-  const { handleSubmit, control } = useForm<CustomEntityForm>({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<CustomEntityForm>({
     mode: 'all',
   });
 
-  const entityValue =
-    addressType === ADDRESS_TYPE.FIAT ? 'DEFAULT_BANK' : 'DEFAULT_CHAIN';
+  const [entityValue, entityType] =
+    addressType === ADDRESS_TYPE.FIAT
+      ? ['DEFAULT_BANK' as Entity['value'], 'Bank']
+      : ['DEFAULT_CHAIN' as Entity['value'], 'Chain'];
+
+  const requiredEntityMessage = `${entityType} name is required`;
+  const minLengthEntityMessage = `${entityType} name is too short`;
+  const maxLengthEntityMessage = `${entityType} name is too long`;
 
   const onSubmit = ({ entityName }: CustomEntityForm) => {
     onSumbitEntity({
@@ -35,22 +45,24 @@ const CustomEntityInput: FC<{
   return (
     <>
       <ListItem>
-        <Stack direction="row" alignItems="center" paddingY={1.65}>
+        <Stack direction="row" alignItems="center" gap={1}>
           <StyledListItemIcon>
             <EntityIcon entity={entityValue} width="2em" svgWidth="2em" />
           </StyledListItemIcon>
-          <Stack marginLeft={1}>
+          <Stack paddingTop={3}>
             <FormInputText
               control={control}
               name="entityName"
-              label={`Other ${
-                addressType === ADDRESS_TYPE.FIAT ? 'bank' : 'chain'
-              }`}
+              error={errors.entityName}
+              label={`Other ${entityType}`}
               rules={{
-                required: { value: true, message: '' },
-                maxLength: { value: 50, message: '' },
+                required: {
+                  value: true,
+                  message: requiredEntityMessage,
+                },
+                minLength: { value: 3, message: minLengthEntityMessage },
+                maxLength: { value: 20, message: maxLengthEntityMessage },
               }}
-              withHelperText={false}
             />
           </Stack>
           <Button
