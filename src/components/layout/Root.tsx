@@ -9,9 +9,9 @@ import {
   createTheme,
   responsiveFontSizes,
 } from '@mui/material';
+import dynamic from 'next/dynamic';
 import { SnackbarProvider } from 'notistack';
 import { Suspense } from 'react';
-import { RecoilRoot } from 'recoil';
 import Layout from './Layout';
 
 interface RootProps {
@@ -19,6 +19,11 @@ interface RootProps {
   pageProps: any;
   emotionCache?: EmotionCache;
 }
+
+const RecoilRoot = dynamic(
+  () => import('recoil').then((recoil) => recoil.RecoilRoot),
+  { ssr: false }
+);
 
 const globalStyles = <GlobalStyles />;
 

@@ -4,7 +4,7 @@ import { CryptoAddress, CryptoAddressesRegex, FIATAddress } from './address';
 export interface Entity {
   color: string;
   icon: string;
-  value: ChainValue | BankValue;
+  value: ChainValue | BankValue | 'DEFAULT_CHAIN' | 'DEFAULT_BANK';
   label: string;
   addressRegex?: RegExp;
 }
