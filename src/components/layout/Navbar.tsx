@@ -2,6 +2,7 @@ import DeleteModal from '@/core/components/DeleteModal';
 import NavbarLayout from '@/core/components/NavbarLayout';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { profilesState } from '@/lib/store/profiles.atom';
+import { formatAddress } from '@/lib/utils/address';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -9,6 +10,8 @@ import { Button, Drawer, IconButton, Stack, styled } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useResetRecoilState } from 'recoil';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { InjectedConnector } from 'wagmi/connectors/injected';
 import DrawerMenuItems from './DrawerMenuItems';
 
 interface NavbarProps {}
@@ -20,6 +23,13 @@ const Navbar: React.FC<NavbarProps> = () => {
   const resetProfiles = useResetRecoilState(profilesState);
   const [resetAccountModalOpen, setResetAccountModalOpen] = useState(false);
   const router = useRouter();
+
+  const { address, isConnected } = useAccount();
+
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const { disconnect } = useDisconnect();
 
   const resetAccountLabel = 'Reset Account';
   const resetAccountMessage =
@@ -43,6 +53,15 @@ const Navbar: React.FC<NavbarProps> = () => {
           >
             {isDrawerOpen ? <CloseIcon /> : <MenuIcon />}
           </IconButton>
+        }
+        rightSide={
+          isConnected ? (
+            <Button onClick={() => disconnect()}>
+              Disconnect {formatAddress(address || '')}
+            </Button>
+          ) : (
+            <Button onClick={() => connect()}>Connect your wallet</Button>
+          )
         }
       />
 

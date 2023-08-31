@@ -12,6 +12,8 @@ import {
 import dynamic from 'next/dynamic';
 import { SnackbarProvider } from 'notistack';
 import { Suspense } from 'react';
+import { createPublicClient, http } from 'viem';
+import { WagmiConfig, createConfig, mainnet } from 'wagmi';
 import Layout from './Layout';
 
 interface RootProps {
@@ -30,6 +32,14 @@ const globalStyles = <GlobalStyles />;
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
+const config = createConfig({
+  autoConnect: true,
+  publicClient: createPublicClient({
+    chain: mainnet,
+    transport: http(),
+  }),
+});
+
 const Root: React.FC<RootProps> = ({
   Component,
   pageProps,
@@ -40,29 +50,31 @@ const Root: React.FC<RootProps> = ({
   return (
     <>
       <RecoilRoot>
-        <CacheProvider value={emotionCache}>
-          {globalStyles}
+        <WagmiConfig config={config}>
+          <CacheProvider value={emotionCache}>
+            {globalStyles}
 
-          <ThemeProvider theme={responsiveFontSizes(createTheme(THEME))}>
-            <CssBaseline enableColorScheme />
+            <ThemeProvider theme={responsiveFontSizes(createTheme(THEME))}>
+              <CssBaseline enableColorScheme />
 
-            <Layout>
-              <Suspense fallback={'Loading...'}>
-                <SnackbarProvider
-                  autoHideDuration={3000}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: isMobile ? 'center' : 'left',
-                  }}
-                  dense={isMobile}
-                  disableWindowBlurListener
-                >
-                  <Component {...pageProps} />
-                </SnackbarProvider>
-              </Suspense>
-            </Layout>
-          </ThemeProvider>
-        </CacheProvider>
+              <Layout>
+                <Suspense fallback={'Loading...'}>
+                  <SnackbarProvider
+                    autoHideDuration={3000}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: isMobile ? 'center' : 'left',
+                    }}
+                    dense={isMobile}
+                    disableWindowBlurListener
+                  >
+                    <Component {...pageProps} />
+                  </SnackbarProvider>
+                </Suspense>
+              </Layout>
+            </ThemeProvider>
+          </CacheProvider>
+        </WagmiConfig>
       </RecoilRoot>
     </>
   );
