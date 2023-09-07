@@ -13,7 +13,7 @@ import dynamic from 'next/dynamic';
 import { SnackbarProvider } from 'notistack';
 import { Suspense } from 'react';
 import { createPublicClient, http } from 'viem';
-import { WagmiConfig, createConfig, mainnet } from 'wagmi';
+import { WagmiConfig, createConfig, sepolia } from 'wagmi';
 import Layout from './Layout';
 
 interface RootProps {
@@ -35,7 +35,7 @@ const clientSideEmotionCache = createEmotionCache();
 const config = createConfig({
   autoConnect: true,
   publicClient: createPublicClient({
-    chain: mainnet,
+    chain: sepolia,
     transport: http(),
   }),
 });

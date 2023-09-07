@@ -7,72 +7,32 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Tab, styled } from '@mui/material';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { useContractRead } from 'wagmi';
+import { abi } from '../../../../../contracts/build/contracts/PortaloContract.json';
 
 interface ProfilePageProps {}
 
 const UserPage: NextPage<ProfilePageProps> = () => {
-  const [addressType, setAddressType] = useState('1');
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [userId, setUserId] = useState<string>('');
   const router = useRouter();
 
   useEffect(() => {
     if (!router.isReady) return;
 
     const { id } = router.query;
-    console.log(id);
+    setUserId(id as string);
 
     if (!id) {
       router.push(ROUTES.APP);
       return;
     }
-
-    setProfile(mockProfileJohn);
-  }, [router, router.isReady, router.query]);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setAddressType(newValue);
-  };
+  }, [router, router.isReady, router.query, setUserId]);
 
   // TODO: Implement loading state
   return (
-    <PageLayout title={profile?.name || 'Loading...'} backPath={ROUTES.APP}>
-      <TabContext value={addressType}>
-        <StyledTabs
-          variant="fullWidth"
-          onChange={handleChange}
-          aria-label="Address type tabs"
-        >
-          <Tab
-            value="1"
-            label={`${ADDRESS_TYPE.CRYPTO} (${
-              profile?.cryptoAddresses?.length || 0
-            })`}
-          />
-          <Tab
-            value="2"
-            label={`${ADDRESS_TYPE.FIAT} (${
-              profile?.fiatAddresses?.length || 0
-            })`}
-          />
-        </StyledTabs>
-
-        <TabPanel value="1" sx={{ p: 0 }}>
-          <AddressList
-            profileId={profile?.id || ''}
-            addresses={profile?.cryptoAddresses || []}
-            addressType={ADDRESS_TYPE.CRYPTO}
-          />
-        </TabPanel>
-
-        <TabPanel value="2" sx={{ p: 0 }}>
-          <AddressList
-            profileId={profile?.id || ''}
-            addresses={profile?.fiatAddresses || []}
-            addressType={ADDRESS_TYPE.FIAT}
-          />
-        </TabPanel>
-      </TabContext>
+    <PageLayout title={userId || 'Loading...'} backPath={ROUTES.APP}>
+      {userId && <ShowProfile userId={userId} />}
     </PageLayout>
   );
 };
@@ -101,3 +61,69 @@ const StyledTabs = styled(TabList)`
     }
   }
 `;
+
+const ShowProfile: FC<{ userId: string }> = ({ userId }) => {
+  const [addressType, setAddressType] = useState('1');
+  const [profile, setProfile] = useState<Profile | null>(null);
+
+  const { data, isError } = useContractRead({
+    abi,
+    address: `0x33b44669F170E5B0d10f3aE1077251A8dA3Dac43`,
+    functionName: 'getProfile',
+    args: [userId],
+    onError: (error) => console.log('No record found'),
+  });
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setAddressType(newValue);
+  };
+
+  useEffect(() => {
+    console.log(data);
+
+    setProfile(mockProfileJohn);
+  }, [data]);
+
+  return (
+    <>
+      {!isError && (
+        <TabContext value={addressType}>
+          <StyledTabs
+            variant="fullWidth"
+            onChange={handleChange}
+            aria-label="Address type tabs"
+          >
+            <Tab
+              value="1"
+              label={`${ADDRESS_TYPE.CRYPTO} (${
+                profile?.cryptoAddresses?.length || 0
+              })`}
+            />
+            <Tab
+              value="2"
+              label={`${ADDRESS_TYPE.FIAT} (${
+                profile?.fiatAddresses?.length || 0
+              })`}
+            />
+          </StyledTabs>
+
+          <TabPanel value="1" sx={{ p: 0 }}>
+            <AddressList
+              profileId={profile?.id || ''}
+              addresses={profile?.cryptoAddresses || []}
+              addressType={ADDRESS_TYPE.CRYPTO}
+            />
+          </TabPanel>
+
+          <TabPanel value="2" sx={{ p: 0 }}>
+            <AddressList
+              profileId={profile?.id || ''}
+              addresses={profile?.fiatAddresses || []}
+              addressType={ADDRESS_TYPE.FIAT}
+            />
+          </TabPanel>
+        </TabContext>
+      )}
+    </>
+  );
+};

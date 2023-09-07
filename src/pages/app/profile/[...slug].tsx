@@ -3,16 +3,19 @@ import PageLayout from '@/components/layout/PageLayout';
 import PulseButton from '@/core/components/PulseButton';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { ADDRESS_TYPE } from '@/lib/model/address';
-import { Profile } from '@/lib/model/profile';
+import { Profile, mapProfileToContract } from '@/lib/model/profile';
 import { addressFormState } from '@/lib/store/address-form.atom';
 import { profilesState } from '@/lib/store/profiles.atom';
 import AddIcon from '@mui/icons-material/Add';
+import Save from '@mui/icons-material/Save';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Tab, styled } from '@mui/material';
+import { Button, Tab, styled } from '@mui/material';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAccount, useContractWrite } from 'wagmi';
+import { abi } from '../../../../contracts/build/contracts/PortaloContract.json';
 
 interface ProfilePageProps {}
 
@@ -23,6 +26,13 @@ const ProfilePage: NextPage<ProfilePageProps> = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const router = useRouter();
   const createAddressTitle = 'Create Address';
+
+  const { write, isLoading, error } = useContractWrite({
+    address: '0x33b44669F170E5B0d10f3aE1077251A8dA3Dac43',
+    abi: abi,
+    functionName: 'addProfile',
+  });
+  const { address } = useAccount();
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -55,6 +65,11 @@ const ProfilePage: NextPage<ProfilePageProps> = () => {
 
     setAddressForm((currentValue) => ({ ...currentValue, action: 'CREATE' }));
     router.push(`${ROUTES.APP_SELECT_ENTITY}/${profile?.id}/${type}`);
+  };
+
+  const handleSaveProfile = () => {
+    if (profile && address)
+      write({ args: [mapProfileToContract(profile, address)] });
   };
 
   // TODO: Implement loading state
@@ -125,6 +140,16 @@ const ProfilePage: NextPage<ProfilePageProps> = () => {
           </PulseButton>
         </TabPanel>
       </TabContext>
+      {/* TODO If it's already saved show update */}
+      <Button
+        variant="outlined"
+        fullWidth
+        startIcon={<Save />}
+        onClick={handleSaveProfile}
+        sx={{ mt: 2 }}
+      >
+        Save Profile
+      </Button>
     </PageLayout>
   );
 };
