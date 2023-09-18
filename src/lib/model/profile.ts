@@ -1,5 +1,10 @@
 import { Address, CryptoAddress, FIATAddress } from './address';
-import { mockCryptoAddresses, mockFIATAddresses } from './entities';
+import {
+  banks,
+  chains,
+  mockCryptoAddresses,
+  mockFIATAddresses,
+} from './entities';
 
 export interface Profile {
   id: string;
@@ -58,6 +63,39 @@ export const mapProfileToContract = (
     owner: ownerAddress,
     exists: true,
     cryptoAddresses: profile.cryptoAddresses.map(mapAddressToContract),
-    fiatAddresses: profile.cryptoAddresses.map(mapAddressToContract),
+    fiatAddresses: profile.fiatAddresses.map(mapAddressToContract),
+  };
+};
+
+export const mapContractAddress = (
+  address: PortaloAddressContract,
+  isCrypto: boolean
+): Address => {
+  return {
+    entity: (isCrypto
+      ? chains.find((chain) => chain.label === address.entity)
+      : banks.find((bank) => bank.label === address.entity)) || {
+      color: 'gray',
+      label: address.entity,
+      icon: isCrypto ? 'DEFAULT_CHAIN' : 'DEFAULT_BANK',
+      value: isCrypto ? 'DEFAULT_CHAIN' : 'DEFAULT_BANK',
+    },
+    address: address.portaloAddress,
+    name: address.name,
+  };
+};
+
+export const mapContractProfile = (
+  portaloProfile: ProfileContract
+): Profile => {
+  return {
+    id: portaloProfile.profileAlias,
+    name: portaloProfile.profileAlias,
+    cryptoAddresses: portaloProfile.cryptoAddresses.map((address) =>
+      mapContractAddress(address, true)
+    ),
+    fiatAddresses: portaloProfile.fiatAddresses.map((address) =>
+      mapContractAddress(address, false)
+    ),
   };
 };

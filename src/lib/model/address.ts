@@ -1,7 +1,7 @@
 import { Entity, chainsSymbols } from './entities';
 
 export interface Address {
-  id: string;
+  id?: string;
   entity: Entity; // Bank, exchange, wallet OR BTC, ETH, etc.
   address: string;
   name?: string;

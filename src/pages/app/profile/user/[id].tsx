@@ -2,7 +2,11 @@ import AddressList from '@/components/addresses/AddressList';
 import PageLayout from '@/components/layout/PageLayout';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { ADDRESS_TYPE } from '@/lib/model/address';
-import { Profile, mockProfileJohn } from '@/lib/model/profile';
+import {
+  Profile,
+  ProfileContract,
+  mapContractProfile,
+} from '@/lib/model/profile';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Tab, styled } from '@mui/material';
 import { NextPage } from 'next';
@@ -31,7 +35,7 @@ const UserPage: NextPage<ProfilePageProps> = () => {
 
   // TODO: Implement loading state
   return (
-    <PageLayout title={userId || 'Loading...'} backPath={ROUTES.APP}>
+    <PageLayout title={userId || 'Loading...'}>
       {userId && <ShowProfile userId={userId} />}
     </PageLayout>
   );
@@ -72,6 +76,7 @@ const ShowProfile: FC<{ userId: string }> = ({ userId }) => {
     functionName: 'getProfile',
     args: [userId],
     onError: (error) => console.log('No record found'),
+    select: (data) => data as ProfileContract,
   });
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -79,9 +84,7 @@ const ShowProfile: FC<{ userId: string }> = ({ userId }) => {
   };
 
   useEffect(() => {
-    console.log(data);
-
-    setProfile(mockProfileJohn);
+    if (data) setProfile(mapContractProfile(data));
   }, [data]);
 
   return (

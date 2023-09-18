@@ -141,15 +141,17 @@ const ProfilePage: NextPage<ProfilePageProps> = () => {
         </TabPanel>
       </TabContext>
       {/* TODO If it's already saved show update */}
-      <Button
-        variant="outlined"
-        fullWidth
-        startIcon={<Save />}
-        onClick={handleSaveProfile}
-        sx={{ mt: 2 }}
-      >
-        Save Profile
-      </Button>
+      {address && (
+        <Button
+          variant="outlined"
+          fullWidth
+          startIcon={<Save />}
+          onClick={handleSaveProfile}
+          sx={{ mt: 2 }}
+        >
+          Save Profile
+        </Button>
+      )}
     </PageLayout>
   );
 };
