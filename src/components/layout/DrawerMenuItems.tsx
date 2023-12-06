@@ -1,97 +1,90 @@
-import { NextLinkComposed } from '@/core/components/Link';
+import { Separator } from '@/core/ui/Separator';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { profilesState } from '@/lib/store/profiles.atom';
-import PortaloLogo from '@images/portalo_logo.svg';
-import GroupIcon from '@mui/icons-material/Group';
-import FAQIcon from '@mui/icons-material/Help';
-import HomeIcon from '@mui/icons-material/Home';
-import SettingsIcon from '@mui/icons-material/Settings';
-import {
-  Divider,
-  ListItemIcon,
-  MenuItem,
-  MenuList,
-  Stack,
-  Typography,
-} from '@mui/material';
 import Avvvatars from 'avvvatars-react';
+import { HelpCircle, Home, Settings, User } from 'lucide-react';
 import { useRecoilValue } from 'recoil';
 
-interface DrawerMenuItemsProps {
-  onClick: () => void;
-}
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList
+} from "@/core/ui/NavigationMenu";
+import Link from 'next/link';
+
+
 
 const menuItems = [
   {
     label: 'Home',
     href: ROUTES.HOME,
-    icon: <HomeIcon />,
+    icon: <Home color="#eae1e1" strokeWidth={1.75} />,
   },
   {
     label: 'Profiles',
     href: ROUTES.APP,
-    icon: <GroupIcon />,
+    icon: <User color="#eae1e1" strokeWidth={1.75} />,
   },
   {
     label: 'Help',
     href: ROUTES.APP_HELP,
-    icon: <FAQIcon />,
+    icon: <HelpCircle color="#eae1e1" strokeWidth={1.75} />,
   },
   {
     label: 'Settings',
     href: ROUTES.APP,
-    icon: <SettingsIcon />,
+    icon: <Settings color="#eae1e1" strokeWidth={1.75} />,
   },
 ];
 
-const DrawerMenuItems: React.FC<DrawerMenuItemsProps> = ({ onClick }) => {
+const DrawerMenuItems: React.FC = () => {
   const profiles = useRecoilValue(profilesState);
 
   const welcomeMessage = 'Hi anon! 👋🏻';
   const profilesCount = profiles?.length || 0;
-  const profilesCountMessage = `${profilesCount} profile${
-    profilesCount > 1 ? 's' : ''
-  }`;
+  const profilesCountMessage = `${profilesCount} profile${profilesCount > 1 ? 's' : ''
+    }`;
   const noProfilesMessage = 'No profiles yet';
 
   return (
     <>
-      <Stack px={1}>
-        <PortaloLogo width="50%" />
-      </Stack>
 
-      <Divider />
-
-      <Stack p={2} my={2}>
-        <Stack direction="row" alignItems="center" gap={2}>
+      <div className='p-2 my-4'>
+        <div className="flex flex-row content-center gap-3" >
           <Avvvatars value={profiles.toString()} size={48} style="shape" />
 
-          <Stack>
-            <Typography variant="h6">{welcomeMessage}</Typography>
+          <div>
+            <h6 className='text-secondary text-xl'>{welcomeMessage}</h6>
 
-            <Typography variant="caption" color="text.secondary">
+            <p className="text-primary text-sm">
               {profilesCount ? profilesCountMessage : noProfilesMessage}
-            </Typography>
-          </Stack>
-        </Stack>
-      </Stack>
+            </p>
+          </div>
+        </div>
+      </div>
 
-      <Divider />
+      <Separator />
 
-      <MenuList>
-        {menuItems.map(({ label, href, icon }) => (
-          <MenuItem
-            key={label}
-            component={NextLinkComposed}
-            to={{ pathname: href }}
-            onClick={onClick}
-          >
-            <ListItemIcon>{icon}</ListItemIcon>
 
-            {label}
-          </MenuItem>
-        ))}
-      </MenuList>
+      <NavigationMenu >
+        <NavigationMenuList>
+          <div className="flex flex-col w-vw p-2">
+
+            {menuItems.map((item, index) => (
+              <NavigationMenuItem
+                key={index}
+              >
+                <Link href={item.href} className='flex p-2 hover-primary w-full'>
+                  {item.icon}
+                  <span className='text-secondary text-lg pl-2'>
+                    {item.label}
+                  </span>
+                </Link>
+              </NavigationMenuItem>
+            ))}
+          </div>
+        </NavigationMenuList>
+      </NavigationMenu >
     </>
   );
 };

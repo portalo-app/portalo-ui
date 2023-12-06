@@ -1,24 +1,41 @@
 import DeleteModal from '@/core/components/DeleteModal';
-import NavbarLayout from '@/core/components/NavbarLayout';
+import { Button } from "@/core/ui/Button";
+import { Separator } from '@/core/ui/Separator';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/core/ui/Sheet";
 import { EXTERNAL_LINKS } from '@/lib/constants/externalLinks.const';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { profilesState } from '@/lib/store/profiles.atom';
-import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Button, Drawer, IconButton, Link, Stack, styled } from '@mui/material';
+import { Menu, Trash2 } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useResetRecoilState } from 'recoil';
 import DrawerMenuItems from './DrawerMenuItems';
-
 interface NavbarProps { }
 
-const LayoutOffset = styled('div')(({ theme }) => theme.mixins.toolbar);
+const PortaloLogo = () => {
+  return (
+    <div className="flex items-center gap-2">
+      <Image
+        priority
+        src="/portalo_dark.svg"
+        alt="Portalo"
+        width={150}
+        height={150}
+      />
+    </div>
+  )
+}
 
 const Navbar: React.FC<NavbarProps> = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const resetProfiles = useResetRecoilState(profilesState);
   const [resetAccountModalOpen, setResetAccountModalOpen] = useState(false);
   const router = useRouter();
@@ -33,82 +50,70 @@ const Navbar: React.FC<NavbarProps> = () => {
     resetProfiles();
 
     setResetAccountModalOpen(false);
-    setIsDrawerOpen(false);
   };
+
+  const handleResetAccountModal = () => {
+    setResetAccountModalOpen(!resetAccountModalOpen)
+  }
 
   return (
     <>
-      <NavbarLayout
-        leftSide={
-          <IconButton
-            aria-label={isDrawerOpen ? 'close menu' : 'open menu'}
-            onClick={() => setIsDrawerOpen(!isDrawerOpen)}
-          >
-            {isDrawerOpen ? <CloseIcon /> : <MenuIcon />}
-          </IconButton>
-        }
-      />
+      <div className='sticky pl-4 top-0 z-50 flex w-full items-center justify-between p-3 shadow bg-foreground shadow-white'>
 
-      <LayoutOffset sx={{ mb: 4 }} />
-
-      <Drawer
-        anchor="left"
-        elevation={0}
-        open={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        PaperProps={{
-          sx: {
-            width: '100%',
-            height: '100%',
-            maxWidth: '300px',
-          },
-        }}
-      >
-        <Stack justifyContent="space-between" height="100%">
-          <Stack>
-            <DrawerMenuItems
-              onClick={() => {
-                setIsDrawerOpen(false);
-              }}
-            />
-          </Stack>
-
-          <Stack px={2} mb={2}>
-            <Button
-              variant="outlined"
-              color="error"
-              onClick={() => setResetAccountModalOpen(true)}
-              startIcon={<DeleteIcon />}
-            >
-              {resetAccountLabel}
-            </Button>
-            <Stack mt={2} alignItems="center">
-              <Link href={EXTERNAL_LINKS.NEOPOWER} color="inherit" underline="none" target="_blank">
-                <Stack direction="row" alignItems="center">
-                  <Image
-                    src="/neopower.svg"
-                    alt="neopower"
-                    width="24"
-                    height="24"
-                    style={{ marginRight: "8px" }}
-                  />
-                  {createdByNeoPower}
-                </Stack>
-              </Link>
-            </Stack>
-          </Stack>
-        </Stack>
-      </Drawer>
-
-      <DeleteModal
-        title={resetAccountLabel}
-        message={resetAccountMessage}
-        open={resetAccountModalOpen}
-        onClose={() => {
-          setResetAccountModalOpen(false);
-        }}
-        onDelete={resetAccount}
-      />
+        <Sheet >
+          <SheetTrigger asChild>
+            <Menu color='white' />
+          </SheetTrigger>
+          <SheetContent side={"left"} className="bg-foreground">
+            <SheetHeader>
+              <SheetTitle>
+                <PortaloLogo />
+              </SheetTitle>
+            </SheetHeader>
+            <Separator />
+            <SheetDescription className='flex flex-col h-full'>
+              <div>
+                <DrawerMenuItems />
+              </div>
+              <Separator />
+              <div className='flex flex-col mt-4'>
+                <Button
+                  variant="outline"
+                  className='text-destructive hover:text-destructive-foreground border-destructive bg-destructive-foreground hover:border-destructive-foreground hover:bg-destructive'
+                  onClick={handleResetAccountModal}
+                >
+                  <Trash2 className='mr-2' />
+                  {resetAccountLabel}
+                </Button>
+                <div className='mt-4 text-secondary p-1'>
+                  <Link href={EXTERNAL_LINKS.NEOPOWER} color="inherit" target="_blank">
+                    <div className='flex justify-center flex-row items-center'>
+                      <Image
+                        src="/neopower.svg"
+                        alt="neopower"
+                        width="24"
+                        height="24"
+                        style={{ marginRight: "8px" }}
+                      />
+                      {createdByNeoPower}
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            </SheetDescription>
+          </SheetContent>
+        </Sheet>
+        <DeleteModal
+          title={resetAccountLabel}
+          message={resetAccountMessage}
+          open={resetAccountModalOpen}
+          onClose={handleResetAccountModal}
+          onDelete={resetAccount}
+        />
+        <Link href={ROUTES.HOME} className="animate-slide-in-right text-xl">
+          <PortaloLogo />
+        </Link>
+      </div >
     </>
   );
 };

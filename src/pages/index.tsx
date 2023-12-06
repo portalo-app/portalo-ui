@@ -1,36 +1,28 @@
-import { NextLinkComposed } from '@/core/components/Link';
+import { Button } from "@/core/ui/Button";
+import { APP_SLOGAN } from "@/lib/constants/constants";
 import { ROUTES } from '@/lib/constants/routes.const';
-import { Button, Stack, Typography } from '@mui/material';
+import Link from "next/link";
 
 export default function Home() {
   return (
     <>
-      <Typography variant="h2">Your tree of financial addresses</Typography>
-      <Typography>
-        Take your addresses anywhere and share them with your clients and
-        friends
-      </Typography>
+      <div className="flex flex-col content-center justify-center p-4 bg-foreground w-full">
+        <h1 className='text-5xl text-secondary m-4 text-center bg-gradient-to-r bg-gra'>{APP_SLOGAN}</h1>
+        <h2 className="text-xl text-secondary m-4 text-center">
+          Start using Portalo and make it easier to find an address
+        </h2>
+        <div className='flex justify-around mt-5'>
 
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        sx={{ '.MuiButton-root': { flex: 1 } }}
-        gap={2}
-      >
-        <Button variant="contained" color="secondary">
-          View demo
-        </Button>
-
-        <Button
-          variant="contained"
-          component={NextLinkComposed}
-          to={{
-            pathname: ROUTES.APP,
-          }}
-        >
-          Start now!
-        </Button>
-      </Stack>
+          <Button
+            className="w-[250px] rounded-3xl h-12"
+            asChild
+          >
+            <Link href={ROUTES.APP} className="text-lg">
+              Start now!
+            </Link>
+          </Button>
+        </div>
+      </div>
     </>
   );
 }

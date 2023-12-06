@@ -1,4 +1,3 @@
-import { Container } from '@mui/material';
 import Navbar from './Navbar';
 
 interface LayoutProps {
@@ -11,7 +10,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Navbar />
 
       <main>
-        <Container maxWidth="sm">{children}</Container>
+        <div className='flex content-center justify-center'>{children}</div>
       </main>
     </>
   );

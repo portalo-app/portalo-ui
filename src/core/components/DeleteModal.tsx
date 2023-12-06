@@ -1,5 +1,14 @@
-import { Button, Paper, Stack, Typography } from '@mui/material';
-import AnimatedModal from './AnimatedModal';
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from "@/core/ui/Dialog";
 
 interface DeleteModalProps {
   title: string;
@@ -20,23 +29,20 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
   const deleteLabel = 'Delete';
 
   return (
-    <AnimatedModal open={open} onClose={onClose}>
-      <Paper sx={{ p: 2 }}>
-        <Typography variant="h6" mb={2}>
-          {title}
-        </Typography>
-
-        <Typography variant="body2">{message}</Typography>
-
-        <Stack direction="row" justifyContent="flex-end" mt={2} gap={1}>
-          <Button onClick={onClose}>{cancelLabel}</Button>
-
-          <Button variant="contained" color="error" onClick={onDelete}>
-            {deleteLabel}
-          </Button>
-        </Stack>
-      </Paper>
-    </AnimatedModal>
+    <AlertDialog open={open}>
+      <AlertDialogContent className="bg-foreground">
+        <AlertDialogHeader>
+          <AlertDialogTitle className="text-secondary text-2xl">{title}</AlertDialogTitle>
+          <AlertDialogDescription >
+            {message}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={onClose} className="bg-secondary hover:text-primary hover:border-primary">{cancelLabel}</AlertDialogCancel>
+          <AlertDialogAction onClick={onDelete} className='text-destructive hover:text-destructive-foreground border-destructive bg-destructive-foreground hover:border-destructive-foreground hover:bg-destructive'>{deleteLabel}</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog >
   );
 };
 
