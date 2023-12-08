@@ -9,7 +9,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <>
       <Navbar />
 
-      <main>
+      <main className='bg-gradient-to-br from-foreground to-primary from-70% min-h-screen'>
         <div className='flex content-center justify-center'>{children}</div>
       </main>
     </>

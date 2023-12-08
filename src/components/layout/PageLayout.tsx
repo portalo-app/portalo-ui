@@ -1,6 +1,6 @@
-import { NextLinkComposed } from '@/core/components/Link';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Button, Fab, IconButton, Stack, Typography } from '@mui/material';
+import { Button } from '@/core/ui/Button';
+import { ChevronLeft } from 'lucide-react';
+import Link from 'next/link';
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -16,60 +16,38 @@ interface ActionData {
   label?: string;
 }
 
-const Action: React.FC<ActionData> = ({ label, icon, onClick }) => {
-  return label ? (
-    <Button variant="contained" startIcon={icon} onClick={onClick}>
-      {label}
-    </Button>
-  ) : (
-    <Fab size="small" color="primary" onClick={onClick}>
-      {icon}
-    </Fab>
-  );
-};
-
 const PageLayout: React.FC<PageLayoutProps> = ({
   children,
   title,
-  action,
   backPath,
   backClick,
 }) => {
   return (
-    <Stack>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        mb={2}
-      >
-        <Stack direction="row" gap={1} alignItems="center">
+    <div className="bg-foreground my-8 p-4 rounded-3xl shadow-sm shadow-secondary max-w-xl min-w-1/3">
+      <div className="flex content-center justify-between mb-2">
+        <div className="flex gap-2 content-center justify-center ">
           {backPath && (
-            <IconButton
-              component={NextLinkComposed}
-              to={{
-                pathname: backPath,
-              }}
+            <Link
+              href={backPath}
               onClick={() => backClick && backClick()}
+              className="flex justify-center flex-col"
             >
-              <ArrowBackIcon />
-            </IconButton>
+              <ChevronLeft color="#fafafa" />
+            </Link>
           )}
-
           {backClick && !backPath && (
-            <IconButton onClick={backClick}>
-              <ArrowBackIcon />
-            </IconButton>
+            <Button onClick={backClick}>
+              <ChevronLeft color="#fafafa" />
+            </Button>
           )}
-
-          <Typography variant="h6">{title}</Typography>
-        </Stack>
-
-        {action && <Action {...action} />}
-      </Stack>
+          <h6 className="text-2xl text-secondary flex content-center text-start justify-center flex-col pb-2 ml-2">
+            {title}
+          </h6>
+        </div>
+      </div>
 
       {children}
-    </Stack>
+    </div>
   );
 };
 

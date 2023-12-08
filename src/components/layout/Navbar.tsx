@@ -1,5 +1,5 @@
 import DeleteModal from '@/core/components/DeleteModal';
-import { Button } from "@/core/ui/Button";
+import { Button } from '@/core/ui/Button';
 import { Separator } from '@/core/ui/Separator';
 import {
   Sheet,
@@ -8,7 +8,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/core/ui/Sheet";
+} from '@/core/ui/Sheet';
 import { EXTERNAL_LINKS } from '@/lib/constants/externalLinks.const';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { profilesState } from '@/lib/store/profiles.atom';
@@ -19,7 +19,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useResetRecoilState } from 'recoil';
 import DrawerMenuItems from './DrawerMenuItems';
-interface NavbarProps { }
+interface NavbarProps {}
 
 const PortaloLogo = () => {
   return (
@@ -32,8 +32,8 @@ const PortaloLogo = () => {
         height={150}
       />
     </div>
-  )
-}
+  );
+};
 
 const Navbar: React.FC<NavbarProps> = () => {
   const resetProfiles = useResetRecoilState(profilesState);
@@ -53,47 +53,50 @@ const Navbar: React.FC<NavbarProps> = () => {
   };
 
   const handleResetAccountModal = () => {
-    setResetAccountModalOpen(!resetAccountModalOpen)
-  }
+    setResetAccountModalOpen(!resetAccountModalOpen);
+  };
 
   return (
     <>
-      <div className='sticky pl-4 top-0 z-50 flex w-full items-center justify-between p-3 shadow bg-foreground shadow-white'>
-
-        <Sheet >
+      <div className="sticky pl-4 top-0 z-50 flex w-full items-center justify-between p-3 shadow bg-foreground shadow-white">
+        <Sheet>
           <SheetTrigger asChild>
-            <Menu color='white' />
+            <Menu color="white" />
           </SheetTrigger>
-          <SheetContent side={"left"} className="bg-foreground">
+          <SheetContent side={'left'} className="bg-foreground">
             <SheetHeader>
               <SheetTitle>
                 <PortaloLogo />
               </SheetTitle>
             </SheetHeader>
             <Separator />
-            <SheetDescription className='flex flex-col h-full'>
+            <SheetDescription className="flex flex-col h-full">
               <div>
                 <DrawerMenuItems />
               </div>
               <Separator />
-              <div className='flex flex-col mt-4'>
+              <div className="flex flex-col mt-4">
                 <Button
                   variant="outline"
-                  className='text-destructive hover:text-destructive-foreground border-destructive bg-destructive-foreground hover:border-destructive-foreground hover:bg-destructive'
+                  className="text-destructive hover:text-destructive-foreground border-destructive bg-destructive-foreground hover:border-destructive-foreground hover:bg-destructive"
                   onClick={handleResetAccountModal}
                 >
-                  <Trash2 className='mr-2' />
+                  <Trash2 className="mr-2" />
                   {resetAccountLabel}
                 </Button>
-                <div className='mt-4 text-secondary p-1'>
-                  <Link href={EXTERNAL_LINKS.NEOPOWER} color="inherit" target="_blank">
-                    <div className='flex justify-center flex-row items-center'>
+                <div className="mt-4 text-secondary p-1">
+                  <Link
+                    href={EXTERNAL_LINKS.NEOPOWER}
+                    color="inherit"
+                    target="_blank"
+                  >
+                    <div className="flex justify-center flex-row items-center">
                       <Image
                         src="/neopower.svg"
                         alt="neopower"
                         width="24"
                         height="24"
-                        style={{ marginRight: "8px" }}
+                        style={{ marginRight: '8px' }}
                       />
                       {createdByNeoPower}
                     </div>
@@ -113,7 +116,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         <Link href={ROUTES.HOME} className="animate-slide-in-right text-xl">
           <PortaloLogo />
         </Link>
-      </div >
+      </div>
     </>
   );
 };
