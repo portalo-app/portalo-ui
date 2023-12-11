@@ -8,7 +8,10 @@ interface StateProps {
   size: SizeType;
 }
 
-const StateIcon: React.FC<{ type: StateType, size: SizeType }> = ({ type, size }) => {
+const StateIcon: React.FC<{ type: StateType; size: SizeType }> = ({
+  type,
+  size,
+}) => {
   switch (type) {
     case 'success':
       return <CheckCircle color="#fafafa" size={size} />;
@@ -26,10 +29,10 @@ const StateIcon: React.FC<{ type: StateType, size: SizeType }> = ({ type, size }
 const State: React.FC<StateProps> = ({ type, label, size }) => {
   return (
     <div className="p-2 flex flex-col">
-      <div className='flex justify-center'>
+      <div className="flex justify-center">
         <StateIcon type={type} size={size} />
       </div>
-      <h2 className='text-secondary text-lg m-2'>{label}</h2>
+      <h2 className="text-lg m-2">{label}</h2>
     </div>
   );
 };

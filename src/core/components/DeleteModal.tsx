@@ -7,7 +7,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/core/ui/Dialog';
+} from '@/core/ui/AlertDialog';
 
 interface DeleteModalProps {
   title: string;
@@ -29,24 +29,14 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
 
   return (
     <AlertDialog open={open}>
-      <AlertDialogContent className="bg-foreground rounded-3xl">
+      <AlertDialogContent className="rounded-3xl">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-secondary text-2xl">
-            {title}
-          </AlertDialogTitle>
+          <AlertDialogTitle className="text-2xl">{title}</AlertDialogTitle>
           <AlertDialogDescription>{message}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel
-            onClick={onClose}
-            className="bg-secondary hover:text-primary hover:border-primary"
-          >
-            {cancelLabel}
-          </AlertDialogCancel>
-          <AlertDialogAction
-            onClick={onDelete}
-            className="text-destructive hover:text-destructive-foreground border-destructive bg-destructive-foreground hover:border-destructive-foreground hover:bg-destructive"
-          >
+          <AlertDialogCancel onClick={onClose}>{cancelLabel}</AlertDialogCancel>
+          <AlertDialogAction onClick={onDelete}>
             {deleteLabel}
           </AlertDialogAction>
         </AlertDialogFooter>

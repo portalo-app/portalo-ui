@@ -1,4 +1,5 @@
 import Root from '@/components/layout/Root';
+import { ThemeProvider } from '@/lib/providers/ThemeProvider';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -14,8 +15,14 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="description" content={APP_DESCRIPTION} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
-      <Root Component={Component} pageProps={pageProps} />
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <Root Component={Component} pageProps={pageProps} />
+      </ThemeProvider>
     </>
   );
 }
