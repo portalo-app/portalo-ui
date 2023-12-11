@@ -1,5 +1,6 @@
 import DeleteModal from '@/core/components/DeleteModal';
 import { Button } from '@/core/ui/Button';
+import { ModeToggle } from '@/core/ui/ModeToggle';
 import { Separator } from '@/core/ui/Separator';
 import {
   Sheet,
@@ -12,7 +13,7 @@ import {
 import { EXTERNAL_LINKS } from '@/lib/constants/externalLinks.const';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { profilesState } from '@/lib/store/profiles.atom';
-import { Menu, Trash2 } from 'lucide-react';
+import { AlignJustify, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -28,8 +29,8 @@ const PortaloLogo = () => {
         priority
         src="/portalo_dark.svg"
         alt="Portalo"
-        width={150}
-        height={150}
+        width={180}
+        height={180}
       />
     </div>
   );
@@ -58,64 +59,72 @@ const Navbar: React.FC<NavbarProps> = () => {
 
   return (
     <>
-      <div className="sticky pl-4 top-0 z-50 flex w-full items-center justify-between p-3 shadow bg-foreground shadow-white">
-        <Sheet>
-          <SheetTrigger asChild>
-            <Menu color="white" />
-          </SheetTrigger>
-          <SheetContent side={'left'} className="bg-foreground">
-            <SheetHeader>
-              <SheetTitle>
-                <PortaloLogo />
-              </SheetTitle>
-            </SheetHeader>
-            <Separator />
-            <SheetDescription className="flex flex-col h-full">
-              <div>
-                <DrawerMenuItems />
-              </div>
+      <div className="sticky pl-4 top-0 flex w-full justify-between p-3 shadow bg-background">
+        <div className="">
+          <Link
+            href={ROUTES.HOME}
+            className="animate-slide-in-left text-xl flex content-center justify-center"
+          >
+            <PortaloLogo />
+          </Link>
+        </div>
+        <div className="flex my-auto ">
+          <Sheet>
+            <SheetTrigger asChild>
+              <AlignJustify size={32} className="mr-4" />
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>
+                  <PortaloLogo />
+                </SheetTitle>
+              </SheetHeader>
               <Separator />
-              <div className="flex flex-col mt-4">
-                <Button
-                  variant="outline"
-                  className="text-destructive hover:text-destructive-foreground border-destructive bg-destructive-foreground hover:border-destructive-foreground hover:bg-destructive"
-                  onClick={handleResetAccountModal}
-                >
-                  <Trash2 className="mr-2" />
-                  {resetAccountLabel}
-                </Button>
-                <div className="mt-4 text-secondary p-1">
-                  <Link
-                    href={EXTERNAL_LINKS.NEOPOWER}
-                    color="inherit"
-                    target="_blank"
-                  >
-                    <div className="flex justify-center flex-row items-center">
-                      <Image
-                        src="/neopower.svg"
-                        alt="neopower"
-                        width="24"
-                        height="24"
-                        style={{ marginRight: '8px' }}
-                      />
-                      {createdByNeoPower}
-                    </div>
-                  </Link>
+              <SheetDescription className="flex flex-col h-full">
+                <ModeToggle />
+                <div>
+                  <DrawerMenuItems />
                 </div>
-              </div>
-            </SheetDescription>
-          </SheetContent>
-        </Sheet>
-        <DeleteModal
-          title={resetAccountLabel}
-          message={resetAccountMessage}
-          open={resetAccountModalOpen}
-          onClose={handleResetAccountModal}
-          onDelete={resetAccount}
-        />
-        <Link href={ROUTES.HOME} className="animate-slide-in-right text-xl">
-          <PortaloLogo />
-        </Link>
+                <div className="flex flex-col justify-center">
+                  <Button
+                    variant="outline"
+                    className="text-destructive hover:text-destructive-foreground border-destructive bg-destructive-foreground hover:border-destructive-foreground hover:bg-destructive ring-destructive"
+                    onClick={handleResetAccountModal}
+                  >
+                    <Trash2 className="mr-2" />
+                    {resetAccountLabel}
+                  </Button>
+                  <div className="mt-4 p-1">
+                    <Link
+                      href={EXTERNAL_LINKS.NEOPOWER}
+                      color="inherit"
+                      target="_blank"
+                    >
+                      <div className="flex justify-center flex-row items-center">
+                        <Image
+                          src="/neopower.svg"
+                          alt="neopower"
+                          width="24"
+                          height="24"
+                          style={{ marginRight: '8px' }}
+                        />
+                        {createdByNeoPower}
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              </SheetDescription>
+            </SheetContent>
+          </Sheet>
+
+          <DeleteModal
+            title={resetAccountLabel}
+            message={resetAccountMessage}
+            open={resetAccountModalOpen}
+            onClose={handleResetAccountModal}
+            onDelete={resetAccount}
+          />
+        </div>
       </div>
     </>
   );
