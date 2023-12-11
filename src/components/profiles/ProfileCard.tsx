@@ -1,147 +1,113 @@
-import AnimatedModal from '@/core/components/AnimatedModal';
+import { Button } from '@/core/ui/Button';
+import { Card, CardContent } from '@/core/ui/Card';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/core/ui/Dialog';
+import { Popover, PopoverContent, PopoverTrigger } from '@/core/ui/PopOver';
+import { Separator } from '@/core/ui/Separator';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { Profile } from '@/lib/model/profile';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { DialogTrigger } from '@radix-ui/react-dialog';
 import {
-  Card,
-  CardActionArea,
-  CardContent,
-  Divider,
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-  MenuList,
-  Paper,
-  Stack,
-  Typography,
-} from '@mui/material';
+  CircleDollarSign,
+  Landmark,
+  MoreVertical,
+  Pencil,
+  Plus,
+  Trash2,
+} from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import PageLayout from '../layout/PageLayout';
 import DeleteProfileModal from './DeleteProfileModal';
 import ProfileForm from './ProfileForm';
-
 interface ProfileCardProps {
   profile: Profile;
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
-  const margin = 2;
   const cryptoLabel = 'CRYPTO';
   const fiatLabel = 'FIAT';
 
   const { id, name, cryptoAddresses, fiatAddresses } = profile;
-  const [isEditing, setIsEditing] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
 
-  const router = useRouter();
-
-  const handleMenuClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.stopPropagation();
-
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleEdit = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-    setAnchorEl(null);
-    setIsEditing(true);
-  };
-
-  const handleDelete = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+  const handleDelete = () => {
     setAnchorEl(null);
     setIsDeleting(true);
   };
 
+  const handleCloseDialog = () => {
+    setDialogIsOpen(false);
+  };
+
+  const handleOpenDialog = () => {
+    setDialogIsOpen(true);
+  };
+
   return (
     <>
-      <Card elevation={2}>
-        <CardActionArea
-          disableRipple
-          component="div"
-          onClick={() => router.push(`${ROUTES.APP_PROFILE}/${id}`)}
-        >
-          <CardContent>
-            <Stack
-              direction="row"
-              mb={margin}
-              alignItems="center"
-              justifyContent="space-between"
-              gap={margin}
-            >
-              <Stack direction="row" alignItems="center" gap={1}>
-                <Typography variant="h6" fontWeight="bold">
-                  {name}
-                </Typography>
-              </Stack>
+      <Card className="border bg-background rounded-xl my-4 min-w-xl shadow-sm  hover:shadow-primary hover:border-primary hover:shadow-md">
+        <CardContent className="p-2 m-2">
+          <div className="flex m-2 content-center justify-between">
+            <div className="flex content-center ">
+              <h6 className="flex font-bold text-xl ">{name}</h6>
+            </div>
+            <div className="flex space-x-2">
+              <Link href={`${ROUTES.APP_PROFILE}/${id}`}>
+                <p className="text-primary flex rounded-2xl">
+                  <Plus />
+                  Add address
+                </p>
+              </Link>
+              <MenuItems
+                handleDelete={handleDelete}
+                profile={profile}
+                className="z-30"
+                handleCloseDialog={handleCloseDialog}
+                setDialogIsOpen={setDialogIsOpen}
+                dialogIsOpen={dialogIsOpen}
+              />
+            </div>
+          </div>
 
-              <IconButton onClick={(event) => handleMenuClick(event)}>
-                <MoreVertIcon fontSize="small" />
-              </IconButton>
-            </Stack>
+          <Separator />
 
-            <Divider sx={{ mx: -margin }} />
+          <div className="flex justify-around content-center mt-4">
+            <div className="flex space-x-4 m-2 items-center">
+              <CircleDollarSign size={32} />
+              <div className="flex flex-col">
+                <h1 className="font-bold font-mono">
+                  {cryptoAddresses.length}
+                </h1>
 
-            <Stack direction="row" mt={margin} gap={margin}>
-              <Stack flex="1" direction="row" alignItems="center" gap={1}>
-                <MonetizationOnIcon color="disabled" fontSize="large" />
+                <h1>{cryptoLabel}</h1>
+              </div>
+            </div>
 
-                <Stack>
-                  <Typography variant="mono" fontWeight="bold">
-                    {cryptoAddresses.length}
-                  </Typography>
+            <div className="flex space-x-4 m-2 items-center">
+              <Landmark size={32} />
 
-                  <Typography variant="caption">{cryptoLabel}</Typography>
-                </Stack>
-              </Stack>
+              <div>
+                <h1 className="font-mono font-bold">{fiatAddresses.length}</h1>
 
-              <Stack flex="1" direction="row" alignItems="center" gap={1}>
-                <AccountBalanceIcon color="disabled" fontSize="large" />
-
-                <Stack>
-                  <Typography variant="mono" fontWeight="bold">
-                    {fiatAddresses.length}
-                  </Typography>
-
-                  <Typography variant="caption">{fiatLabel}</Typography>
-                </Stack>
-              </Stack>
-            </Stack>
-          </CardContent>
-        </CardActionArea>
+                <h1>{fiatLabel}</h1>
+              </div>
+            </div>
+          </div>
+        </CardContent>
       </Card>
 
       <DeleteProfileModal
         profile={profile}
         open={isDeleting}
         onClose={() => setIsDeleting(false)}
-      />
-
-      <AnimatedModal open={isEditing} onClose={() => setIsEditing(false)}>
-        <Paper sx={{ p: 2 }}>
-          <PageLayout title="Edit Profile">
-            <ProfileForm
-              profile={profile}
-              action="EDIT"
-              onComplete={() => setIsEditing(false)}
-            />
-          </PageLayout>
-        </Paper>
-      </AnimatedModal>
-
-      <MenuItems
-        anchorEl={anchorEl}
-        setAnchorEl={setAnchorEl}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
       />
     </>
   );
@@ -150,44 +116,51 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 export default ProfileCard;
 
 const MenuItems: React.FC<any> = ({
-  anchorEl,
-  setAnchorEl,
-  handleEdit,
   handleDelete,
+  profile,
+  handleCloseDialog,
+  setDialogIsOpen,
+  dialogIsOpen,
 }) => {
   const editLabel = 'Edit';
   const deleteLabel = 'Delete';
 
   return (
-    <Menu
-      id="profile-menu"
-      anchorEl={anchorEl}
-      open={Boolean(anchorEl)}
-      onClose={() => setAnchorEl(null)}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'left',
-      }}
-    >
-      <MenuList>
-        <MenuItem onClick={handleEdit}>
-          <ListItemIcon>
-            <EditIcon fontSize="small" />
-          </ListItemIcon>
-
-          <ListItemText>{editLabel}</ListItemText>
-        </MenuItem>
-
-        <MenuItem onClick={handleDelete}>
-          <ListItemIcon>
-            <DeleteIcon color="error" fontSize="small" />
-          </ListItemIcon>
-
-          <ListItemText primaryTypographyProps={{ color: 'error' }}>
-            {deleteLabel}
-          </ListItemText>
-        </MenuItem>
-      </MenuList>
-    </Menu>
+    <Popover>
+      <PopoverTrigger>
+        <MoreVertical size={24} />
+      </PopoverTrigger>
+      <PopoverContent className="w-[150px] flex flex-col space-y-4">
+        <Dialog open={dialogIsOpen}>
+          <DialogTrigger
+            onClick={setDialogIsOpen}
+            className="flex justify-center space-x-3"
+          >
+            <Pencil size={24} />
+            <h2>{editLabel}</h2>
+          </DialogTrigger>
+          <DialogContent className="rounded-3xl">
+            <DialogHeader>
+              <DialogTitle>Edit profile</DialogTitle>
+              <DialogDescription>
+                <ProfileForm
+                  profile={profile}
+                  action="EDIT"
+                  onComplete={handleCloseDialog}
+                />
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+        <Button
+          onClick={handleDelete}
+          variant={'destructive'}
+          className="space-x-2"
+        >
+          <Trash2 size={24} />
+          <h2>{deleteLabel}</h2>
+        </Button>
+      </PopoverContent>
+    </Popover>
   );
 };

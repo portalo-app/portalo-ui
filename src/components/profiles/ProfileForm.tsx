@@ -1,16 +1,24 @@
-import FormInputText from '@/core/components/FormInputText';
+import { Button } from '@/core/ui/Button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/core/ui/Form';
+import { Input } from '@/core/ui/Input';
 import useCreateProfile from '@/lib/hooks/profiles/useCreateProfile';
 import useEditProfile from '@/lib/hooks/profiles/useEditProfile';
 import { Profile } from '@/lib/model/profile';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { Button, IconButton, InputAdornment, Stack } from '@mui/material';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 interface ProfileFormProps {
   action: 'CREATE' | 'EDIT';
-  onComplete: () => void;
+  onComplete?: () => void;
   profile?: Profile;
 }
 
@@ -24,21 +32,20 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   profile,
   onComplete,
 }) => {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<FormData>({ mode: 'all' });
   const [showPassword, setShowPassword] = useState(false);
   const createProfile = useCreateProfile();
   const editProfile = useEditProfile();
 
   const actionLabel = action === 'CREATE' ? 'Create' : 'Edit';
   const nameLabel = 'Name';
-  const nameRequiredMessage = 'Name is required';
-  const nameMaxLengthMessage = 'Name is too long';
-
   const passwordLabel = 'Password';
+
+  const formSchema = z
+    .object({
+      name: z.string().min(4).max(30),
+      password: z.string().min(4).max(30),
+    })
+    .required();
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -47,9 +54,17 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
     event.currentTarget.focus();
   };
 
-  const onSubmit = (data: FormData) => {
-    const { name, password } = data;
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: profile ? profile.name : '',
+      password: profile ? profile.password : '',
+    },
+  });
 
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    const { name, password } = data;
+    console.log(data);
     // TODO: Add password as param
     if (action === 'CREATE') {
       createProfile(name, password);
@@ -63,47 +78,55 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   };
 
   return (
-    <Stack gap={2}>
-      <FormInputText
-        control={control}
-        name="name"
-        label={nameLabel}
-        error={errors.name}
-        defaultValue={action === 'EDIT' ? profile?.name : ''}
-        rules={{
-          required: { value: true, message: nameRequiredMessage },
-          maxLength: { value: 30, message: nameMaxLengthMessage },
-        }}
-      />
-
-      <FormInputText
-        name="password"
-        control={control}
-        label={passwordLabel}
-        type={showPassword ? 'text' : 'password'}
-        defaultValue={action === 'EDIT' ? profile?.password : undefined}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton
-              aria-label="toggle password visibility"
-              onMouseDown={handleMouseDownPassword}
-              onClick={() => setShowPassword(!showPassword)}
-              edge="end"
-            >
-              {showPassword ? <VisibilityOff /> : <Visibility />}
-            </IconButton>
-          </InputAdornment>
-        }
-      />
-
-      <Button
-        variant="contained"
-        disabled={Object.keys(errors).length > 0}
-        onClick={handleSubmit(onSubmit)}
-      >
-        {actionLabel}
-      </Button>
-    </Stack>
+    <div className="p-4">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col space-y-5"
+        >
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{nameLabel}</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="name"
+                    {...field}
+                    className=" focus:border-primary ring-primary w-full"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{passwordLabel}</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="password"
+                    {...field}
+                    className="focus:border-primary ring-primary"
+                    type="password"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex justify-center content-center">
+            <Button type="submit" className="mt-4 w-[250px]">
+              {actionLabel}
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 };
 
