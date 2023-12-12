@@ -24,13 +24,7 @@ const AddressCard: React.FC<AddressCardProps> = ({
     >
       <CardContent className="py-4">
         <div className="flex content-center space-x-2">
-          <EntityIcon
-            width="50"
-            height="50"
-            svgHeight="50"
-            svgWidth="50"
-            entity={entity.value}
-          />
+          <EntityIcon width={50} height={50} entity={entity.value} />
 
           <h3 className="text-lg font-bold">{entity.label}</h3>
 
