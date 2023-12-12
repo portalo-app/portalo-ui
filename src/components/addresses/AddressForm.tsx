@@ -76,7 +76,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: action === 'EDIT' ? originalAddress?.name : '',
+      name: action === ACTION.Edit ? originalAddress?.name : '',
       address: action === 'EDIT' ? originalAddress?.address : '',
       alias: action === 'EDIT' ? originalAddress?.alias : '',
     },
