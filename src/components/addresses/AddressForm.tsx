@@ -29,6 +29,11 @@ interface AddressFormProps {
   onComplete?: () => void;
 }
 
+const ACTION_FORM = {
+  Edit: 'EDIT',
+  Create: 'CREATE',
+} as const;
+
 export type AddressFormData = {
   entity: Entity;
   address: string;
@@ -76,15 +81,15 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: action === ACTION.Edit ? originalAddress?.name : '',
-      address: action === 'EDIT' ? originalAddress?.address : '',
-      alias: action === 'EDIT' ? originalAddress?.alias : '',
+      name: action === ACTION_FORM.Edit ? originalAddress?.name : '',
+      address: action === ACTION_FORM.Edit ? originalAddress?.address : '',
+      alias: action === ACTION_FORM.edit ? originalAddress?.alias : '',
     },
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const { name, address, alias } = data;
-    if (action === 'EDIT') {
+    if (action === ACTION_FORM.Edit) {
       editAddress(profileId, addressType, {
         id: addressForm.addressId,
         address,
