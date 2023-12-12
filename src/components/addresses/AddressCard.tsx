@@ -17,10 +17,7 @@ const AddressCard: React.FC<AddressCardProps> = ({
 }) => {
   const { name, alias, notes, entity, address } = addressData;
   return (
-    <Card
-      className={`border bg-background rounded-xl min-w-xl shadow-sm  hover:shadow-primary  hover:border-primary hover:shadow-md hover:cursor-pointer m-2`}
-      {...props}
-    >
+    <Card className={`min-w-xl  hover:cursor-pointer m-2`} {...props}>
       <CardContent className="py-4">
         <div className="flex content-center space-x-2">
           <EntityIcon width={50} height={50} entity={entity.value} />

@@ -37,6 +37,8 @@ const EntitySelect: FC<EntitySelectProps> = ({ addressType, profileId }) => {
 
   const x = addressType === ADDRESS_TYPE.CRYPTO ? chains : banks;
 
+  // TODO : In this component there should be a tab to select what entity will be used for creating an address.
+
   return (
     <div>
       <CustomEntityInput
@@ -46,6 +48,8 @@ const EntitySelect: FC<EntitySelectProps> = ({ addressType, profileId }) => {
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button className="w-[200px] justify-between">
+            {/* // TODO  */}
+
             {/* {value
               ? x.find((entity) => entity.value === value)?.label
               : 'Select a chain...'} */}

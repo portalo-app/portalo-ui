@@ -21,7 +21,6 @@ import {
   Trash2,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import DeleteProfileModal from './DeleteProfileModal';
 import ProfileForm from './ProfileForm';
@@ -35,11 +34,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 
   const { id, name, cryptoAddresses, fiatAddresses } = profile;
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
 
   const handleDelete = () => {
-    setAnchorEl(null);
     setIsDeleting(true);
   };
 
@@ -53,7 +50,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 
   return (
     <>
-      <Card className="border bg-background rounded-xl my-4 min-w-xl shadow-sm  hover:shadow-primary hover:border-primary hover:shadow-md">
+      <Card className="my-4 min-w-xl">
         <CardContent className="p-2 m-2">
           <div className="flex m-2 content-center justify-between">
             <div className="flex content-center ">

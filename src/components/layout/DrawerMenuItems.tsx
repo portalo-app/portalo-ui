@@ -16,22 +16,22 @@ const menuItems = [
   {
     label: 'Home',
     href: ROUTES.HOME,
-    icon: <Home strokeWidth={1.75} />,
+    icon: <Home />,
   },
   {
     label: 'Profiles',
     href: ROUTES.APP,
-    icon: <User strokeWidth={1.75} />,
+    icon: <User />,
   },
   {
     label: 'Help',
     href: ROUTES.APP_HELP,
-    icon: <HelpCircle strokeWidth={1.75} />,
+    icon: <HelpCircle />,
   },
   {
     label: 'Settings',
     href: ROUTES.APP,
-    icon: <Settings strokeWidth={1.75} />,
+    icon: <Settings />,
   },
 ];
 
