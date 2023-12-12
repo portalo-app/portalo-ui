@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import createEmotionCache from '@/styles/createEmotionCache';
 import createEmotionServer from '@emotion/server/create-instance';
 import { getInitColorSchemeScript } from '@mui/material';
@@ -13,9 +14,7 @@ export default class MyDocument extends Document {
           {this.links.map(({ rel, href }) => (
             <link key={href} rel={rel} href={href} />
           ))}
-
           <meta name="emotion-insertion-point" content="" />
-
           {(this.props as any).emotionStyleTags}
         </Head>
 

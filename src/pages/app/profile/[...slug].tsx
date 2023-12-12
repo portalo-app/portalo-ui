@@ -12,13 +12,13 @@ import { Tab, styled } from '@mui/material';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 interface ProfilePageProps {}
 
 const ProfilePage: NextPage<ProfilePageProps> = () => {
   const profilesData = useRecoilValue(profilesState);
-  const [_, setAddressForm] = useRecoilState(addressFormState);
+  const setAddressForm = useSetRecoilState(addressFormState);
   const [addressType, setAddressType] = useState('1');
   const [profile, setProfile] = useState<Profile | null>(null);
   const router = useRouter();

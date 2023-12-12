@@ -15,7 +15,9 @@ import { Suspense } from 'react';
 import Layout from './Layout';
 
 interface RootProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Component: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   pageProps: any;
   emotionCache?: EmotionCache;
 }

@@ -5,7 +5,7 @@ import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
 import { addressFormState } from '@/lib/store/address-form.atom';
 import { Paper } from '@mui/material';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import PageLayout from '../layout/PageLayout';
 import AddressCard from './AddressCard';
 import AddressForm from './AddressForm';
@@ -27,7 +27,7 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
   onComplete,
 }) => {
   const [action, setAction] = useState<Action | null>(null);
-  const [_, setAddressForm] = useRecoilState(addressFormState);
+  const setAddressForm = useSetRecoilState(addressFormState);
 
   const deleteAddress = useDeleteAddress();
 

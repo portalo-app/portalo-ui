@@ -26,7 +26,7 @@ const AddressCard: React.FC<AddressCardProps> = ({
   inModal,
   ...props
 }) => {
-  const { name, alias, notes, entity, address } = addressData;
+  const { name, alias, entity, address } = addressData;
 
   return (
     <Card

@@ -14,6 +14,7 @@ interface CustomEntityForm {
 
 const CustomEntityInput: FC<{
   addressType: ADDRESS_TYPE;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onSumbitEntity: (entity: Entity) => void;
 }> = ({ addressType, onSumbitEntity }) => {
   const {

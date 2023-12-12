@@ -51,32 +51,32 @@ const AddressMenu: React.FC<AddressMenuProps> = ({
       icon: snackbarOpen ? <DoneIcon /> : <ContentCopyIcon />,
       label: 'Copy',
       action: handleCopy,
-      color: 'default' as 'default',
+      color: 'default' as const,
       disabled: snackbarOpen,
     },
     {
       icon: <QrCodeIcon />,
       label: 'QR Code',
       action: handleQR,
-      color: 'default' as 'default',
+      color: 'default' as const,
     },
     {
       icon: <ShareIcon />,
       label: 'Share',
       action: handleShare,
-      color: 'default' as 'default',
+      color: 'default' as const,
     },
     {
       icon: <EditIcon />,
       label: 'Edit',
       action: handleEdit,
-      color: 'default' as 'default',
+      color: 'default' as const,
     },
     {
       icon: <DeleteIcon />,
       label: 'Delete',
       action: handleDelete,
-      color: 'error' as 'error',
+      color: 'error' as const,
     },
   ];
 

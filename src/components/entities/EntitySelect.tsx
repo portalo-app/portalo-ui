@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import CustomEntityInput from './EntityCustom';
 import EntityIcon from './EntityIcon';
 
@@ -25,7 +25,7 @@ interface EntitySelectProps {
 
 const EntitySelect: FC<EntitySelectProps> = ({ addressType, profileId }) => {
   const router = useRouter();
-  const [_, setAddressFormState] = useRecoilState(addressFormState);
+  const setAddressFormState = useSetRecoilState(addressFormState);
   const handleEntityClick = (entity: Entity) => {
     setAddressFormState((current) => ({ ...current, entity }));
 

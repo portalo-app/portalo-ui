@@ -5,14 +5,14 @@ import { ADDRESS_TYPE } from '@/lib/model/address';
 import { addressFormState } from '@/lib/store/address-form.atom';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 interface SelecteEntityPageProps {}
 
 const SelectEntityPage: NextPage<SelecteEntityPageProps> = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const [_, setAddressForm] = useRecoilState(addressFormState);
+  const setAddressForm = useSetRecoilState(addressFormState);
 
   const profileId = slug && slug[0];
   const addressType: ADDRESS_TYPE = (slug && slug[1]) as ADDRESS_TYPE;

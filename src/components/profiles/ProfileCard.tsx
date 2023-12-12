@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import AnimatedModal from '@/core/components/AnimatedModal';
 import { ROUTES } from '@/lib/constants/routes.const';
 import { Profile } from '@/lib/model/profile';
@@ -149,6 +150,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 
 export default ProfileCard;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MenuItems: React.FC<any> = ({
   anchorEl,
   setAnchorEl,

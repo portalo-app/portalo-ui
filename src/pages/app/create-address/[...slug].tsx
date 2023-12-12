@@ -27,6 +27,7 @@ const CreateAddressPage: NextPage<CreateAddressPageProps> = () => {
 
   useEffect(() => {
     if (!entity) router.push(backPath);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // TODO: Handle invalid slug data
