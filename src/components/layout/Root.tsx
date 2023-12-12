@@ -1,4 +1,3 @@
-import useIsMobile from '@/lib/hooks/common/useIsMobile';
 import createEmotionCache from '@/styles/createEmotionCache';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import dynamic from 'next/dynamic';
@@ -17,7 +16,6 @@ const RecoilRoot = dynamic(
   { ssr: false }
 );
 
-
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -26,23 +24,14 @@ const Root: React.FC<RootProps> = ({
   pageProps,
   emotionCache = clientSideEmotionCache,
 }) => {
-  const isMobile = useIsMobile();
-
   return (
     <>
       <RecoilRoot>
         <CacheProvider value={emotionCache}>
-
-
           <Layout>
             <Suspense fallback={'Loading...'}>
               <SnackbarProvider
                 autoHideDuration={3000}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: isMobile ? 'center' : 'left',
-                }}
-                dense={isMobile}
                 disableWindowBlurListener
               >
                 <Component {...pageProps} />
