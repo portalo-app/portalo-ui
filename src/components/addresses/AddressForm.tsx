@@ -83,7 +83,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
     defaultValues: {
       name: action === ACTION_FORM.Edit ? originalAddress?.name : '',
       address: action === ACTION_FORM.Edit ? originalAddress?.address : '',
-      alias: action === ACTION_FORM.edit ? originalAddress?.alias : '',
+      alias: action === ACTION_FORM.Edit ? originalAddress?.alias : '',
     },
   });
 
