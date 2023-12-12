@@ -1,8 +1,4 @@
 import { BankValue, ChainValue, banks } from '@/lib/model/entities';
-import styled from '@emotion/styled';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import { SvgIcon } from '@mui/material';
 import Algo from 'cryptocurrency-icons/svg/color/algo.svg';
 import Sol from 'cryptocurrency-icons/svg/color/sol.svg';
 import Uni from 'cryptocurrency-icons/svg/color/uni.svg';
@@ -10,13 +6,13 @@ import Btc from 'cryptocurrency-icons/svg/icon/btc.svg';
 import Dot from 'cryptocurrency-icons/svg/icon/dot.svg';
 import Eth from 'cryptocurrency-icons/svg/icon/eth.svg';
 import Matic from 'cryptocurrency-icons/svg/icon/matic.svg';
+import { Landmark, Wallet } from 'lucide-react';
 import Image from 'next/image';
+
 interface EntityIconProps {
   entity: ChainValue | BankValue | 'DEFAULT_BANK' | 'DEFAULT_CHAIN';
-  width?: string;
-  height?: string;
-  svgWidth?: string;
-  svgHeight?: string;
+  width?: number;
+  height?: number;
 }
 
 const chainIcons: {
@@ -48,52 +44,26 @@ banks.forEach((bank) =>
   })
 );
 
-const BankIconContainer = styled.div<
-  Pick<EntityIconProps, 'width' | 'height' | 'svgHeight' | 'svgWidth'>
->`
-  display: flex;
-
-  img {
-    width: ${(props) => props.width};
-    height: ${(props) => props.height};
-  }
-
-  svg {
-    width: ${(props) => props.svgWidth};
-    height: ${(props) => props.svgHeight};
-    color: white;
-  }
-`;
-
-const EntityIcon: React.FC<EntityIconProps> = ({
-  entity,
-  width = '100%',
-  height = '100%',
-  svgWidth = '100%',
-  svgHeight = '100%',
-}) => {
+const EntityIcon: React.FC<EntityIconProps> = ({ entity, width, height }) => {
   const icon =
     chainIcons[entity as ChainValue] ||
     bankIcons[entity as BankValue] ||
-    (entity === 'DEFAULT_BANK' ? (
-      <AccountBalanceIcon />
-    ) : (
-      <AccountBalanceWalletIcon />
-    ));
+    (entity === 'DEFAULT_BANK' ? <Landmark /> : <Wallet />);
 
+  console.log('icon', icon);
   return (
-    <BankIconContainer
-      width={width}
-      height={height}
-      svgWidth={svgWidth}
-      svgHeight={svgHeight}
-    >
-      {bankIcons[entity as BankValue] ? (
-        (icon as JSX.Element)
+    <div>
+      {typeof icon !== 'string' ? (
+        <div style={{ width: `${width}`, height: `${height}` }}>{icon}</div>
       ) : (
-        <SvgIcon viewBox="0 0 32 32">{icon}</SvgIcon>
+        <Image
+          src={icon as string}
+          alt="SVG Icon"
+          width={width}
+          height={height}
+        />
       )}
-    </BankIconContainer>
+    </div>
   );
 };
 
