@@ -16,7 +16,6 @@ const AddressCard: React.FC<AddressCardProps> = ({
   ...props
 }) => {
   const { name, alias, notes, entity, address } = addressData;
-  console.log(addressData);
   return (
     <Card
       className={`border bg-background rounded-xl min-w-xl shadow-sm  hover:shadow-primary  hover:border-primary hover:shadow-md hover:cursor-pointer m-2`}

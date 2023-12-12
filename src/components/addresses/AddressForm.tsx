@@ -84,8 +84,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const { name, address, alias } = data;
-    console.log(data);
-    console.log(addressForm);
     if (action === 'EDIT') {
       editAddress(profileId, addressType, {
         id: addressForm.addressId,

@@ -50,7 +50,6 @@ const EntityIcon: React.FC<EntityIconProps> = ({ entity, width, height }) => {
     bankIcons[entity as BankValue] ||
     (entity === 'DEFAULT_BANK' ? <Landmark /> : <Wallet />);
 
-  console.log('icon', icon);
   return (
     <div>
       {typeof icon !== 'string' ? (
