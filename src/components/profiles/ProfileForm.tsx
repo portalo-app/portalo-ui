@@ -12,7 +12,6 @@ import useCreateProfile from '@/lib/hooks/profiles/useCreateProfile';
 import useEditProfile from '@/lib/hooks/profiles/useEditProfile';
 import { Profile } from '@/lib/model/profile';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -22,56 +21,38 @@ interface ProfileFormProps {
   profile?: Profile;
 }
 
-type FormData = {
-  name: string;
-  password: string;
-};
-
 const ProfileForm: React.FC<ProfileFormProps> = ({
   action,
   profile,
   onComplete,
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
   const createProfile = useCreateProfile();
   const editProfile = useEditProfile();
 
   const actionLabel = action === 'CREATE' ? 'Create' : 'Edit';
   const nameLabel = 'Name';
-  const passwordLabel = 'Password';
 
   const formSchema = z
     .object({
       name: z.string().min(4).max(30),
-      password: z.string().min(4).max(30),
     })
     .required();
-
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-    event.currentTarget.focus();
-  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: profile ? profile.name : '',
-      password: profile ? profile.password : '',
     },
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    const { name, password } = data;
-    console.log(data);
-    // TODO: Add password as param
+    const { name } = data;
     if (action === 'CREATE') {
-      createProfile(name, password);
+      createProfile(name);
     } else {
       if (!profile?.id) return;
 
-      editProfile(profile?.id || '', name, password);
+      editProfile(profile?.id || '', name);
     }
 
     onComplete && onComplete();
@@ -101,24 +82,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{passwordLabel}</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="password"
-                    {...field}
-                    className="focus:border-primary ring-primary"
-                    type="password"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
           <div className="flex justify-center content-center">
             <Button type="submit" className="mt-4 w-[250px]">
               {actionLabel}

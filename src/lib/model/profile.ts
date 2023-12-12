@@ -4,7 +4,6 @@ import { mockCryptoAddresses, mockFIATAddresses } from './entities';
 export interface Profile {
   id: string;
   name: string;
-  password?: string;
   cryptoAddresses: CryptoAddress[];
   fiatAddresses: FIATAddress[];
 }
