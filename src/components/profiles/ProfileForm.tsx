@@ -41,7 +41,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: profile ? profile.name : '',
+      name: profile?.name || '',
     },
   });
 
