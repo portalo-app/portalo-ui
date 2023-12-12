@@ -83,7 +83,7 @@ const AddressMenu: React.FC<AddressMenuProps> = ({
             key={index}
             onClick={action}
             disabled={disabled}
-            variant={'link'}
+            variant="link"
             className="rounded-full m-1 border-primary border hover:shadow hover:shadow-primary"
           >
             {icon}
