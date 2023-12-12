@@ -1,6 +1,5 @@
 import State from '@/core/components/State';
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
-import { Fade, Stack } from '@mui/material';
 import { useState } from 'react';
 import AddressCard from './AddressCard';
 import AddressDetail from './AddressDetail';
@@ -19,29 +18,28 @@ const AddressList: React.FC<AddressListProps> = ({
   addressType,
 }) => {
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
-
-  const emptyMessage = 'No addresses found';
+  const emptyMessage = 'Looks like you don’t have any payment address yet';
 
   const handleAddressClick = (address: Address) => {
     setSelectedAddress(address);
   };
 
   return addresses.length === 0 ? (
-    <State label={emptyMessage} type="info" />
+    <div className="flex justify-center">
+      <State label={emptyMessage} type="info" size={100} />
+    </div>
   ) : (
     <>
-      <Stack gap={2}>
+      <div>
         {addresses.map((address, index) => (
-          <Fade key={index} in timeout={{ enter: 200 * (index + 1) }}>
-            <div>
-              <AddressCard
-                addressData={address}
-                onClick={() => handleAddressClick(address)}
-              />
-            </div>
-          </Fade>
+          <div key={index}>
+            <AddressCard
+              addressData={address}
+              onClick={() => handleAddressClick(address)}
+            />
+          </div>
         ))}
-      </Stack>
+      </div>
 
       {selectedAddress && (
         <AddressDetail
