@@ -1,3 +1,5 @@
+'use client';
+
 import PageLayout from '@components/layout/PageLayout';
 import { ROUTES } from '@constants/routes.const';
 import {

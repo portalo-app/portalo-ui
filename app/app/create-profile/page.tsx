@@ -1,10 +1,12 @@
+'use client';
+
 import PageLayout from '@components/layout/PageLayout';
 import ProfileForm from '@components/profiles/ProfileForm';
 import { ROUTES } from '@constants/routes.const';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
-interface CreateProfileProps { }
+interface CreateProfileProps {}
 
 const CreateProfile: NextPage<CreateProfileProps> = () => {
   const createProfileTitle = 'Create Profile';

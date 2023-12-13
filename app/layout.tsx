@@ -1,3 +1,5 @@
+import Root from '@components/layout/Root';
+import '@styles/globals.css';
 import { Metadata, Viewport } from 'next';
 
 export const metadata: Metadata = {
@@ -24,11 +26,9 @@ export default function RootLayout({
       {links.map(({ rel, href }) => (
         <link key={href} rel={rel} href={href} />
       ))}
-      {/* <meta name="emotion-insertion-point" content="" /> */}
 
       <body>
-        {/* <Root Component={Component} pageProps={pageProps} /> */}
-        {children}
+        <Root>{children}</Root>
       </body>
     </html>
   );

@@ -1,17 +1,20 @@
+'use client';
+
 import EntitySelect from '@components/entities/EntitySelect';
 import PageLayout from '@components/layout/PageLayout';
 import { ROUTES } from '@constants/routes.const';
 import { ADDRESS_TYPE } from '@models/address';
 import { addressFormState } from '@states/address-form.atom';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 
 interface SelecteEntityPageProps {}
-
-const SelectEntityPage: NextPage<SelecteEntityPageProps> = () => {
-  const router = useRouter();
-  const { slug } = router.query;
+const SelectEntityPage: NextPage<
+  // TODO Add corresponding type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  SelecteEntityPageProps & { params: { slug: any } }
+> = ({ params }) => {
+  const { slug } = params;
   const setAddressForm = useSetRecoilState(addressFormState);
 
   const profileId = slug && slug[0];

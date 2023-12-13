@@ -1,3 +1,5 @@
+'use client';
+
 import PageLayout from '@components/layout/PageLayout';
 import ProfileCard from '@components/profiles/ProfileCard';
 import { ROUTES } from '@constants/routes.const';
@@ -5,7 +7,7 @@ import State from '@core/components/State';
 import { Button } from '@core/ui/Button';
 import { Profile } from '@models/profile';
 import { profilesState } from '@states/profiles.atom';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 

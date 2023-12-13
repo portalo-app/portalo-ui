@@ -1,3 +1,5 @@
+'use client';
+
 import AddressList from '@components/addresses/AddressList';
 import PageLayout from '@components/layout/PageLayout';
 import { ROUTES } from '@constants/routes.const';
@@ -9,13 +11,19 @@ import { addressFormState } from '@states/address-form.atom';
 import { profilesState } from '@states/profiles.atom';
 import { Plus } from 'lucide-react';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 interface ProfilePageProps {}
 
-const ProfilePage: NextPage<ProfilePageProps> = () => {
+const ProfilePage: NextPage<
+  // TODO Add corresponding type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ProfilePageProps & { params: { slug: any } }
+> = ({ params }) => {
+  const { slug } = params;
+
   const profilesData = useRecoilValue(profilesState);
 
   const setAddressForm = useSetRecoilState(addressFormState);
@@ -27,9 +35,6 @@ const ProfilePage: NextPage<ProfilePageProps> = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    if (!router.isReady) return;
-
-    const { slug } = router.query;
 
     const id = slug && slug[0];
     const type: ADDRESS_TYPE = (slug && slug[1]) as ADDRESS_TYPE;
@@ -47,7 +52,7 @@ const ProfilePage: NextPage<ProfilePageProps> = () => {
     }
 
     setProfile(selectedProfile);
-  }, [profilesData, router, router.isReady, router.query]);
+  }, [profilesData, router, slug]);
 
   const handleChange = (newValue: string) => {
     setAddressType(newValue);

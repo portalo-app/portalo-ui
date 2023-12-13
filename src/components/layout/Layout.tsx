@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@//lib/providers/ThemeProvider';
 import Navbar from './Navbar';
 
 interface LayoutProps {
@@ -6,13 +7,13 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <>
+    <ThemeProvider>
       <Navbar />
 
       <main className="bg-gradient-to-br from-background to-primary from-70% min-h-screen">
         <div className="flex content-center justify-center">{children}</div>
       </main>
-    </>
+    </ThemeProvider>
   );
 };
 

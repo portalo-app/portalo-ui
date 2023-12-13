@@ -1,13 +1,12 @@
+'use client';
+
 import dynamic from 'next/dynamic';
 import { SnackbarProvider } from 'notistack';
 import { Suspense } from 'react';
 import Layout from './Layout';
 
 interface RootProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Component: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  pageProps: any;
+  children: React.ReactNode;
 }
 
 const RecoilRoot = dynamic(
@@ -15,14 +14,14 @@ const RecoilRoot = dynamic(
   { ssr: false }
 );
 
-const Root: React.FC<RootProps> = ({ Component, pageProps }) => {
+const Root: React.FC<RootProps> = ({ children }) => {
   return (
     <>
       <RecoilRoot>
         <Layout>
           <Suspense fallback={'Loading...'}>
             <SnackbarProvider autoHideDuration={3000} disableWindowBlurListener>
-              <Component {...pageProps} />
+              {children}
             </SnackbarProvider>
           </Suspense>
         </Layout>

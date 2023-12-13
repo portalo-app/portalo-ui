@@ -1,3 +1,5 @@
+'use client';
+
 import { ROUTES } from '@constants/routes.const';
 import { Button } from '@core/ui/Button';
 import {
@@ -12,8 +14,9 @@ import { ADDRESS_TYPE } from '@models/address';
 import { Entity, banks, chains } from '@models/entities';
 import { addressFormState } from '@states/address-form.atom';
 import { ChevronsUpDown } from 'lucide-react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { FC, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import CustomEntityInput from './EntityCustom';
 import EntityIcon from './EntityIcon';
 
