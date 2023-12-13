@@ -1,5 +1,3 @@
-import useCreateAddress from '@/lib/hooks/addresses/useCreateAddress';
-import useEditAddress from '@/lib/hooks/addresses/useEditAddress';
 import { Button } from '@core/ui/Button';
 import {
   Form,
@@ -11,6 +9,8 @@ import {
 } from '@core/ui/Form';
 import { Input } from '@core/ui/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import useCreateAddress from '@hooks/addresses/useCreateAddress';
+import useEditAddress from '@hooks/addresses/useEditAddress';
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
 import { Entity } from '@models/entities';
 import { addressFormState } from '@states/address-form.atom';

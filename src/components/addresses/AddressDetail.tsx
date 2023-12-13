@@ -1,5 +1,5 @@
-import useDeleteAddress from '@/lib/hooks/addresses/useDeleteAddress';
 import DeleteModal from '@core/components/DeleteModal';
+import useDeleteAddress from '@hooks/addresses/useDeleteAddress';
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
 import { addressFormState } from '@states/address-form.atom';
 import { useState } from 'react';
