@@ -1,11 +1,21 @@
-import FormInputText from '@core/components/FormInputText';
-// import styled from '@emotion/styled';
+import { Button } from '@core/ui/Button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@core/ui/Form';
+import { Input } from '@core/ui/Input';
+import { Separator } from '@core/ui/Separator';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { ADDRESS_TYPE } from '@models/address';
 import { Entity } from '@models/entities';
-import NavigateNext from '@mui/icons-material/NavigateNext';
-import { Button, Divider, ListItem, Stack } from '@mui/material';
+import { ChevronRight } from 'lucide-react';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 import EntityIcon from './EntityIcon';
 
 interface CustomEntityForm {
@@ -17,74 +27,67 @@ const CustomEntityInput: FC<{
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onSumbitEntity: (entity: Entity) => void;
 }> = ({ addressType, onSumbitEntity }) => {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<CustomEntityForm>({
-    mode: 'all',
-  });
-
   const [entityValue, entityType] =
     addressType === ADDRESS_TYPE.FIAT
       ? ['DEFAULT_BANK' as Entity['value'], 'Bank']
       : ['DEFAULT_CHAIN' as Entity['value'], 'Chain'];
 
-  const requiredEntityMessage = `${entityType} name is required`;
-  const minLengthEntityMessage = `${entityType} name is too short`;
-  const maxLengthEntityMessage = `${entityType} name is too long`;
+  const formSchema = z
+    .object({
+      entityName: z.string().min(3).max(20),
+    })
+    .required();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      entityName: '',
+    },
+  });
 
   const onSubmit = ({ entityName }: CustomEntityForm) => {
     onSumbitEntity({
       label: entityName,
       value: entityValue,
-      color: 'gray',
+      color: 'grey',
       icon: entityValue,
     });
   };
 
   return (
     <>
-      <ListItem>
-        <Stack direction="row" alignItems="center" gap={1}>
-          <div>
-            <EntityIcon entity={entityValue} width="2em" svgWidth="2em" />
-          </div>
-          <Stack paddingTop={3}>
-            <FormInputText
-              control={control}
-              name="entityName"
-              error={errors.entityName}
-              label={`Other ${entityType}`}
-              rules={{
-                required: {
-                  value: true,
-                  message: requiredEntityMessage,
-                },
-                minLength: { value: 3, message: minLengthEntityMessage },
-                maxLength: { value: 20, message: maxLengthEntityMessage },
-              }}
-            />
-          </Stack>
-          <Button
-            variant="text"
-            color="inherit"
-            onClick={handleSubmit(onSubmit)}
-          >
-            <NavigateNext />
-          </Button>
-        </Stack>
-      </ListItem>
-      <Divider />
+      <div className="flex content-center">
+        <EntityIcon entity={entityValue} width={50} />
+        <div className="pt-3">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <FormField
+                control={form.control}
+                name="entityName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{`Other ${entityType}`}</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="entity name"
+                        {...field}
+                        className=" focus:border-primary ring-primary w-full"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="bg-primary">
+                <ChevronRight />
+              </Button>
+            </form>
+          </Form>
+        </div>
+      </div>
+      <Separator />
     </>
   );
 };
 
 export default CustomEntityInput;
-
-// const StyledListItemIcon = styled(ListItemIcon)`
-//   display: flex;
-//   justify-content: center;
-//   width: 2em;
-//   height: 2em;
-// `;

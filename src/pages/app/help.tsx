@@ -1,13 +1,11 @@
 import PageLayout from '@components/layout/PageLayout';
 import { ROUTES } from '@constants/routes.const';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Stack,
-  Typography,
-} from '@mui/material';
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@core/ui/Accordion';
 import { NextPage } from 'next';
 
 interface HelpPageProps {}
@@ -17,14 +15,17 @@ const HelpPage: NextPage<HelpPageProps> = () => {
 
   const faqs = [
     {
+      id: '1',
       question: 'How do I create a profile?',
       answer: 'Click on the "Create Profile" button on the Profiles page.',
     },
     {
+      id: '2',
       question: 'How do I edit a profile?',
       answer: 'Click on the "Edit" button on the Profiles page.',
     },
     {
+      id: '3',
       question: 'How do I delete a profile?',
       answer: 'Click on the "Delete" button on the Profiles page.',
     },
@@ -32,22 +33,19 @@ const HelpPage: NextPage<HelpPageProps> = () => {
 
   return (
     <PageLayout title={helpTitle} backPath={ROUTES.APP}>
-      <Stack>
-        {faqs.map(({ question, answer }, index) => (
-          <Accordion key={index}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls={`faq-${index}-content`}
-            >
-              {question}
-            </AccordionSummary>
+      <div>
+        {faqs.map(({ question, answer, id }, index) => (
+          <Accordion key={index} type="single" collapsible>
+            <AccordionItem value={id}>
+              <AccordionTrigger>{question}</AccordionTrigger>
 
-            <AccordionDetails>
-              <Typography>{answer}</Typography>
-            </AccordionDetails>
+              <AccordionContent>
+                <p>{answer}</p>
+              </AccordionContent>
+            </AccordionItem>
           </Accordion>
         ))}
-      </Stack>
+      </div>
     </PageLayout>
   );
 };

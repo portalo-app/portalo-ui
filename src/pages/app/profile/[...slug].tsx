@@ -1,14 +1,13 @@
 import AddressList from '@components/addresses/AddressList';
 import PageLayout from '@components/layout/PageLayout';
 import { ROUTES } from '@constants/routes.const';
-import PulseButton from '@core/components/PulseButton';
+import { Button } from '@core/ui/Button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@core/ui/Tab';
 import { ADDRESS_TYPE } from '@models/address';
 import { Profile } from '@models/profile';
-import AddIcon from '@mui/icons-material/Add';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Tab, styled } from '@mui/material';
 import { addressFormState } from '@states/address-form.atom';
 import { profilesState } from '@states/profiles.atom';
+import { Plus } from 'lucide-react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -18,13 +17,16 @@ interface ProfilePageProps {}
 
 const ProfilePage: NextPage<ProfilePageProps> = () => {
   const profilesData = useRecoilValue(profilesState);
+
   const setAddressForm = useSetRecoilState(addressFormState);
-  const [addressType, setAddressType] = useState('1');
+  const [addressType, setAddressType] = useState('crypto');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [profile, setProfile] = useState<Profile | null>(null);
   const router = useRouter();
   const createAddressTitle = 'Create Address';
 
   useEffect(() => {
+    setIsLoading(true);
     if (!router.isReady) return;
 
     const { slug } = router.query;
@@ -32,10 +34,11 @@ const ProfilePage: NextPage<ProfilePageProps> = () => {
     const id = slug && slug[0];
     const type: ADDRESS_TYPE = (slug && slug[1]) as ADDRESS_TYPE;
 
-    if (type) setAddressType(type === ADDRESS_TYPE.FIAT ? '2' : '1');
+    if (type) setAddressType(type === ADDRESS_TYPE.FIAT ? 'fiat' : 'crypto');
 
     if (!id) return;
 
+    setIsLoading(false);
     const selectedProfile = profilesData.find((profile) => profile.id === id);
 
     if (!selectedProfile) {
@@ -46,110 +49,70 @@ const ProfilePage: NextPage<ProfilePageProps> = () => {
     setProfile(selectedProfile);
   }, [profilesData, router, router.isReady, router.query]);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (newValue: string) => {
     setAddressType(newValue);
   };
 
   const handleCreateAddress = () => {
-    const type = addressType === '1' ? ADDRESS_TYPE.CRYPTO : ADDRESS_TYPE.FIAT;
+    const type =
+      addressType === 'crypto' ? ADDRESS_TYPE.CRYPTO : ADDRESS_TYPE.FIAT;
 
     setAddressForm((currentValue) => ({ ...currentValue, action: 'CREATE' }));
     router.push(`${ROUTES.APP_SELECT_ENTITY}/${profile?.id}/${type}`);
   };
 
-  // TODO: Implement loading state
   return (
-    <PageLayout
-      title={profile?.name || 'Loading...'}
-      backPath={ROUTES.APP}
-      action={{
-        icon: <AddIcon />,
-        onClick: handleCreateAddress,
-      }}
-    >
-      <TabContext value={addressType}>
-        <StyledTabs
-          variant="fullWidth"
-          onChange={handleChange}
-          aria-label="Address type tabs"
-        >
-          <Tab
-            value="1"
-            label={`${ADDRESS_TYPE.CRYPTO} (${
-              profile?.cryptoAddresses?.length || 0
-            })`}
-          />
-          <Tab
-            value="2"
-            label={`${ADDRESS_TYPE.FIAT} (${
-              profile?.fiatAddresses?.length || 0
-            })`}
-          />
-        </StyledTabs>
-
-        <TabPanel value="1" sx={{ p: 0 }}>
-          <AddressList
-            profileId={profile?.id || ''}
-            addresses={profile?.cryptoAddresses || []}
-            addressType={ADDRESS_TYPE.CRYPTO}
-          />
-
-          <PulseButton
-            variant="outlined"
-            pulse={(profile?.cryptoAddresses || []).length === 0}
-            fullWidth
-            startIcon={<AddIcon />}
-            onClick={handleCreateAddress}
-            sx={{ mt: 2 }}
-          >
-            {createAddressTitle}
-          </PulseButton>
-        </TabPanel>
-
-        <TabPanel value="2" sx={{ p: 0 }}>
-          <AddressList
-            profileId={profile?.id || ''}
-            addresses={profile?.fiatAddresses || []}
-            addressType={ADDRESS_TYPE.FIAT}
-          />
-
-          <PulseButton
-            variant="outlined"
-            pulse={(profile?.fiatAddresses || []).length === 0}
-            fullWidth
-            startIcon={<AddIcon />}
-            onClick={handleCreateAddress}
-            sx={{ mt: 2 }}
-          >
-            {createAddressTitle}
-          </PulseButton>
-        </TabPanel>
-      </TabContext>
+    <PageLayout title={profile?.name || 'Loading...'} backPath={ROUTES.APP}>
+      <Tabs
+        defaultValue="crypto"
+        className=" flex flex-col w-full justify-center content-center checked:bg-primary"
+        onValueChange={handleChange}
+      >
+        <TabsList className="space-x-4">
+          <TabsTrigger value="crypto">{`${ADDRESS_TYPE.CRYPTO} (${
+            profile?.cryptoAddresses?.length || 0
+          })`}</TabsTrigger>
+          <TabsTrigger value="fiat">{`${ADDRESS_TYPE.FIAT} (${
+            profile?.fiatAddresses?.length || 0
+          })`}</TabsTrigger>
+        </TabsList>
+        <TabsContent value="crypto">
+          {isLoading ? (
+            'loading...' // TODO ->  add skeleton
+          ) : (
+            <div>
+              <AddressList
+                profileId={profile?.id || ''}
+                addresses={profile?.cryptoAddresses || []}
+                addressType={ADDRESS_TYPE.CRYPTO}
+              />
+              <Button onClick={handleCreateAddress}>
+                <Plus size={16} />
+                {createAddressTitle}
+              </Button>
+            </div>
+          )}
+        </TabsContent>
+        <TabsContent value="fiat">
+          {isLoading ? (
+            'loading...' // TODO -> add skeleton
+          ) : (
+            <div>
+              <AddressList
+                profileId={profile?.id || ''}
+                addresses={profile?.fiatAddresses || []}
+                addressType={ADDRESS_TYPE.FIAT}
+              />
+              <Button onClick={handleCreateAddress}>
+                <Plus size={16} />
+                {createAddressTitle}
+              </Button>
+            </div>
+          )}
+        </TabsContent>
+      </Tabs>
     </PageLayout>
   );
 };
 
 export default ProfilePage;
-
-const StyledTabs = styled(TabList)`
-  background: ${({ theme }) => theme.palette.background.paper};
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  margin-bottom: 1rem;
-  border: 1px solid ${({ theme }) => theme.palette.divider};
-
-  .MuiTabs-indicator {
-    height: 100%;
-    background-color: ${({ theme }) => theme.palette.background.paper};
-    filter: brightness(0.8);
-    z-index: 1;
-  }
-
-  .MuiTab-root {
-    background-color: transparent;
-    z-index: 2;
-
-    &.Mui-selected {
-      font-weight: ${({ theme }) => theme.typography.fontWeightBold};
-    }
-  }
-`;

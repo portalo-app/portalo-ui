@@ -1,42 +1,37 @@
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
-import InfoIcon from '@mui/icons-material/Info';
-import WarningIcon from '@mui/icons-material/Warning';
-import { Paper, Stack, Typography } from '@mui/material';
+import { AlertTriangle, CheckCircle, Info, XCircle } from 'lucide-react';
 
 type StateType = 'success' | 'info' | 'warning' | 'error';
-
+type SizeType = number;
 interface StateProps {
   type: StateType;
   label: string;
+  size?: SizeType;
 }
 
-const StateIcon: React.FC<{ type: StateType }> = ({ type }) => {
+const StateIcon: React.FC<{ type: StateType; size?: SizeType }> = ({
+  type,
+  size,
+}) => {
   switch (type) {
     case 'success':
-      return <CheckCircleIcon fontSize="inherit" color="success" />;
+      return <CheckCircle size={size} />;
     case 'info':
-      return <InfoIcon fontSize="inherit" color="info" />;
+      return <Info size={size} />;
     case 'warning':
-      return <WarningIcon fontSize="inherit" color="warning" />;
+      return <AlertTriangle size={size} />;
     case 'error':
-      return <ErrorIcon fontSize="inherit" color="error" />;
+      return <XCircle size={size} />;
     default:
       return null;
   }
 };
 
-const State: React.FC<StateProps> = ({ type, label }) => {
+const State: React.FC<StateProps> = ({ type, label, size }) => {
   return (
-    <Paper elevation={0}>
-      <Stack p={2} alignItems="center" justifyContent="center">
-        <Typography variant="h1">
-          <StateIcon type={type} />
-        </Typography>
-
-        <Typography>{label}</Typography>
-      </Stack>
-    </Paper>
+    <div className="flex content-center justify-center flex-col">
+      <StateIcon type={type} size={size} />
+      <h2 className="text-lg mt-2 ">{label}</h2>
+    </div>
   );
 };
 
