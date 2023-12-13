@@ -1,9 +1,9 @@
 import FormInputText from '@core/components/FormInputText';
-import styled from '@emotion/styled';
+// import styled from '@emotion/styled';
 import { ADDRESS_TYPE } from '@models/address';
 import { Entity } from '@models/entities';
 import NavigateNext from '@mui/icons-material/NavigateNext';
-import { Button, Divider, ListItem, ListItemIcon, Stack } from '@mui/material';
+import { Button, Divider, ListItem, Stack } from '@mui/material';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import EntityIcon from './EntityIcon';
@@ -47,9 +47,9 @@ const CustomEntityInput: FC<{
     <>
       <ListItem>
         <Stack direction="row" alignItems="center" gap={1}>
-          <StyledListItemIcon>
+          <div>
             <EntityIcon entity={entityValue} width="2em" svgWidth="2em" />
-          </StyledListItemIcon>
+          </div>
           <Stack paddingTop={3}>
             <FormInputText
               control={control}
@@ -82,9 +82,9 @@ const CustomEntityInput: FC<{
 
 export default CustomEntityInput;
 
-const StyledListItemIcon = styled(ListItemIcon)`
-  display: flex;
-  justify-content: center;
-  width: 2em;
-  height: 2em;
-`;
+// const StyledListItemIcon = styled(ListItemIcon)`
+//   display: flex;
+//   justify-content: center;
+//   width: 2em;
+//   height: 2em;
+// `;

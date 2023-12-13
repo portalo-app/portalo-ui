@@ -1,4 +1,4 @@
-import { CacheProvider, EmotionCache } from '@emotion/react';
+// import { CacheProvider, EmotionCache } from '@emotion/react';
 import useIsMobile from '@hooks/common/useIsMobile';
 import {
   CssBaseline,
@@ -6,7 +6,7 @@ import {
   createTheme,
   responsiveFontSizes,
 } from '@mui/material';
-import createEmotionCache from '@styles/createEmotionCache';
+// import createEmotionCache from '@styles/createEmotionCache';
 import GlobalStyles from '@styles/globals.style';
 import { THEME } from '@styles/theme.style';
 import dynamic from 'next/dynamic';
@@ -19,7 +19,7 @@ interface RootProps {
   Component: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   pageProps: any;
-  emotionCache?: EmotionCache;
+  // emotionCache?: EmotionCache;
 }
 
 const RecoilRoot = dynamic(
@@ -30,41 +30,41 @@ const RecoilRoot = dynamic(
 const globalStyles = <GlobalStyles />;
 
 // Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache();
+// const clientSideEmotionCache = createEmotionCache();
 
 const Root: React.FC<RootProps> = ({
   Component,
   pageProps,
-  emotionCache = clientSideEmotionCache,
+  // emotionCache = clientSideEmotionCache,
 }) => {
   const isMobile = useIsMobile();
 
   return (
     <>
       <RecoilRoot>
-        <CacheProvider value={emotionCache}>
-          {globalStyles}
+        {/* <CacheProvider value={emotionCache}> */}
+        {globalStyles}
 
-          <ThemeProvider theme={responsiveFontSizes(createTheme(THEME))}>
-            <CssBaseline enableColorScheme />
+        <ThemeProvider theme={responsiveFontSizes(createTheme(THEME))}>
+          <CssBaseline enableColorScheme />
 
-            <Layout>
-              <Suspense fallback={'Loading...'}>
-                <SnackbarProvider
-                  autoHideDuration={3000}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: isMobile ? 'center' : 'left',
-                  }}
-                  dense={isMobile}
-                  disableWindowBlurListener
-                >
-                  <Component {...pageProps} />
-                </SnackbarProvider>
-              </Suspense>
-            </Layout>
-          </ThemeProvider>
-        </CacheProvider>
+          <Layout>
+            <Suspense fallback={'Loading...'}>
+              <SnackbarProvider
+                autoHideDuration={3000}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: isMobile ? 'center' : 'left',
+                }}
+                dense={isMobile}
+                disableWindowBlurListener
+              >
+                <Component {...pageProps} />
+              </SnackbarProvider>
+            </Suspense>
+          </Layout>
+        </ThemeProvider>
+        {/* </CacheProvider> */}
       </RecoilRoot>
     </>
   );

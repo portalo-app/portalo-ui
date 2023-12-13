@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+// import styled from '@emotion/styled';
 import { BankValue, ChainValue, banks } from '@models/entities';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -10,7 +10,7 @@ import Btc from 'cryptocurrency-icons/svg/icon/btc.svg';
 import Dot from 'cryptocurrency-icons/svg/icon/dot.svg';
 import Eth from 'cryptocurrency-icons/svg/icon/eth.svg';
 import Matic from 'cryptocurrency-icons/svg/icon/matic.svg';
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 interface EntityIconProps {
   entity: ChainValue | BankValue | 'DEFAULT_BANK' | 'DEFAULT_CHAIN';
   width?: string;
@@ -37,6 +37,7 @@ const bankIcons: {
 banks.forEach((bank) =>
   Object.assign(bankIcons, {
     [bank.value]: (
+      // TODO Use new image component
       <Image
         alt={bank.icon}
         src={`/assets/icons/banks/${bank.icon}.png`}
@@ -48,29 +49,29 @@ banks.forEach((bank) =>
   })
 );
 
-const BankIconContainer = styled.div<
-  Pick<EntityIconProps, 'width' | 'height' | 'svgHeight' | 'svgWidth'>
->`
-  display: flex;
+// const BankIconContainer = styled.div<
+//   Pick<EntityIconProps, 'width' | 'height' | 'svgHeight' | 'svgWidth'>
+// >`
+//   display: flex;
 
-  img {
-    width: ${(props) => props.width};
-    height: ${(props) => props.height};
-  }
+//   img {
+//     width: ${(props) => props.width};
+//     height: ${(props) => props.height};
+//   }
 
-  svg {
-    width: ${(props) => props.svgWidth};
-    height: ${(props) => props.svgHeight};
-    color: white;
-  }
-`;
+//   svg {
+//     width: ${(props) => props.svgWidth};
+//     height: ${(props) => props.svgHeight};
+//     color: white;
+//   }
+// `;
 
 const EntityIcon: React.FC<EntityIconProps> = ({
   entity,
-  width = '100%',
-  height = '100%',
-  svgWidth = '100%',
-  svgHeight = '100%',
+  // width = '100%',
+  // height = '100%',
+  // svgWidth = '100%',
+  // svgHeight = '100%',
 }) => {
   const icon =
     chainIcons[entity as ChainValue] ||
@@ -82,18 +83,13 @@ const EntityIcon: React.FC<EntityIconProps> = ({
     ));
 
   return (
-    <BankIconContainer
-      width={width}
-      height={height}
-      svgWidth={svgWidth}
-      svgHeight={svgHeight}
-    >
+    <div>
       {bankIcons[entity as BankValue] ? (
         (icon as JSX.Element)
       ) : (
         <SvgIcon viewBox="0 0 32 32">{icon}</SvgIcon>
       )}
-    </BankIconContainer>
+    </div>
   );
 };
 
