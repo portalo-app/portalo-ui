@@ -15,9 +15,17 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"],
       "@icons/*": ["./public/assets/icons/*"],
-      "@images/*": ["./public/assets/images/*"]
+      "@images/*": ["./public/assets/images/*"],
+      "@components/*": ["./src/components/*"],
+      "@core/*": ["./src/core/*"],
+      "@constants/*": ["./src/lib/constants/*"],
+      "@hooks/*": ["./src/lib/hooks/*"],
+      "@models/*": ["./src/lib/models/*"],
+      "@states/*": ["./src/lib/states/*"],
+      "@utils/*": ["./src/lib/utils/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@/*": ["./src*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

@@ -1,4 +1,4 @@
-import { Entity } from '@/lib/model/entities';
+import { Entity } from '@models/entities';
 import Chip from '@mui/material/Chip';
 import { FC } from 'react';
 import EntityIcon from './EntityIcon';

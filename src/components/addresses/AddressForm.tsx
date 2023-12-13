@@ -1,16 +1,13 @@
-import FormInputText from '@/core/components/FormInputText';
-import { ROUTES } from '@/lib/constants/routes.const';
-import useCreateAddress from '@/lib/hooks/addresses/useCreateAddress';
-import useEditAddress from '@/lib/hooks/addresses/useEditAddress';
-import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
-import { Entity } from '@/lib/model/entities';
-import { addressFormState } from '@/lib/store/address-form.atom';
-import {
-  canPasteFormClipboard,
-  pasteFromClipboard,
-} from '@/lib/utils/clipboard';
+import { ROUTES } from '@constants/routes.const';
+import FormInputText from '@core/components/FormInputText';
+import useCreateAddress from '@hooks/addresses/useCreateAddress';
+import useEditAddress from '@hooks/addresses/useEditAddress';
+import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
+import { Entity } from '@models/entities';
 import { ContentPaste } from '@mui/icons-material';
 import { Button, Stack } from '@mui/material';
+import { addressFormState } from '@states/address-form.atom';
+import { canPasteFormClipboard, pasteFromClipboard } from '@utils/clipboard';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';

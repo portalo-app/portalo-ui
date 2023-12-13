@@ -1,5 +1,5 @@
-import PageLayout from '@/components/layout/PageLayout';
-import { ROUTES } from '@/lib/constants/routes.const';
+import PageLayout from '@components/layout/PageLayout';
+import { ROUTES } from '@constants/routes.const';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,

@@ -1,6 +1,6 @@
-import PageLayout from '@/components/layout/PageLayout';
-import ProfileForm from '@/components/profiles/ProfileForm';
-import { ROUTES } from '@/lib/constants/routes.const';
+import PageLayout from '@components/layout/PageLayout';
+import ProfileForm from '@components/profiles/ProfileForm';
+import { ROUTES } from '@constants/routes.const';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 

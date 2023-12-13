@@ -1,4 +1,4 @@
-import { profilesState } from '@/lib/store/profiles.atom';
+import { profilesState } from '@states/profiles.atom';
 import { useSetRecoilState } from 'recoil';
 
 type DeleteProfile = (id: string) => void;

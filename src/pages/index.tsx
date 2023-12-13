@@ -1,5 +1,5 @@
-import { NextLinkComposed } from '@/core/components/Link';
-import { ROUTES } from '@/lib/constants/routes.const';
+import { ROUTES } from '@constants/routes.const';
+import { NextLinkComposed } from '@core/components/Link';
 import { Button, Stack, Typography } from '@mui/material';
 
 export default function Home() {

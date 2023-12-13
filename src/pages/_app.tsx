@@ -1,4 +1,4 @@
-import Root from '@/components/layout/Root';
+import Root from '@components/layout/Root';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 

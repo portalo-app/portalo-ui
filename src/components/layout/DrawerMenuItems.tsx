@@ -1,6 +1,5 @@
-import { NextLinkComposed } from '@/core/components/Link';
-import { ROUTES } from '@/lib/constants/routes.const';
-import { profilesState } from '@/lib/store/profiles.atom';
+import { ROUTES } from '@constants/routes.const';
+import { NextLinkComposed } from '@core/components/Link';
 import PortaloLogo from '@images/portalo_logo.svg';
 import GroupIcon from '@mui/icons-material/Group';
 import FAQIcon from '@mui/icons-material/Help';
@@ -14,6 +13,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { profilesState } from '@states/profiles.atom';
 import Avvvatars from 'avvvatars-react';
 import { useRecoilValue } from 'recoil';
 

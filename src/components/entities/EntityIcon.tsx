@@ -1,5 +1,5 @@
-import { BankValue, ChainValue, banks } from '@/lib/model/entities';
 import styled from '@emotion/styled';
+import { BankValue, ChainValue, banks } from '@models/entities';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { SvgIcon } from '@mui/material';

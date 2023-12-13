@@ -1,7 +1,7 @@
-import FormInputText from '@/core/components/FormInputText';
-import useCreateProfile from '@/lib/hooks/profiles/useCreateProfile';
-import useEditProfile from '@/lib/hooks/profiles/useEditProfile';
-import { Profile } from '@/lib/model/profile';
+import FormInputText from '@core/components/FormInputText';
+import useCreateProfile from '@hooks/profiles/useCreateProfile';
+import useEditProfile from '@hooks/profiles/useEditProfile';
+import { Profile } from '@models/profile';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Button, IconButton, InputAdornment, Stack } from '@mui/material';

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import AnimatedModal from '@/core/components/AnimatedModal';
-import { ROUTES } from '@/lib/constants/routes.const';
-import { Profile } from '@/lib/model/profile';
+import { ROUTES } from '@constants/routes.const';
+import AnimatedModal from '@core/components/AnimatedModal';
+import { Profile } from '@models/profile';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';

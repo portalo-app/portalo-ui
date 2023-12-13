@@ -1,7 +1,6 @@
-import { ROUTES } from '@/lib/constants/routes.const';
-import { ADDRESS_TYPE } from '@/lib/model/address';
-import { Entity, banks, chains } from '@/lib/model/entities';
-import { addressFormState } from '@/lib/store/address-form.atom';
+import { ROUTES } from '@constants/routes.const';
+import { ADDRESS_TYPE } from '@models/address';
+import { Entity, banks, chains } from '@models/entities';
 import {
   Divider,
   List,
@@ -12,6 +11,7 @@ import {
   Typography,
   styled,
 } from '@mui/material';
+import { addressFormState } from '@states/address-form.atom';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { useSetRecoilState } from 'recoil';

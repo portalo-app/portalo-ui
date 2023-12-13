@@ -1,14 +1,14 @@
-import useIsMobile from '@/lib/hooks/common/useIsMobile';
-import createEmotionCache from '@/styles/createEmotionCache';
-import GlobalStyles from '@/styles/globals.style';
-import { THEME } from '@/styles/theme.style';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import useIsMobile from '@hooks/common/useIsMobile';
 import {
   CssBaseline,
   ThemeProvider,
   createTheme,
   responsiveFontSizes,
 } from '@mui/material';
+import createEmotionCache from '@styles/createEmotionCache';
+import GlobalStyles from '@styles/globals.style';
+import { THEME } from '@styles/theme.style';
 import dynamic from 'next/dynamic';
 import { SnackbarProvider } from 'notistack';
 import { Suspense } from 'react';

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import createEmotionCache from '@/styles/createEmotionCache';
 import createEmotionServer from '@emotion/server/create-instance';
 import { getInitColorSchemeScript } from '@mui/material';
+import createEmotionCache from '@styles/createEmotionCache';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 export default class MyDocument extends Document {

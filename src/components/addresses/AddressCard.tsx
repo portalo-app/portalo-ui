@@ -1,4 +1,4 @@
-import { CryptoAddress, FIATAddress } from '@/lib/model/address';
+import { CryptoAddress, FIATAddress } from '@models/address';
 
 import {
   Avatar,

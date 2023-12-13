@@ -1,4 +1,4 @@
-import { Address } from '@/lib/model/address';
+import { Address } from '@models/address';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';

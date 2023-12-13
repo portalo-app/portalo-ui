@@ -1,4 +1,4 @@
-import { NextLinkComposed } from '@/core/components/Link';
+import { NextLinkComposed } from '@core/components/Link';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Button, Fab, IconButton, Stack, Typography } from '@mui/material';
 

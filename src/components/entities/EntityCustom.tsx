@@ -1,7 +1,7 @@
-import FormInputText from '@/core/components/FormInputText';
-import { ADDRESS_TYPE } from '@/lib/model/address';
-import { Entity } from '@/lib/model/entities';
+import FormInputText from '@core/components/FormInputText';
 import styled from '@emotion/styled';
+import { ADDRESS_TYPE } from '@models/address';
+import { Entity } from '@models/entities';
 import NavigateNext from '@mui/icons-material/NavigateNext';
 import { Button, Divider, ListItem, ListItemIcon, Stack } from '@mui/material';
 import { FC } from 'react';

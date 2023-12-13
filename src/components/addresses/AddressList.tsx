@@ -1,5 +1,5 @@
-import State from '@/core/components/State';
-import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
+import State from '@core/components/State';
+import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
 import { Fade, Stack } from '@mui/material';
 import { useState } from 'react';
 import AddressCard from './AddressCard';

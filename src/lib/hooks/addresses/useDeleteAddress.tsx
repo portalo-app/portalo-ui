@@ -1,5 +1,5 @@
-import { ADDRESS_TYPE } from '@/lib/model/address';
-import { profilesState } from '@/lib/store/profiles.atom';
+import { ADDRESS_TYPE } from '@models/address';
+import { profilesState } from '@states/profiles.atom';
 import { useSetRecoilState } from 'recoil';
 
 type DeleteAddress = (
