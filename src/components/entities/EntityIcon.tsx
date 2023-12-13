@@ -10,7 +10,7 @@ import Btc from 'cryptocurrency-icons/svg/icon/btc.svg';
 import Dot from 'cryptocurrency-icons/svg/icon/dot.svg';
 import Eth from 'cryptocurrency-icons/svg/icon/eth.svg';
 import Matic from 'cryptocurrency-icons/svg/icon/matic.svg';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 interface EntityIconProps {
   entity: ChainValue | BankValue | 'DEFAULT_BANK' | 'DEFAULT_CHAIN';
   width?: string;

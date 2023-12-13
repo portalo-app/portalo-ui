@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Button, Drawer, IconButton, Link, Stack, styled } from '@mui/material';
 import { profilesState } from '@states/profiles.atom';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useResetRecoilState } from 'recoil';
@@ -90,6 +90,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                 target="_blank"
               >
                 <Stack direction="row" alignItems="center">
+                  {/* // TODO Use new image component */}
                   <Image
                     src="/neopower.svg"
                     alt="neopower"
