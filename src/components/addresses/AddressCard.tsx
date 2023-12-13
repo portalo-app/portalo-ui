@@ -1,76 +1,46 @@
+import { Badge } from '@/core/ui/Badge';
+import { Card, CardContent } from '@/core/ui/Card';
 import { CryptoAddress, FIATAddress } from '@/lib/model/address';
-
-import {
-  Avatar,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardProps,
-  Chip,
-  Grow,
-  Stack,
-  Typography,
-} from '@mui/material';
 import { QRCodeSVG } from 'qrcode.react';
 import EntityIcon from '../entities/EntityIcon';
 
-interface AddressCardProps extends CardProps {
+interface AddressCardProps {
   addressData: CryptoAddress | FIATAddress;
   showQR?: boolean;
-  inModal?: boolean;
+  onClick?: () => void;
 }
 
 const AddressCard: React.FC<AddressCardProps> = ({
   addressData,
   showQR,
-  inModal,
   ...props
 }) => {
   const { name, alias, notes, entity, address } = addressData;
-
   return (
-    <Card
-      sx={{
-        [inModal ? 'borderTop' : 'borderLeft']: `3px solid ${entity.color}`,
-      }}
-      {...props}
-      elevation={inModal ? 0 : 2}
-      variant={inModal ? 'outlined' : 'elevation'}
-    >
-      <CardActionArea disabled={inModal}>
-        <CardContent>
-          <Stack direction="row" alignItems="center" gap={1} mb={1}>
-            <Avatar
-              sx={{ width: 32, height: 32, backgroundColor: 'transparent' }}
-            >
-              <EntityIcon entity={entity.value} />
-            </Avatar>
+    <Card className="min-w-xl  hover:cursor-pointer m-2" {...props}>
+      <CardContent className="py-4">
+        <div className="flex content-center space-x-2">
+          <EntityIcon width={50} height={50} entity={entity.value} />
 
-            <Stack direction="row" gap={1} alignItems="center">
-              <Typography variant="subtitle2">{entity.label}</Typography>
+          <h3 className="text-lg font-bold">{entity.label}</h3>
 
-              {alias && <Chip size="small" label={alias} />}
-            </Stack>
-          </Stack>
+          {alias && <Badge className="bg-primary">{alias}</Badge>}
+        </div>
 
-          <Typography variant="h6">{name || 'Wallet'}</Typography>
+        <h1 className="text-2xl my-1 font-bold">{name || 'Wallet'}</h1>
 
-          <Typography variant="mono" fontSize={12}>
-            {address}
-          </Typography>
-
-          <Grow in={showQR} mountOnEnter unmountOnExit>
-            <Stack mt={2} alignItems="center">
-              <QRCodeSVG
-                includeMargin
-                value={address}
-                size={256}
-                style={{ borderRadius: 8 }}
-              />
-            </Stack>
-          </Grow>
-        </CardContent>
-      </CardActionArea>
+        <h2>{address}</h2>
+        {showQR && (
+          <div className=" flex mt-3 content-center">
+            <QRCodeSVG
+              includeMargin
+              value={address}
+              size={256}
+              style={{ borderRadius: 8 }}
+            />
+          </div>
+        )}
+      </CardContent>
     </Card>
   );
 };

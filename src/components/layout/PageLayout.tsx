@@ -1,75 +1,46 @@
-import { NextLinkComposed } from '@/core/components/Link';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Button, Fab, IconButton, Stack, Typography } from '@mui/material';
+import { Button } from '@/core/ui/Button';
+import { ChevronLeft } from 'lucide-react';
+import Link from 'next/link';
 
 interface PageLayoutProps {
   children: React.ReactNode;
   title: string;
-  action?: ActionData;
   backPath?: string;
   backClick?: () => void;
 }
 
-interface ActionData {
-  icon: React.ReactNode;
-  onClick: () => void;
-  label?: string;
-}
-
-const Action: React.FC<ActionData> = ({ label, icon, onClick }) => {
-  return label ? (
-    <Button variant="contained" startIcon={icon} onClick={onClick}>
-      {label}
-    </Button>
-  ) : (
-    <Fab size="small" color="primary" onClick={onClick}>
-      {icon}
-    </Fab>
-  );
-};
-
 const PageLayout: React.FC<PageLayoutProps> = ({
   children,
   title,
-  action,
   backPath,
   backClick,
 }) => {
   return (
-    <Stack>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        mb={2}
-      >
-        <Stack direction="row" gap={1} alignItems="center">
+    <div className="my-8 max-w-xs w-full">
+      <div className="flex content-center justify-between mb-2">
+        <div className="flex gap-2 content-center justify-center ">
           {backPath && (
-            <IconButton
-              component={NextLinkComposed}
-              to={{
-                pathname: backPath,
-              }}
+            <Link
+              href={backPath}
               onClick={() => backClick && backClick()}
+              className="flex justify-center flex-col"
             >
-              <ArrowBackIcon />
-            </IconButton>
+              <ChevronLeft />
+            </Link>
           )}
-
           {backClick && !backPath && (
-            <IconButton onClick={backClick}>
-              <ArrowBackIcon />
-            </IconButton>
+            <Button onClick={backClick}>
+              <ChevronLeft />
+            </Button>
           )}
-
-          <Typography variant="h6">{title}</Typography>
-        </Stack>
-
-        {action && <Action {...action} />}
-      </Stack>
+          <h6 className="text-2xl flex content-center text-start justify-center flex-col pb-2 ml-2">
+            {title}
+          </h6>
+        </div>
+      </div>
 
       {children}
-    </Stack>
+    </div>
   );
 };
 

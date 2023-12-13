@@ -1,20 +1,24 @@
-import FormInputText from '@/core/components/FormInputText';
+import { Button } from '@/core/ui/Button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/core/ui/Form';
+import { Input } from '@/core/ui/Input';
 import { ROUTES } from '@/lib/constants/routes.const';
 import useCreateAddress from '@/lib/hooks/addresses/useCreateAddress';
 import useEditAddress from '@/lib/hooks/addresses/useEditAddress';
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
 import { Entity } from '@/lib/model/entities';
 import { addressFormState } from '@/lib/store/address-form.atom';
-import {
-  canPasteFormClipboard,
-  pasteFromClipboard,
-} from '@/lib/utils/clipboard';
-import { ContentPaste } from '@mui/icons-material';
-import { Button, Stack } from '@mui/material';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
+import * as z from 'zod';
 import EntityChip from '../entities/EntityChip';
 
 interface AddressFormProps {
@@ -24,6 +28,11 @@ interface AddressFormProps {
   address?: CryptoAddress | FIATAddress;
   onComplete?: () => void;
 }
+
+const ACTION_FORM = {
+  Edit: 'EDIT',
+  Create: 'CREATE',
+} as const;
 
 export type AddressFormData = {
   entity: Entity;
@@ -46,67 +55,53 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   const [addressForm, setAddressForm] = useRecoilState(addressFormState);
 
-  const {
-    handleSubmit,
-    register,
-    setValue,
-    watch,
-    trigger,
-    control,
-    formState: { errors, dirtyFields },
-  } = useForm<AddressFormData>({ mode: 'all', defaultValues: addressForm });
-
-  const addressValue = watch('address');
-
   const actionLabel = action === 'CREATE' ? 'Create Address' : 'Edit Address';
 
   const nameLabel = 'Name';
-  const requiredNameMessage = 'Name is required';
-  const maxLengthNameMessage = 'Name is too long';
-
   const addressLabel = 'Address';
-  const requiredAddressMessage = 'Address is required';
-  const maxLengthAddressMessage = 'Address is too long';
-
   const aliasLabel = 'Alias';
-  const maxLengthAliasMessage = 'Alias is too long';
-
-  useEffect(() => {
-    register('address', {
-      required: 'Required',
-      pattern: {
-        value: addressForm.entity?.addressRegex || new RegExp(''),
-        message: 'Invalid address',
-      },
-    });
-
-    if (dirtyFields.address || addressValue) trigger('address');
-  }, [addressValue, addressForm.entity, dirtyFields, register, trigger]);
 
   const handleEntityDelete = () => {
     setAddressForm((currentValue) => ({
       ...currentValue,
-      ...watch(),
       entity: undefined,
     }));
 
     router.push(`${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`);
   };
 
-  const onSubmit = ({ address, alias, entity, name }: AddressFormData) => {
-    if (action === 'EDIT') {
+  const formSchema = z
+    .object({
+      name: z.string().min(4).max(50),
+      address: z.string().min(4).max(100),
+      alias: z.string().min(4),
+    })
+    .required();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: action === ACTION_FORM.Edit ? originalAddress?.name : '',
+      address: action === ACTION_FORM.Edit ? originalAddress?.address : '',
+      alias: action === ACTION_FORM.Edit ? originalAddress?.alias : '',
+    },
+  });
+
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    const { name, address, alias } = data;
+    if (action === ACTION_FORM.Edit) {
       editAddress(profileId, addressType, {
         id: addressForm.addressId,
         address,
         alias,
-        entity,
+        entity: addressForm.entity,
         name,
       } as CryptoAddress | FIATAddress);
     } else {
       createAddress(profileId, addressType, {
         address,
         alias,
-        entity,
+        entity: addressForm.entity,
         name,
       } as CryptoAddress | FIATAddress);
     }
@@ -114,69 +109,71 @@ const AddressForm: React.FC<AddressFormProps> = ({
     onComplete && onComplete();
   };
 
-  // TODO: Update validations
   return (
-    <Stack gap={2}>
-      {addressForm.entity && (
-        <EntityChip entity={addressForm.entity} onClick={handleEntityDelete} />
-      )}
-
-      <FormInputText
-        control={control}
-        name="address"
-        label={addressLabel}
-        error={errors.address}
-        defaultValue={action === 'EDIT' ? originalAddress?.address : undefined}
-        rules={{
-          required: { value: true, message: requiredAddressMessage },
-          maxLength: { value: 100, message: maxLengthAddressMessage },
-        }}
-        endAdornment={
-          canPasteFormClipboard() && (
-            <ContentPaste
-              cursor="pointer"
-              onClick={async () => {
-                setValue('address', await pasteFromClipboard(), {
-                  shouldValidate: true,
-                  shouldDirty: true,
-                });
-              }}
-            />
-          )
-        }
-      />
-
-      <FormInputText
-        control={control}
-        name="name"
-        label={nameLabel}
-        error={errors.name}
-        defaultValue={action === 'EDIT' ? originalAddress?.name : undefined}
-        rules={{
-          required: { value: true, message: requiredNameMessage },
-          maxLength: { value: 30, message: maxLengthNameMessage },
-        }}
-      />
-
-      <FormInputText
-        control={control}
-        name="alias"
-        label={aliasLabel}
-        error={errors.alias}
-        defaultValue={action === 'EDIT' ? originalAddress?.alias : undefined}
-        rules={{
-          maxLength: { value: 30, message: maxLengthAliasMessage },
-        }}
-      />
-
-      <Button
-        variant="contained"
-        disabled={Object.keys(errors).length > 0}
-        onClick={handleSubmit(onSubmit)}
-      >
-        {actionLabel}
-      </Button>
-    </Stack>
+    <div className="p-2">
+      {addressForm.entity && <EntityChip entity={addressForm.entity} />}
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col justify-center space-y-2"
+        >
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{nameLabel}</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="name"
+                    {...field}
+                    className=" focus:border-primary ring-primary w-full"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{addressLabel}</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="address"
+                    {...field}
+                    className=" focus:border-primary ring-primary w-full"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="alias"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{aliasLabel}</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="alias"
+                    {...field}
+                    className=" focus:border-primary ring-primary w-full"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" className="mt-2 w-[250px]">
+            {actionLabel}
+          </Button>
+        </form>
+      </Form>
+    </div>
   );
 };
 
