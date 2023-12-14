@@ -1,16 +1,16 @@
-import { Button } from '@/core/ui/Button';
-import { Card, CardContent } from '@/core/ui/Card';
+import { ROUTES } from '@constants/routes.const';
+import { Button } from '@core/ui/Button';
+import { Card, CardContent } from '@core/ui/Card';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/core/ui/Dialog';
-import { Popover, PopoverContent, PopoverTrigger } from '@/core/ui/PopOver';
-import { Separator } from '@/core/ui/Separator';
-import { ROUTES } from '@/lib/constants/routes.const';
-import { Profile } from '@/lib/model/profile';
+} from '@core/ui/Dialog';
+import { Popover, PopoverContent, PopoverTrigger } from '@core/ui/PopOver';
+import { Separator } from '@core/ui/Separator';
+import { Profile } from '@models/profile';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import {
   CircleDollarSign,
@@ -42,10 +42,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 
   const handleCloseDialog = () => {
     setDialogIsOpen(false);
-  };
-
-  const handleOpenDialog = () => {
-    setDialogIsOpen(true);
   };
 
   return (
@@ -112,6 +108,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 
 export default ProfileCard;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MenuItems: React.FC<any> = ({
   handleDelete,
   profile,

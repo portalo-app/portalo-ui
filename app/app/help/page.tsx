@@ -1,11 +1,13 @@
-import PageLayout from '@/components/layout/PageLayout';
+'use client';
+
+import PageLayout from '@components/layout/PageLayout';
+import { ROUTES } from '@constants/routes.const';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/core/ui/Accordion';
-import { ROUTES } from '@/lib/constants/routes.const';
+} from '@core/ui/Accordion';
 import { NextPage } from 'next';
 
 interface HelpPageProps {}

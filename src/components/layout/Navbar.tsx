@@ -1,7 +1,9 @@
-import DeleteModal from '@/core/components/DeleteModal';
-import { Button } from '@/core/ui/Button';
-import { ModeToggle } from '@/core/ui/ModeToggle';
-import { Separator } from '@/core/ui/Separator';
+import { EXTERNAL_LINKS } from '@constants/externalLinks.const';
+import { ROUTES } from '@constants/routes.const';
+import DeleteModal from '@core/components/DeleteModal';
+import { Button } from '@core/ui/Button';
+import { ModeToggle } from '@core/ui/ModeToggle';
+import { Separator } from '@core/ui/Separator';
 import {
   Sheet,
   SheetContent,
@@ -9,14 +11,12 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/core/ui/Sheet';
-import { EXTERNAL_LINKS } from '@/lib/constants/externalLinks.const';
-import { ROUTES } from '@/lib/constants/routes.const';
-import { profilesState } from '@/lib/store/profiles.atom';
+} from '@core/ui/Sheet';
+import { profilesState } from '@states/profiles.atom';
 import { AlignJustify, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useResetRecoilState } from 'recoil';
 import DrawerMenuItems from './DrawerMenuItems';

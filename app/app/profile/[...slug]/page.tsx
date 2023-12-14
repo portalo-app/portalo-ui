@@ -1,23 +1,32 @@
-import AddressList from '@/components/addresses/AddressList';
-import PageLayout from '@/components/layout/PageLayout';
-import { Button } from '@/core/ui/Button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/core/ui/Tab';
-import { ROUTES } from '@/lib/constants/routes.const';
-import { ADDRESS_TYPE } from '@/lib/model/address';
-import { Profile } from '@/lib/model/profile';
-import { addressFormState } from '@/lib/store/address-form.atom';
-import { profilesState } from '@/lib/store/profiles.atom';
+'use client';
+
+import AddressList from '@components/addresses/AddressList';
+import PageLayout from '@components/layout/PageLayout';
+import { ROUTES } from '@constants/routes.const';
+import { Button } from '@core/ui/Button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@core/ui/Tab';
+import { ADDRESS_TYPE } from '@models/address';
+import { Profile } from '@models/profile';
+import { addressFormState } from '@states/address-form.atom';
+import { profilesState } from '@states/profiles.atom';
 import { Plus } from 'lucide-react';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 interface ProfilePageProps {}
 
-const ProfilePage: NextPage<ProfilePageProps> = () => {
+const ProfilePage: NextPage<
+  // TODO Add corresponding type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ProfilePageProps & { params: { slug: any } }
+> = ({ params }) => {
+  const { slug } = params;
+
   const profilesData = useRecoilValue(profilesState);
-  const [_, setAddressForm] = useRecoilState(addressFormState);
+
+  const setAddressForm = useSetRecoilState(addressFormState);
   const [addressType, setAddressType] = useState('crypto');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -26,9 +35,6 @@ const ProfilePage: NextPage<ProfilePageProps> = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    if (!router.isReady) return;
-
-    const { slug } = router.query;
 
     const id = slug && slug[0];
     const type: ADDRESS_TYPE = (slug && slug[1]) as ADDRESS_TYPE;
@@ -46,7 +52,7 @@ const ProfilePage: NextPage<ProfilePageProps> = () => {
     }
 
     setProfile(selectedProfile);
-  }, [profilesData, router, router.isReady, router.query]);
+  }, [profilesData, router, slug]);
 
   const handleChange = (newValue: string) => {
     setAddressType(newValue);

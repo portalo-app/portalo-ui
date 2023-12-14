@@ -1,20 +1,22 @@
-import { Button } from '@/core/ui/Button';
+'use client';
+
+import { ROUTES } from '@constants/routes.const';
+import { Button } from '@core/ui/Button';
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from '@/core/ui/Command';
-import { Popover, PopoverContent, PopoverTrigger } from '@/core/ui/PopOver';
-import { ROUTES } from '@/lib/constants/routes.const';
-import { ADDRESS_TYPE } from '@/lib/model/address';
-import { Entity, banks, chains } from '@/lib/model/entities';
-import { addressFormState } from '@/lib/store/address-form.atom';
+} from '@core/ui/Command';
+import { Popover, PopoverContent, PopoverTrigger } from '@core/ui/PopOver';
+import { ADDRESS_TYPE } from '@models/address';
+import { Entity, banks, chains } from '@models/entities';
+import { addressFormState } from '@states/address-form.atom';
 import { ChevronsUpDown } from 'lucide-react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { FC, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import CustomEntityInput from './EntityCustom';
 import EntityIcon from './EntityIcon';
 
@@ -28,7 +30,7 @@ const EntitySelect: FC<EntitySelectProps> = ({ addressType, profileId }) => {
   const [value, setValue] = useState('');
 
   const router = useRouter();
-  const [_, setAddressFormState] = useRecoilState(addressFormState);
+  const setAddressFormState = useSetRecoilState(addressFormState);
   const handleEntityClick = (entity: Entity) => {
     setAddressFormState((current) => ({ ...current, entity }));
 
@@ -65,7 +67,7 @@ const EntitySelect: FC<EntitySelectProps> = ({ addressType, profileId }) => {
                 <CommandItem
                   key={entity.value}
                   value={entity.value}
-                  onSelect={(currentValue: any) => {
+                  onSelect={(currentValue: string) => {
                     setValue(currentValue === value ? '' : currentValue);
                     setOpen(false);
                   }}

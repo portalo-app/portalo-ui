@@ -1,4 +1,4 @@
-import { Button } from '@/core/ui/Button';
+import { Button } from '@core/ui/Button';
 import {
   Form,
   FormControl,
@@ -6,18 +6,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/core/ui/Form';
-import { Input } from '@/core/ui/Input';
-import { ROUTES } from '@/lib/constants/routes.const';
-import useCreateAddress from '@/lib/hooks/addresses/useCreateAddress';
-import useEditAddress from '@/lib/hooks/addresses/useEditAddress';
-import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
-import { Entity } from '@/lib/model/entities';
-import { addressFormState } from '@/lib/store/address-form.atom';
+} from '@core/ui/Form';
+import { Input } from '@core/ui/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/router';
+import useCreateAddress from '@hooks/addresses/useCreateAddress';
+import useEditAddress from '@hooks/addresses/useEditAddress';
+import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
+import { Entity } from '@models/entities';
+import { addressFormState } from '@states/address-form.atom';
 import { useForm } from 'react-hook-form';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import * as z from 'zod';
 import EntityChip from '../entities/EntityChip';
 
@@ -48,12 +46,10 @@ const AddressForm: React.FC<AddressFormProps> = ({
   address: originalAddress,
   onComplete,
 }) => {
-  const router = useRouter();
-
   const createAddress = useCreateAddress();
   const editAddress = useEditAddress();
 
-  const [addressForm, setAddressForm] = useRecoilState(addressFormState);
+  const addressForm = useRecoilValue(addressFormState);
 
   const actionLabel = action === 'CREATE' ? 'Create Address' : 'Edit Address';
 
@@ -61,14 +57,15 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const addressLabel = 'Address';
   const aliasLabel = 'Alias';
 
-  const handleEntityDelete = () => {
-    setAddressForm((currentValue) => ({
-      ...currentValue,
-      entity: undefined,
-    }));
+  // TODO Validate if we can delete this
+  // const handleEntityDelete = () => {
+  //   setAddressForm((currentValue) => ({
+  //     ...currentValue,
+  //     entity: undefined,
+  //   }));
 
-    router.push(`${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`);
-  };
+  //   router.push(`${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`);
+  // };
 
   const formSchema = z
     .object({

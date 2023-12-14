@@ -1,6 +1,6 @@
-import { Separator } from '@/core/ui/Separator';
-import { ROUTES } from '@/lib/constants/routes.const';
-import { profilesState } from '@/lib/store/profiles.atom';
+import { ROUTES } from '@constants/routes.const';
+import { Separator } from '@core/ui/Separator';
+import { profilesState } from '@states/profiles.atom';
 import Avvvatars from 'avvvatars-react';
 import { HelpCircle, Home, Settings, User } from 'lucide-react';
 import { useRecoilValue } from 'recoil';
@@ -9,7 +9,7 @@ import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
-} from '@/core/ui/NavigationMenu';
+} from '@core/ui/NavigationMenu';
 import Link from 'next/link';
 
 const menuItems = [

@@ -1,6 +1,6 @@
-import { Badge } from '@/core/ui/Badge';
-import { Card, CardContent } from '@/core/ui/Card';
-import { CryptoAddress, FIATAddress } from '@/lib/model/address';
+import { Badge } from '@core/ui/Badge';
+import { Card, CardContent } from '@core/ui/Card';
+import { CryptoAddress, FIATAddress } from '@models/address';
 import { QRCodeSVG } from 'qrcode.react';
 import EntityIcon from '../entities/EntityIcon';
 
@@ -15,7 +15,7 @@ const AddressCard: React.FC<AddressCardProps> = ({
   showQR,
   ...props
 }) => {
-  const { name, alias, notes, entity, address } = addressData;
+  const { name, alias, entity, address } = addressData;
   return (
     <Card className="min-w-xl  hover:cursor-pointer m-2" {...props}>
       <CardContent className="py-4">

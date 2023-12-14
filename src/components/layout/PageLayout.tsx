@@ -1,4 +1,4 @@
-import { Button } from '@/core/ui/Button';
+import { Button } from '@core/ui/Button';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 

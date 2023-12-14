@@ -1,4 +1,4 @@
-import { BankValue, ChainValue, banks } from '@/lib/model/entities';
+import { BankValue, ChainValue, banks } from '@models/entities';
 import Algo from 'cryptocurrency-icons/svg/color/algo.svg';
 import Sol from 'cryptocurrency-icons/svg/color/sol.svg';
 import Uni from 'cryptocurrency-icons/svg/color/uni.svg';
@@ -7,7 +7,7 @@ import Dot from 'cryptocurrency-icons/svg/icon/dot.svg';
 import Eth from 'cryptocurrency-icons/svg/icon/eth.svg';
 import Matic from 'cryptocurrency-icons/svg/icon/matic.svg';
 import { Landmark, Wallet } from 'lucide-react';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 interface EntityIconProps {
   entity: ChainValue | BankValue | 'DEFAULT_BANK' | 'DEFAULT_CHAIN';

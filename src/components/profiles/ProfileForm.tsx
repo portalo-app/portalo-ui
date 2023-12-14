@@ -1,4 +1,4 @@
-import { Button } from '@/core/ui/Button';
+import { Button } from '@core/ui/Button';
 import {
   Form,
   FormControl,
@@ -6,12 +6,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/core/ui/Form';
-import { Input } from '@/core/ui/Input';
-import useCreateProfile from '@/lib/hooks/profiles/useCreateProfile';
-import useEditProfile from '@/lib/hooks/profiles/useEditProfile';
-import { Profile } from '@/lib/model/profile';
+} from '@core/ui/Form';
+import { Input } from '@core/ui/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import useCreateProfile from '@hooks/profiles/useCreateProfile';
+import useEditProfile from '@hooks/profiles/useEditProfile';
+import { Profile } from '@models/profile';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 

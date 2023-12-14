@@ -1,5 +1,5 @@
-import { Badge } from '@/core/ui/Badge';
-import { Entity } from '@/lib/model/entities';
+import { Badge } from '@core/ui/Badge';
+import { Entity } from '@models/entities';
 import { FC } from 'react';
 import EntityIcon from './EntityIcon';
 

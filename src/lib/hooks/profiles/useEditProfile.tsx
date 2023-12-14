@@ -1,4 +1,4 @@
-import { profilesState } from '@/lib/store/profiles.atom';
+import { profilesState } from '@states/profiles.atom';
 import { useRecoilState } from 'recoil';
 
 type EditProfile = (id: string, name: string) => void;

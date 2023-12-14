@@ -1,6 +1,6 @@
-import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
-import { Profile } from '@/lib/model/profile';
-import { profilesState } from '@/lib/store/profiles.atom';
+import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
+import { Profile } from '@models/profile';
+import { profilesState } from '@states/profiles.atom';
 import { useRecoilState } from 'recoil';
 
 type CreateAddress = (

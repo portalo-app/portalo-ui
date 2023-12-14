@@ -1,15 +1,15 @@
-import DeleteModal from '@/core/components/DeleteModal';
-import useDeleteAddress from '@/lib/hooks/addresses/useDeleteAddress';
-import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@/lib/model/address';
-import { addressFormState } from '@/lib/store/address-form.atom';
+import DeleteModal from '@core/components/DeleteModal';
+import useDeleteAddress from '@hooks/addresses/useDeleteAddress';
+import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
+import { addressFormState } from '@states/address-form.atom';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import PageLayout from '../layout/PageLayout';
 import AddressCard from './AddressCard';
 import AddressForm from './AddressForm';
 import AddressMenu from './AddressMenu';
 
-import { Dialog, DialogContent } from '@/core/ui/Dialog';
+import { Dialog, DialogContent } from '@core/ui/Dialog';
 
 interface AddressDetailProps {
   profileId: string;
@@ -27,7 +27,7 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
   onComplete,
 }) => {
   const [action, setAction] = useState<Action | null>(null);
-  const [_, setAddressForm] = useRecoilState(addressFormState);
+  const setAddressForm = useSetRecoilState(addressFormState);
 
   const deleteAddress = useDeleteAddress();
 

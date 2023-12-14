@@ -1,18 +1,24 @@
-import AddressForm from '@/components/addresses/AddressForm';
-import PageLayout from '@/components/layout/PageLayout';
-import { ROUTES } from '@/lib/constants/routes.const';
-import { ADDRESS_TYPE } from '@/lib/model/address';
-import { addressFormState } from '@/lib/store/address-form.atom';
+'use client';
+
+import AddressForm from '@components/addresses/AddressForm';
+import PageLayout from '@components/layout/PageLayout';
+import { ROUTES } from '@constants/routes.const';
+import { ADDRESS_TYPE } from '@models/address';
+import { addressFormState } from '@states/address-form.atom';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 interface CreateAddressPageProps {}
 
-const CreateAddressPage: NextPage<CreateAddressPageProps> = () => {
+const CreateAddressPage: NextPage<
+  // TODO Add corresponding type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  CreateAddressPageProps & { params: { slug: any } }
+> = ({ params }) => {
   const router = useRouter();
-  const { slug } = router.query;
+  const { slug } = params;
 
   const [{ action, entity }, setAddressForm] = useRecoilState(addressFormState);
 
@@ -27,6 +33,7 @@ const CreateAddressPage: NextPage<CreateAddressPageProps> = () => {
 
   useEffect(() => {
     if (!entity) router.push(backPath);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // TODO: Handle invalid slug data

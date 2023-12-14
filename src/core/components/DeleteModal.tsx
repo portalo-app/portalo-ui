@@ -7,7 +7,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/core/ui/AlertDialog';
+} from '@core/ui/AlertDialog';
 
 interface DeleteModalProps {
   title: string;

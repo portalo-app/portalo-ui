@@ -1,5 +1,5 @@
-import { Button } from '@/core/ui/Button';
-import { Address } from '@/lib/model/address';
+import { Button } from '@core/ui/Button';
+import { Address } from '@models/address';
 import { Check, Copy, Pencil, QrCode, Share, Trash2 } from 'lucide-react';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
@@ -46,32 +46,32 @@ const AddressMenu: React.FC<AddressMenuProps> = ({
       icon: snackbarOpen ? <Check /> : <Copy />,
       label: 'Copy',
       action: handleCopy,
-      color: 'default' as 'default',
+      color: 'default' as const,
       disabled: snackbarOpen,
     },
     {
       icon: <QrCode />,
       label: 'QR Code',
       action: handleQR,
-      color: 'default' as 'default',
+      color: 'default' as const,
     },
     {
       icon: <Share />,
       label: 'Share',
       action: handleShare,
-      color: 'default' as 'default',
+      color: 'default' as const,
     },
     {
       icon: <Pencil />,
       label: 'Edit',
       action: handleEdit,
-      color: 'default' as 'default',
+      color: 'default' as const,
     },
     {
       icon: <Trash2 />,
       label: 'Delete',
       action: handleDelete,
-      color: 'error' as 'error',
+      color: 'error' as const,
     },
   ];
 

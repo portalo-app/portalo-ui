@@ -1,5 +1,5 @@
-import { Profile } from '@/lib/model/profile';
-import { profilesState } from '@/lib/store/profiles.atom';
+import { Profile } from '@models/profile';
+import { profilesState } from '@states/profiles.atom';
 import { useSetRecoilState } from 'recoil';
 
 type CreateProfile = (name: string) => void;

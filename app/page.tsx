@@ -1,6 +1,6 @@
-import { Button } from '@/core/ui/Button';
-import { APP_SLOGAN } from '@/lib/constants/constants';
-import { ROUTES } from '@/lib/constants/routes.const';
+import { APP_SLOGAN } from '@constants/constants';
+import { ROUTES } from '@constants/routes.const';
+import { Button } from '@core/ui/Button';
 import Link from 'next/link';
 
 export default function Home() {

@@ -1,4 +1,4 @@
-import { Button } from '@/core/ui/Button';
+import { Button } from '@core/ui/Button';
 import {
   Form,
   FormControl,
@@ -6,12 +6,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/core/ui/Form';
-import { Input } from '@/core/ui/Input';
-import { Separator } from '@/core/ui/Separator';
-import { ADDRESS_TYPE } from '@/lib/model/address';
-import { Entity } from '@/lib/model/entities';
+} from '@core/ui/Form';
+import { Input } from '@core/ui/Input';
+import { Separator } from '@core/ui/Separator';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ADDRESS_TYPE } from '@models/address';
+import { Entity } from '@models/entities';
 import { ChevronRight } from 'lucide-react';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
@@ -24,6 +24,7 @@ interface CustomEntityForm {
 
 const CustomEntityInput: FC<{
   addressType: ADDRESS_TYPE;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onSumbitEntity: (entity: Entity) => void;
 }> = ({ addressType, onSumbitEntity }) => {
   const [entityValue, entityType] =

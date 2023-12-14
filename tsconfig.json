@@ -15,11 +15,25 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"],
       "@icons/*": ["./public/assets/icons/*"],
-      "@images/*": ["./public/assets/images/*"]
-    }
+      "@images/*": ["./public/assets/images/*"],
+      "@components/*": ["./src/components/*"],
+      "@core/*": ["./src/core/*"],
+      "@constants/*": ["./src/lib/constants/*"],
+      "@hooks/*": ["./src/lib/hooks/*"],
+      "@models/*": ["./src/lib/models/*"],
+      "@states/*": ["./src/lib/states/*"],
+      "@utils/*": ["./src/lib/utils/*"],
+      "@providers/*": ["./src/lib/providers/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@/*": ["./src*"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
