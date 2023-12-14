@@ -44,11 +44,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
     setDialogIsOpen(false);
   };
 
-  // TODO Validate if we can delete this
-  // const handleOpenDialog = () => {
-  //   setDialogIsOpen(true);
-  // };
-
   return (
     <>
       <Card className="my-4 min-w-xl">

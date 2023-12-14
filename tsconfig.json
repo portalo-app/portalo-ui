@@ -24,6 +24,7 @@
       "@models/*": ["./src/lib/models/*"],
       "@states/*": ["./src/lib/states/*"],
       "@utils/*": ["./src/lib/utils/*"],
+      "@providers/*": ["./src/lib/providers/*"],
       "@styles/*": ["./src/styles/*"],
       "@/*": ["./src*"]
     },

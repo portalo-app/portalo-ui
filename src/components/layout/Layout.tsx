@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@//lib/providers/ThemeProvider';
+import { ThemeProvider } from '@providers/ThemeProvider';
 import Navbar from './Navbar';
 
 interface LayoutProps {
