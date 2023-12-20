@@ -15,5 +15,7 @@
     "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml",
     "*.mts": "${capture}.typegen.ts",
     "*.cts": "${capture}.typegen.ts"
-  }
+  },
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

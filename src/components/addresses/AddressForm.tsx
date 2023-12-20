@@ -8,16 +8,26 @@ import {
   FormMessage,
 } from '@core/ui/Form';
 import { Input } from '@core/ui/Input';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@core/ui/Select";
 import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateAddress from '@hooks/addresses/useCreateAddress';
 import useEditAddress from '@hooks/addresses/useEditAddress';
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
-import { Entity } from '@models/entities';
+import { Entity, banks, chains } from '@models/entities';
 import { addressFormState } from '@states/address-form.atom';
+import { Bitcoin, Info, Landmark } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import * as z from 'zod';
-import EntityChip from '../entities/EntityChip';
+
+
 
 interface AddressFormProps {
   action: 'CREATE' | 'EDIT';
@@ -49,13 +59,21 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const createAddress = useCreateAddress();
   const editAddress = useEditAddress();
 
+
+  const entityType = addressType === ADDRESS_TYPE.CRYPTO ? chains : banks;
+
+
   const addressForm = useRecoilValue(addressFormState);
 
-  const actionLabel = action === 'CREATE' ? 'Create Address' : 'Edit Address';
+  const actionLabel = action === 'CREATE' ? 'Confirm' : 'Edit Address';
 
-  const nameLabel = 'Name';
-  const addressLabel = 'Address';
-  const aliasLabel = 'Alias';
+  const nameLabel = addressType === 'CRYPTO' ? 'Blockchain' : 'Bank Name';
+  const addressLabel = addressType === 'CRYPTO' ? 'Wallet Address' : 'Payment Address';
+  const aliasLabel = 'Payment Address Alias';
+  const optionalLabel = '(optional)'
+
+  // const namePlaceholder = addressType === 'CRYPTO' ? "Select a blockchain from the list" : "Add your bank's name"
+  const addressPlaceholder = addressType === 'CRYPTO' ? "0x..." : 'Add your CBU/CVU/Alias'
 
   // TODO Validate if we can delete this
   // const handleEntityDelete = () => {
@@ -69,7 +87,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   const formSchema = z
     .object({
-      name: z.string().min(4).max(50),
+      name: z.string({ required_error: "Please select an email to display.", }),
       address: z.string().min(4).max(100),
       alias: z.string().min(4),
     })
@@ -86,6 +104,9 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const { name, address, alias } = data;
+    console.log('data', data)
+    console.log('addressForm', addressForm)
+    console.log('type', entityType)
     if (action === ACTION_FORM.Edit) {
       editAddress(profileId, addressType, {
         id: addressForm.addressId,
@@ -108,64 +129,119 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   return (
     <div className="p-2">
-      {addressForm.entity && <EntityChip entity={addressForm.entity} />}
+      {/* {addressForm.entity && <EntityChip entity={addressForm.entity} />} */}
+      {
+        addressType === 'CRYPTO'
+          ?
+          <div className='p-3 border rounded-xl flex space-x-3 items-center my-6'>
+            <Bitcoin size={25} />
+            <p>
+              Crypto Account
+            </p>
+          </div>
+          :
+          <div className='p-3 border rounded-xl flex space-x-3 items-center my-6' >
+            <Landmark size={25} />
+            <p>
+              Bank Account
+            </p>
+          </div>
+      }
+
+
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col justify-center space-y-2"
+          className="flex flex-col space-y-20"
         >
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{nameLabel}</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="name"
-                    {...field}
-                    className=" focus:border-primary ring-primary w-full"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="address"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{addressLabel}</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="address"
-                    {...field}
-                    className=" focus:border-primary ring-primary w-full"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="alias"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{aliasLabel}</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="alias"
-                    {...field}
-                    className=" focus:border-primary ring-primary w-full"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="mt-2 w-[250px]">
+          <div className='flex flex-col space-y-4'>
+            <FormField
+              control={form.control}
+              name="alias"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className='flex justify-between items-center'>
+                    <div className='flex'>
+                      <p>{aliasLabel}</p>
+                      <p>{optionalLabel}</p>
+                    </div>
+                    <Info color='grey' />
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Insert an alias for your payment address"
+                      {...field}
+                      className=" focus:border-primary ring-primary w-full rounded-3xl"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{nameLabel}
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={namePlaceholder}
+                      {...field}
+                      className="focus:border-primary ring-primary w-full rounded-3xl"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            /> */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{nameLabel}</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="rounded-3xl">
+                        <SelectValue placeholder="Blockchain" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent >
+                      <SelectGroup  >
+                        {entityType.map((element, idx) => (
+                          <SelectItem value={element.value} key={idx}>
+                            <p>{element.label}</p>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className='flex justify-between items-center'>{addressLabel}
+                    <Info color='grey' />
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={addressPlaceholder}
+                      {...field}
+                      className=" focus:border-primary ring-primary w-full rounded-3xl"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <Button type="submit" className="rounded-3xl uppercase text-foreground">
             {actionLabel}
           </Button>
         </form>

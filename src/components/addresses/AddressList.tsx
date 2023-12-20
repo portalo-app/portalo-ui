@@ -1,5 +1,6 @@
-import State from '@core/components/State';
+import { Button } from '@core/ui/Button';
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
+import { Search } from 'lucide-react';
 import { useState } from 'react';
 import AddressCard from './AddressCard';
 import AddressDetail from './AddressDetail';
@@ -8,6 +9,7 @@ interface AddressListProps {
   profileId: string;
   addressType: ADDRESS_TYPE;
   addresses: CryptoAddress[] | FIATAddress[];
+  onClick: () => void;
 }
 
 type Address = CryptoAddress | FIATAddress;
@@ -16,17 +18,25 @@ const AddressList: React.FC<AddressListProps> = ({
   profileId,
   addresses,
   addressType,
+  onClick
 }) => {
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
+
   const emptyMessage = 'Looks like you don’t have any payment address yet';
+
+  const createAddressTitle = 'Add Payment address';
 
   const handleAddressClick = (address: Address) => {
     setSelectedAddress(address);
   };
 
   return addresses.length === 0 ? (
-    <div className="flex justify-center">
-      <State label={emptyMessage} type="info" size={100} />
+    <div className="flex flex-col justify-center border-2 rounded-xl p-4">
+      <div className='flex space-x-3'>
+        <Search size={60} className='pb-2' />
+        <p>{emptyMessage}</p>
+      </div>
+      <Button onClick={onClick} className='text-foreground text-sm uppercase rounded-3xl '>{createAddressTitle}</Button>
     </div>
   ) : (
     <>

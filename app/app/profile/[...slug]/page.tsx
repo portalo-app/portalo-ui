@@ -9,13 +9,12 @@ import { ADDRESS_TYPE } from '@models/address';
 import { Profile } from '@models/profile';
 import { addressFormState } from '@states/address-form.atom';
 import { profilesState } from '@states/profiles.atom';
-import { Plus } from 'lucide-react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-interface ProfilePageProps {}
+interface ProfilePageProps { }
 
 const ProfilePage: NextPage<
   // TODO Add corresponding type
@@ -31,7 +30,6 @@ const ProfilePage: NextPage<
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [profile, setProfile] = useState<Profile | null>(null);
   const router = useRouter();
-  const createAddressTitle = 'Create Address';
 
   useEffect(() => {
     setIsLoading(true);
@@ -54,6 +52,8 @@ const ProfilePage: NextPage<
     setProfile(selectedProfile);
   }, [profilesData, router, slug]);
 
+
+
   const handleChange = (newValue: string) => {
     setAddressType(newValue);
   };
@@ -67,19 +67,21 @@ const ProfilePage: NextPage<
   };
 
   return (
-    <PageLayout title={profile?.name || 'Loading...'} backPath={ROUTES.APP}>
+    <PageLayout title={`Hello ${profile?.name}!` || 'Loading...'} backPath={ROUTES.APP}>
+      <div className='flex justify-between mt-6'>
+        <p className='flex items-center'>Your payment addresses</p>
+        <Button className='text-primary bg-background p-0' onClick={handleCreateAddress}>+ Add Address</Button>
+      </div>
       <Tabs
         defaultValue="crypto"
         className=" flex flex-col w-full justify-center content-center checked:bg-primary"
         onValueChange={handleChange}
       >
-        <TabsList className="space-x-4">
-          <TabsTrigger value="crypto">{`${ADDRESS_TYPE.CRYPTO} (${
-            profile?.cryptoAddresses?.length || 0
-          })`}</TabsTrigger>
-          <TabsTrigger value="fiat">{`${ADDRESS_TYPE.FIAT} (${
-            profile?.fiatAddresses?.length || 0
-          })`}</TabsTrigger>
+        <TabsList className="space-x-6">
+          <TabsTrigger value="crypto">{`Crypto Accounts (${profile?.cryptoAddresses?.length || 0
+            })`}</TabsTrigger>
+          <TabsTrigger value="fiat">{`Bank Accounts (${profile?.fiatAddresses?.length || 0
+            })`}</TabsTrigger>
         </TabsList>
         <TabsContent value="crypto">
           {isLoading ? (
@@ -90,11 +92,8 @@ const ProfilePage: NextPage<
                 profileId={profile?.id || ''}
                 addresses={profile?.cryptoAddresses || []}
                 addressType={ADDRESS_TYPE.CRYPTO}
+                onClick={handleCreateAddress}
               />
-              <Button onClick={handleCreateAddress}>
-                <Plus size={16} />
-                {createAddressTitle}
-              </Button>
             </div>
           )}
         </TabsContent>
@@ -107,11 +106,8 @@ const ProfilePage: NextPage<
                 profileId={profile?.id || ''}
                 addresses={profile?.fiatAddresses || []}
                 addressType={ADDRESS_TYPE.FIAT}
+                onClick={handleCreateAddress}
               />
-              <Button onClick={handleCreateAddress}>
-                <Plus size={16} />
-                {createAddressTitle}
-              </Button>
             </div>
           )}
         </TabsContent>

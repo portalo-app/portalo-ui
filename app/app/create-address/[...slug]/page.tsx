@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
-interface CreateAddressPageProps {}
+interface CreateAddressPageProps { }
 
 const CreateAddressPage: NextPage<
   // TODO Add corresponding type
@@ -20,25 +20,34 @@ const CreateAddressPage: NextPage<
   const router = useRouter();
   const { slug } = params;
 
-  const [{ action, entity }, setAddressForm] = useRecoilState(addressFormState);
+  const [{ action }, setAddressForm] = useRecoilState(addressFormState); //entity
 
   const profileId = slug && slug[0];
   const addressType: ADDRESS_TYPE = (slug && slug[1]) as ADDRESS_TYPE;
 
   const createAddressTitle =
-    action === 'CREATE' ? 'Create Address' : 'Edit Address';
+    action === 'CREATE' ? 'Add payment address' : 'Edit Address';
+
+  const subtitle = action === 'CREATE' ? 'Great! Now lets add the payment details' : 'Edit adress';
+
   const backPath = profileId
     ? `${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`
     : ROUTES.APP;
 
   useEffect(() => {
-    if (!entity) router.push(backPath);
+    // if (!entity) router.push(backPath);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // const handleClick = () => {
+  //   console.log(action, entity, slug)
+  //   console.log(profileId, addressType)
+  // }
 
   // TODO: Handle invalid slug data
   return (
     <PageLayout title={createAddressTitle} backPath={backPath}>
+      <p className='text-center'>{subtitle}</p>
       <AddressForm
         action={action || 'CREATE'}
         profileId={profileId || ''}
@@ -48,6 +57,7 @@ const CreateAddressPage: NextPage<
           setAddressForm({});
         }}
       />
+      {/* <button onClick={handleClick}> hi</button> */}
     </PageLayout>
   );
 };

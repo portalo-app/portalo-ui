@@ -28,7 +28,7 @@ const StateIcon: React.FC<{ type: StateType; size?: SizeType }> = ({
 
 const State: React.FC<StateProps> = ({ type, label, size }) => {
   return (
-    <div className="flex content-center justify-center flex-col">
+    <div className="flex items-center flex-col">
       <StateIcon type={type} size={size} />
       <h2 className="text-lg mt-2 ">{label}</h2>
     </div>

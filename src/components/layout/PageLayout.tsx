@@ -33,7 +33,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
               <ChevronLeft />
             </Button>
           )}
-          <h6 className="text-2xl flex content-center text-start justify-center flex-col pb-2 ml-2">
+          <h6 className={` font-bold text-2xl flex content-center text-start justify-center flex-col pb-2 ml-2 ${!backPath && 'ml-10'}`}>
             {title}
           </h6>
         </div>
