@@ -1,7 +1,6 @@
 'use client';
 
 import { ROUTES } from '@constants/routes.const';
-// import { banks, chains } from '@models/entities';
 import { addressFormState } from '@states/address-form.atom';
 import { useRouter } from 'next/navigation';
 import { FC, useState } from 'react';
@@ -22,10 +21,9 @@ const EntitySelect: FC<EntitySelectProps> = ({ profileId }) => {
   const router = useRouter();
   const setAddressFormState = useSetRecoilState(addressFormState);
 
-  // const addressType = value === ADDRESS_TYPE.CRYPTO ? chains : banks;
 
   const handleEntityClick = () => {
-    setAddressFormState((current) => ({ ...current, entity: addressType }));
+    setAddressFormState((current) => ({ ...current }));
 
     router.push(`${ROUTES.APP_CREATE_ADDRESS}/${profileId}/${addressType}`);
   };
