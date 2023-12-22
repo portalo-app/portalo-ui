@@ -73,7 +73,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const sheetTitle = addressType === 'CRYPTO' ? 'Select a blockchain from the list' : 'Select a bank from the list';
 
 
-  const entityType = addressType === ADDRESS_TYPE.CRYPTO ? chains : banks;
+  const entityType = (addressType === ADDRESS_TYPE.CRYPTO ? chains : banks) as Entity[]
 
   const [openSheet, setOpenSheet] = useState<boolean>(false)
   const [searchEntity, setSearchEntity] = useState('')
@@ -88,9 +88,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
   useEffect(() => {
     if (searchEntity === '') setFilteredEntity(entityType)
 
-    const filtered = entityType.filter(
-      (el) => el.label.toLowerCase().includes(searchEntity.toLowerCase())
-    );
+    const filtered = entityType.filter((el) => el.label.toLowerCase().includes(searchEntity.toLowerCase()));
     console.log(filtered)
     setFilteredEntity(filtered)
   }, [searchEntity, entityType])
