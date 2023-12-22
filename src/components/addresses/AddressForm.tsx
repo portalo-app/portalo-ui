@@ -26,7 +26,7 @@ import { Entity, banks, chains } from '@models/entities';
 import { addressFormState } from '@states/address-form.atom';
 import { pasteFromClipboard } from '@utils/clipboard';
 import { Bitcoin, Clipboard, Info, Landmark, Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import * as z from 'zod';
@@ -81,7 +81,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const createAddress = useCreateAddress();
   const editAddress = useEditAddress();
 
-  const handleFilterEntity = (e) => {
+  const handleFilterEntity = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchEntity(e.target.value)
   }
 
