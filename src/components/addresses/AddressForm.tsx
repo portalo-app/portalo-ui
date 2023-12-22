@@ -1,3 +1,4 @@
+import EntityIcon from '@components/entities/EntityIcon';
 import { Button } from '@core/ui/Button';
 import {
   Form,
@@ -8,21 +9,24 @@ import {
   FormMessage,
 } from '@core/ui/Form';
 import { Input } from '@core/ui/Input';
+import { Label } from "@core/ui/Label";
+import { RadioGroup, RadioGroupItem } from "@core/ui/RadioGroup";
+import { ScrollArea } from "@core/ui/ScrollArea";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@core/ui/Select";
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle
+} from "@core/ui/Sheet";
 import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateAddress from '@hooks/addresses/useCreateAddress';
 import useEditAddress from '@hooks/addresses/useEditAddress';
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
 import { Entity, banks, chains } from '@models/entities';
 import { addressFormState } from '@states/address-form.atom';
-import { Bitcoin, Info, Landmark } from 'lucide-react';
+import { pasteFromClipboard } from '@utils/clipboard';
+import { Bitcoin, Clipboard, Info, Landmark, Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import * as z from 'zod';
@@ -56,14 +60,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
   address: originalAddress,
   onComplete,
 }) => {
-  const createAddress = useCreateAddress();
-  const editAddress = useEditAddress();
-
-
-  const entityType = addressType === ADDRESS_TYPE.CRYPTO ? chains : banks;
-
-
-  const addressForm = useRecoilValue(addressFormState);
+  const namePlaceholder = addressType === 'CRYPTO' ? "Select a blockchain from the list" : "Add your bank's name"
 
   const actionLabel = action === 'CREATE' ? 'Confirm' : 'Edit Address';
 
@@ -72,8 +69,34 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const aliasLabel = 'Payment Address Alias';
   const optionalLabel = '(optional)'
 
-  // const namePlaceholder = addressType === 'CRYPTO' ? "Select a blockchain from the list" : "Add your bank's name"
   const addressPlaceholder = addressType === 'CRYPTO' ? "0x..." : 'Add your CBU/CVU/Alias'
+  const sheetTitle = addressType === 'CRYPTO' ? 'Select a blockchain from the list' : 'Select a bank from the list';
+
+
+  const entityType = addressType === ADDRESS_TYPE.CRYPTO ? chains : banks;
+
+  const [openSheet, setOpenSheet] = useState<boolean>(false)
+  const [searchEntity, setSearchEntity] = useState('')
+  const [filteredEntity, setFilteredEntity] = useState(entityType)
+  const createAddress = useCreateAddress();
+  const editAddress = useEditAddress();
+
+  const handleFilterEntity = (e) => {
+    setSearchEntity(e.target.value)
+  }
+
+  useEffect(() => {
+    if (searchEntity === '') setFilteredEntity(entityType)
+
+    const filtered = entityType.filter(
+      (el) => el.label.toLowerCase().includes(searchEntity.toLowerCase())
+    );
+    console.log(filtered)
+    setFilteredEntity(filtered)
+  }, [searchEntity, entityType])
+
+
+  const addressForm = useRecoilValue(addressFormState);
 
   // TODO Validate if we can delete this
   // const handleEntityDelete = () => {
@@ -84,6 +107,10 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   //   router.push(`${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`);
   // };
+
+  const handleOpenSheet = () => {
+    setOpenSheet(!openSheet)
+  }
 
   const formSchema = z
     .object({
@@ -171,56 +198,57 @@ const AddressForm: React.FC<AddressFormProps> = ({
                     <Input
                       placeholder="Insert an alias for your payment address"
                       {...field}
-                      className=" focus:border-primary ring-primary w-full rounded-3xl"
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            {/* <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{nameLabel}
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder={namePlaceholder}
-                      {...field}
-                      className="focus:border-primary ring-primary w-full rounded-3xl"
+            <div>
+              <Label>{nameLabel}</Label>
+              <Input placeholder={namePlaceholder} onClick={handleOpenSheet} />
+              {/* <div className="relative bottom-8 left-64" >
+                <Clipboard color='grey' />
+              </div> */}
+            </div>
+            <Sheet open={openSheet} onOpenChange={handleOpenSheet}>
+              <SheetContent side="bottom" className='h-3/4 rounded-t-lg'>
+
+                <SheetHeader className='flex items-start'>
+                  <SheetTitle>{sheetTitle}</SheetTitle>
+                </SheetHeader>
+                <div className='mt-5'>
+                  <Input placeholder='Search' className='pl-10' onChange={handleFilterEntity} />
+                  <Button className="relative bottom-10 left-3 p-0 bg-transparent" onClick={pasteFromClipboard}>
+                    <Search color="grey" />
+                  </Button>
+                  <ScrollArea className='h-[200px]'>
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <RadioGroup onValueChange={field.onChange} defaultValue={field.value}>
+                            {filteredEntity.map((element, idx) => (
+                              <div className="flex justify-between w-full p-1 items-center" key={idx}>
+                                <div className="flex items-center space-x-4">
+                                  <EntityIcon entity={element.value} width={50} height={50} />
+                                  <Label htmlFor={element.label}>{element.label}</Label>
+                                </div>
+                                <RadioGroupItem value={element.value} id={element.value} />
+                              </div>
+                            ))}
+                          </RadioGroup>
+                        </FormItem>
+                      )}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{nameLabel}</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger className="rounded-3xl">
-                        <SelectValue placeholder="Blockchain" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent >
-                      <SelectGroup  >
-                        {entityType.map((element, idx) => (
-                          <SelectItem value={element.value} key={idx}>
-                            <p>{element.label}</p>
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </FormItem>
-              )}
-            />
+                  </ScrollArea>
+                  <Button onClick={handleOpenSheet} className='w-full mt-10'>Continue</Button>
+                </div>
+              </SheetContent>
+            </Sheet>
+
+
             <FormField
               control={form.control}
               name="address"
@@ -230,11 +258,15 @@ const AddressForm: React.FC<AddressFormProps> = ({
                     <Info color='grey' />
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder={addressPlaceholder}
-                      {...field}
-                      className=" focus:border-primary ring-primary w-full rounded-3xl"
-                    />
+                    <div>
+                      <Input
+                        placeholder={addressPlaceholder}
+                        {...field}
+                      />
+                      <Button className="relative z-10 bottom-10 left-64 p-0 bg-transparent" onClick={pasteFromClipboard}>
+                        <Clipboard color='grey' />
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -246,7 +278,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
           </Button>
         </form>
       </Form>
-    </div>
+    </div >
   );
 };
 

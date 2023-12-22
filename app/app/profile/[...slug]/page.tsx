@@ -74,11 +74,11 @@ const ProfilePage: NextPage<
       </div>
       <Tabs
         defaultValue="crypto"
-        className=" flex flex-col w-full justify-center content-center checked:bg-primary"
+        className=" flex flex-col w-full justify-center content-center data-[state=active]:bg-primary"
         onValueChange={handleChange}
       >
-        <TabsList className="space-x-6">
-          <TabsTrigger value="crypto">{`Crypto Accounts (${profile?.cryptoAddresses?.length || 0
+        <TabsList className="space-x-6 data-[state=active]:bg-primary ">
+          <TabsTrigger value="crypto data-[state=active]:bg-primary">{`Crypto Accounts (${profile?.cryptoAddresses?.length || 0
             })`}</TabsTrigger>
           <TabsTrigger value="fiat">{`Bank Accounts (${profile?.fiatAddresses?.length || 0
             })`}</TabsTrigger>

@@ -36,8 +36,8 @@ banks.forEach((bank) =>
       <Image
         alt={bank.icon}
         src={`/assets/icons/banks/${bank.icon}.png`}
-        width={64}
-        height={64}
+        width={30}
+        height={30}
         style={{ objectFit: 'contain', height: '100%' }}
       />
     ),

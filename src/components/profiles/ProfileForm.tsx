@@ -75,7 +75,6 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
                   <Input
                     placeholder="name"
                     {...field}
-                    className=" focus:border-primary ring-primary w-full"
                   />
                 </FormControl>
                 <FormMessage />

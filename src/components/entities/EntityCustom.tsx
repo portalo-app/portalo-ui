@@ -71,7 +71,6 @@ const CustomEntityInput: FC<{
                       <Input
                         placeholder="entity name"
                         {...field}
-                        className=" focus:border-primary ring-primary w-full"
                       />
                     </FormControl>
                     <FormMessage />
