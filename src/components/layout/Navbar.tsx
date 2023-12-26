@@ -80,15 +80,17 @@ const Navbar: React.FC<NavbarProps> = () => {
                 </SheetTitle>
               </SheetHeader>
               <Separator />
-              <SheetDescription className="flex flex-col h-full">
-                <ModeToggle />
+              <SheetDescription className="flex flex-col min-h-[550px] justify-between">
                 <div>
                   <DrawerMenuItems />
+                  <div className='ml-4'>
+                    <ModeToggle />
+                  </div>
                 </div>
+
                 <div className="flex flex-col justify-center">
                   <Button
                     variant="destructive"
-
                     onClick={handleResetAccountModal}
                   >
                     <Trash2 className="mr-2" />
