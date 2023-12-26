@@ -21,14 +21,20 @@ const AddressList: React.FC<AddressListProps> = ({
   onClick
 }) => {
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const emptyMessage = 'Looks like you don’t have any payment address yet';
 
   const createAddressTitle = 'Add Payment address';
 
+  const handleOpenDialog = () => {
+    setIsDialogOpen(!isDialogOpen)
+  }
+
   const handleAddressClick = (address: Address) => {
     setSelectedAddress(address);
-  };
+    setIsDialogOpen(!isDialogOpen)
+  }
 
   return addresses.length === 0 ? (
     <div className="flex flex-col justify-center border-2 rounded-xl p-4">
@@ -57,6 +63,8 @@ const AddressList: React.FC<AddressListProps> = ({
           addressType={addressType}
           address={selectedAddress}
           onComplete={() => setSelectedAddress(null)}
+          handleOpenDialog={handleOpenDialog}
+          isDialogOpen={isDialogOpen}
         />
       )}
     </>

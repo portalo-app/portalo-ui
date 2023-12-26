@@ -25,7 +25,7 @@ import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
 import { Entity, banks, chains } from '@models/entities';
 import { addressFormState } from '@states/address-form.atom';
 import { pasteFromClipboard } from '@utils/clipboard';
-import { Bitcoin, Clipboard, Info, Landmark, Search } from 'lucide-react';
+import { Bitcoin, ChevronDown, Clipboard, Info, Landmark, Search } from 'lucide-react';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
@@ -39,6 +39,7 @@ interface AddressFormProps {
   addressType: ADDRESS_TYPE;
   address?: CryptoAddress | FIATAddress;
   onComplete?: () => void;
+  handleDelete?: () => void;
 }
 
 const ACTION_FORM = {
@@ -59,11 +60,12 @@ const AddressForm: React.FC<AddressFormProps> = ({
   addressType,
   address: originalAddress,
   onComplete,
+  handleDelete
 }) => {
   const namePlaceholder = addressType === 'CRYPTO' ? "Select a blockchain from the list" : "Add your bank's name"
 
-  const actionLabel = action === 'CREATE' ? 'Confirm' : 'Edit Address';
-
+  const actionLabel = action === 'CREATE' ? 'Confirm' : 'Confirm changes';
+  const deleteActionLabel = 'Delete payment address'
   const nameLabel = addressType === 'CRYPTO' ? 'Blockchain' : 'Bank Name';
   const addressLabel = addressType === 'CRYPTO' ? 'Wallet Address' : 'Payment Address';
   const aliasLabel = 'Payment Address Alias';
@@ -75,6 +77,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   const entityType = (addressType === ADDRESS_TYPE.CRYPTO ? chains : banks) as Entity[]
 
+  const [entitySelected, setEntitySelected] = useState<string>(namePlaceholder)
   const [openSheet, setOpenSheet] = useState<boolean>(false)
   const [searchEntity, setSearchEntity] = useState('')
   const [filteredEntity, setFilteredEntity] = useState(entityType)
@@ -112,7 +115,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   const formSchema = z
     .object({
-      name: z.string({ required_error: "Please select an email to display.", }),
+      name: z.string({ required_error: "Please select an entity", }),
       address: z.string().min(4).max(100),
       alias: z.string().min(4),
     })
@@ -121,11 +124,18 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: action === ACTION_FORM.Edit ? originalAddress?.name : '',
+      name: action === ACTION_FORM.Edit ? originalAddress?.name : namePlaceholder,
       address: action === ACTION_FORM.Edit ? originalAddress?.address : '',
       alias: action === ACTION_FORM.Edit ? originalAddress?.alias : '',
     },
   });
+
+  const { watch } = form
+  const watchName = watch("name")
+
+  useEffect(() => {
+    setEntitySelected(watchName)
+  }, [watchName])
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const { name, address, alias } = data;
@@ -137,14 +147,14 @@ const AddressForm: React.FC<AddressFormProps> = ({
         id: addressForm.addressId,
         address,
         alias,
-        entity: addressForm.entity,
+        // entity: addressForm.entity,
         name,
       } as CryptoAddress | FIATAddress);
     } else {
       createAddress(profileId, addressType, {
         address,
         alias,
-        entity: addressForm.entity,
+        // entity: addressForm.entity,
         name,
       } as CryptoAddress | FIATAddress);
     }
@@ -204,7 +214,10 @@ const AddressForm: React.FC<AddressFormProps> = ({
             />
             <div>
               <Label>{nameLabel}</Label>
-              <Input placeholder={namePlaceholder} onClick={handleOpenSheet} />
+              <Button className='bg-background border border-primary w-full rounded-3xl text-foreground flex justify-between text mt-2' onClick={handleOpenSheet}>
+                {entitySelected}
+                <ChevronDown />
+              </Button>
               {/* <div className="relative bottom-8 left-64" >
                 <Clipboard color='grey' />
               </div> */}
@@ -227,13 +240,13 @@ const AddressForm: React.FC<AddressFormProps> = ({
                       render={({ field }) => (
                         <FormItem>
                           <RadioGroup onValueChange={field.onChange} defaultValue={field.value}>
-                            {filteredEntity.map((element, idx) => (
-                              <div className="flex justify-between w-full p-1 items-center" key={idx}>
+                            {filteredEntity.map(({ value, label }, idx) => (
+                              <div className="flex justify-between w-full p-1 items-center hover:cursor-pointer hover:bg-primary-foreground" key={idx}>
                                 <div className="flex items-center space-x-4">
-                                  <EntityIcon entity={element.value} width={50} height={50} />
-                                  <Label htmlFor={element.label}>{element.label}</Label>
+                                  <EntityIcon entity={value} width={50} height={50} />
+                                  <Label htmlFor={label}>{label}</Label>
                                 </div>
-                                <RadioGroupItem value={element.value} id={element.value} />
+                                <RadioGroupItem value={label} id={label} />
                               </div>
                             ))}
                           </RadioGroup>
@@ -271,9 +284,12 @@ const AddressForm: React.FC<AddressFormProps> = ({
               )}
             />
           </div>
-          <Button type="submit" className="rounded-3xl uppercase text-foreground">
-            {actionLabel}
-          </Button>
+          <div className='w-full flex flex-col space-y-2'>
+            {action === 'EDIT' && <Button variant={"destructive"} className="uppercase" onClick={handleDelete}>{deleteActionLabel}</Button>}
+            <Button type="submit" className="rounded-3xl uppercase text-foreground">
+              {actionLabel}
+            </Button>
+          </div>
         </form>
       </Form>
     </div >

@@ -1,21 +1,21 @@
 import DeleteModal from '@core/components/DeleteModal';
+import { Dialog, DialogContent } from '@core/ui/Dialog';
 import useDeleteAddress from '@hooks/addresses/useDeleteAddress';
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
 import { addressFormState } from '@states/address-form.atom';
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import PageLayout from '../layout/PageLayout';
-import AddressCard from './AddressCard';
+import AddressCardDetail from './AddressCardDetail';
 import AddressForm from './AddressForm';
-import AddressMenu from './AddressMenu';
-
-import { Dialog, DialogContent } from '@core/ui/Dialog';
 
 interface AddressDetailProps {
   profileId: string;
   addressType: ADDRESS_TYPE;
   address: CryptoAddress | FIATAddress;
   onComplete?: () => void;
+  handleOpenDialog: () => void;
+  isDialogOpen: boolean;
 }
 
 type Action = 'edit' | 'delete' | 'qr';
@@ -25,6 +25,8 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
   addressType,
   address,
   onComplete,
+  handleOpenDialog,
+  isDialogOpen
 }) => {
   const [action, setAction] = useState<Action | null>(null);
   const setAddressForm = useSetRecoilState(addressFormState);
@@ -36,7 +38,6 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
 
   const isDeleting = action === 'delete';
   const isEditing = action === 'edit';
-  const showingQR = action === 'qr';
 
   const clearAction = () => setAction(null);
 
@@ -55,6 +56,7 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
     handleMenuClose();
   };
 
+
   return (
     <>
       <DeleteModal
@@ -65,17 +67,12 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
         onDelete={handleAddressDelete}
       />
 
-      <Dialog open={Boolean(address)}>
+      <Dialog open={isDialogOpen} onOpenChange={handleOpenDialog}>
         <DialogContent className="bg-background rounded-3xl border-none">
           {address && !isEditing && (
             <>
-              <AddressCard addressData={address} showQR={showingQR} />
-
-              <AddressMenu
-                selectedAddress={address}
-                handleQR={() =>
-                  setAction((action) => (action === 'qr' ? null : 'qr'))
-                }
+              <AddressCardDetail
+                addressData={address}
                 handleDelete={() => setAction('delete')}
                 handleEdit={() => {
                   setAddressForm({
@@ -84,8 +81,7 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
                     action: 'EDIT',
                   });
                   setAction('edit');
-                }}
-              />
+                }} />
             </>
           )}
 
@@ -101,12 +97,13 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
                   addressType={addressType}
                   address={address as CryptoAddress | FIATAddress}
                   onComplete={handleMenuClose}
+                  handleDelete={() => setAction('delete')}
                 />
               </PageLayout>
             </div>
           )}
         </DialogContent>
-      </Dialog>
+      </Dialog >
     </>
   );
 };
