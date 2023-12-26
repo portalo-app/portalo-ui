@@ -1,4 +1,3 @@
-import EntityIcon from '@components/entities/EntityIcon';
 import { Card, CardContent } from '@core/ui/Card';
 import { CryptoAddress, FIATAddress } from '@models/address';
 import { ChevronRight } from 'lucide-react';
@@ -18,7 +17,7 @@ const AddressCard: React.FC<AddressCardProps> = ({
       <CardContent className="flex justify-between p-2">
         <div className='flex'>
           <div className="flex items-center mr-3">
-            <EntityIcon width={50} height={50} entity={name} />
+            {/* <EntityIcon width={50} height={50} entity={name} /> */}
           </div>
           <div>
             <p className="font-bold text-xl">{alias}</p>
