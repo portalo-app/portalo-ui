@@ -8,9 +8,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@core/ui/Accordion';
+import { TypographySmall } from '@core/ui/Typography';
 import { NextPage } from 'next';
 
-interface HelpPageProps {}
+interface HelpPageProps { }
 
 const HelpPage: NextPage<HelpPageProps> = () => {
   const helpTitle = 'Help';
@@ -42,7 +43,7 @@ const HelpPage: NextPage<HelpPageProps> = () => {
               <AccordionTrigger>{question}</AccordionTrigger>
 
               <AccordionContent>
-                <p>{answer}</p>
+                <TypographySmall>{answer}</TypographySmall>
               </AccordionContent>
             </AccordionItem>
           </Accordion>

@@ -3,6 +3,7 @@
 import AddressForm from '@components/addresses/AddressForm';
 import PageLayout from '@components/layout/PageLayout';
 import { ROUTES } from '@constants/routes.const';
+import { TypographySmall } from '@core/ui/Typography';
 import { ADDRESS_TYPE } from '@models/address';
 import { addressFormState } from '@states/address-form.atom';
 import { NextPage } from 'next';
@@ -39,15 +40,10 @@ const CreateAddressPage: NextPage<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const handleClick = () => {
-  //   console.log(action, entity, slug)
-  //   console.log(profileId, addressType)
-  // }
-
   // TODO: Handle invalid slug data
   return (
     <PageLayout title={createAddressTitle} backPath={backPath}>
-      <p className='text-center'>{subtitle}</p>
+      <TypographySmall className='block text-center'>{subtitle}</TypographySmall>
       <AddressForm
         action={action || 'CREATE'}
         profileId={profileId || ''}
@@ -57,7 +53,6 @@ const CreateAddressPage: NextPage<
           setAddressForm({});
         }}
       />
-      {/* <button onClick={handleClick}> hi</button> */}
     </PageLayout>
   );
 };

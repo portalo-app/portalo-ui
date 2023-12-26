@@ -26,7 +26,7 @@ export const TypographyH2: React.FC<TypographyProps> = ({
     <h2
         className={cn(
             className,
-            'scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0'
+            'scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0'
         )}
     >
         {children}
@@ -65,7 +65,7 @@ export const TypographyP: React.FC<TypographyProps> = ({
     className,
     children,
 }) => (
-    <p className={cn(className, 'leading-7 [&:not(:first-child)]:mt-6')}>
+    <p className={cn(className, 'text-base')}>
         {children}
     </p>
 );
@@ -118,5 +118,5 @@ export const TypographyMuted: React.FC<TypographyProps> = ({
     className,
     children,
 }) => (
-    <p className={cn(className, 'text-sm text-muted-foreground')}>{children}</p>
+    <p className={cn(className, 'text-base text-muted-foreground')}>{children}</p>
 );

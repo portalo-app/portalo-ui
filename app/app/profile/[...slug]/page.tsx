@@ -5,6 +5,7 @@ import PageLayout from '@components/layout/PageLayout';
 import { ROUTES } from '@constants/routes.const';
 import { Button } from '@core/ui/Button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@core/ui/Tab';
+import { TypographySmall } from '@core/ui/Typography';
 import { ADDRESS_TYPE } from '@models/address';
 import { Profile } from '@models/profile';
 import { addressFormState } from '@states/address-form.atom';
@@ -69,7 +70,7 @@ const ProfilePage: NextPage<
   return (
     <PageLayout title={`Hello ${profile?.name}!` || 'Loading...'} backPath={ROUTES.APP}>
       <div className='flex justify-between mt-6'>
-        <p className='flex items-center'>Your payment addresses</p>
+        <TypographySmall className='flex items-center'>Your payment addresses</TypographySmall>
         <Button className='text-primary bg-background p-0' onClick={handleCreateAddress}>+ Add Address</Button>
       </div>
       <Tabs

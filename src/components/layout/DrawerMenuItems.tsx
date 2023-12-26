@@ -10,6 +10,7 @@ import {
   NavigationMenuItem,
   NavigationMenuList,
 } from '@core/ui/NavigationMenu';
+import { TypographyLarge, TypographyLead, TypographySmall } from '@core/ui/Typography';
 import Link from 'next/link';
 
 const menuItems = [
@@ -40,9 +41,8 @@ const DrawerMenuItems: React.FC = () => {
 
   const welcomeMessage = 'Hi anon! 👋🏻';
   const profilesCount = profiles?.length || 0;
-  const profilesCountMessage = `${profilesCount} profile${
-    profilesCount > 1 ? 's' : ''
-  }`;
+  const profilesCountMessage = `${profilesCount} profile${profilesCount > 1 ? 's' : ''
+    }`;
   const noProfilesMessage = 'No profiles yet';
 
   return (
@@ -52,11 +52,11 @@ const DrawerMenuItems: React.FC = () => {
           <Avvvatars value={profiles.toString()} size={48} style="shape" />
 
           <div>
-            <h6 className="text-xl">{welcomeMessage}</h6>
+            <TypographyLead>{welcomeMessage}</TypographyLead>
 
-            <p className="text-primary text-sm">
+            <TypographySmall className="text-primary">
               {profilesCount ? profilesCountMessage : noProfilesMessage}
-            </p>
+            </TypographySmall>
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@ const DrawerMenuItems: React.FC = () => {
                   className="flex p-2 hover-primary w-full"
                 >
                   {item.icon}
-                  <span className="text-lg pl-2">{item.label}</span>
+                  <TypographyLarge className="pl-2">{item.label}</TypographyLarge>
                 </Link>
               </NavigationMenuItem>
             ))}

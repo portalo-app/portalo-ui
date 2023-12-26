@@ -10,15 +10,16 @@ import {
 } from '@core/ui/Dialog';
 import { Popover, PopoverContent, PopoverTrigger } from '@core/ui/PopOver';
 import { Separator } from '@core/ui/Separator';
+import { TypographyH3, TypographyLarge, TypographySmall } from '@core/ui/Typography';
 import { Profile } from '@models/profile';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import {
-  CircleDollarSign,
+  Bitcoin,
   Landmark,
   MoreVertical,
   Pencil,
   Plus,
-  Trash2,
+  Trash2
 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -40,31 +41,29 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
     setIsDeleting(true);
   };
 
-  const handleCloseDialog = () => {
-    setDialogIsOpen(false);
+  const handleDialogIsOpen = () => {
+    setDialogIsOpen(!dialogIsOpen);
   };
 
   return (
     <>
       <Card className="my-4 min-w-xl">
         <CardContent className="p-2 m-2">
-          <div className="flex m-2 content-center justify-between">
-            <div className="flex content-center ">
-              <h6 className="flex font-bold text-xl ">{name}</h6>
+          <div className="flex m-2 items-center justify-between">
+            <div>
+              <TypographyH3>{name}</TypographyH3>
             </div>
-            <div className="flex space-x-2">
+            <div className="flex space-x-2 items-center">
               <Link href={`${ROUTES.APP_PROFILE}/${id}`}>
-                <p className="text-primary flex rounded-2xl">
-                  <Plus />
+                <TypographySmall className="text-primary flex items-center">
+                  <Plus size={20} />
                   Add address
-                </p>
+                </TypographySmall>
               </Link>
               <MenuItems
                 handleDelete={handleDelete}
                 profile={profile}
-                className="z-30"
-                handleCloseDialog={handleCloseDialog}
-                setDialogIsOpen={setDialogIsOpen}
+                handleDialogIsOpen={handleDialogIsOpen}
                 dialogIsOpen={dialogIsOpen}
               />
             </div>
@@ -73,24 +72,24 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
           <Separator />
 
           <div className="flex justify-around content-center mt-4">
-            <div className="flex space-x-4 m-2 items-center">
-              <CircleDollarSign size={32} />
+            <div className="flex space-x-2 items-center">
+              <Bitcoin size={40} />
               <div className="flex flex-col">
-                <h1 className="font-bold font-mono">
+                <TypographyLarge>
                   {cryptoAddresses.length}
-                </h1>
+                </TypographyLarge>
 
-                <h1>{cryptoLabel}</h1>
+                <TypographyLarge>{cryptoLabel}</TypographyLarge>
               </div>
             </div>
 
-            <div className="flex space-x-4 m-2 items-center">
-              <Landmark size={32} />
+            <div className="flex space-x-4 items-center">
+              <Landmark size={40} />
 
               <div>
-                <h1 className="font-mono font-bold">{fiatAddresses.length}</h1>
+                <TypographyLarge>{fiatAddresses.length}</TypographyLarge>
 
-                <h1>{fiatLabel}</h1>
+                <TypographyLarge>{fiatLabel}</TypographyLarge>
               </div>
             </div>
           </div>
@@ -112,26 +111,24 @@ export default ProfileCard;
 const MenuItems: React.FC<any> = ({
   handleDelete,
   profile,
-  handleCloseDialog,
-  setDialogIsOpen,
+  handleDialogIsOpen,
   dialogIsOpen,
 }) => {
   const editLabel = 'Edit';
   const deleteLabel = 'Delete';
 
   return (
-    <Popover>
+    <Popover >
       <PopoverTrigger>
         <MoreVertical size={24} />
       </PopoverTrigger>
       <PopoverContent className="w-[150px] flex flex-col space-y-4">
-        <Dialog open={dialogIsOpen}>
+        <Dialog open={dialogIsOpen} onOpenChange={handleDialogIsOpen}>
           <DialogTrigger
-            onClick={setDialogIsOpen}
             className="flex justify-center space-x-3"
           >
             <Pencil size={24} />
-            <h2>{editLabel}</h2>
+            <TypographyLarge>{editLabel}</TypographyLarge>
           </DialogTrigger>
           <DialogContent className="rounded-3xl">
             <DialogHeader>
@@ -140,7 +137,7 @@ const MenuItems: React.FC<any> = ({
                 <ProfileForm
                   profile={profile}
                   action="EDIT"
-                  onComplete={handleCloseDialog}
+                  onComplete={handleDialogIsOpen}
                 />
               </DialogDescription>
             </DialogHeader>
@@ -152,7 +149,7 @@ const MenuItems: React.FC<any> = ({
           className="space-x-2"
         >
           <Trash2 size={24} />
-          <h2>{deleteLabel}</h2>
+          <TypographyLarge>{deleteLabel}</TypographyLarge>
         </Button>
       </PopoverContent>
     </Popover>

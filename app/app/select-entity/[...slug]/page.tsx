@@ -3,6 +3,7 @@
 import EntitySelect from '@components/entities/EntitySelect';
 import PageLayout from '@components/layout/PageLayout';
 import { ROUTES } from '@constants/routes.const';
+import { TypographySmall } from '@core/ui/Typography';
 import { ADDRESS_TYPE } from '@models/address';
 import { addressFormState } from '@states/address-form.atom';
 import { NextPage } from 'next';
@@ -30,7 +31,7 @@ const SelectEntityPage: NextPage<
       backPath={`${ROUTES.APP_PROFILE}/${profileId}/${addressType}`}
       backClick={() => setAddressForm({})}
     >
-      <p className='text-center'>Select a payment account type</p>
+      <TypographySmall className='block text-center'>Select a payment account type</TypographySmall>
       <EntitySelect
         profileId={profileId || ''}
       // addressType={addressType}

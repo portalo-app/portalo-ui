@@ -1,4 +1,5 @@
 import { Button } from '@core/ui/Button';
+import { TypographyH3 } from '@core/ui/Typography';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 
@@ -33,9 +34,9 @@ const PageLayout: React.FC<PageLayoutProps> = ({
               <ChevronLeft />
             </Button>
           )}
-          <h6 className={` font-bold text-2xl flex content-center text-start justify-center flex-col pb-2 ml-2 ${!backPath && 'ml-10'}`}>
+          <TypographyH3 className={` font-bold text-2xl flex content-center text-start justify-center flex-col pb-2 ml-2 ${!backPath && 'ml-10'}`}>
             {title}
-          </h6>
+          </TypographyH3>
         </div>
       </div>
 

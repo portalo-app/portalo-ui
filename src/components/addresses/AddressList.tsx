@@ -1,4 +1,5 @@
 import { Button } from '@core/ui/Button';
+import { TypographyP } from '@core/ui/Typography';
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
 import { Search } from 'lucide-react';
 import { useState } from 'react';
@@ -40,7 +41,7 @@ const AddressList: React.FC<AddressListProps> = ({
     <div className="flex flex-col justify-center border-2 rounded-xl p-4">
       <div className='flex space-x-3'>
         <Search size={60} className='pb-2' />
-        <p>{emptyMessage}</p>
+        <TypographyP>{emptyMessage}</TypographyP>
       </div>
       <Button onClick={onClick} className='text-foreground text-sm uppercase rounded-3xl '>{createAddressTitle}</Button>
     </div>

@@ -1,4 +1,5 @@
 import { Card, CardContent } from '@core/ui/Card';
+import { TypographyH4, TypographyMuted } from '@core/ui/Typography';
 import { CryptoAddress, FIATAddress } from '@models/address';
 import { ChevronRight } from 'lucide-react';
 
@@ -20,9 +21,9 @@ const AddressCard: React.FC<AddressCardProps> = ({
             {/* <EntityIcon width={50} height={50} entity={name} /> */}
           </div>
           <div>
-            <p className="font-bold text-xl">{alias}</p>
-            <h1>{name || 'Wallet'}</h1>
-            <h2 className='text-ellipsis overflow-hidden max-w-44'>{address}</h2>
+            <TypographyH4>{alias}</TypographyH4>
+            <TypographyMuted>{name || 'Wallet'}</TypographyMuted>
+            <TypographyMuted className='text-ellipsis overflow-hidden max-w-44'>{address}</TypographyMuted>
           </div>
         </div>
         <div className='flex items-center '>

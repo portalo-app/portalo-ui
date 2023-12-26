@@ -1,4 +1,5 @@
 import { Button } from '@core/ui/Button';
+import { TypographyLarge, TypographyMuted } from '@core/ui/Typography';
 import { CryptoAddress, FIATAddress } from '@models/address';
 import { Copy } from 'lucide-react';
 import { useSnackbar } from 'notistack';
@@ -40,15 +41,15 @@ const AddressCardDetail: React.FC<AddressCardDetailProps> = ({ addressData, hand
         includeMargin
         value={address}
         size={256}
-        style={{ borderRadius: 8 }}
+        className='rounded-3xl mb-4'
       />
-      <p className='font-bold'>{alias}</p>
-      <p>{name}</p>
-      <div className='flex space-x-2'>
-        <p>{address}</p>
-        <Copy onClick={handleCopy} />
+      <TypographyLarge>{alias}</TypographyLarge>
+      <TypographyMuted>{name}</TypographyMuted>
+      <div className='flex space-x-2 items-center'>
+        <TypographyMuted>{address}</TypographyMuted>
+        <Copy onClick={handleCopy} size={20} />
       </div>
-      <Button onClick={handleShare} className='w-full text-foreground'>Share</Button>
+      <Button onClick={handleShare} className='w-full text-foreground uppercase'>Share</Button>
       <Button className='bg-background text-primary w-full' onClick={handleEdit}>Edit Payment Address</Button>
     </div>
   );

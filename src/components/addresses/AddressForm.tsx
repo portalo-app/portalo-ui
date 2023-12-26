@@ -30,6 +30,7 @@ import {
   SheetHeader,
   SheetTitle
 } from "@core/ui/Sheet";
+import { TypographyMuted, TypographyP } from '@core/ui/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateAddress from '@hooks/addresses/useCreateAddress';
 import useEditAddress from '@hooks/addresses/useEditAddress';
@@ -184,16 +185,16 @@ const AddressForm: React.FC<AddressFormProps> = ({
           ?
           <div className='p-3 border rounded-xl flex space-x-3 items-center my-6'>
             <Bitcoin size={25} />
-            <p>
+            <TypographyP>
               Crypto Account
-            </p>
+            </TypographyP>
           </div>
           :
           <div className='p-3 border rounded-xl flex space-x-3 items-center my-6' >
             <Landmark size={25} />
-            <p>
+            <TypographyP>
               Bank Account
-            </p>
+            </TypographyP>
           </div>
       }
 
@@ -210,9 +211,9 @@ const AddressForm: React.FC<AddressFormProps> = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className='flex justify-between items-center'>
-                    <div className='flex'>
-                      <p>{aliasLabel}</p>
-                      <p>{optionalLabel}</p>
+                    <div className='flex items-center space-x-1'>
+                      <TypographyP>{aliasLabel}</TypographyP>
+                      <TypographyMuted>{optionalLabel}</TypographyMuted>
                     </div>
                     <Info color='grey' />
                   </FormLabel>
@@ -275,7 +276,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                                   )}
                                 />
                                 <EntityIcon entity={value} width={30} height={30} />
-                                <p className='ml-2'>{label}</p>
+                                <TypographyP className='ml-2'>{label}</TypographyP>
                               </CommandItem>
                             ))}
                           </CommandGroup>
