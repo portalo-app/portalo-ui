@@ -1,6 +1,13 @@
 import EntityIcon from '@components/entities/EntityIcon';
 import { Button } from '@core/ui/Button';
 import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@core/ui/Command";
+import {
   Form,
   FormControl,
   FormField,
@@ -10,6 +17,11 @@ import {
 } from '@core/ui/Form';
 import { Input } from '@core/ui/Input';
 import { Label } from "@core/ui/Label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@core/ui/PopOver";
 import { RadioGroup, RadioGroupItem } from "@core/ui/RadioGroup";
 import { ScrollArea } from "@core/ui/ScrollArea";
 import {
@@ -21,17 +33,17 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateAddress from '@hooks/addresses/useCreateAddress';
 import useEditAddress from '@hooks/addresses/useEditAddress';
+import useMediaQuery from '@hooks/useMediaQuery';
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
 import { Entity, banks, chains } from '@models/entities';
 import { addressFormState } from '@states/address-form.atom';
 import { pasteFromClipboard } from '@utils/clipboard';
-import { Bitcoin, ChevronDown, Clipboard, Info, Landmark, Search } from 'lucide-react';
+import { cn } from "@utils/utils";
+import { Bitcoin, Check, ChevronDown, ChevronsUpDown, Clipboard, Info, Landmark, Search } from 'lucide-react';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import * as z from 'zod';
-
-
 
 interface AddressFormProps {
   action: 'CREATE' | 'EDIT';
@@ -87,6 +99,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const handleFilterEntity = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchEntity(e.target.value)
   }
+
+  const isDesktop = useMediaQuery('(min-width: 960px)');
 
   useEffect(() => {
     if (searchEntity === '') setFilteredEntity(entityType)
@@ -212,54 +226,116 @@ const AddressForm: React.FC<AddressFormProps> = ({
                 </FormItem>
               )}
             />
-            <div>
-              <Label>{nameLabel}</Label>
-              <Button className='bg-background border border-primary w-full rounded-3xl text-foreground flex justify-between text mt-2' onClick={handleOpenSheet}>
-                {entitySelected}
-                <ChevronDown />
-              </Button>
-              {/* <div className="relative bottom-8 left-64" >
+            {isDesktop ? (
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>{nameLabel}</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "w-full justify-between",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value
+                              ? filteredEntity.find(
+                                (entity) => entity.value === field.value
+                              )?.label
+                              : addressPlaceholder}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full p-0">
+                        <Command>
+                          <CommandInput placeholder="Search entity..." className='w-full' />
+                          <CommandEmpty>No entity found.</CommandEmpty>
+                          <CommandGroup>
+                            {filteredEntity.map(({ value, label }, index) => (
+                              <CommandItem
+                                value={label}
+                                key={index}
+                                onSelect={() => {
+                                  form.setValue("name", value)
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                <EntityIcon entity={value} width={30} height={30} />
+                                <p className='ml-2'>{label}</p>
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ) : (
+              <div>
+                <div>
+                  <Label>{nameLabel}</Label>
+                  <Button className='bg-background border border-primary w-full rounded-3xl text-foreground flex justify-between text mt-2' onClick={handleOpenSheet}>
+                    {entitySelected}
+                    <ChevronDown />
+                  </Button>
+                  {/* <div className="relative bottom-8 left-64" >
                 <Clipboard color='grey' />
               </div> */}
-            </div>
-            <Sheet open={openSheet} onOpenChange={handleOpenSheet}>
-              <SheetContent side="bottom" className='h-3/4 rounded-t-lg'>
-
-                <SheetHeader className='flex items-start'>
-                  <SheetTitle>{sheetTitle}</SheetTitle>
-                </SheetHeader>
-                <div className='mt-5'>
-                  <Input placeholder='Search' className='pl-10' onChange={handleFilterEntity} />
-                  <Button className="relative bottom-10 left-3 p-0 bg-transparent" onClick={pasteFromClipboard}>
-                    <Search color="grey" />
-                  </Button>
-                  <ScrollArea className='h-[200px]'>
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <RadioGroup onValueChange={field.onChange} defaultValue={field.value}>
-                            {filteredEntity.map(({ value, label }, idx) => (
-                              <div className="flex justify-between w-full p-1 items-center hover:cursor-pointer hover:bg-primary-foreground" key={idx}>
-                                <div className="flex items-center space-x-4">
-                                  <EntityIcon entity={value} width={50} height={50} />
-                                  <Label htmlFor={label}>{label}</Label>
-                                </div>
-                                <RadioGroupItem value={value} id={label} />
-                              </div>
-                            ))}
-                          </RadioGroup>
-                        </FormItem>
-                      )}
-                    />
-                  </ScrollArea>
-                  <Button onClick={handleOpenSheet} className='w-full mt-10'>Continue</Button>
                 </div>
-              </SheetContent>
-            </Sheet>
+                <Sheet open={openSheet} onOpenChange={handleOpenSheet}>
+                  <SheetContent side="bottom" className='h-3/4 rounded-t-lg'>
 
-
+                    <SheetHeader className='flex items-start'>
+                      <SheetTitle>{sheetTitle}</SheetTitle>
+                    </SheetHeader>
+                    <div className='mt-5'>
+                      <Input placeholder='Search' className='pl-10' onChange={handleFilterEntity} />
+                      <Button className="relative bottom-10 left-3 p-0 bg-transparent" onClick={pasteFromClipboard}>
+                        <Search color="grey" />
+                      </Button>
+                      <ScrollArea className='h-[200px]'>
+                        <FormField
+                          control={form.control}
+                          name="name"
+                          render={({ field }) => (
+                            <FormItem>
+                              <RadioGroup onValueChange={field.onChange} defaultValue={field.value}>
+                                {filteredEntity.map(({ value, label }, idx) => (
+                                  <div className="flex justify-between w-full p-1 items-center hover:cursor-pointer hover:bg-primary-foreground" key={idx}>
+                                    <div className="flex items-center space-x-4">
+                                      <EntityIcon entity={value} width={50} height={50} />
+                                      <Label htmlFor={label}>{label}</Label>
+                                    </div>
+                                    <RadioGroupItem value={value} id={label} />
+                                  </div>
+                                ))}
+                              </RadioGroup>
+                            </FormItem>
+                          )}
+                        />
+                      </ScrollArea>
+                      <Button onClick={handleOpenSheet} className='w-full mt-10'>Continue</Button>
+                    </div>
+                  </SheetContent>
+                </Sheet>
+              </div>
+            )}
             <FormField
               control={form.control}
               name="address"
