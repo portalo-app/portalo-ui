@@ -246,7 +246,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                                   <EntityIcon entity={value} width={50} height={50} />
                                   <Label htmlFor={label}>{label}</Label>
                                 </div>
-                                <RadioGroupItem value={label} id={label} />
+                                <RadioGroupItem value={value} id={label} />
                               </div>
                             ))}
                           </RadioGroup>
