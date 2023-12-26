@@ -20,7 +20,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useResetRecoilState } from 'recoil';
 import DrawerMenuItems from './DrawerMenuItems';
-interface NavbarProps {}
+interface NavbarProps { }
 
 const PortaloLogo = () => {
   return (
@@ -87,8 +87,8 @@ const Navbar: React.FC<NavbarProps> = () => {
                 </div>
                 <div className="flex flex-col justify-center">
                   <Button
-                    variant="outline"
-                    className="text-destructive hover:text-destructive-foreground border-destructive bg-destructive-foreground hover:border-destructive-foreground hover:bg-destructive ring-destructive"
+                    variant="destructive"
+
                     onClick={handleResetAccountModal}
                   >
                     <Trash2 className="mr-2" />

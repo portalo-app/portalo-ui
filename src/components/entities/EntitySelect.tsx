@@ -50,7 +50,7 @@ const EntitySelect: FC<EntitySelectProps> = ({ profileId }) => {
           <RadioGroupItem value="CRYPTO" id="CRYPTO" />
         </div>
       </RadioGroup>
-      <Button className="w-full rounded-3xl text-foreground" onClick={handleEntityClick}>Continue</Button>
+      <Button onClick={handleEntityClick}>Continue</Button>
     </div>
   );
 };

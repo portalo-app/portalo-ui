@@ -49,8 +49,8 @@ const AddressCardDetail: React.FC<AddressCardDetailProps> = ({ addressData, hand
         <TypographyMuted>{address}</TypographyMuted>
         <Copy onClick={handleCopy} size={20} />
       </div>
-      <Button onClick={handleShare} className='w-full text-foreground uppercase'>Share</Button>
-      <Button className='bg-background text-primary w-full' onClick={handleEdit}>Edit Payment Address</Button>
+      <Button onClick={handleShare} className='uppercase'>Share</Button>
+      <Button variant="secondary" onClick={handleEdit}>Edit Payment Address</Button>
     </div>
   );
 }

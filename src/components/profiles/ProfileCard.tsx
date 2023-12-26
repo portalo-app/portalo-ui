@@ -145,7 +145,7 @@ const MenuItems: React.FC<any> = ({
         </Dialog>
         <Button
           onClick={handleDelete}
-          variant={'destructive'}
+          variant='destructive'
           className="space-x-2"
         >
           <Trash2 size={24} />

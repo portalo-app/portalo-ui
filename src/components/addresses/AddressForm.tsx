@@ -291,7 +291,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
               <div>
                 <div>
                   <Label>{nameLabel}</Label>
-                  <Button className='bg-background border border-primary w-full rounded-3xl text-foreground flex justify-between text mt-2' onClick={handleOpenSheet}>
+                  <Button className='bg-background border border-primary text-foreground flex justify-between mt-2' onClick={handleOpenSheet}>
                     {entitySelected}
                     <ChevronDown />
                   </Button>
@@ -307,7 +307,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                     </SheetHeader>
                     <div className='mt-5'>
                       <Input placeholder='Search' className='pl-10' onChange={handleFilterEntity} />
-                      <Button className="relative bottom-10 left-3 p-0 bg-transparent" onClick={pasteFromClipboard}>
+                      <Button className="relative bottom-10 right-36 p-0 bg-transparent" onClick={pasteFromClipboard}>
                         <Search color="grey" />
                       </Button>
                       <ScrollArea className='h-[200px]'>
@@ -331,7 +331,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                           )}
                         />
                       </ScrollArea>
-                      <Button onClick={handleOpenSheet} className='w-full mt-10'>Continue</Button>
+                      <Button onClick={handleOpenSheet} className='mt-10'>Continue</Button>
                     </div>
                   </SheetContent>
                 </Sheet>
@@ -351,7 +351,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                         placeholder={addressPlaceholder}
                         {...field}
                       />
-                      <Button className="relative z-10 bottom-10 left-64 p-0 bg-transparent" onClick={pasteFromClipboard}>
+                      <Button className="relative z-10 bottom-10 left-32 p-0 bg-transparent" onClick={pasteFromClipboard}>
                         <Clipboard color='grey' />
                       </Button>
                     </div>
@@ -363,7 +363,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
           </div>
           <div className='w-full flex flex-col space-y-2'>
             {action === 'EDIT' && <Button variant={"destructive"} className="uppercase" onClick={handleDelete}>{deleteActionLabel}</Button>}
-            <Button type="submit" className="rounded-3xl uppercase text-foreground">
+            <Button type="submit" className="uppercase">
               {actionLabel}
             </Button>
           </div>

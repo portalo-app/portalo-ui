@@ -83,7 +83,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
           />
 
           <div className="flex justify-center content-center">
-            <Button type="submit" className="mt-4 w-[250px]">
+            <Button type="submit" className="mt-4">
               {actionLabel}
             </Button>
           </div>

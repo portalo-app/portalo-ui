@@ -71,7 +71,7 @@ const ProfilePage: NextPage<
     <PageLayout title={`Hello ${profile?.name}!` || 'Loading...'} backPath={ROUTES.APP}>
       <div className='flex justify-between mt-6'>
         <TypographySmall className='flex items-center'>Your payment addresses</TypographySmall>
-        <Button className='text-primary bg-background p-0' onClick={handleCreateAddress}>+ Add Address</Button>
+        <Button variant="secondary" onClick={handleCreateAddress}>+ Add Address</Button>
       </div>
       <Tabs
         defaultValue="crypto"

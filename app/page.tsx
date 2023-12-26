@@ -18,7 +18,6 @@ export default function Home() {
         </div>
         <div className="flex justify-center mt-5">
           <Button
-            className="w-[250px] rounded-3xl h-12 text-primary border-2 border-primary ease-in duration-200 bg-background"
             asChild
           >
             <Link href={ROUTES.APP} className="text-xl">

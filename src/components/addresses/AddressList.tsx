@@ -43,7 +43,7 @@ const AddressList: React.FC<AddressListProps> = ({
         <Search size={60} className='pb-2' />
         <TypographyP>{emptyMessage}</TypographyP>
       </div>
-      <Button onClick={onClick} className='text-foreground text-sm uppercase rounded-3xl '>{createAddressTitle}</Button>
+      <Button onClick={onClick} className='uppercase'>{createAddressTitle}</Button>
     </div>
   ) : (
     <>

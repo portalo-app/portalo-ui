@@ -47,7 +47,6 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
       <div className="flex content-center justify-center pt-4">
         <Button
           onClick={handleCreateProfile}
-          className="w-[250px] rounded-3xl h-12 hover:text-primary hover:border-2 hover:border-primary ease-in duration-200 mt-2 text-foreground"
         >
           {createProfileTitle}
         </Button>
