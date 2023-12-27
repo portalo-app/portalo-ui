@@ -1,3 +1,4 @@
+import EntityIcon from '@components/entities/EntityIcon';
 import { Button } from '@core/ui/Button';
 import { TypographyLarge, TypographyMuted } from '@core/ui/Typography';
 import { CryptoAddress, FIATAddress } from '@models/address';
@@ -9,10 +10,12 @@ interface AddressCardDetailProps {
   addressData: CryptoAddress | FIATAddress;
   handleEdit: () => void;
   handleDelete: () => void;
-
 }
 
-const AddressCardDetail: React.FC<AddressCardDetailProps> = ({ addressData, handleEdit, }) => {
+const AddressCardDetail: React.FC<AddressCardDetailProps> = ({
+  addressData,
+  handleEdit,
+}) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleShare = () => {
@@ -33,26 +36,33 @@ const AddressCardDetail: React.FC<AddressCardDetailProps> = ({ addressData, hand
     });
   };
 
-  const { name, alias, address } = addressData;
+  const { alias, address, entity } = addressData;
 
   return (
-    <div className="flex flex-col p-1 items-center space-y-3">
+    <div className="text-center space-y-3">
       <QRCodeSVG
         includeMargin
         value={address}
         size={256}
-        className='rounded-3xl mb-4'
+        className="rounded-3xl mb-4"
       />
       <TypographyLarge>{alias}</TypographyLarge>
-      <TypographyMuted>{name}</TypographyMuted>
-      <div className='flex space-x-2 items-center'>
+      <div className="flex items-center gap-2 justify-center">
+        <EntityIcon width={50} height={50} entity={entity.value} />
+        <TypographyMuted>{entity.label}</TypographyMuted>
+      </div>
+      <div className="flex gap-2 items-center justify-center">
         <TypographyMuted>{address}</TypographyMuted>
         <Copy onClick={handleCopy} size={20} />
       </div>
-      <Button onClick={handleShare} className='uppercase'>Share</Button>
-      <Button variant="secondary" onClick={handleEdit}>Edit Payment Address</Button>
+      <Button onClick={handleShare} className="uppercase">
+        Share
+      </Button>
+      <Button variant="secondary" onClick={handleEdit}>
+        Edit Payment Address
+      </Button>
     </div>
   );
-}
+};
 
-export default AddressCardDetail
+export default AddressCardDetail;

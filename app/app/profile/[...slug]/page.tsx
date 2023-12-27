@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-interface ProfilePageProps { }
+interface ProfilePageProps {}
 
 const ProfilePage: NextPage<
   // TODO Add corresponding type
@@ -53,8 +53,6 @@ const ProfilePage: NextPage<
     setProfile(selectedProfile);
   }, [profilesData, router, slug]);
 
-
-
   const handleChange = (newValue: string) => {
     setAddressType(newValue);
   };
@@ -68,10 +66,17 @@ const ProfilePage: NextPage<
   };
 
   return (
-    <PageLayout title={`Hello ${profile?.name}!` || 'Loading...'} backPath={ROUTES.APP}>
-      <div className='flex justify-between mt-6'>
-        <TypographySmall className='flex items-center'>Your payment addresses</TypographySmall>
-        <Button variant="secondary" onClick={handleCreateAddress}>+ Add Address</Button>
+    <PageLayout
+      title={`Hello ${profile?.name}!` || 'Loading...'}
+      backPath={ROUTES.APP}
+    >
+      <div className="flex justify-between mt-6">
+        <TypographySmall className="flex items-center">
+          Your payment addresses
+        </TypographySmall>
+        <Button variant="secondary" onClick={handleCreateAddress}>
+          + Add Address
+        </Button>
       </div>
       <Tabs
         defaultValue="crypto"
@@ -80,10 +85,11 @@ const ProfilePage: NextPage<
       >
         <TabsList className="space-x-6">
           <TabsTrigger value="crypto">
-            {`Crypto Accounts (${profile?.cryptoAddresses?.length || 0
-              })`}</TabsTrigger>
-          <TabsTrigger value="fiat">{`Bank Accounts (${profile?.fiatAddresses?.length || 0
-            })`}</TabsTrigger>
+            {`Crypto Accounts (${profile?.cryptoAddresses?.length || 0})`}
+          </TabsTrigger>
+          <TabsTrigger value="fiat">{`Bank Accounts (${
+            profile?.fiatAddresses?.length || 0
+          })`}</TabsTrigger>
         </TabsList>
         <TabsContent value="crypto">
           {isLoading ? (

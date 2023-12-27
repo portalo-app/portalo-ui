@@ -10,7 +10,7 @@ import {
 } from '@core/ui/Dialog';
 import { Popover, PopoverContent, PopoverTrigger } from '@core/ui/PopOver';
 import { Separator } from '@core/ui/Separator';
-import { TypographyH3, TypographyLarge, TypographySmall } from '@core/ui/Typography';
+import { TypographyH4, TypographySmall } from '@core/ui/Typography';
 import { Profile } from '@models/profile';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import {
@@ -19,7 +19,7 @@ import {
   MoreVertical,
   Pencil,
   Plus,
-  Trash2
+  Trash2,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -47,13 +47,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 
   return (
     <>
-      <Card className="my-4 min-w-xl">
+      <Card>
         <CardContent className="p-2 m-2">
           <div className="flex m-2 items-center justify-between">
             <div>
-              <TypographyH3>{name}</TypographyH3>
+              <TypographyH4>{name}</TypographyH4>
             </div>
-            <div className="flex space-x-2 items-center">
+            <div className="flex gap-2 items-center">
               <Link href={`${ROUTES.APP_PROFILE}/${id}`}>
                 <TypographySmall className="text-primary flex items-center">
                   <Plus size={20} />
@@ -72,24 +72,22 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
           <Separator />
 
           <div className="flex justify-around content-center mt-4">
-            <div className="flex space-x-2 items-center">
-              <Bitcoin size={40} />
-              <div className="flex flex-col">
-                <TypographyLarge>
-                  {cryptoAddresses.length}
-                </TypographyLarge>
+            <div className="flex gap-2 items-center">
+              <Bitcoin size={35} />
+              <div className="flex flex-col gap-1">
+                <TypographySmall>{cryptoAddresses.length}</TypographySmall>
 
-                <TypographyLarge>{cryptoLabel}</TypographyLarge>
+                <TypographySmall>{cryptoLabel}</TypographySmall>
               </div>
             </div>
 
-            <div className="flex space-x-4 items-center">
-              <Landmark size={40} />
+            <div className="flex gap-2 items-center">
+              <Landmark size={35} />
 
-              <div>
-                <TypographyLarge>{fiatAddresses.length}</TypographyLarge>
+              <div className="flex flex-col gap-1">
+                <TypographySmall>{fiatAddresses.length}</TypographySmall>
 
-                <TypographyLarge>{fiatLabel}</TypographyLarge>
+                <TypographySmall>{fiatLabel}</TypographySmall>
               </div>
             </div>
           </div>
@@ -118,17 +116,15 @@ const MenuItems: React.FC<any> = ({
   const deleteLabel = 'Delete';
 
   return (
-    <Popover >
+    <Popover>
       <PopoverTrigger>
         <MoreVertical size={24} />
       </PopoverTrigger>
-      <PopoverContent className="w-[150px] flex flex-col space-y-4">
+      <PopoverContent className="w-[150px] space-y-2 flex flex-col items-center">
         <Dialog open={dialogIsOpen} onOpenChange={handleDialogIsOpen}>
-          <DialogTrigger
-            className="flex justify-center space-x-3"
-          >
+          <DialogTrigger className="flex justify-center items-center gap-2">
             <Pencil size={24} />
-            <TypographyLarge>{editLabel}</TypographyLarge>
+            <TypographySmall>{editLabel}</TypographySmall>
           </DialogTrigger>
           <DialogContent className="rounded-3xl">
             <DialogHeader>
@@ -145,11 +141,11 @@ const MenuItems: React.FC<any> = ({
         </Dialog>
         <Button
           onClick={handleDelete}
-          variant='destructive'
+          variant="destructive"
           className="space-x-2"
         >
           <Trash2 size={24} />
-          <TypographyLarge>{deleteLabel}</TypographyLarge>
+          <TypographySmall>{deleteLabel}</TypographySmall>
         </Button>
       </PopoverContent>
     </Popover>

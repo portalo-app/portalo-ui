@@ -18,8 +18,8 @@ const PageLayout: React.FC<PageLayoutProps> = ({
 }) => {
   return (
     <div className="my-8 max-w-xs w-full">
-      <div className="flex content-center justify-between mb-2">
-        <div className="flex gap-2 content-center justify-center ">
+      <div className="flex mb-2">
+        <div className="flex gap-2 items-center">
           {backPath && (
             <Link
               href={backPath}
@@ -30,7 +30,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
             </Link>
           )}
           {backClick && !backPath && (
-            <Button onClick={backClick}>
+            <Button onClick={backClick} className='bg-transparent hover:border-none'>
               <ChevronLeft />
             </Button>
           )}

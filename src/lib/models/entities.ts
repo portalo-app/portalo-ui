@@ -98,6 +98,8 @@ export const banks = [
   },
 ] as const;
 
+export const ENTITIES = [...chains, ...banks];
+
 export type ChainValue = (typeof chainsSymbols)[number];
 export type BankValue = (typeof banks)[number]['value'];
 

@@ -68,7 +68,7 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
       />
 
       <Dialog open={isDialogOpen} onOpenChange={handleOpenDialog}>
-        <DialogContent className="bg-background rounded-3xl border-none">
+        <DialogContent className="bg-background rounded-3xl border-none max-w-md flex items-center flex-col">
           {address && !isEditing && (
             <>
               <AddressCardDetail

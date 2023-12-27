@@ -38,7 +38,7 @@ const AddressList: React.FC<AddressListProps> = ({
   }
 
   return addresses.length === 0 ? (
-    <div className="flex flex-col justify-center border-2 rounded-xl p-4">
+    <div className="flex flex-col justify-center border rounded-xl p-4">
       <div className='flex space-x-3'>
         <Search size={60} className='pb-2' />
         <TypographyP>{emptyMessage}</TypographyP>
