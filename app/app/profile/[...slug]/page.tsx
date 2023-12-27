@@ -61,7 +61,11 @@ const ProfilePage: NextPage<
     const type =
       addressType === 'crypto' ? ADDRESS_TYPE.CRYPTO : ADDRESS_TYPE.FIAT;
 
-    setAddressForm((currentValue) => ({ ...currentValue, action: 'CREATE' }));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setAddressForm((currentValue: any) => ({
+      ...currentValue,
+      action: 'CREATE',
+    }));
     router.push(`${ROUTES.APP_SELECT_ENTITY}/${profile?.id}/${type}`);
   };
 
