@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
-interface AppPageProps { }
+interface AppPageProps {}
 
 const AppPage: FunctionComponent<AppPageProps> = () => {
   const profilesTitle = 'Profiles';
@@ -45,11 +45,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
         </div>
       )}
       <div className="flex content-center justify-center pt-4">
-        <Button
-          onClick={handleCreateProfile}
-        >
-          {createProfileTitle}
-        </Button>
+        <Button onClick={handleCreateProfile}>{createProfileTitle}</Button>
       </div>
     </PageLayout>
   );

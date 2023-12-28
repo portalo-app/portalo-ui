@@ -47,7 +47,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 
   return (
     <>
-      <Card>
+      <Card className="m-2">
         <CardContent className="p-2 m-2">
           <div className="flex m-2 items-center justify-between">
             <div>
