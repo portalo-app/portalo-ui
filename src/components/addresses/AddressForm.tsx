@@ -99,7 +99,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
     const filtered = entityType.filter((el) =>
       el.label.toLowerCase().includes(searchEntity.toLowerCase())
     );
-    console.log(filtered);
     setFilteredEntity(filtered);
   }, [searchEntity, entityType]);
 
@@ -117,8 +116,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
     })
     .required();
 
-  console.log('originalAddress', originalAddress);
-  console.log('action', action);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -140,8 +137,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   useEffect(() => {
     const entity = getEntity(watchEntityValue);
-    console.log('entity', entity);
-
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-expect-error
     setEntitySelected(entity?.label);
@@ -149,10 +144,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const { entityValue, address, alias } = data;
-    console.log('data', data);
-    console.log('addressForm', addressForm);
-    console.log('type', entityType);
-
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-expect-error
     const entity = getEntity(entityValue); //TODO: Check this error type -> Type error: Argument of type 'string' is not assignable to parameter of type '"BTC" | "ETH" | "MATIC" | "DOT" | "ALGO" | "SOL" | "UNI" | "NACION" | "SANTANDER" | "GALICIA" | "BBVA" | "MACRO" | "HSBC" | "DEFAULT_CHAIN" | "DEFAULT_BANK"'.
