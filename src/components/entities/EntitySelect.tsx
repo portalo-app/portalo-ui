@@ -9,6 +9,7 @@ import { useSetRecoilState } from 'recoil';
 import { Button } from '@core/ui/Button';
 import { Label } from '@core/ui/Label';
 import { RadioGroup, RadioGroupItem } from '@core/ui/RadioGroup';
+import { ADDRESS_TYPE } from '@models/address';
 import { Bitcoin, Landmark } from 'lucide-react';
 
 interface EntitySelectProps {
@@ -16,14 +17,13 @@ interface EntitySelectProps {
 }
 
 const EntitySelect: FC<EntitySelectProps> = ({ profileId }) => {
-  const [addressType, setAddressType] = useState<string>('FIAT');
+  const [addressType, setAddressType] = useState<string>(ADDRESS_TYPE.FIAT);
 
   const router = useRouter();
   const setAddressFormState = useSetRecoilState(addressFormState);
 
   const handleEntityClick = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setAddressFormState((current: any) => ({ ...current }));
+    setAddressFormState((current) => ({ ...current }));
 
     router.push(`${ROUTES.APP_CREATE_ADDRESS}/${profileId}/${addressType}`);
   };

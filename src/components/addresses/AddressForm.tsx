@@ -40,7 +40,6 @@ const ACTION_FORM = {
 export type AddressFormData = {
   entity: Entity;
   address: string;
-  name: string;
   alias: string;
 };
 
@@ -52,27 +51,42 @@ const AddressForm: React.FC<AddressFormProps> = ({
   onComplete,
   handleDelete,
 }) => {
-  const namePlaceholder =
-    addressType === 'CRYPTO'
-      ? 'Select a blockchain from the list'
-      : "Add your bank's name";
-
   const { getEntity } = useEntity();
 
-  const actionLabel = action === 'CREATE' ? 'Confirm' : 'Confirm changes';
+  const actionLabel =
+    action === ACTION_FORM.Create ? 'Confirm' : 'Confirm changes';
   const deleteActionLabel = 'Delete payment address';
-  const nameLabel = addressType === 'CRYPTO' ? 'Blockchain' : 'Bank Name';
-  const addressLabel =
-    addressType === 'CRYPTO' ? 'Wallet Address' : 'Payment Address';
   const aliasLabel = 'Payment Address Alias';
   const optionalLabel = '(optional)';
 
-  const addressPlaceholder =
-    addressType === 'CRYPTO' ? '0x...' : 'Add your CBU/CVU/Alias';
-  const sheetTitle =
-    addressType === 'CRYPTO'
-      ? 'Select a blockchain from the list'
-      : 'Select a bank from the list';
+  const cryptoAddressFormContent = {
+    nameLabel: 'Blockchain',
+    addressLabel: 'Wallet Address',
+    addressPlaceholder: '0x...',
+    sheetTitle: 'Select a blockchain from the list',
+    namePlaceholder: 'Select a blockchain from the list',
+  };
+
+  const fiatAddressFormContent = {
+    nameLabel: 'Bank Name',
+    addressLabel: 'Payment Address',
+    addressPlaceholder: 'Add your CBU/CVU/Alias',
+    sheetTitle: 'Select a bank from the list',
+    namePlaceholder: "Add your bank's name",
+  };
+
+  const addressFormContent =
+    addressType === ADDRESS_TYPE.CRYPTO
+      ? cryptoAddressFormContent
+      : fiatAddressFormContent;
+
+  const {
+    nameLabel,
+    addressLabel,
+    addressPlaceholder,
+    sheetTitle,
+    namePlaceholder,
+  } = addressFormContent;
 
   const entityType = (
     addressType === ADDRESS_TYPE.CRYPTO ? chains : banks
@@ -92,8 +106,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
   useEffect(() => {
     if (searchEntity === '') setFilteredEntity(entityType);
 
-    const filtered = entityType.filter((el) =>
-      el.label.toLowerCase().includes(searchEntity.toLowerCase())
+    const filtered = entityType.filter((entity) =>
+      entity.label.toLowerCase().includes(searchEntity.toLowerCase())
     );
     setFilteredEntity(filtered);
   }, [searchEntity, entityType]);
@@ -133,16 +147,15 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   useEffect(() => {
     const entity = getEntity(watchEntityValue);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-expect-error
-    setEntitySelected(entity?.label);
+    if (entity) {
+      setEntitySelected(entity.label);
+    }
   }, [watchEntityValue, getEntity]);
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const { entityValue, address, alias } = data;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-expect-error
-    const entity = getEntity(entityValue); //TODO: Check this error type -> Type error: Argument of type 'string' is not assignable to parameter of type '"BTC" | "ETH" | "MATIC" | "DOT" | "ALGO" | "SOL" | "UNI" | "NACION" | "SANTANDER" | "GALICIA" | "BBVA" | "MACRO" | "HSBC" | "DEFAULT_CHAIN" | "DEFAULT_BANK"'.
+
+    const entity = getEntity(entityValue as Entity['value']);
 
     if (action === ACTION_FORM.Edit) {
       editAddress(profileId, addressType, {
@@ -164,8 +177,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   return (
     <div className="p-2">
-      {/* {addressForm.entity && <EntityChip entity={addressForm.entity} />} */}
-      {addressType === 'CRYPTO' ? (
+      {addressType === ADDRESS_TYPE.CRYPTO ? (
         <div className="p-3 border rounded-xl flex space-x-3 items-center my-6">
           <Bitcoin size={25} />
           <TypographyP>Crypto Account</TypographyP>
@@ -252,7 +264,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
             />
           </div>
           <div className="w-full flex flex-col space-y-2">
-            {action === 'EDIT' && (
+            {action === ACTION_FORM.Edit && (
               <Button
                 variant={'destructive'}
                 className="uppercase"

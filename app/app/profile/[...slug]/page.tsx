@@ -61,8 +61,7 @@ const ProfilePage: NextPage<
     const type =
       addressType === 'crypto' ? ADDRESS_TYPE.CRYPTO : ADDRESS_TYPE.FIAT;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setAddressForm((currentValue: any) => ({
+    setAddressForm((currentValue) => ({
       ...currentValue,
       action: 'CREATE',
     }));
