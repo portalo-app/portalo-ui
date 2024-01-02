@@ -12,7 +12,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateAddress from '@hooks/addresses/useCreateAddress';
 import useEditAddress from '@hooks/addresses/useEditAddress';
 import useEntity from '@hooks/entities/useEntity';
-import useMediaQuery from '@hooks/useMediaQuery';
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
 import { Entity, banks, chains } from '@models/entities';
 import { addressFormState } from '@states/address-form.atom';
@@ -22,8 +21,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import * as z from 'zod';
-import EntityFormDesktop from './EntityFormDesktop';
-import EntityFormMobile from './EntityFormMobile';
+import EntityForm from './EntityForm';
 
 interface AddressFormProps {
   action: 'CREATE' | 'EDIT';
@@ -90,8 +88,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const handleFilterEntity = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchEntity(e.target.value);
   };
-
-  const isDesktop = useMediaQuery('(min-width: 480px)');
 
   useEffect(() => {
     if (searchEntity === '') setFilteredEntity(entityType);
@@ -212,26 +208,18 @@ const AddressForm: React.FC<AddressFormProps> = ({
                 </FormItem>
               )}
             />
-            {isDesktop ? (
-              <EntityFormDesktop
-                form={form}
-                nameLabel={nameLabel}
-                addressPlaceholder={addressPlaceholder}
-                filteredEntity={filteredEntity}
-              />
-            ) : (
-              <EntityFormMobile
-                sheetTitle={sheetTitle}
-                entitySelected={entitySelected}
-                handleOpenDrawer={handleOpenDrawer}
-                pasteFromClipboard={pasteFromClipboard}
-                filteredEntity={filteredEntity}
-                nameLabel={nameLabel}
-                form={form}
-                handleFilterEntity={handleFilterEntity}
-                errors={errors}
-              />
-            )}
+            <EntityForm
+              addressPlaceholder={addressPlaceholder}
+              sheetTitle={sheetTitle}
+              entitySelected={entitySelected}
+              handleOpenDrawer={handleOpenDrawer}
+              pasteFromClipboard={pasteFromClipboard}
+              filteredEntity={filteredEntity}
+              nameLabel={nameLabel}
+              form={form}
+              handleFilterEntity={handleFilterEntity}
+              errors={errors}
+            />
             <FormField
               control={form.control}
               name="address"
