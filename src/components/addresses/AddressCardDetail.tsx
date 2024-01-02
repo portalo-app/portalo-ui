@@ -39,13 +39,15 @@ const AddressCardDetail: React.FC<AddressCardDetailProps> = ({
   const { alias, address, entity } = addressData;
 
   return (
-    <div className="text-center space-y-3">
-      <QRCodeSVG
-        includeMargin
-        value={address}
-        size={256}
-        className="rounded-3xl mb-4"
-      />
+    <div className="text-center space-y-4">
+      <div className="flex justify-center">
+        <QRCodeSVG
+          includeMargin
+          value={address}
+          size={256}
+          className="rounded-3xl mb-4"
+        />
+      </div>
       <TypographyLarge>{alias}</TypographyLarge>
       <div className="flex items-center gap-2 justify-center">
         <EntityIcon width={50} height={50} entity={entity.value} />

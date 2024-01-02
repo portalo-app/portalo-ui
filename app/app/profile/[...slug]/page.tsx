@@ -73,20 +73,14 @@ const ProfilePage: NextPage<
       title={`Hello ${profile?.name}!` || 'Loading...'}
       backPath={ROUTES.APP}
     >
-      <div className="flex justify-between mt-6">
-        <TypographySmall className="flex items-center">
-          Your payment addresses
-        </TypographySmall>
+      <div className="flex mt-4 items-center">
+        <TypographySmall>Your payment addresses</TypographySmall>
         <Button variant="secondary" onClick={handleCreateAddress}>
           + Add Address
         </Button>
       </div>
-      <Tabs
-        defaultValue="crypto"
-        className="flex flex-col w-full justify-center content-center"
-        onValueChange={handleChange}
-      >
-        <TabsList className="space-x-6">
+      <Tabs defaultValue="crypto" onValueChange={handleChange}>
+        <TabsList className="space-x-4">
           <TabsTrigger value="crypto">
             {`Crypto Accounts (${profile?.cryptoAddresses?.length || 0})`}
           </TabsTrigger>

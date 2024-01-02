@@ -7,19 +7,15 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <>
-      <div className="flex flex-col p-4">
-        <TypographyH1 className="text-5xl my-4 pt-8 text-center max-w-lg font-bold">
+      <div>
+        <TypographyH1 className="pt-8 text-center max-w-lg">
           {APP_SLOGAN}
         </TypographyH1>
-        <div className="flex justify-center">
-          <TypographyH3 className="text-xl ml-8 my-4 text-center max-w-sm ">
-            Start using Portalo and make it easier to find an address
-          </TypographyH3>
-        </div>
+        <TypographyH3 className="m-4 max-w-lg text-center">
+          Start using Portalo and make it easier to find an address
+        </TypographyH3>
         <div className="flex justify-center mt-5">
-          <Button
-            asChild
-          >
+          <Button asChild>
             <Link href={ROUTES.APP} className="text-xl">
               Start now!
             </Link>

@@ -15,8 +15,8 @@ const AddressCard: React.FC<AddressCardProps> = ({ addressData, ...props }) => {
   return (
     <Card className="hover:cursor-pointer m-2" {...props}>
       <CardContent className="flex justify-between p-2">
-        <div className="flex">
-          <div className="flex items-center mr-3">
+        <div className="flex items-center">
+          <div className="mr-3">
             <EntityIcon width={50} height={50} entity={entity.value} />
           </div>
           <div>

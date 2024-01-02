@@ -176,7 +176,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
   };
 
   return (
-    <div className="p-2">
+    <div>
       {addressType === ADDRESS_TYPE.CRYPTO ? (
         <div className="p-3 border rounded-xl flex space-x-3 items-center my-6">
           <Bitcoin size={25} />
@@ -190,11 +190,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
       )}
 
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col space-y-20"
-        >
-          <div className="flex flex-col space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-20">
+          <div className="space-y-4">
             <FormField
               control={form.control}
               name="alias"
@@ -263,7 +260,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
               )}
             />
           </div>
-          <div className="w-full flex flex-col space-y-2">
+          <div className="w-full space-y-2">
             {action === ACTION_FORM.Edit && (
               <Button
                 variant={'destructive'}

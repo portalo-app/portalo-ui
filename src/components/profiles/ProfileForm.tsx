@@ -59,12 +59,9 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   };
 
   return (
-    <div className="p-4">
+    <div>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col space-y-5"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
             control={form.control}
             name="name"
@@ -72,21 +69,15 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
               <FormItem>
                 <FormLabel>{nameLabel}</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="name"
-                    {...field}
-                  />
+                  <Input placeholder="name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
-          <div className="flex justify-center content-center">
-            <Button type="submit" className="mt-4">
-              {actionLabel}
-            </Button>
-          </div>
+          <Button type="submit" className="mt-4">
+            {actionLabel}
+          </Button>
         </form>
       </Form>
     </div>

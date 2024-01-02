@@ -30,7 +30,6 @@ const useEntity = () => {
    */
   const getEntity = (value: Entity['value']) => {
     const entity = ENTITIES.find((entity) => entity.value === value);
-    console.log(entity);
     return entity;
   };
 

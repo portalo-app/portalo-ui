@@ -17,26 +17,23 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   backClick,
 }) => {
   return (
-    <div className="my-8 max-w-xs w-full">
-      <div className="flex mb-2">
-        <div className="flex gap-2 items-center">
+    <div className="my-4 max-w-xs w-full">
+      <div className="mb-2">
+        <div className="flex gap-2 items-center justify-start">
           {backPath && (
-            <Link
-              href={backPath}
-              onClick={() => backClick && backClick()}
-              className="flex justify-center flex-col"
-            >
+            <Link href={backPath} onClick={() => backClick && backClick()}>
               <ChevronLeft />
             </Link>
           )}
           {backClick && !backPath && (
-            <Button onClick={backClick} className='bg-transparent hover:border-none'>
+            <Button
+              onClick={backClick}
+              className="bg-transparent hover:border-none w-8 p-0"
+            >
               <ChevronLeft />
             </Button>
           )}
-          <TypographyH3 className={` font-bold text-2xl flex content-center text-start justify-center flex-col pb-2 ml-2 ${!backPath && 'ml-10'}`}>
-            {title}
-          </TypographyH3>
+          <TypographyH3 className="ml-2">{title}</TypographyH3>
         </div>
       </div>
 

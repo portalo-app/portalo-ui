@@ -26,7 +26,7 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
   address,
   onComplete,
   handleOpenDialog,
-  isDialogOpen
+  isDialogOpen,
 }) => {
   const [action, setAction] = useState<Action | null>(null);
   const setAddressForm = useSetRecoilState(addressFormState);
@@ -56,7 +56,6 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
     handleMenuClose();
   };
 
-
   return (
     <>
       <DeleteModal
@@ -68,7 +67,7 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
       />
 
       <Dialog open={isDialogOpen} onOpenChange={handleOpenDialog}>
-        <DialogContent className="bg-background rounded-3xl border-none max-w-md flex items-center flex-col">
+        <DialogContent className="flex justify-center rounded-3xl max-w-md">
           {address && !isEditing && (
             <>
               <AddressCardDetail
@@ -81,7 +80,8 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
                     action: 'EDIT',
                   });
                   setAction('edit');
-                }} />
+                }}
+              />
             </>
           )}
 
@@ -103,7 +103,7 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
             </div>
           )}
         </DialogContent>
-      </Dialog >
+      </Dialog>
     </>
   );
 };
