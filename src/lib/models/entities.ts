@@ -4,7 +4,7 @@ import { CryptoAddress, CryptoAddressesRegex, FIATAddress } from './address';
 export interface Entity {
   color: string;
   icon: string;
-  value: ChainValue | BankValue | 'DEFAULT_CHAIN' | 'DEFAULT_BANK';
+  value: (typeof EntityValue)[number];
   label: string;
   addressRegex?: RegExp;
 }
@@ -137,3 +137,12 @@ export const mockFIATAddresses: FIATAddress[] = [
     currency: 'ARS',
   },
 ];
+
+export const banksSymbols = banks.map(({ value }) => value);
+
+export const EntityValue = [
+  ...chainsSymbols,
+  ...banksSymbols,
+  'DEFAULT_CHAIN',
+  'DEFAULT_BANK',
+] as const;

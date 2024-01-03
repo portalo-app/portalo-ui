@@ -22,11 +22,11 @@ import { Popover, PopoverContent, PopoverTrigger } from '@core/ui/PopOver';
 import { RadioGroup, RadioGroupItem } from '@core/ui/RadioGroup';
 import { ScrollArea } from '@core/ui/ScrollArea';
 import { TypographyP } from '@core/ui/Typography';
-import { Entity } from '@models/entities';
+import { Entity, EntityValue } from '@models/entities';
 import { cn } from '@utils/utils';
 import { Check, ChevronDown, ChevronsUpDown, Search } from 'lucide-react';
 import { ChangeEvent } from 'react';
-import { FieldErrors } from 'react-hook-form/dist/types';
+import { FieldErrors, UseFormReturn } from 'react-hook-form/dist/types';
 
 interface EntityFormProps {
   sheetTitle: string;
@@ -35,8 +35,11 @@ interface EntityFormProps {
   pasteFromClipboard: () => void;
   filteredEntity: Entity[];
   nameLabel: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  form: any;
+  form: UseFormReturn<{
+    address: string;
+    entityValue: (typeof EntityValue)[number];
+    alias: string;
+  }>;
   handleFilterEntity: (e: ChangeEvent<HTMLInputElement>) => void;
   errors: FieldErrors;
   addressPlaceholder: string;

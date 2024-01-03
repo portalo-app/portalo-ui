@@ -13,7 +13,7 @@ import useCreateAddress from '@hooks/addresses/useCreateAddress';
 import useEditAddress from '@hooks/addresses/useEditAddress';
 import useEntity from '@hooks/entities/useEntity';
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
-import { Entity, banks, chains } from '@models/entities';
+import { Entity, EntityValue, banks, chains } from '@models/entities';
 import { addressFormState } from '@states/address-form.atom';
 import { pasteFromClipboard } from '@utils/clipboard';
 import { Bitcoin, Clipboard, Info, Landmark } from 'lucide-react';
@@ -65,7 +65,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
     addressPlaceholder: '0x...',
     sheetTitle: 'Select a blockchain from the list',
     namePlaceholder: 'Select a blockchain from the list',
-  };
+    defaultEntity: 'DEFAULT_CHAIN',
+  } as const;
 
   const fiatAddressFormContent = {
     nameLabel: 'Bank Name',
@@ -73,7 +74,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
     addressPlaceholder: 'Add your CBU/CVU/Alias',
     sheetTitle: 'Select a bank from the list',
     namePlaceholder: "Add your bank's name",
-  };
+    defaultEntity: 'DEFAULT_BANK',
+  } as const;
 
   const addressFormContent =
     addressType === ADDRESS_TYPE.CRYPTO
@@ -86,13 +88,14 @@ const AddressForm: React.FC<AddressFormProps> = ({
     addressPlaceholder,
     sheetTitle,
     namePlaceholder,
+    defaultEntity,
   } = addressFormContent;
 
   const entityType = (
     addressType === ADDRESS_TYPE.CRYPTO ? chains : banks
   ) as Entity[];
 
-  const [entitySelected, setEntitySelected] = useState(namePlaceholder);
+  const [entitySelected, setEntitySelected] = useState<string>(namePlaceholder);
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const [searchEntity, setSearchEntity] = useState('');
   const [filteredEntity, setFilteredEntity] = useState(entityType);
@@ -120,7 +123,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   const formSchema = z
     .object({
-      entityValue: z.string(),
+      entityValue: z.enum(EntityValue),
       address: z.string().min(4).max(100),
       alias: z.string().min(4),
     })
@@ -131,8 +134,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
     defaultValues: {
       entityValue:
         action === ACTION_FORM.Edit
-          ? originalAddress?.entity?.value
-          : namePlaceholder,
+          ? originalAddress?.entity?.value || defaultEntity
+          : defaultEntity,
       address: action === ACTION_FORM.Edit ? originalAddress?.address : '',
       alias: action === ACTION_FORM.Edit ? originalAddress?.alias : '',
     },
