@@ -1,20 +1,17 @@
-import { ThemeProvider } from '@providers/ThemeProvider';
-import Navbar from './Navbar';
+import Navbar from '@components/layout/Navbar';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+export default function AppLayout({ children }: LayoutProps) {
   return (
-    <ThemeProvider>
+    <>
       <Navbar />
 
       <main className="bg-gradient-to-br from-background to-primary from-70% min-h-screen">
         <div className="flex content-center justify-center">{children}</div>
       </main>
-    </ThemeProvider>
+    </>
   );
-};
-
-export default Layout;
+}

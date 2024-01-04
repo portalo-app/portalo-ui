@@ -1,3 +1,5 @@
+'use client';
+
 import { EXTERNAL_LINKS } from '@constants/externalLinks.const';
 import { ROUTES } from '@constants/routes.const';
 import DeleteModal from '@core/components/DeleteModal';
