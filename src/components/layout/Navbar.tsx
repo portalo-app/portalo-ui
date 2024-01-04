@@ -20,7 +20,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useResetRecoilState } from 'recoil';
 import DrawerMenuItems from './DrawerMenuItems';
-interface NavbarProps { }
+interface NavbarProps {}
 
 const PortaloLogo = () => {
   return (
@@ -62,7 +62,7 @@ const Navbar: React.FC<NavbarProps> = () => {
       <div className="sticky pl-4 top-0 flex w-full justify-between p-3 shadow bg-background">
         <div className="">
           <Link
-            href={ROUTES.HOME}
+            href={ROUTES.APP}
             className="animate-slide-in-left text-xl flex content-center justify-center"
           >
             <PortaloLogo />
@@ -83,7 +83,7 @@ const Navbar: React.FC<NavbarProps> = () => {
               <SheetDescription className="flex flex-col min-h-[550px] justify-between">
                 <div>
                   <DrawerMenuItems />
-                  <div className='ml-4'>
+                  <div className="ml-4">
                     <ModeToggle />
                   </div>
                 </div>
