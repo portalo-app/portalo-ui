@@ -55,7 +55,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
             </div>
             <div className="flex gap-2 items-center">
               <Link href={`${ROUTES.APP_PROFILE}/${id}`}>
-                <TypographySmall className="text-primary flex items-center">
+                <TypographySmall className="text-secondary flex items-center ">
                   <Plus size={20} />
                   Add address
                 </TypographySmall>
@@ -118,7 +118,7 @@ const MenuItems: React.FC<any> = ({
   return (
     <Popover>
       <PopoverTrigger>
-        <MoreVertical size={24} />
+        <MoreVertical size={24} aria-label="open" />
       </PopoverTrigger>
       <PopoverContent className="w-[150px] space-y-2 flex flex-col items-center">
         <Dialog open={dialogIsOpen} onOpenChange={handleDialogIsOpen}>

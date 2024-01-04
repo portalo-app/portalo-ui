@@ -255,7 +255,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                         className="relative z-10 bottom-10 left-28 p-0 bg-transparent hover:border-none hover:bg-transparent"
                         onClick={pasteFromClipboard}
                       >
-                        <Clipboard color="grey" />
+                        <Clipboard color="grey" aria-label="paste address" />
                       </Button>
                     </div>
                   </FormControl>

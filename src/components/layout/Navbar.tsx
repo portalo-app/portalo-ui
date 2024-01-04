@@ -73,7 +73,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         <div className="flex my-auto ">
           <Sheet>
             <SheetTrigger asChild>
-              <AlignJustify size={32} className="mr-4" />
+              <AlignJustify size={32} className="mr-4" role="img" />
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>

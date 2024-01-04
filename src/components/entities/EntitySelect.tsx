@@ -42,7 +42,11 @@ const EntitySelect: FC<EntitySelectProps> = ({ profileId }) => {
               Bank Account
             </Label>
           </div>
-          <RadioGroupItem value="FIAT" id="FIAT" />
+          <RadioGroupItem
+            value="FIAT"
+            id="FIAT"
+            aria-label="select fiat option"
+          />
         </div>
         <div className="flex items-center space-x-2 border p-4 rounded-xl justify-between">
           <div className="flex items-center">
@@ -51,7 +55,11 @@ const EntitySelect: FC<EntitySelectProps> = ({ profileId }) => {
               Crypto Account
             </Label>
           </div>
-          <RadioGroupItem value="CRYPTO" id="CRYPTO" />
+          <RadioGroupItem
+            value="CRYPTO"
+            id="CRYPTO"
+            aria-label="select crypto option"
+          />
         </div>
       </RadioGroup>
       <Button onClick={handleEntityClick}>Continue</Button>

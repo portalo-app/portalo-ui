@@ -22,7 +22,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
         <div className="flex gap-2 items-center justify-start">
           {backPath && (
             <Link href={backPath} onClick={() => backClick && backClick()}>
-              <ChevronLeft />
+              <ChevronLeft aria-label="go back" />
             </Link>
           )}
           {backClick && !backPath && (
