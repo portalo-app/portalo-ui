@@ -59,4 +59,11 @@
       'rlig' 1,
       'calt' 1;
   }
+  [aria-invalid='true'] input {
+    @apply border-destructive bg-destructive/30 text-destructive;
+  }
+
+  input[aria-invalid='true'] {
+    @apply border-destructive bg-destructive/30 text-destructive;
+  }
 }

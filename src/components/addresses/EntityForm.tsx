@@ -26,7 +26,7 @@ import { Entity, EntityValue } from '@models/entities';
 import { cn } from '@utils/utils';
 import { Check, ChevronDown, ChevronsUpDown, Search } from 'lucide-react';
 import { ChangeEvent } from 'react';
-import { FieldErrors, UseFormReturn } from 'react-hook-form/dist/types';
+import { UseFormReturn } from 'react-hook-form/dist/types';
 
 interface EntityFormProps {
   sheetTitle: string;
@@ -41,7 +41,6 @@ interface EntityFormProps {
     alias: string;
   }>;
   handleFilterEntity: (e: ChangeEvent<HTMLInputElement>) => void;
-  errors: FieldErrors;
   addressPlaceholder: string;
 }
 
@@ -54,7 +53,6 @@ const EntityForm: React.FC<EntityFormProps> = ({
   nameLabel,
   form,
   handleFilterEntity,
-  errors,
   addressPlaceholder,
 }) => {
   return (
@@ -69,10 +67,7 @@ const EntityForm: React.FC<EntityFormProps> = ({
         <Drawer>
           <DrawerTrigger asChild>
             <Button
-              className={`bg-background border border-primary text-foreground flex justify-between mt-2 ${
-                errors.entityValue &&
-                'bg-destructive/30 border-destructive text-destructive'
-              }`}
+              className={`bg-background border border-primary text-foreground flex justify-between mt-2`}
               onClick={handleOpenDrawer}
             >
               {entitySelected}

@@ -141,10 +141,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
     },
   });
 
-  const {
-    watch,
-    formState: { errors },
-  } = form;
+  const { watch } = form;
 
   const watchEntityValue = watch('entityValue') as Entity['value'];
 
@@ -209,10 +206,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className={`${
-                        errors.alias &&
-                        'bg-destructive/30 border-destructive text-destructive'
-                      }`}
                       placeholder="Insert an alias for your payment address"
                       {...field}
                     />
@@ -230,7 +223,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
               nameLabel={nameLabel}
               form={form}
               handleFilterEntity={handleFilterEntity}
-              errors={errors}
             />
             <FormField
               control={form.control}
@@ -243,14 +235,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                   </FormLabel>
                   <FormControl>
                     <div>
-                      <Input
-                        placeholder={addressPlaceholder}
-                        {...field}
-                        className={`${
-                          errors.address &&
-                          'bg-destructive/30 border-destructive text-destructive'
-                        }`}
-                      />
+                      <Input placeholder={addressPlaceholder} {...field} />
                       <Button
                         className="relative z-10 bottom-10 left-28 p-0 bg-transparent hover:border-none hover:bg-transparent"
                         onClick={pasteFromClipboard}
