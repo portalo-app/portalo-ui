@@ -32,4 +32,6 @@ export const CryptoAddressesRegex: {
   MATIC: /^0x[a-fA-F0-9]{40}$/,
   SOL: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/,
   UNI: /^0x[a-fA-F0-9]{40}$/,
+  ATOM: /^cosmos1[0-9a-z]{39}$/,
+  SCRT: /^secret1[0-9a-z]{39}$/,
 };
