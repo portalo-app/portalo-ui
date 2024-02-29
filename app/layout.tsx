@@ -12,6 +12,9 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+// Import this in your top-level route/layout
+import '@interchain-ui/react/styles';
+
 const links = [{ rel: 'icon', href: '/favicon.ico' }];
 
 export default function RootLayout({

@@ -1,10 +1,10 @@
 'use client';
 
+import WalletConnect from '@components/walletConnect/WalletConnect';
 import { EXTERNAL_LINKS } from '@constants/externalLinks.const';
 import { ROUTES } from '@constants/routes.const';
 import DeleteModal from '@core/components/DeleteModal';
 import { Button } from '@core/ui/Button';
-import { ModeToggle } from '@core/ui/ModeToggle';
 import { Separator } from '@core/ui/Separator';
 import {
   Sheet,
@@ -22,6 +22,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useResetRecoilState } from 'recoil';
 import DrawerMenuItems from './DrawerMenuItems';
+
 interface NavbarProps {}
 
 const PortaloLogo = () => {
@@ -71,6 +72,8 @@ const Navbar: React.FC<NavbarProps> = () => {
           </Link>
         </div>
         <div className="flex my-auto ">
+          <WalletConnect />
+
           <Sheet>
             <SheetTrigger asChild>
               <AlignJustify size={32} className="mr-4" role="img" />
@@ -85,9 +88,7 @@ const Navbar: React.FC<NavbarProps> = () => {
               <SheetDescription className="flex flex-col min-h-[550px] justify-between">
                 <div>
                   <DrawerMenuItems />
-                  <div className="ml-4">
-                    <ModeToggle />
-                  </div>
+                  <div className="ml-4">{/* <ModeToggle /> */}</div>
                 </div>
 
                 <div className="flex flex-col justify-center">
