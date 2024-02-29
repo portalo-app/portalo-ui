@@ -17,10 +17,27 @@ export const chainsSymbols = [
   'ALGO',
   'SOL',
   'UNI',
+  'ATOM',
+  'SCRT',
+  'OSMOSIS',
 ] as const;
 
+const fullChainList = [
+  ...chainsList,
+  {
+    symbol: 'SCRT',
+    name: 'Secret',
+    color: '#302c2c',
+  },
+  {
+    symbol: 'OSMOSIS',
+    name: 'Osmosis',
+    color: '#ec1076',
+  },
+];
+
 const filteredUniqueChains = Object.values(
-  chainsList
+  fullChainList
     .filter((chain) =>
       (chainsSymbols as ReadonlyArray<string>).includes(chain.symbol)
     )

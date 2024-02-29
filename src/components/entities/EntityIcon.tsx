@@ -1,11 +1,15 @@
 import { BankValue, ChainValue, banks } from '@models/entities';
 import Algo from 'cryptocurrency-icons/svg/color/algo.svg';
+import Atom from 'cryptocurrency-icons/svg/color/atom.svg';
 import Sol from 'cryptocurrency-icons/svg/color/sol.svg';
 import Uni from 'cryptocurrency-icons/svg/color/uni.svg';
 import Btc from 'cryptocurrency-icons/svg/icon/btc.svg';
 import Dot from 'cryptocurrency-icons/svg/icon/dot.svg';
 import Eth from 'cryptocurrency-icons/svg/icon/eth.svg';
 import Matic from 'cryptocurrency-icons/svg/icon/matic.svg';
+import Osmosis from '../../../public/assets/icons/cryptocurrencys/osmosis.svg';
+import Scrt from '../../../public/assets/icons/cryptocurrencys/secret.svg';
+
 import { Landmark, Wallet } from 'lucide-react';
 import Image from 'next/legacy/image';
 
@@ -25,6 +29,9 @@ const chainIcons: {
   ALGO: <Algo />,
   SOL: <Sol />,
   UNI: <Uni />,
+  ATOM: <Atom />,
+  SCRT: <Scrt />,
+  OSMO: <Osmosis />,
 };
 
 const bankIcons: {

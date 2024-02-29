@@ -1,14 +1,24 @@
 import { Button } from '@core/ui/Button';
 import { TypographySmall } from '@core/ui/Typography';
 import { useChain } from '@cosmos-kit/react';
+import Image from 'next/image';
 
 interface WalletConnectProps {}
 
 const WalletConnect: React.FC<WalletConnectProps> = () => {
-  const chainContext = useChain('cosmoshub');
+  const chainContext = useChain('secretnetworktestnet');
 
-  const { status, username, address, message, connect, disconnect, openView } =
-    chainContext;
+  const {
+    status,
+    username,
+    address,
+    message,
+    connect,
+    disconnect,
+    openView,
+    logoUrl,
+    assets,
+  } = chainContext;
 
   console.log({
     status,
@@ -18,6 +28,8 @@ const WalletConnect: React.FC<WalletConnectProps> = () => {
     connect,
     disconnect,
     openView,
+    logoUrl,
+    assets,
   });
 
   const handleDisconnect = () => {
@@ -31,6 +43,9 @@ const WalletConnect: React.FC<WalletConnectProps> = () => {
           <TypographySmall className="text-ellipsis overflow-hidden">
             Username : {username}
           </TypographySmall>
+          {logoUrl && (
+            <Image src={logoUrl} alt="logo icon" width={30} height={30} />
+          )}
           <TypographySmall className="text-ellipsis overflow-hidden">
             Address : {address}
           </TypographySmall>

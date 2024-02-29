@@ -26,6 +26,13 @@ const Root: React.FC<RootProps> = ({ children }) => {
             chains={chains} // supported chains
             assetLists={assets} // supported asset lists
             wallets={wallets} // supported wallets
+            endpointOptions={{
+              endpoints: {
+                localsecret: {
+                  rpc: ['http://localhost:3000'],
+                },
+              },
+            }}
           >
             <ThemeProvider>
               <SnackbarProvider
