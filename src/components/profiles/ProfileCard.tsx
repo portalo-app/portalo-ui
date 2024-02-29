@@ -19,6 +19,7 @@ import {
   MoreVertical,
   Pencil,
   Plus,
+  Save,
   Trash2,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -114,6 +115,7 @@ const MenuItems: React.FC<any> = ({
 }) => {
   const editLabel = 'Edit';
   const deleteLabel = 'Delete';
+  const saveLabel = 'Save';
 
   return (
     <Popover>
@@ -139,6 +141,7 @@ const MenuItems: React.FC<any> = ({
             </DialogHeader>
           </DialogContent>
         </Dialog>
+
         <Button
           onClick={handleDelete}
           variant="destructive"
@@ -146,6 +149,11 @@ const MenuItems: React.FC<any> = ({
         >
           <Trash2 size={24} />
           <TypographySmall>{deleteLabel}</TypographySmall>
+        </Button>
+
+        <Button variant="default" className="space-x-2">
+          <Save size={24} />
+          <TypographySmall>{saveLabel}</TypographySmall>
         </Button>
       </PopoverContent>
     </Popover>
