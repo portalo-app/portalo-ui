@@ -19,7 +19,7 @@ export const chainsSymbols = [
   'UNI',
   'ATOM',
   'SCRT',
-  'OSMOSIS',
+  // 'OSMO',
 ] as const;
 
 const fullChainList = [
@@ -29,11 +29,11 @@ const fullChainList = [
     name: 'Secret',
     color: '#302c2c',
   },
-  {
-    symbol: 'OSMOSIS',
-    name: 'Osmosis',
-    color: '#ec1076',
-  },
+  // {
+  //   symbol: 'OSMO',
+  //   name: 'Osmosis',
+  //   color: '#ec1076',
+  // },
 ];
 
 const filteredUniqueChains = Object.values(

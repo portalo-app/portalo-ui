@@ -7,7 +7,7 @@ import Btc from 'cryptocurrency-icons/svg/icon/btc.svg';
 import Dot from 'cryptocurrency-icons/svg/icon/dot.svg';
 import Eth from 'cryptocurrency-icons/svg/icon/eth.svg';
 import Matic from 'cryptocurrency-icons/svg/icon/matic.svg';
-import Osmosis from '../../../public/assets/icons/cryptocurrencys/osmosis.svg';
+// import Osmosis from '../../../public/assets/icons/cryptocurrencys/osmosis.svg';
 import Scrt from '../../../public/assets/icons/cryptocurrencys/secret.svg';
 
 import { Landmark, Wallet } from 'lucide-react';
@@ -31,7 +31,7 @@ const chainIcons: {
   UNI: <Uni />,
   ATOM: <Atom />,
   SCRT: <Scrt />,
-  OSMO: <Osmosis />,
+  // OSMO: <Osmosis />,
 };
 
 const bankIcons: {
