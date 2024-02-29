@@ -16,6 +16,7 @@ interface AddressDetailProps {
   onComplete?: () => void;
   handleOpenDialog: () => void;
   isDialogOpen: boolean;
+  editable?: boolean;
 }
 
 type Action = 'edit' | 'delete' | 'qr';
@@ -27,6 +28,7 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
   onComplete,
   handleOpenDialog,
   isDialogOpen,
+  editable = false,
 }) => {
   const [action, setAction] = useState<Action | null>(null);
   const setAddressForm = useSetRecoilState(addressFormState);
@@ -58,13 +60,15 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
 
   return (
     <>
-      <DeleteModal
-        open={isDeleting}
-        onClose={clearAction}
-        title={deleteTitle}
-        message={deleteMessage}
-        onDelete={handleAddressDelete}
-      />
+      {editable && (
+        <DeleteModal
+          open={isDeleting}
+          onClose={clearAction}
+          title={deleteTitle}
+          message={deleteMessage}
+          onDelete={handleAddressDelete}
+        />
+      )}
 
       <Dialog open={isDialogOpen} onOpenChange={handleOpenDialog}>
         <DialogContent className="flex justify-center rounded-3xl max-w-md">
@@ -73,14 +77,19 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
               <AddressCardDetail
                 addressData={address}
                 handleDelete={() => setAction('delete')}
-                handleEdit={() => {
-                  setAddressForm({
-                    ...address,
-                    addressId: address.id,
-                    action: 'EDIT',
-                  });
-                  setAction('edit');
-                }}
+                handleEdit={
+                  editable
+                    ? () => {
+                        setAddressForm({
+                          ...address,
+                          addressId: address.id,
+                          action: 'EDIT',
+                        });
+                        setAction('edit');
+                      }
+                    : () => {}
+                }
+                editable={editable}
               />
             </>
           )}

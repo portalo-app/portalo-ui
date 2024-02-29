@@ -10,11 +10,13 @@ interface AddressCardDetailProps {
   addressData: CryptoAddress | FIATAddress;
   handleEdit: () => void;
   handleDelete: () => void;
+  editable?: boolean;
 }
 
 const AddressCardDetail: React.FC<AddressCardDetailProps> = ({
   addressData,
   handleEdit,
+  editable = true,
 }) => {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -60,9 +62,11 @@ const AddressCardDetail: React.FC<AddressCardDetailProps> = ({
       <Button onClick={handleShare} className="uppercase">
         Share
       </Button>
-      <Button variant="secondary" onClick={handleEdit}>
-        Edit Payment Address
-      </Button>
+      {editable && (
+        <Button variant="secondary" onClick={handleEdit}>
+          Edit Payment Address
+        </Button>
+      )}
     </div>
   );
 };
