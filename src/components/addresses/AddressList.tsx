@@ -10,7 +10,8 @@ interface AddressListProps {
   profileId: string;
   addressType: ADDRESS_TYPE;
   addresses: CryptoAddress[] | FIATAddress[];
-  onClick: () => void;
+  onClick?: () => void;
+  editable?: boolean;
 }
 
 type Address = CryptoAddress | FIATAddress;
@@ -20,6 +21,7 @@ const AddressList: React.FC<AddressListProps> = ({
   addresses,
   addressType,
   onClick,
+  editable = true,
 }) => {
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -68,6 +70,7 @@ const AddressList: React.FC<AddressListProps> = ({
           onComplete={() => setSelectedAddress(null)}
           handleOpenDialog={handleOpenDialog}
           isDialogOpen={isDialogOpen}
+          editable={editable}
         />
       )}
     </>
