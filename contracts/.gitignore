@@ -15,3 +15,8 @@ contract.wasm*
 # IDEs
 *.iml
 .idea
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
