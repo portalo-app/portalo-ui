@@ -5,12 +5,11 @@ import PageLayout from '@components/layout/PageLayout';
 import { ROUTES } from '@constants/routes.const';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@core/ui/Tab';
 import { TypographySmall } from '@core/ui/Typography';
+import useSecretContract from '@hooks/useSecretContract';
 import { ADDRESS_TYPE } from '@models/address';
-import { Profile } from '@models/profile';
 import { NextPage } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { SecretNetworkClient, Wallet } from 'secretjs';
 
 interface ViewProfilePageProps {}
 
@@ -20,52 +19,27 @@ const ViewProfilePage: NextPage<
 > = ({ params }) => {
   const { slug } = params;
 
-  const [profileData, setProfileData] = useState<Profile>();
+  const [profileData, setProfileData] = useState();
 
   const [addressType, setAddressType] = useState('crypto');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-
+  const { getDataByViewingKey } = useSecretContract();
   useEffect(() => {
     setIsLoading(true);
     /*PARAMS: 
     - Viewing Key del Profile
     - ADDRESS_TYPE
-    */ // When we generate the sharable link we have to use encodeURIComponent
+    */
+
+    // When we generate the sharable link we have to use encodeURIComponent
     const viewingKey = slug && decodeURIComponent(slug[0]);
 
     if (!viewingKey) return;
 
-    // TODO: This has to be in .env
-    const contractCodeHash =
-      'b7bb4b5ed2dfdb3663f14e73b374aa96c8c7c498f9e3c9e4757d8406d6ca0af9';
-    const contractAddress = 'secret1fvqzspnytzjqd75t4z3fyhsmw7mh5kc4ufxaft';
-
-    //TODO Move to a hook
-    const wallet = new Wallet(
-      'blossom copy head can penalty true argue able entire shiver razor return'
-    );
-
-    const secretjs = new SecretNetworkClient({
-      chainId: 'pulsar-3',
-      url: 'https://api.pulsar.scrttestnet.com',
-      wallet: wallet,
-      walletAddress: wallet.address,
-    });
-
     const queryContract = async () => {
-      const result = (await secretjs.query.compute.queryContract({
-        contract_address: contractAddress,
-        code_hash: contractCodeHash,
-        query: {
-          get_config: {
-            viewing_key: viewingKey,
-          },
-        },
-      })) as { config: { config: string } };
-
-      const parsedResult = JSON.parse(result.config.config);
-      setProfileData(parsedResult[0]);
+      const data = await getDataByViewingKey(viewingKey);
+      setProfileData(data);
 
       setIsLoading(false);
     };
