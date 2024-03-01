@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@core/ui/Tab';
 import { TypographySmall } from '@core/ui/Typography';
 import useSecretContract from '@hooks/useSecretContract';
 import { ADDRESS_TYPE } from '@models/address';
+import { Profile } from '@models/profile';
 import { NextPage } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -19,7 +20,7 @@ const ViewProfilePage: NextPage<
 > = ({ params }) => {
   const { slug } = params;
 
-  const [profileData, setProfileData] = useState();
+  const [profileData, setProfileData] = useState<Profile>();
 
   const [addressType, setAddressType] = useState('crypto');
   const [isLoading, setIsLoading] = useState<boolean>(false);
