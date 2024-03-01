@@ -6,7 +6,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@core/ui/DropdownMenu';
+} from '@core/ui/DropDownMenu';
 import { TypographyMuted } from '@core/ui/Typography';
 import { useChain } from '@cosmos-kit/react';
 import { ChevronDown } from 'lucide-react';
