@@ -7,11 +7,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@core/ui/Tab';
 import { TypographySmall } from '@core/ui/Typography';
 import { ADDRESS_TYPE } from '@models/address';
 import { Profile } from '@models/profile';
-import { profilesState } from '@states/profiles.atom';
 import { NextPage } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { SecretNetworkClient, Wallet } from 'secretjs';
 
 interface ViewProfilePageProps {}
 
@@ -21,33 +20,58 @@ const ViewProfilePage: NextPage<
 > = ({ params }) => {
   const { slug } = params;
 
-  const profilesData = useRecoilValue(profilesState); // TODO Replace this with the profile saved in the contract
+  const [profileData, setProfileData] = useState<Profile>();
 
   const [addressType, setAddressType] = useState('crypto');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [profile, setProfile] = useState<Profile | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     setIsLoading(true);
+    /*PARAMS: 
+    - Viewing Key del Profile
+    - ADDRESS_TYPE
+    */ // When we generate the sharable link we have to use encodeURIComponent
+    const viewingKey = slug && decodeURIComponent(slug[0]);
 
-    const id = slug && slug[0];
-    const type: ADDRESS_TYPE = (slug && slug[1]) as ADDRESS_TYPE;
+    if (!viewingKey) return;
 
-    if (type) setAddressType(type === ADDRESS_TYPE.FIAT ? 'fiat' : 'crypto');
+    // TODO: This has to be in .env
+    const contractCodeHash =
+      'b7bb4b5ed2dfdb3663f14e73b374aa96c8c7c498f9e3c9e4757d8406d6ca0af9';
+    const contractAddress = 'secret1fvqzspnytzjqd75t4z3fyhsmw7mh5kc4ufxaft';
 
-    if (!id) return;
+    //TODO Move to a hook
+    const wallet = new Wallet(
+      'blossom copy head can penalty true argue able entire shiver razor return'
+    );
 
-    setIsLoading(false);
-    const selectedProfile = profilesData.find((profile) => profile.id === id);
+    const secretjs = new SecretNetworkClient({
+      chainId: 'pulsar-3',
+      url: 'https://api.pulsar.scrttestnet.com',
+      wallet: wallet,
+      walletAddress: wallet.address,
+    });
 
-    if (!selectedProfile) {
-      router.push(ROUTES.APP);
-      return;
-    }
+    const queryContract = async () => {
+      const result = (await secretjs.query.compute.queryContract({
+        contract_address: contractAddress,
+        code_hash: contractCodeHash,
+        query: {
+          get_config: {
+            viewing_key: viewingKey,
+          },
+        },
+      })) as { config: { config: string } };
 
-    setProfile(selectedProfile);
-  }, [profilesData, router, slug]);
+      const parsedResult = JSON.parse(result.config.config);
+      setProfileData(parsedResult[0]);
+
+      setIsLoading(false);
+    };
+
+    queryContract();
+  }, [router, slug]);
 
   const handleChange = (newValue: string) => {
     setAddressType(newValue);
@@ -55,12 +79,12 @@ const ViewProfilePage: NextPage<
 
   return (
     <PageLayout
-      title={`${profile?.name}'s Profile` || 'Loading...'}
+      title={`${profileData?.name}'s Profile` || 'Loading...'}
       backPath={ROUTES.APP}
     >
       <div className="my-4">
         <TypographySmall className="capitalize">
-          {profile?.name} payment addresses
+          {profileData?.name} payment addresses
         </TypographySmall>
       </div>
       <Tabs
@@ -70,10 +94,10 @@ const ViewProfilePage: NextPage<
       >
         <TabsList className="space-x-4">
           <TabsTrigger value="crypto">
-            {`Crypto Accounts (${profile?.cryptoAddresses?.length || 0})`}
+            {`Crypto Accounts (${profileData?.cryptoAddresses?.length || 0})`}
           </TabsTrigger>
           <TabsTrigger value="fiat">{`Bank Accounts (${
-            profile?.fiatAddresses?.length || 0
+            profileData?.fiatAddresses?.length || 0
           })`}</TabsTrigger>
         </TabsList>
         <TabsContent value="crypto">
@@ -82,8 +106,8 @@ const ViewProfilePage: NextPage<
           ) : (
             <div>
               <AddressList
-                profileId={profile?.id || ''}
-                addresses={profile?.cryptoAddresses || []}
+                profileId={profileData?.id || ''}
+                addresses={profileData?.cryptoAddresses || []}
                 addressType={ADDRESS_TYPE.CRYPTO}
                 editable={false}
               />
@@ -96,8 +120,8 @@ const ViewProfilePage: NextPage<
           ) : (
             <div>
               <AddressList
-                profileId={profile?.id || ''}
-                addresses={profile?.fiatAddresses || []}
+                profileId={profileData?.id || ''}
+                addresses={profileData?.fiatAddresses || []}
                 addressType={ADDRESS_TYPE.FIAT}
                 editable={false}
               />

@@ -148,10 +148,10 @@ let try_query_viewing_key = async () => {
   console.log(my_query);
 };
 
-try_query_viewing_key();
+// try_query_viewing_key();
 
 let try_query_config = async () => {
-  const viewingKey = 'api_key_H2M5LUdVsvG91hj0I142VWUuyFqh67svZJ5UMdWc58E=';
+  const viewingKey = 'api_key_2+dmSeJw7V3brdzK/E25DxdAkpOSCKOJTSJovT/BwY4=';
 
   const my_query = await secretjs.query.compute.queryContract({
     contract_address: contractAddress,
