@@ -20,6 +20,7 @@ import {
   Pencil,
   Plus,
   Save,
+  Share,
   Trash2,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -116,6 +117,7 @@ const MenuItems: React.FC<any> = ({
   const editLabel = 'Edit';
   const deleteLabel = 'Delete';
   const saveLabel = 'Save';
+  const shareLabel = 'Share';
 
   return (
     <Popover>
@@ -154,6 +156,11 @@ const MenuItems: React.FC<any> = ({
         <Button variant="default" className="space-x-2">
           <Save size={24} />
           <TypographySmall>{saveLabel}</TypographySmall>
+        </Button>
+
+        <Button variant="ghost" className="space-x-2">
+          <Share size={24} />
+          <TypographySmall>{shareLabel}</TypographySmall>
         </Button>
       </PopoverContent>
     </Popover>
