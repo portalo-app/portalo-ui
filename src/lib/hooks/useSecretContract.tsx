@@ -18,14 +18,14 @@ const useSecretContract = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     window as Window & typeof globalThis & { leap: any };
 
-  if (!typedWindow || !typedWindow.leap) return;
-
-  const leapOfflineSigner =
-    typedWindow.leap.getOfflineSignerOnlyAmino('pulsar-3');
-
   //this fn should receive config and hash from params
   const postConfig = async (profile: Profile) => {
     if (!address) return;
+
+    if (!typedWindow || !typedWindow.leap) return;
+
+    const leapOfflineSigner =
+      typedWindow.leap.getOfflineSignerOnlyAmino('pulsar-3');
 
     const secretjs = new SecretNetworkClient({
       chainId: 'pulsar-3',
@@ -54,6 +54,11 @@ const useSecretContract = () => {
 
   const deleteConfig = async (viewingKey: string) => {
     if (!address) return;
+
+    if (!typedWindow || !typedWindow.leap) return;
+
+    const leapOfflineSigner =
+      typedWindow.leap.getOfflineSignerOnlyAmino('pulsar-3');
 
     const secretjs = new SecretNetworkClient({
       chainId: 'pulsar-3',
@@ -106,8 +111,6 @@ const useSecretContract = () => {
     const secretjs = new SecretNetworkClient({
       chainId: 'pulsar-3',
       url: 'https://api.pulsar.scrttestnet.com',
-      wallet: leapOfflineSigner,
-      walletAddress: address,
     });
 
     const result = (await secretjs.query.compute.queryContract({
