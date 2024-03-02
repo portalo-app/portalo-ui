@@ -25,7 +25,7 @@ const ViewProfilePage: NextPage<
   const [addressType, setAddressType] = useState('crypto');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-  const { getDataByViewingKey } = useSecretContract();
+  const { getDataByViewingKey } = useSecretContract()!;
   useEffect(() => {
     setIsLoading(true);
     /*PARAMS: 
