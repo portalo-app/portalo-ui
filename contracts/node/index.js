@@ -83,7 +83,7 @@ const contractCodeHash =
 const contractAddress = 'secret1fvqzspnytzjqd75t4z3fyhsmw7mh5kc4ufxaft';
 
 let try_save_config = async () => {
-  let tx = await secretjs.tx.compute.executeContract(
+  let tx = secretjs.tx.compute.executeContract(
     {
       sender: wallet.address,
       contract_address: contractAddress,
@@ -101,10 +101,12 @@ let try_save_config = async () => {
       gasLimit: 100_000,
     }
   );
+  console.log({ tx });
+
   console.log('Saving Profile...', tx);
 };
 
-// try_save_config();
+try_save_config();
 
 let try_remove_config = async () => {
   const viewingKey = 'api_key_H2M5LUdVsvG91hj0I142VWUuyFqh67svZJ5UMdWc58E=';
@@ -166,4 +168,4 @@ let try_query_config = async () => {
   console.log(my_query);
 };
 
-try_query_config();
+// try_query_config();

@@ -1,34 +1,47 @@
-import { SecretNetworkClient, Wallet } from 'secretjs';
+import { useChain } from '@cosmos-kit/react';
+import { Profile } from '@models/profile';
+import { SecretNetworkClient } from 'secretjs';
 
-// This should be a sign by wallet user
-const wallet = new Wallet(
-  'blossom copy head can penalty true argue able entire shiver razor return'
-);
+// // This should be a sign by wallet user
+// const wallet = new Wallet(
+//   'blossom copy head can penalty true argue able entire shiver razor return'
+// );
 
 const contractCodeHash =
   'b7bb4b5ed2dfdb3663f14e73b374aa96c8c7c498f9e3c9e4757d8406d6ca0af9';
 const contractAddress = 'secret1fvqzspnytzjqd75t4z3fyhsmw7mh5kc4ufxaft';
 
-const secretjs = new SecretNetworkClient({
-  chainId: 'pulsar-3',
-  url: 'https://api.pulsar.scrttestnet.com',
-  wallet: wallet,
-  walletAddress: wallet.address,
-});
-
 const useSecretContract = () => {
+  const { address } = useChain('secretnetworktestnet');
+
+  const typedWindow =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    window as Window & typeof globalThis & { leap: any };
+
+  if (!typedWindow || !typedWindow.leap) return;
+
+  const leapOfflineSigner =
+    typedWindow.leap.getOfflineSignerOnlyAmino('pulsar-3');
+
   //this fn should receive config and hash from params
-  const postConfig = async () => {
+  const postConfig = async (profile: Profile) => {
+    if (!address) return;
+
+    const secretjs = new SecretNetworkClient({
+      chainId: 'pulsar-3',
+      url: 'https://api.pulsar.scrttestnet.com',
+      wallet: leapOfflineSigner,
+      walletAddress: address,
+    });
     const tx = await secretjs.tx.compute.executeContract(
       {
-        sender: wallet.address,
+        sender: address,
         contract_address: contractAddress,
         code_hash: contractCodeHash, // optional but way faster
         msg: {
           save_config: {
-            config:
-              '[ { "id": "1687705951139", "name": "juan", "password": "juan", "cryptoAddresses": [ { "address": "0x1234", "alias": "testt", "entity": { "color": "#e6007a", "icon": "dot", "value": "DOT", "label": "Polkadot", "addressRegex": {} }, "id": "1709233470451" } ], "fiatAddresses": [ { "address": "1231231", "alias": "test", "entity": { "color": "#007894", "icon": "nacion", "value": "NACION", "label": "Nacion", "addressRegex": {} }, "id": "1709233456008" } ] } ]',
-            hash: 'juanprofile',
+            config: JSON.stringify(profile),
+            hash: profile.name,
           },
         },
       },
@@ -40,9 +53,17 @@ const useSecretContract = () => {
   };
 
   const deleteConfig = async (viewingKey: string) => {
+    if (!address) return;
+
+    const secretjs = new SecretNetworkClient({
+      chainId: 'pulsar-3',
+      url: 'https://api.pulsar.scrttestnet.com',
+      wallet: leapOfflineSigner,
+      walletAddress: address,
+    });
     const tx = await secretjs.tx.compute.executeContract(
       {
-        sender: wallet.address,
+        sender: address,
         contract_address: contractAddress,
         code_hash: contractCodeHash, // optional but way faster
         msg: {
@@ -59,6 +80,10 @@ const useSecretContract = () => {
   };
 
   const getDataByViewingKey = async (viewingKey: string) => {
+    const secretjs = new SecretNetworkClient({
+      chainId: 'pulsar-3',
+      url: 'https://api.pulsar.scrttestnet.com',
+    });
     const result = (await secretjs.query.compute.queryContract({
       contract_address: contractAddress,
       code_hash: contractCodeHash,
@@ -69,25 +94,37 @@ const useSecretContract = () => {
       },
     })) as { config: { config: string } };
 
-    const parsedResult = JSON.parse(result.config.config)[0];
+    if (!result || !result.config) return null;
+
+    const parsedResult = JSON.parse(result.config.config);
     return parsedResult;
   };
 
-  const getConfig = async (viewingKey: string) => {
-    const my_query = await secretjs.query.compute.queryContract({
+  const getViewingKey = async (walletAddress: string, hash: string) => {
+    if (!address) return;
+
+    const secretjs = new SecretNetworkClient({
+      chainId: 'pulsar-3',
+      url: 'https://api.pulsar.scrttestnet.com',
+      wallet: leapOfflineSigner,
+      walletAddress: address,
+    });
+
+    const result = (await secretjs.query.compute.queryContract({
       contract_address: contractAddress,
       code_hash: contractCodeHash,
       query: {
-        get_config: {
-          viewing_key: viewingKey,
+        get_viewing_key: {
+          wallet: walletAddress,
+          hash,
         },
       },
-    });
+    })) as { viewing_key: string };
 
-    console.log(my_query);
+    return result?.viewing_key || '';
   };
 
-  return { postConfig, deleteConfig, getDataByViewingKey, getConfig };
+  return { postConfig, deleteConfig, getDataByViewingKey, getViewingKey };
 };
 
 export default useSecretContract;

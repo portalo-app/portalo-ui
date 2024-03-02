@@ -11,6 +11,8 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@core/ui/PopOver';
 import { Separator } from '@core/ui/Separator';
 import { TypographyH4, TypographySmall } from '@core/ui/Typography';
+import { useChain } from '@cosmos-kit/react';
+import useSecretContract from '@hooks/useSecretContract';
 import { Profile } from '@models/profile';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import {
@@ -24,7 +26,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DeleteProfileModal from './DeleteProfileModal';
 import ProfileForm from './ProfileForm';
 interface ProfileCardProps {
@@ -119,6 +121,21 @@ const MenuItems: React.FC<any> = ({
   const saveLabel = 'Save';
   const shareLabel = 'Share';
 
+  const [viewingKey, setViewingKey] = useState<string>();
+
+  const { address } = useChain('secretnetworktestnet');
+
+  const { getViewingKey, postConfig, deleteConfig } = useSecretContract()!;
+
+  useEffect(() => {
+    const getViewingKeyAsync = async () => {
+      const result = await getViewingKey(address || '', profile.name);
+      setViewingKey(result);
+    };
+
+    getViewingKeyAsync();
+  }, [address]);
+
   return (
     <Popover>
       <PopoverTrigger>
@@ -145,20 +162,40 @@ const MenuItems: React.FC<any> = ({
         </Dialog>
 
         <Button
-          onClick={handleDelete}
+          onClick={() => {
+            deleteConfig(viewingKey!);
+            handleDelete();
+          }}
           variant="destructive"
           className="space-x-2"
+          disabled={!viewingKey}
         >
           <Trash2 size={24} />
           <TypographySmall>{deleteLabel}</TypographySmall>
         </Button>
 
-        <Button variant="default" className="space-x-2">
+        <Button
+          variant="default"
+          className="space-x-2"
+          disabled={!!viewingKey}
+          onClick={() => postConfig(profile)}
+        >
           <Save size={24} />
           <TypographySmall>{saveLabel}</TypographySmall>
         </Button>
 
-        <Button variant="ghost" className="space-x-2">
+        <Button
+          variant="ghost"
+          className="space-x-2"
+          disabled={!viewingKey}
+          onClick={() =>
+            navigator.clipboard.writeText(
+              `${window.location.origin}/profile/view/${encodeURIComponent(
+                viewingKey || ''
+              )}`
+            )
+          }
+        >
           <Share size={24} />
           <TypographySmall>{shareLabel}</TypographySmall>
         </Button>

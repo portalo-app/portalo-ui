@@ -4,7 +4,7 @@ import AddressList from '@components/addresses/AddressList';
 import PageLayout from '@components/layout/PageLayout';
 import { ROUTES } from '@constants/routes.const';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@core/ui/Tab';
-import { TypographySmall } from '@core/ui/Typography';
+import { TypographyH2, TypographySmall } from '@core/ui/Typography';
 import useSecretContract from '@hooks/useSecretContract';
 import { ADDRESS_TYPE } from '@models/address';
 import { Profile } from '@models/profile';
@@ -51,6 +51,13 @@ const ViewProfilePage: NextPage<
   const handleChange = (newValue: string) => {
     setAddressType(newValue);
   };
+
+  if (!profileData)
+    return (
+      <PageLayout title={`No profile exists`} backPath={ROUTES.APP}>
+        <TypographyH2>The link has expired</TypographyH2>
+      </PageLayout>
+    );
 
   return (
     <PageLayout
