@@ -16,7 +16,7 @@ interface AppPageProps {}
 const AppPage: FunctionComponent<AppPageProps> = () => {
   const profilesTitle = 'Profiles';
   const emptyMessage = "You don't have any profiles yet";
-  const createProfileTitle = 'Create Profile';
+  const createProfileLabel = 'Create Profile';
   const profilesData = useRecoilValue(profilesState);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const router = useRouter();
@@ -25,7 +25,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
     setProfiles(profilesData);
   }, [profilesData]);
 
-  const hasProfiles = profiles && profiles.length > 0;
+  const hasProfiles = profiles?.length > 0;
 
   const handleCreateProfile = () => {
     router.push(ROUTES.APP_CREATE_PROFILE);
@@ -33,20 +33,23 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
 
   return (
     <PageLayout title={profilesTitle}>
-      <div className="flex content-center justify-center mt-8">
-        {!hasProfiles && <State type="info" size={100} label={emptyMessage} />}
-      </div>
+      {!hasProfiles && (
+        <div className="flex content-center justify-center mt-8">
+          <State type="info" size={100} label={emptyMessage} />
+        </div>
+      )}
 
       {hasProfiles && (
-        <div>
+        <div className="space-y-4 *:block">
           {profiles.map((profile, index) => (
             <ProfileCard profile={profile} key={index} />
           ))}
         </div>
       )}
-      <div className="flex content-center justify-center pt-4">
-        <Button onClick={handleCreateProfile}>{createProfileTitle}</Button>
-      </div>
+
+      <Button onClick={handleCreateProfile} className="w-full mt-4">
+        {createProfileLabel}
+      </Button>
     </PageLayout>
   );
 };

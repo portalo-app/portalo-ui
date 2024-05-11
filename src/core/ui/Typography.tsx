@@ -61,10 +61,28 @@ export const TypographyH4: React.FC<TypographyProps> = ({
   </h4>
 );
 
+export const TypographyH5: React.FC<TypographyProps> = ({
+  className,
+  children,
+}) => (
+  <h5
+    className={cn(
+      className,
+      'scroll-m-20 text-lg font-semibold tracking-tight'
+    )}
+  >
+    {children}
+  </h5>
+);
+
 export const TypographyP: React.FC<TypographyProps> = ({
   className,
   children,
-}) => <p className={cn(className, 'text-base')}>{children}</p>;
+}) => (
+  <p className={cn(className, 'leading-7 [&:not(:first-child)]:mt-6')}>
+    {children}
+  </p>
+);
 
 export const TypographyBlockquote: React.FC<TypographyProps> = ({
   className,
@@ -110,9 +128,34 @@ export const TypographySmall: React.FC<TypographyProps> = ({
   </small>
 );
 
+export const TypographyXS: React.FC<TypographyProps> = ({
+  className,
+  children,
+}) => (
+  <p className={cn(className, 'text-xs leading-none md:text-sm')}>{children}</p>
+);
+
+export const TypographyXXS: React.FC<TypographyProps> = ({
+  className,
+  children,
+}) => (
+  <p className={cn(className, 'text-xxs leading-none md:text-sm')}>
+    {children}
+  </p>
+);
+
+export const TypographyMutedXS: React.FC<TypographyProps> = ({
+  className,
+  children,
+}) => (
+  <p className={cn(className, 'text-xs text-muted-foreground md:text-sm')}>
+    {children}
+  </p>
+);
+
 export const TypographyMuted: React.FC<TypographyProps> = ({
   className,
   children,
 }) => (
-  <p className={cn(className, 'text-base text-muted-foreground')}>{children}</p>
+  <p className={cn(className, 'text-sm text-muted-foreground')}>{children}</p>
 );

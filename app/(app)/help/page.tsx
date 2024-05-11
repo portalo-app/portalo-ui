@@ -11,7 +11,7 @@ import {
 import { TypographySmall } from '@core/ui/Typography';
 import { NextPage } from 'next';
 
-interface HelpPageProps { }
+interface HelpPageProps {}
 
 const HelpPage: NextPage<HelpPageProps> = () => {
   const helpTitle = 'Help';
@@ -36,19 +36,17 @@ const HelpPage: NextPage<HelpPageProps> = () => {
 
   return (
     <PageLayout title={helpTitle} backPath={ROUTES.APP}>
-      <div>
-        {faqs.map(({ question, answer, id }, index) => (
-          <Accordion key={index} type="single" collapsible>
-            <AccordionItem value={id}>
-              <AccordionTrigger>{question}</AccordionTrigger>
+      {faqs.map(({ question, answer, id }, index) => (
+        <Accordion key={index} type="single" collapsible>
+          <AccordionItem value={id}>
+            <AccordionTrigger>{question}</AccordionTrigger>
 
-              <AccordionContent>
-                <TypographySmall>{answer}</TypographySmall>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        ))}
-      </div>
+            <AccordionContent>
+              <TypographySmall>{answer}</TypographySmall>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      ))}
     </PageLayout>
   );
 };

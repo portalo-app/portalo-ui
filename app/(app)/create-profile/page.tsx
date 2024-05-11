@@ -9,8 +9,9 @@ import { useRouter } from 'next/navigation';
 interface CreateProfileProps {}
 
 const CreateProfile: NextPage<CreateProfileProps> = () => {
-  const createProfileTitle = 'Create Profile';
   const router = useRouter();
+
+  const createProfileTitle = 'Create Profile';
 
   return (
     <PageLayout title={createProfileTitle} backPath={ROUTES.APP}>

@@ -9,12 +9,11 @@ import { addressFormState } from '@states/address-form.atom';
 import { NextPage } from 'next';
 import { useSetRecoilState } from 'recoil';
 
-interface SelecteEntityPageProps {}
-const SelectEntityPage: NextPage<
-  // TODO Add corresponding type
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  SelecteEntityPageProps & { params: { slug: any } }
-> = ({ params }) => {
+interface SelectEntityPageProps {
+  params: { slug: any };
+}
+
+const SelectEntityPage: NextPage<SelectEntityPageProps> = ({ params }) => {
   const { slug } = params;
   const setAddressForm = useSetRecoilState(addressFormState);
 
@@ -32,6 +31,7 @@ const SelectEntityPage: NextPage<
       <TypographySmall className="block text-center">
         Select a payment account type
       </TypographySmall>
+
       <EntitySelect profileId={profileId || ''} />
     </PageLayout>
   );

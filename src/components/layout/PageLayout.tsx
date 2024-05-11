@@ -17,14 +17,15 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   backClick,
 }) => {
   return (
-    <div className="my-4 max-w-xs w-full">
-      <div className="mb-2">
+    <div className="pb-20">
+      <div className="mb-4">
         <div className="flex gap-2 items-center justify-start">
           {backPath && (
             <Link href={backPath} onClick={() => backClick && backClick()}>
               <ChevronLeft aria-label="go back" />
             </Link>
           )}
+
           {backClick && !backPath && (
             <Button
               onClick={backClick}

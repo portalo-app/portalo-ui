@@ -11,8 +11,8 @@ import {
   NavigationMenuList,
 } from '@core/ui/NavigationMenu';
 import {
-  TypographyLarge,
   TypographyLead,
+  TypographyP,
   TypographySmall,
 } from '@core/ui/Typography';
 import Link from 'next/link';
@@ -65,17 +65,16 @@ const DrawerMenuItems: React.FC = () => {
 
       <NavigationMenu>
         <NavigationMenuList>
-          <div className="flex flex-col w-vw p-2">
+          <div className="w-vw p-2">
             {menuItems.map((item, index) => (
               <NavigationMenuItem key={index}>
                 <Link
                   href={item.href}
-                  className="flex p-2 hover-primary w-full"
+                  className="flex p-2 gap-2 w-full items-center"
                 >
                   {item.icon}
-                  <TypographyLarge className="pl-2">
-                    {item.label}
-                  </TypographyLarge>
+
+                  <TypographyP className="!m-0">{item.label}</TypographyP>
                 </Link>
               </NavigationMenuItem>
             ))}

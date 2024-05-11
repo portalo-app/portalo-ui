@@ -1,4 +1,6 @@
+import MobileBottomNavbar from '@components/layout/MobileBottomNavbar';
 import Navbar from '@components/layout/Navbar';
+import Root from '@components/layout/Root';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -6,12 +8,13 @@ interface LayoutProps {
 
 export default function AppLayout({ children }: LayoutProps) {
   return (
-    <>
+    <Root>
       <Navbar />
 
-      <main className="bg-gradient-to-br from-background to-primary from-70% min-h-screen">
-        <div className="flex content-center justify-center">{children}</div>
-      </main>
-    </>
+      <main className="container max-w-md px-4 mt-4">{children}</main>
+
+      <MobileBottomNavbar />
+      {/* {!isDesktop ? <MobileBottomNavbar /> : null} */}
+    </Root>
   );
 }
