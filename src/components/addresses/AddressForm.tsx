@@ -25,7 +25,7 @@ import EntityForm from './EntityForm';
 
 interface AddressFormProps {
   action: 'CREATE' | 'EDIT';
-  profileId: string;
+  spaceId: string;
   addressType: ADDRESS_TYPE;
   address?: CryptoAddress | FIATAddress;
   onComplete?: () => void;
@@ -45,7 +45,7 @@ export type AddressFormData = {
 
 const AddressForm: React.FC<AddressFormProps> = ({
   action,
-  profileId,
+  spaceId,
   addressType,
   address: originalAddress,
   onComplete,
@@ -158,14 +158,14 @@ const AddressForm: React.FC<AddressFormProps> = ({
     const entity = getEntity(entityValue as Entity['value']);
 
     if (action === ACTION_FORM.Edit) {
-      editAddress(profileId, addressType, {
+      editAddress(spaceId, addressType, {
         id: addressForm.addressId,
         address,
         alias,
         entity,
       } as CryptoAddress | FIATAddress);
     } else {
-      createAddress(profileId, addressType, {
+      createAddress(spaceId, addressType, {
         address,
         alias,
         entity,

@@ -1,9 +1,9 @@
 import { ADDRESS_TYPE } from '@models/address';
-import { profilesState } from '@states/profiles.atom';
+import { spacesState } from '@states/spaces.atom';
 import { useSetRecoilState } from 'recoil';
 
 type DeleteAddress = (
-  profileId: string,
+  spaceId: string,
   addressId: string,
   addressType: ADDRESS_TYPE
 ) => void;
@@ -11,36 +11,26 @@ type DeleteAddress = (
 type UseDeleteAddress = () => DeleteAddress;
 
 const useDeleteAddress: UseDeleteAddress = () => {
-  const setProfiles = useSetRecoilState(profilesState);
+  const setSpaces = useSetRecoilState(spacesState);
 
-  const deleteAddress = (
-    profileId: string,
-    addressId: string,
-    addressType: ADDRESS_TYPE
-  ) => {
-    setProfiles((profiles) => {
-      const profile = profiles.find((p) => p.id === profileId);
-      if (!profile) return profiles;
+  const deleteAddress: DeleteAddress = (spaceId, addressId, addressType) => {
+    setSpaces((prevSpaces) =>
+      prevSpaces.map((space) => {
+        if (space.id !== spaceId) return space;
 
-      let updatedProfile = null;
-      if (addressType === ADDRESS_TYPE.CRYPTO) {
-        updatedProfile = {
-          ...profile,
-          cryptoAddresses: profile.cryptoAddresses.filter(
-            (a) => a.id !== addressId
+        const addressKey =
+          addressType === ADDRESS_TYPE.CRYPTO
+            ? 'cryptoAddresses'
+            : 'fiatAddresses';
+
+        return {
+          ...space,
+          [addressKey]: space[addressKey].filter(
+            (address) => address.id !== addressId
           ),
         };
-      } else {
-        updatedProfile = {
-          ...profile,
-          fiatAddresses: profile.fiatAddresses.filter(
-            (a) => a.id !== addressId
-          ),
-        };
-      }
-
-      return [...profiles.filter((p) => p.id !== profileId), updatedProfile];
-    });
+      })
+    );
   };
 
   return deleteAddress;

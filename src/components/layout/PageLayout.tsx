@@ -1,4 +1,3 @@
-import { Button } from '@core/ui/Button';
 import { TypographyH3 } from '@core/ui/Typography';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -26,15 +25,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
             </Link>
           )}
 
-          {backClick && !backPath && (
-            <Button
-              onClick={backClick}
-              className="bg-transparent hover:border-none w-8 p-0"
-            >
-              <ChevronLeft />
-            </Button>
-          )}
-          <TypographyH3 className="ml-2">{title}</TypographyH3>
+          <TypographyH3>{title}</TypographyH3>
         </div>
       </div>
 

@@ -10,7 +10,7 @@ import AddressCardDetail from './AddressCardDetail';
 import AddressForm from './AddressForm';
 
 interface AddressDetailProps {
-  profileId: string;
+  spaceId: string;
   addressType: ADDRESS_TYPE;
   address: CryptoAddress | FIATAddress;
   onComplete?: () => void;
@@ -21,7 +21,7 @@ interface AddressDetailProps {
 type Action = 'edit' | 'delete' | 'qr';
 
 const AddressDetail: React.FC<AddressDetailProps> = ({
-  profileId,
+  spaceId,
   addressType,
   address,
   onComplete,
@@ -50,7 +50,7 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
   const handleAddressDelete = () => {
     if (!address) return;
 
-    deleteAddress(profileId, address.id, addressType);
+    deleteAddress(spaceId, address.id, addressType);
 
     clearAction();
     handleMenuClose();
@@ -93,7 +93,7 @@ const AddressDetail: React.FC<AddressDetailProps> = ({
               >
                 <AddressForm
                   action="EDIT"
-                  profileId={profileId}
+                  spaceId={spaceId}
                   addressType={addressType}
                   address={address as CryptoAddress | FIATAddress}
                   onComplete={handleMenuClose}

@@ -31,8 +31,8 @@ const MobileBottomNavbar = () => {
       url: ROUTES.APP,
     },
     {
-      id: 'profiles',
-      name: 'Profiles',
+      id: 'spaces',
+      name: 'Spaces',
       icon: User,
       url: ROUTES.APP,
     },

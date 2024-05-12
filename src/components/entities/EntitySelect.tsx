@@ -13,10 +13,10 @@ import { ADDRESS_TYPE } from '@models/address';
 import { Bitcoin, Landmark } from 'lucide-react';
 
 interface EntitySelectProps {
-  profileId: string;
+  spaceId: string;
 }
 
-const EntitySelect: FC<EntitySelectProps> = ({ profileId }) => {
+const EntitySelect: FC<EntitySelectProps> = ({ spaceId }) => {
   const [addressType, setAddressType] = useState<string>(ADDRESS_TYPE.FIAT);
 
   const router = useRouter();
@@ -25,7 +25,7 @@ const EntitySelect: FC<EntitySelectProps> = ({ profileId }) => {
   const handleEntityClick = () => {
     setAddressFormState((current) => ({ ...current }));
 
-    router.push(`${ROUTES.APP_CREATE_ADDRESS}/${profileId}/${addressType}`);
+    router.push(`${ROUTES.APP_CREATE_ADDRESS}/${spaceId}/${addressType}`);
   };
 
   const handleValueChange = (value: string) => {

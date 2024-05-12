@@ -19,18 +19,18 @@ const HelpPage: NextPage<HelpPageProps> = () => {
   const faqs = [
     {
       id: '1',
-      question: 'How do I create a profile?',
-      answer: 'Click on the "Create Profile" button on the Profiles page.',
+      question: 'How do I create a space?',
+      answer: 'Click on the "Create Space" button on the Spaces page.',
     },
     {
       id: '2',
-      question: 'How do I edit a profile?',
-      answer: 'Click on the "Edit" button on the Profiles page.',
+      question: 'How do I edit a space?',
+      answer: 'Click on the "Edit" button on the Spaces page.',
     },
     {
       id: '3',
-      question: 'How do I delete a profile?',
-      answer: 'Click on the "Delete" button on the Profiles page.',
+      question: 'How do I delete a space?',
+      answer: 'Click on the "Delete" button on the Spaces page.',
     },
   ];
 

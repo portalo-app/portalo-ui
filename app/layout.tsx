@@ -4,8 +4,8 @@ import { Metadata, Viewport } from 'next';
 import { DM_Sans as FontSans } from 'next/font/google';
 
 export const metadata: Metadata = {
-  title: 'Portalo | Address Tree',
-  description: 'Take your addresses everywhere',
+  title: 'Portalo | Store and share your data',
+  description: 'Take your private data everywhere',
 };
 
 export const viewport: Viewport = {

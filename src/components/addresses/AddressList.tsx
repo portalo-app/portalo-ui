@@ -7,7 +7,7 @@ import AddressCard from './AddressCard';
 import AddressDetail from './AddressDetail';
 
 interface AddressListProps {
-  profileId: string;
+  spaceId: string;
   addressType: ADDRESS_TYPE;
   addresses: CryptoAddress[] | FIATAddress[];
   onClick: () => void;
@@ -16,7 +16,7 @@ interface AddressListProps {
 type Address = CryptoAddress | FIATAddress;
 
 const AddressList: React.FC<AddressListProps> = ({
-  profileId,
+  spaceId,
   addresses,
   addressType,
   onClick,
@@ -62,7 +62,7 @@ const AddressList: React.FC<AddressListProps> = ({
 
       {selectedAddress && (
         <AddressDetail
-          profileId={profileId}
+          spaceId={spaceId}
           addressType={addressType}
           address={selectedAddress}
           onComplete={() => setSelectedAddress(null)}

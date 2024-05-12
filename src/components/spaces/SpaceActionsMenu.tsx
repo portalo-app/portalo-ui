@@ -9,12 +9,17 @@ import {
 } from '@core/ui/Dialog';
 import { Popover, PopoverContent, PopoverTrigger } from '@core/ui/PopOver';
 import { TypographySmall } from '@core/ui/Typography';
+import { Space } from '@models/space';
 import { MoreVertical, Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import DeleteProfileModal from './DeleteProfileModal';
-import ProfileForm from './ProfileForm';
+import DeleteSpaceModal from './DeleteSpaceModal';
+import SpaceForm from './SpaceForm';
 
-const ProfileActionsMenu: React.FC<any> = ({ profile }) => {
+interface SpaceActionsMenuProps {
+  space: Space;
+}
+
+const SpaceActionsMenu: React.FC<SpaceActionsMenuProps> = ({ space }) => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
 
@@ -45,11 +50,11 @@ const ProfileActionsMenu: React.FC<any> = ({ profile }) => {
 
           <DialogContent className="rounded-3xl">
             <DialogHeader>
-              <DialogTitle>Edit profile</DialogTitle>
+              <DialogTitle>Edit space</DialogTitle>
 
               <DialogDescription>
-                <ProfileForm
-                  profile={profile}
+                <SpaceForm
+                  space={space}
                   action="EDIT"
                   onComplete={handleDialogIsOpen}
                 />
@@ -69,8 +74,8 @@ const ProfileActionsMenu: React.FC<any> = ({ profile }) => {
         </Button>
       </PopoverContent>
 
-      <DeleteProfileModal
-        profile={profile}
+      <DeleteSpaceModal
+        space={space}
         open={isDeleting}
         onClose={() => setIsDeleting(false)}
       />
@@ -78,4 +83,4 @@ const ProfileActionsMenu: React.FC<any> = ({ profile }) => {
   );
 };
 
-export default ProfileActionsMenu;
+export default SpaceActionsMenu;

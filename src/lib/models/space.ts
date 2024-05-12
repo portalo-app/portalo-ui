@@ -1,25 +1,25 @@
 import { CryptoAddress, FIATAddress } from './address';
 import { mockCryptoAddresses, mockFIATAddresses } from './entities';
 
-export interface Profile {
+export interface Space {
   id: string;
   name: string;
   cryptoAddresses: CryptoAddress[];
   fiatAddresses: FIATAddress[];
 }
 
-export const mockProfileJohn: Profile = {
+export const mockSpaceJohn: Space = {
   id: '1',
   name: 'John Doe',
   cryptoAddresses: mockCryptoAddresses,
   fiatAddresses: mockFIATAddresses,
 };
 
-export const mockProfileAlice: Profile = {
+export const mockSpaceAlice: Space = {
   id: '2',
   name: 'Alice Doe',
   cryptoAddresses: mockCryptoAddresses,
   fiatAddresses: mockFIATAddresses,
 };
 
-export const mockProfiles: Profile[] = [mockProfileJohn, mockProfileAlice];
+export const mockSpaces: Space[] = [mockSpaceJohn, mockSpaceAlice];

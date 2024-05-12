@@ -1,10 +1,9 @@
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
-import { Profile } from '@models/profile';
-import { profilesState } from '@states/profiles.atom';
-import { useRecoilState } from 'recoil';
+import { spacesState } from '@states/spaces.atom';
+import { useSetRecoilState } from 'recoil';
 
 type CreateAddress = (
-  profileId: string,
+  spaceId: string,
   addressType: ADDRESS_TYPE,
   newAddress: CryptoAddress | FIATAddress
 ) => void;
@@ -12,27 +11,25 @@ type CreateAddress = (
 type UseCreateAddress = () => CreateAddress;
 
 const useCreateAddress: UseCreateAddress = () => {
-  const [profiles, setProfiles] = useRecoilState(profilesState);
+  const setSpaces = useSetRecoilState(spacesState);
 
-  const createAddress: CreateAddress = (profileId, addressType, newAddress) => {
-    const profile = profiles.find((profile) => profile.id === profileId);
+  const createAddress: CreateAddress = (spaceId, addressType, newAddress) => {
+    setSpaces((prevSpaces) =>
+      prevSpaces.map((space) => {
+        if (space.id !== spaceId) return space;
 
-    if (!profile) return;
+        const address = { ...newAddress, id: Date.now().toString() };
 
-    const newProfile: Profile = { ...profile };
-    const address = { ...newAddress, id: Date.now().toString() };
-
-    if (addressType === ADDRESS_TYPE.CRYPTO) {
-      newProfile.cryptoAddresses = [...profile.cryptoAddresses, address];
-    } else {
-      newProfile.fiatAddresses = [...profile.fiatAddresses, address];
-    }
-
-    const newProfiles = profiles.map((profile) =>
-      profile.id === profileId ? newProfile : profile
+        if (addressType === ADDRESS_TYPE.CRYPTO) {
+          return {
+            ...space,
+            cryptoAddresses: [...space.cryptoAddresses, address],
+          };
+        } else {
+          return { ...space, fiatAddresses: [...space.fiatAddresses, address] };
+        }
+      })
     );
-
-    setProfiles(newProfiles);
   };
 
   return createAddress;

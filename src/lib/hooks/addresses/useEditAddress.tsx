@@ -1,9 +1,9 @@
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
-import { profilesState } from '@states/profiles.atom';
-import { useRecoilState } from 'recoil';
+import { spacesState } from '@states/spaces.atom';
+import { useSetRecoilState } from 'recoil';
 
 type EditAddress = (
-  profileId: string,
+  spaceId: string,
   addressType: ADDRESS_TYPE,
   newAddress: CryptoAddress | FIATAddress
 ) => void;
@@ -11,30 +11,26 @@ type EditAddress = (
 type UseEditAddress = () => EditAddress;
 
 const useEditAddress: UseEditAddress = () => {
-  const [profiles, setProfiles] = useRecoilState(profilesState);
+  const setSpaces = useSetRecoilState(spacesState);
 
-  const editAddress: EditAddress = (profileId, addressType, newAddress) => {
-    const profile = profiles.find((profile) => profile.id === profileId);
+  const editAddress: EditAddress = (spaceId, addressType, newAddress) => {
+    setSpaces((prevSpaces) =>
+      prevSpaces.map((space) => {
+        if (space.id !== spaceId) return space;
 
-    if (!profile) return;
+        const addressKey =
+          addressType === ADDRESS_TYPE.CRYPTO
+            ? 'cryptoAddresses'
+            : 'fiatAddresses';
 
-    const newProfile = { ...profile };
-
-    if (addressType === ADDRESS_TYPE.CRYPTO) {
-      newProfile.cryptoAddresses = profile.cryptoAddresses.map((address) =>
-        address.id === newAddress.id ? newAddress : address
-      );
-    } else {
-      newProfile.fiatAddresses = profile.fiatAddresses.map((address) =>
-        address.id === newAddress.id ? newAddress : address
-      );
-    }
-
-    const newProfiles = profiles.map((profile) =>
-      profile.id === profileId ? newProfile : profile
+        return {
+          ...space,
+          [addressKey]: space[addressKey].map((address) =>
+            address.id === newAddress.id ? newAddress : address
+          ),
+        };
+      })
     );
-
-    setProfiles(newProfiles);
   };
 
   return editAddress;

@@ -22,7 +22,7 @@ const CreateAddressPage: NextPage<
 
   const [{ action }, setAddressForm] = useRecoilState(addressFormState);
 
-  const profileId = slug && slug[0];
+  const spaceId = slug && slug[0];
   const addressType: ADDRESS_TYPE = (slug && slug[1]) as ADDRESS_TYPE;
 
   const createAddressTitle =
@@ -33,8 +33,8 @@ const CreateAddressPage: NextPage<
       ? 'Great! Now lets add the payment details'
       : 'Edit adress';
 
-  const backPath = profileId
-    ? `${ROUTES.APP_SELECT_ENTITY}/${profileId}/${addressType}`
+  const backPath = spaceId
+    ? `${ROUTES.APP_SELECT_ENTITY}/${spaceId}/${addressType}`
     : ROUTES.APP;
 
   // TODO: Handle invalid slug data
@@ -45,10 +45,10 @@ const CreateAddressPage: NextPage<
       </TypographySmall>
       <AddressForm
         action={action || 'CREATE'}
-        profileId={profileId || ''}
+        spaceId={spaceId || ''}
         addressType={addressType}
         onComplete={() => {
-          router.push(`${ROUTES.APP_PROFILE}/${profileId}/${addressType}`);
+          router.push(`${ROUTES.APP_SPACE}/${spaceId}/${addressType}`);
           setAddressForm({});
         }}
       />

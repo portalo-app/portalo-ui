@@ -14,7 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@core/ui/Sheet';
-import { profilesState } from '@states/profiles.atom';
+import { spacesState } from '@states/spaces.atom';
 import { Menu, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -27,19 +27,19 @@ import DrawerMenuItems from './DrawerMenuItems';
 interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = () => {
-  const resetProfiles = useResetRecoilState(profilesState);
+  const resetSpaces = useResetRecoilState(spacesState);
   const [resetAccountModalOpen, setResetAccountModalOpen] = useState(false);
   const router = useRouter();
 
   const resetAccountLabel = 'Reset Account';
   const resetAccountMessage =
-    'Are you sure you want to clear the account data? This will remove every profile and all the data associated with them. This action cannot be undone.';
+    'Are you sure you want to clear the account data? This will remove every Space and all the data associated with them. This action cannot be undone.';
 
   const createdByNeoPower = 'Created by NeoPower';
 
   const resetAccount = () => {
     router.push(ROUTES.APP);
-    resetProfiles();
+    resetSpaces();
 
     setResetAccountModalOpen(false);
   };

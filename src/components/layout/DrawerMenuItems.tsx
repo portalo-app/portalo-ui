@@ -1,6 +1,6 @@
 import { ROUTES } from '@constants/routes.const';
 import { Separator } from '@core/ui/Separator';
-import { profilesState } from '@states/profiles.atom';
+import { spacesState } from '@states/spaces.atom';
 import Avvvatars from 'avvvatars-react';
 import { HelpCircle, Settings, User } from 'lucide-react';
 import { useRecoilValue } from 'recoil';
@@ -19,7 +19,7 @@ import Link from 'next/link';
 
 const menuItems = [
   {
-    label: 'Profiles',
+    label: 'Spaces',
     href: ROUTES.APP,
     icon: <User />,
   },
@@ -36,26 +36,26 @@ const menuItems = [
 ];
 
 const DrawerMenuItems: React.FC = () => {
-  const profiles = useRecoilValue(profilesState);
+  const spaces = useRecoilValue(spacesState);
 
   const welcomeMessage = 'Hi anon! 👋🏻';
-  const profilesCount = profiles?.length || 0;
-  const profilesCountMessage = `${profilesCount} profile${
-    profilesCount > 1 ? 's' : ''
+  const spacesCount = spaces?.length || 0;
+  const spacesCountMessage = `${spacesCount} space${
+    spacesCount > 1 ? 's' : ''
   }`;
-  const noProfilesMessage = 'No profiles yet';
+  const emptyMessage = 'No spaces yet';
 
   return (
     <>
       <div className="p-2 my-4">
         <div className="flex flex-row content-center gap-3">
-          <Avvvatars value={profiles.toString()} size={48} style="shape" />
+          <Avvvatars value={spaces.toString()} size={48} style="shape" />
 
           <div>
             <TypographyLead>{welcomeMessage}</TypographyLead>
 
             <TypographySmall className="text-primary">
-              {profilesCount ? profilesCountMessage : noProfilesMessage}
+              {spacesCount ? spacesCountMessage : emptyMessage}
             </TypographySmall>
           </div>
         </div>

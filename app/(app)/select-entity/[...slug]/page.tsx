@@ -17,7 +17,7 @@ const SelectEntityPage: NextPage<SelectEntityPageProps> = ({ params }) => {
   const { slug } = params;
   const setAddressForm = useSetRecoilState(addressFormState);
 
-  const profileId = slug && slug[0];
+  const spaceId = slug && slug[0];
   const addressType: ADDRESS_TYPE = (slug && slug[1]) as ADDRESS_TYPE;
 
   const titlePage = 'Add payment address';
@@ -25,14 +25,14 @@ const SelectEntityPage: NextPage<SelectEntityPageProps> = ({ params }) => {
   return (
     <PageLayout
       title={titlePage}
-      backPath={`${ROUTES.APP_PROFILE}/${profileId}/${addressType}`}
+      backPath={`${ROUTES.APP_SPACE}/${spaceId}/${addressType}`}
       backClick={() => setAddressForm({})}
     >
       <TypographySmall className="block text-center">
         Select a payment account type
       </TypographySmall>
 
-      <EntitySelect profileId={profileId || ''} />
+      <EntitySelect spaceId={spaceId || ''} />
     </PageLayout>
   );
 };
