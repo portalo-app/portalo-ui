@@ -3,7 +3,8 @@ export const ROUTES = {
   APP_HELP: '/help',
   APP_SPACE: '/spaces',
   APP_CREATE_SPACE: '/spaces/new',
-  APP_CREATE_ADDRESS: '/create-address',
+  APP_ADDRESS: '/addresses',
+  APP_CREATE_ADDRESS: '/addresses/new',
   APP_SELECT_ENTITY: '/select-entity',
 } as const;
 

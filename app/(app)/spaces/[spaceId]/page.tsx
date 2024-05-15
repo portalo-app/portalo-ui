@@ -2,6 +2,7 @@
 
 import AddressList from '@components/addresses/AddressList';
 import PageLayout from '@components/layout/PageLayout';
+import SpaceActionsMenu from '@components/spaces/SpaceActionsMenu';
 import { ROUTES } from '@constants/routes.const';
 import { Button } from '@core/ui/Button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@core/ui/Tab';
@@ -9,6 +10,7 @@ import { ADDRESS_TYPE } from '@models/address';
 import { Space } from '@models/space';
 import { addressFormState } from '@states/address-form.atom';
 import { spacesState } from '@states/spaces.atom';
+import { getCreateAddressURL } from '@utils/navigation';
 import { NextPage } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -19,11 +21,10 @@ interface SpacePageProps {
 }
 
 const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
+  const [space, setSpace] = useState<Space | null>(null);
   const [addressType, setAddressType] = useState<ADDRESS_TYPE>(
     ADDRESS_TYPE.CRYPTO
   );
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [space, setSpace] = useState<Space | null>(null);
 
   const router = useRouter();
 
@@ -36,8 +37,6 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
     if (!spaceId) return;
 
     const selectedSpace = spacesData.find((space) => space.id === spaceId);
-
-    setIsLoading(false);
 
     if (!selectedSpace) {
       router.push(ROUTES.APP);
@@ -57,7 +56,7 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
       action: 'CREATE',
     }));
 
-    router.push(`${ROUTES.APP_SELECT_ENTITY}/${space?.id}/${addressType}`);
+    router.push(getCreateAddressURL(space?.id || '', addressType));
   };
 
   return (
@@ -65,6 +64,8 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
       <Button variant="ghost" onClick={handleCreateAddress}>
         + Add Address
       </Button>
+
+      <SpaceActionsMenu space={space!} />
 
       <Tabs defaultValue={ADDRESS_TYPE.CRYPTO} onValueChange={handleChange}>
         <TabsList className="mb-4 grid h-full w-full grid-cols-2">
@@ -78,29 +79,21 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
         </TabsList>
 
         <TabsContent value={ADDRESS_TYPE.CRYPTO}>
-          {isLoading ? (
-            'loading...' // TODO ->  add skeleton
-          ) : (
-            <AddressList
-              spaceId={space?.id || ''}
-              addresses={space?.cryptoAddresses || []}
-              addressType={ADDRESS_TYPE.CRYPTO}
-              onClick={handleCreateAddress}
-            />
-          )}
+          <AddressList
+            spaceId={space?.id || ''}
+            addresses={space?.cryptoAddresses || []}
+            addressType={ADDRESS_TYPE.CRYPTO}
+            onClick={handleCreateAddress}
+          />
         </TabsContent>
 
         <TabsContent value={ADDRESS_TYPE.FIAT}>
-          {isLoading ? (
-            'loading...' // TODO -> add skeleton
-          ) : (
-            <AddressList
-              spaceId={space?.id || ''}
-              addresses={space?.fiatAddresses || []}
-              addressType={ADDRESS_TYPE.FIAT}
-              onClick={handleCreateAddress}
-            />
-          )}
+          <AddressList
+            spaceId={space?.id || ''}
+            addresses={space?.fiatAddresses || []}
+            addressType={ADDRESS_TYPE.FIAT}
+            onClick={handleCreateAddress}
+          />
         </TabsContent>
       </Tabs>
     </PageLayout>

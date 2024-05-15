@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 interface PageLayoutProps {
   children: React.ReactNode;
-  title: string;
+  title?: string;
   backPath?: string;
   backClick?: () => void;
 }
@@ -17,17 +17,19 @@ const PageLayout: React.FC<PageLayoutProps> = ({
 }) => {
   return (
     <div className="pb-20">
-      <div className="mb-4">
-        <div className="flex gap-2 items-center justify-start">
-          {backPath && (
-            <Link href={backPath} onClick={() => backClick && backClick()}>
-              <ChevronLeft aria-label="go back" />
-            </Link>
-          )}
+      {title && (
+        <div className="mb-4">
+          <div className="flex gap-2 items-center justify-start">
+            {backPath && (
+              <Link href={backPath} onClick={() => backClick && backClick()}>
+                <ChevronLeft aria-label="go back" />
+              </Link>
+            )}
 
-          <TypographyH3>{title}</TypographyH3>
+            <TypographyH3>{title}</TypographyH3>
+          </div>
         </div>
-      </div>
+      )}
 
       {children}
     </div>

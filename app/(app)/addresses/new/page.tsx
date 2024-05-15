@@ -7,23 +7,24 @@ import { TypographySmall } from '@core/ui/Typography';
 import { ADDRESS_TYPE } from '@models/address';
 import { addressFormState } from '@states/address-form.atom';
 import { NextPage } from 'next';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useRecoilState } from 'recoil';
 
-interface CreateAddressPageProps {}
+interface CreateAddressPageProps {
+  searchParams: {
+    space: string | undefined;
+    type: string | undefined;
+  };
+}
 
-const CreateAddressPage: NextPage<
-  // TODO Add corresponding type
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  CreateAddressPageProps & { params: { slug: any } }
-> = ({ params }) => {
+const CreateAddressPage: NextPage<CreateAddressPageProps> = () => {
   const router = useRouter();
-  const { slug } = params;
+  const searchParams = useSearchParams();
+
+  const spaceId = searchParams.get('space');
+  const type = searchParams.get('type');
 
   const [{ action }, setAddressForm] = useRecoilState(addressFormState);
-
-  const spaceId = slug && slug[0];
-  const addressType: ADDRESS_TYPE = (slug && slug[1]) as ADDRESS_TYPE;
 
   const createAddressTitle =
     action === 'CREATE' ? 'Add payment address' : 'Edit Address';
@@ -34,21 +35,20 @@ const CreateAddressPage: NextPage<
       : 'Edit adress';
 
   const backPath = spaceId
-    ? `${ROUTES.APP_SELECT_ENTITY}/${spaceId}/${addressType}`
+    ? `${ROUTES.APP_SELECT_ENTITY}/${spaceId}/${type}`
     : ROUTES.APP;
 
   // TODO: Handle invalid slug data
   return (
     <PageLayout title={createAddressTitle} backPath={backPath}>
-      <TypographySmall className="block text-center">
-        {subtitle}
-      </TypographySmall>
+      <TypographySmall>{subtitle}</TypographySmall>
+
       <AddressForm
         action={action || 'CREATE'}
         spaceId={spaceId || ''}
-        addressType={addressType}
+        addressType={type as ADDRESS_TYPE}
         onComplete={() => {
-          router.push(`${ROUTES.APP_SPACE}/${spaceId}/${addressType}`);
+          router.push(`${ROUTES.APP_SPACE}/${spaceId}/${type}`);
           setAddressForm({});
         }}
       />

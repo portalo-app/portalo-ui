@@ -14,6 +14,7 @@ const useEntity = () => {
     const entity = ENTITIES.find((entity) => entity.value === value);
     return entity?.color;
   };
+
   /**
    * Gets the icon of an entity based on its value.
    * @param value - The value of the entity.
@@ -23,6 +24,7 @@ const useEntity = () => {
     const entity = ENTITIES.find((entity) => entity.value === value);
     return entity?.value;
   };
+
   /**
    * Gets the entity based on its value.
    * @param value - The value of the entity.

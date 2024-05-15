@@ -4,10 +4,11 @@ import PageLayout from '@components/layout/PageLayout';
 import SpaceCard from '@components/spaces/SpaceCard';
 import { ROUTES } from '@constants/routes.const';
 import State from '@core/components/State';
-import { Button } from '@core/ui/Button';
+import { Card } from '@core/ui/Card';
+import { TypographyH3 } from '@core/ui/Typography';
 import { Space } from '@models/space';
 import { spacesState } from '@states/spaces.atom';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
@@ -16,11 +17,10 @@ interface AppPageProps {}
 const AppPage: FunctionComponent<AppPageProps> = () => {
   const [spaces, setSpaces] = useState<Space[]>([]);
   const spacesData = useRecoilValue(spacesState);
-  const router = useRouter();
 
   const spacesTitle = 'Your Spaces';
   const emptyMessage = "You don't have any spaces yet";
-  const createSpaceLabel = '+ Create Space';
+  const createSpaceLabel = '+ Add new';
 
   useEffect(() => {
     setSpaces(spacesData);
@@ -28,33 +28,32 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
 
   const hasSpaces = spaces?.length > 0;
 
-  const handleCreateSpace = () => {
-    router.push(ROUTES.APP_CREATE_SPACE);
-  };
-
   return (
-    <PageLayout title={spacesTitle}>
-      {!hasSpaces && (
-        <div className="flex content-center justify-center mt-8">
-          <State type="info" size={100} label={emptyMessage} />
-        </div>
-      )}
+    <PageLayout>
+      <div className="space-y-4">
+        <Card className="h-40 bg-muted">SUMMARY</Card>
 
-      {hasSpaces && (
-        <div className="divide-y-2 *:block">
-          {spaces.map((space, index) => (
-            <SpaceCard space={space} key={index} />
-          ))}
-        </div>
-      )}
+        <div>
+          <div className="flex justify-between items-center">
+            <TypographyH3>{spacesTitle}</TypographyH3>
+            <Link className="text-secondary" href={ROUTES.APP_CREATE_SPACE}>
+              {createSpaceLabel}
+            </Link>
+          </div>
 
-      <Button
-        variant="secondary"
-        onClick={handleCreateSpace}
-        className="w-full mt-4"
-      >
-        {createSpaceLabel}
-      </Button>
+          {hasSpaces ? (
+            <div className="divide-y-2 *:block">
+              {spaces.map((space, index) => (
+                <SpaceCard space={space} key={index} />
+              ))}
+            </div>
+          ) : (
+            <div className="flex content-center justify-center mt-4">
+              <State type="info" size={100} label={emptyMessage} />
+            </div>
+          )}
+        </div>
+      </div>
     </PageLayout>
   );
 };
