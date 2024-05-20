@@ -1,25 +1,59 @@
-import { CryptoAddress, FIATAddress } from './address';
-import { mockCryptoAddresses, mockFIATAddresses } from './entities';
-
+// Space model
 export interface Space {
   id: string;
+  icon?: string;
   name: string;
-  cryptoAddresses: CryptoAddress[];
-  fiatAddresses: FIATAddress[];
+  vaults: (Vault<AddressElement> | Vault<SocialElement>)[];
 }
 
-export const mockSpaceJohn: Space = {
-  id: '1',
-  name: 'John Doe',
-  cryptoAddresses: mockCryptoAddresses,
-  fiatAddresses: mockFIATAddresses,
-};
+// Vaults
+export interface Vault<T extends VaultElement> {
+  id: string;
+  type: VaultType;
+  elements: T[];
+}
 
-export const mockSpaceAlice: Space = {
-  id: '2',
-  name: 'Alice Doe',
-  cryptoAddresses: mockCryptoAddresses,
-  fiatAddresses: mockFIATAddresses,
-};
+export interface VaultType {
+  id: string;
+  label: string;
+}
 
-export const mockSpaces: Space[] = [mockSpaceJohn, mockSpaceAlice];
+// Elements
+export interface VaultElement {
+  id: string;
+  entity: Entity;
+  tags: Tag[];
+}
+
+export interface AddressElement extends VaultElement {
+  address: string;
+  name?: string;
+  alias?: string;
+  notes?: string;
+}
+
+export interface SocialElement extends VaultElement {
+  url: string;
+  username: string;
+}
+
+// Entity
+export interface Entity {
+  color: string;
+  icon: string;
+  value: string;
+  validationRegex: RegExp;
+  defaultTags: Tag[];
+}
+
+// Tags
+export interface TagCategory {
+  icon: string;
+  label: string;
+}
+
+export interface Tag {
+  icon: string;
+  label: string;
+  category: TagCategory;
+}

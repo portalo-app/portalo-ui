@@ -1,4 +1,5 @@
 import { Space } from '@models/space';
+import { DEFAULT_VAULTS } from '@models/space.data';
 import { spacesState } from '@states/spaces.atom';
 import { useSetRecoilState } from 'recoil';
 
@@ -13,8 +14,7 @@ const useCreateSpace: UseCreateSpace = () => {
     const space: Space = {
       id: Date.now().toString(),
       name,
-      cryptoAddresses: [],
-      fiatAddresses: [],
+      vaults: [...DEFAULT_VAULTS],
     };
 
     setSpaces((spaces) => [...spaces, space]);

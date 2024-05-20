@@ -13,11 +13,11 @@ const DeleteSpaceModal: React.FC<DeleteSpaceModalProps> = ({
   open,
   onClose,
 }) => {
+  const deleteSpace = useDeleteSpace();
+
   const deleteTitle = 'Delete Space';
   const deleteMessage =
     'Are you sure you want to delete the space "${space.name}"?';
-
-  const deleteSpace = useDeleteSpace();
 
   const handleDelete = () => {
     deleteSpace(space.id);

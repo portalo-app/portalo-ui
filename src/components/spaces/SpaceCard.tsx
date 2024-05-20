@@ -10,25 +10,10 @@ interface SpaceCardProps {
 }
 
 const SpaceCard: React.FC<SpaceCardProps> = ({ space }) => {
-  const { id, name, cryptoAddresses, fiatAddresses } = space;
+  const { id, name, vaults } = space;
 
-  const addressCount = cryptoAddresses.length + fiatAddresses.length;
-  const addressCountLabel = `${addressCount} address${
-    addressCount > 1 ? 'es' : ''
-  }`;
-
-  // const addressesStats = [
-  //   {
-  //     icon: Coins,
-  //     label: 'Crypto',
-  //     count: cryptoAddresses.length,
-  //   },
-  //   {
-  //     icon: Landmark,
-  //     label: 'Fiat',
-  //     count: fiatAddresses.length,
-  //   },
-  // ];
+  const count = vaults.length;
+  const countLabel = `${count} active vault${count > 1 || count === 0 ? 's' : ''}`;
 
   return (
     <Link href={`${ROUTES.APP_SPACE}/${id}`}>
@@ -40,25 +25,10 @@ const SpaceCard: React.FC<SpaceCardProps> = ({ space }) => {
             <TypographyH4>{name}</TypographyH4>
 
             <TypographyMutedXS className="text-primary">
-              {addressCountLabel}
+              {countLabel}
             </TypographyMutedXS>
           </div>
         </div>
-
-        {/* <CardContent>
-          <div className="flex gap-8 items-center">
-            {addressesStats.map((data, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <data.icon size={16} className="text-secondary" />
-
-                <TypographySmall>
-                  <span className="text-muted-foreground">{data.label}:</span>{' '}
-                  {data.count}
-                </TypographySmall>
-              </div>
-            ))}
-          </div>
-        </CardContent> */}
 
         <ChevronRight
           size={24}

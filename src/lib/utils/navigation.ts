@@ -9,3 +9,15 @@ export const getCreateAddressURL = (
 
   return `${ROUTES.APP_CREATE_ADDRESS}?${params.toString()}`;
 };
+
+export const getCreateVaultURL = (spaceId?: string) => {
+  if (!spaceId) return '';
+
+  return `${ROUTES.APP_SPACE}/${spaceId}/${ROUTES.APP_CREATE_VAULT}`;
+};
+
+export const getVaultURL = (spaceId?: string, vaultId?: string) => {
+  if (!spaceId || !vaultId) return '';
+
+  return `${ROUTES.APP_VAULT}/${vaultId}`;
+};

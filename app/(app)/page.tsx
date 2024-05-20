@@ -6,25 +6,19 @@ import { ROUTES } from '@constants/routes.const';
 import State from '@core/components/State';
 import { Card } from '@core/ui/Card';
 import { TypographyH3 } from '@core/ui/Typography';
-import { Space } from '@models/space';
 import { spacesState } from '@states/spaces.atom';
 import Link from 'next/link';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent } from 'react';
 import { useRecoilValue } from 'recoil';
 
 interface AppPageProps {}
 
 const AppPage: FunctionComponent<AppPageProps> = () => {
-  const [spaces, setSpaces] = useState<Space[]>([]);
-  const spacesData = useRecoilValue(spacesState);
+  const spaces = useRecoilValue(spacesState);
 
   const spacesTitle = 'Your Spaces';
   const emptyMessage = "You don't have any spaces yet";
   const createSpaceLabel = '+ Add new';
-
-  useEffect(() => {
-    setSpaces(spacesData);
-  }, [spacesData]);
 
   const hasSpaces = spaces?.length > 0;
 
@@ -36,6 +30,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
         <div>
           <div className="flex justify-between items-center">
             <TypographyH3>{spacesTitle}</TypographyH3>
+
             <Link className="text-secondary" href={ROUTES.APP_CREATE_SPACE}>
               {createSpaceLabel}
             </Link>

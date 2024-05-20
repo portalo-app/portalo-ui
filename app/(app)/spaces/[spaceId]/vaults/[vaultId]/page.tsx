@@ -1,0 +1,74 @@
+'use client';
+
+import { ROUTES } from '@constants/routes.const';
+import { TypographyH3 } from '@core/ui/Typography';
+import { Space, Vault, VaultElement } from '@models/space';
+import { spacesState } from '@states/spaces.atom';
+import { NextPage } from 'next';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import router from 'next/router';
+import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+
+interface VaultDetailsProps {
+  params: { vaultId: string; spaceId: string };
+}
+
+const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
+  const [space, setSpace] = useState<Space | null>(null);
+  const [vault, setVault] = useState<Vault<VaultElement> | null>(null);
+  const pathName = usePathname();
+
+  const spacesData = useRecoilValue(spacesState);
+  const { vaultId, spaceId } = params;
+
+  const createLabel = '+ Add new';
+
+  useEffect(() => {
+    if (!spaceId) return;
+
+    const selectedSpace = spacesData.find((space) => space.id === spaceId);
+    const selectedVault = selectedSpace?.vaults.find(
+      (vault) => vault.id === vaultId
+    );
+
+    if (!selectedSpace || !selectedVault) {
+      router.push(ROUTES.APP);
+      return;
+    }
+
+    setSpace(selectedSpace);
+    setVault(selectedVault);
+  }, [spacesData, spaceId, vaultId]);
+
+  return (
+    <div className="space-y-4">
+      <div className="flex justify-between items-center">
+        <TypographyH3>
+          {space?.name} | {vault?.type.label}
+        </TypographyH3>
+
+        <Link className="text-secondary" href={`${pathName}/new`}>
+          {createLabel}
+        </Link>
+      </div>
+
+      <div>TAGS</div>
+
+      <div>
+        <TypographyH3>Elements: {vault?.elements.length}</TypographyH3>
+
+        <div className="grid grid-cols-2 gap-4">
+          {vault?.elements.map((element) => (
+            <div key={element.id} className="p-4 bg-white rounded shadow">
+              <TypographyH3>{element.id}</TypographyH3>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default VaultDetail;
