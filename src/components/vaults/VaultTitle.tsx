@@ -9,6 +9,8 @@ interface VaultTitleProps {
 }
 
 const VaultTitle: React.FC<VaultTitleProps> = ({ space, vault }) => {
+  if (!space || !vault) return null;
+
   return (
     <div className="flex items-center gap-4">
       <Avatar className="bg-muted grid place-items-center w-[42px] h-[42px]">
