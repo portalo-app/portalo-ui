@@ -1,6 +1,6 @@
 'use client';
 
-import ShortcutItem from '@components/dashboard/ShortcutItem';
+import VaultItem from '@components/vaults/VaultItem';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import { TypographyH3 } from '@core/ui/Typography';
@@ -37,7 +37,7 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
   }, [spacesData, router, spaceId]);
 
   return (
-    <div className="space-y-4">
+    <div>
       <div className="flex justify-between items-center">
         <TypographyH3>{space?.name}</TypographyH3>
 
@@ -46,14 +46,14 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
         />
       </div>
 
-      <div className="divide-y-2 *:block space-y-2">
+      <div className="divide-y-2 *:block">
         {space?.vaults.map((vault, index) => (
           <Link
             className="relative"
             key={index}
             href={`${ROUTES.APP_SPACE}/${spaceId}/${ROUTES.APP_VAULT}/${vault.id}`}
           >
-            <ShortcutItem space={space} vault={vault} />
+            <VaultItem space={space} vault={vault} />
 
             <ChevronRight
               size={24}

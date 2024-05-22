@@ -1,9 +1,9 @@
 'use client';
 
-import ShortcutItem from '@components/dashboard/ShortcutItem';
 import StoreWidget from '@components/dashboard/StoreWidget';
 import PageLayout from '@components/layout/PageLayout';
 import SpaceItem from '@components/spaces/SpaceItem';
+import VaultItem from '@components/vaults/VaultItem';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
@@ -85,7 +85,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
           {hasSpaces ? (
             <div className="divide-y-2 *:block">
               {shortcuts.map(({ space, vault }, index) => (
-                <ShortcutItem key={index} space={space} vault={vault} />
+                <VaultItem key={index} space={space} vault={vault} />
               ))}
             </div>
           ) : (

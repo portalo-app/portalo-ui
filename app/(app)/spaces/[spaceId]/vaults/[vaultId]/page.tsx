@@ -1,5 +1,6 @@
 'use client';
 
+import VaultTitle from '@components/vaults/VaultTitle';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import { TypographyH3 } from '@core/ui/Typography';
@@ -43,17 +44,15 @@ const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <TypographyH3>
-          {space?.name} | {vault?.type.label}
-        </TypographyH3>
+        <VaultTitle space={space!} vault={vault!} />
 
         <CreateButton href={`${pathName}/new`} />
       </div>
 
-      <div>TAGS</div>
+      <div>FILTERS HERE</div>
 
       <div>
-        <TypographyH3>Elements: {vault?.elements.length}</TypographyH3>
+        <TypographyH3>Elements Here: {vault?.elements.length}</TypographyH3>
 
         <div className="grid grid-cols-2 gap-4">
           {vault?.elements.map((element) => (
