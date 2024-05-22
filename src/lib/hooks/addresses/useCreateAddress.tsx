@@ -1,4 +1,5 @@
 import { ADDRESS_TYPE, CryptoAddress, FIATAddress } from '@models/address';
+import { AddressElement, Vault } from '@models/space';
 import { spacesState } from '@states/spaces.atom';
 import { useSetRecoilState } from 'recoil';
 
@@ -20,14 +21,10 @@ const useCreateAddress: UseCreateAddress = () => {
 
         const address = { ...newAddress, id: Date.now().toString() };
 
-        if (addressType === ADDRESS_TYPE.CRYPTO) {
-          return {
-            ...space,
-            cryptoAddresses: [...space.cryptoAddresses, address],
-          };
-        } else {
-          return { ...space, fiatAddresses: [...space.fiatAddresses, address] };
-        }
+        return {
+          ...space,
+          vaults: [...space.vaults, address] as Vault<AddressElement>[],
+        };
       })
     );
   };
