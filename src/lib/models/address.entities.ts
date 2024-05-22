@@ -1,13 +1,6 @@
 import chainsList from 'cryptocurrency-icons/manifest.json';
 import { CryptoAddress, CryptoAddressesRegex, FIATAddress } from './address';
-
-export interface Entity {
-  color: string;
-  icon: string;
-  value: (typeof EntityValue)[number];
-  label: string;
-  addressRegex?: RegExp;
-}
+import { Entity } from './space';
 
 export const chainsSymbols = [
   'BTC',
@@ -47,58 +40,65 @@ export const chains: Entity[] = filteredUniqueChains.map((chain) => ({
   icon: chain.symbol.toLowerCase(),
   value: chain.symbol as ChainValue,
   label: chain.name,
-  addressRegex:
+  validationRegex:
     CryptoAddressesRegex[chain.symbol as keyof typeof CryptoAddressesRegex],
+  defaultTags: [],
 }));
 
 const CBU_REGEX = /^[0-9]{22}$/;
 
-export const banks = [
+export const banks: Entity[] = [
   {
     color: '#007894',
     icon: 'nacion',
     value: 'NACION',
     label: 'Nacion',
-    addressRegex: CBU_REGEX,
+    validationRegex: CBU_REGEX,
+    defaultTags: [],
   },
   {
     color: '#e60000',
     icon: 'santander',
     value: 'SANTANDER',
     label: 'Santander',
-    addressRegex: CBU_REGEX,
+    validationRegex: CBU_REGEX,
+    defaultTags: [],
   },
   {
     color: '#f7931a',
     icon: 'galicia',
     value: 'GALICIA',
     label: 'Galicia',
-    addressRegex: CBU_REGEX,
+    validationRegex: CBU_REGEX,
+    defaultTags: [],
   },
   {
     color: '#1e3096',
     icon: 'bbva',
     value: 'BBVA',
     label: 'BBVA',
-    addressRegex: CBU_REGEX,
+    validationRegex: CBU_REGEX,
+    defaultTags: [],
   },
   {
     color: '#003057',
     icon: 'macro',
     value: 'MACRO',
     label: 'Macro',
-    addressRegex: CBU_REGEX,
+    validationRegex: CBU_REGEX,
+    defaultTags: [],
   },
   {
     color: '#db0011',
     icon: 'hsbc',
     value: 'HSBC',
     label: 'Hsbc',
-    addressRegex: CBU_REGEX,
+    validationRegex: CBU_REGEX,
+    defaultTags: [],
   },
 ] as const;
 
-export const ENTITIES = [...chains, ...banks];
+export const ENTITIES = [...chains, ...banks] as Entity[];
 
 export type ChainValue = (typeof chainsSymbols)[number];
 export type BankValue = (typeof banks)[number]['value'];

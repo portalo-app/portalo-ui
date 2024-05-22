@@ -19,6 +19,8 @@ export interface VaultType {
   id: string;
   label: string;
   icon: LucideIcon;
+  entityLabel: string;
+  availableEntities: Entity[];
 }
 
 // Elements
@@ -45,6 +47,7 @@ export interface Entity {
   color: string;
   icon: string;
   value: string;
+  label: string;
   validationRegex: RegExp;
   defaultTags: Tag[];
 }

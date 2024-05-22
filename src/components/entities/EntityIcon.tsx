@@ -1,4 +1,4 @@
-import { BankValue, ChainValue, banks } from '@models/entities';
+import { BankValue, ChainValue, banks } from '@models/address.entities';
 import Algo from 'cryptocurrency-icons/svg/color/algo.svg';
 import Sol from 'cryptocurrency-icons/svg/color/sol.svg';
 import Uni from 'cryptocurrency-icons/svg/color/uni.svg';
