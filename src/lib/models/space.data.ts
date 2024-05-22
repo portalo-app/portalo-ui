@@ -1,13 +1,16 @@
+import { Share2, Wallet } from 'lucide-react';
 import { AddressElement, SocialElement, Vault, VaultType } from './space';
 
 export const ADDRESS_TYPE: VaultType = {
   id: 'address',
   label: 'Addresses',
+  icon: Wallet,
 };
 
 export const SOCIAL_TYPE: VaultType = {
   id: 'social',
   label: 'Social',
+  icon: Share2,
 };
 
 export const DEFAULT_ADDRESSES_VAULT: Vault<AddressElement> = {

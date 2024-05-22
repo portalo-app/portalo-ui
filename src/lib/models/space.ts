@@ -1,3 +1,5 @@
+import { LucideIcon } from 'lucide-react';
+
 // Space model
 export interface Space {
   id: string;
@@ -16,6 +18,7 @@ export interface Vault<T extends VaultElement> {
 export interface VaultType {
   id: string;
   label: string;
+  icon: LucideIcon;
 }
 
 // Elements

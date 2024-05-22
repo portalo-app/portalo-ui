@@ -5,11 +5,11 @@ import Avvvatars from 'avvvatars-react';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
-interface SpaceCardProps {
+interface SpaceItemProps {
   space: Space;
 }
 
-const SpaceCard: React.FC<SpaceCardProps> = ({ space }) => {
+const SpaceItem: React.FC<SpaceItemProps> = ({ space }) => {
   const { id, name, vaults } = space;
 
   const count = vaults.length;
@@ -19,7 +19,7 @@ const SpaceCard: React.FC<SpaceCardProps> = ({ space }) => {
     <Link href={`${ROUTES.APP_SPACE}/${id}`}>
       <div className="relative py-4">
         <div className="flex items-center gap-4">
-          <Avvvatars value={name} size={42} style="character" radius={8} />
+          <Avvvatars value={name} size={42} style="character" />
 
           <div>
             <TypographyH4>{name}</TypographyH4>
@@ -39,4 +39,4 @@ const SpaceCard: React.FC<SpaceCardProps> = ({ space }) => {
   );
 };
 
-export default SpaceCard;
+export default SpaceItem;

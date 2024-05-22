@@ -1,11 +1,11 @@
 'use client';
 
 import { ROUTES } from '@constants/routes.const';
+import CreateButton from '@core/components/CreateButton';
 import { TypographyH3 } from '@core/ui/Typography';
 import { Space, Vault, VaultElement } from '@models/space';
 import { spacesState } from '@states/spaces.atom';
 import { NextPage } from 'next';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
@@ -22,8 +22,6 @@ const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
 
   const spacesData = useRecoilValue(spacesState);
   const { vaultId, spaceId } = params;
-
-  const createLabel = '+ Add new';
 
   useEffect(() => {
     if (!spaceId) return;
@@ -49,9 +47,7 @@ const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
           {space?.name} | {vault?.type.label}
         </TypographyH3>
 
-        <Link className="text-secondary" href={`${pathName}/new`}>
-          {createLabel}
-        </Link>
+        <CreateButton href={`${pathName}/new`} />
       </div>
 
       <div>TAGS</div>
