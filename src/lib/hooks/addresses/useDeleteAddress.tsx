@@ -13,21 +13,14 @@ type UseDeleteAddress = () => DeleteAddress;
 const useDeleteAddress: UseDeleteAddress = () => {
   const setSpaces = useSetRecoilState(spacesState);
 
-  const deleteAddress: DeleteAddress = (spaceId, addressId, addressType) => {
+  const deleteAddress: DeleteAddress = (spaceId, addressId) => {
     setSpaces((prevSpaces) =>
       prevSpaces.map((space) => {
         if (space.id !== spaceId) return space;
 
-        const addressKey =
-          addressType === ADDRESS_TYPE.CRYPTO
-            ? 'cryptoAddresses'
-            : 'fiatAddresses';
-
         return {
           ...space,
-          [addressKey]: space[addressKey].filter(
-            (address) => address.id !== addressId
-          ),
+          vaults: space.vaults.filter((address) => address.id !== addressId),
         };
       })
     );
