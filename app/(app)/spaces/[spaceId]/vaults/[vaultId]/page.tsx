@@ -1,8 +1,9 @@
 'use client';
 
+import ElementItem from '@components/elements/ElementItem';
+import VaultTitle from '@components/vaults/VaultTitle';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
-import { TypographyH3 } from '@core/ui/Typography';
 import { Space, Vault, VaultElement } from '@models/space';
 import { spacesState } from '@states/spaces.atom';
 import { NextPage } from 'next';
@@ -40,28 +41,23 @@ const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
     setVault(selectedVault);
   }, [spacesData, spaceId, vaultId]);
 
+  // TODO: Change this to the actual vault elements
+  const elements = new Array(5).fill(null);
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <TypographyH3>
-          {space?.name} | {vault?.type.label}
-        </TypographyH3>
+        <VaultTitle space={space!} vault={vault!} />
 
         <CreateButton href={`${pathName}/new`} />
       </div>
 
-      <div>TAGS</div>
+      <div>VARIANT FILTER</div>
 
-      <div>
-        <TypographyH3>Elements: {vault?.elements.length}</TypographyH3>
-
-        <div className="grid grid-cols-2 gap-4">
-          {vault?.elements.map((element) => (
-            <div key={element.id} className="p-4 bg-white rounded shadow">
-              <TypographyH3>{element.id}</TypographyH3>
-            </div>
-          ))}
-        </div>
+      <div className="space-y-4">
+        {elements.map((element, index) => (
+          <ElementItem key={index} element={element} />
+        ))}
       </div>
     </div>
   );
