@@ -1,12 +1,13 @@
+import { Button } from '@core/ui/Button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@core/ui/Form';
+import { Input } from '@core/ui/Input';
 import {
   Select,
   SelectContent,
@@ -27,8 +28,18 @@ interface VaultElementFormProps {
 const VaultElementForm: React.FC<VaultElementFormProps> = ({ vaultType }) => {
   const formSchema = z
     .object({
-      variant: z.string(),
-      entity: z.string(),
+      ...{
+        variant: z.string(),
+        entity: z.string(),
+      },
+      ...(vaultType.id === 'social'
+        ? { username: z.string(), url: z.string() }
+        : {
+            address: z.string(),
+            name: z.string().optional(),
+            alias: z.string().optional(),
+            notes: z.string().optional(),
+          }),
     })
     .required();
 
@@ -37,12 +48,30 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({ vaultType }) => {
     defaultValues: {
       variant: vaultType.variants[0].id,
       entity: '',
+      ...(vaultType.id === 'social'
+        ? {
+            username: '',
+            url: '',
+          }
+        : {
+            address: '',
+            name: '',
+            alias: '',
+            notes: '',
+          }),
     },
   });
 
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    console.log({ data });
+  };
+
   return (
     <Form {...form}>
-      <form className="flex flex-col gap-4">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
         <FormField
           control={form.control}
           name="variant"
@@ -63,9 +92,6 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({ vaultType }) => {
                   ))}
                 </SelectContent>
               </Select>
-              <FormDescription>
-                Select {vaultType.label} variant.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -76,7 +102,13 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({ vaultType }) => {
           name="entity"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{vaultType.entityLabel}</FormLabel>
+              <FormLabel>
+                {
+                  vaultType.variants.find(
+                    (variant) => variant.id === form.getValues().variant
+                  )!.entityLabel
+                }
+              </FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -93,13 +125,124 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({ vaultType }) => {
                     ))}
                 </SelectContent>
               </Select>
-              <FormDescription>
-                Choose the entity of the element
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        {
+          // Render the form fields for the selected entity
+          // based on the selected vault
+          vaultType.id === 'social' ? (
+            <>
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <Input
+                      type="text"
+                      {...field}
+                      placeholder="Username"
+                      value={field.value as string}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="url"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>URL</FormLabel>
+                    <Input
+                      type="text"
+                      {...field}
+                      placeholder="https://example.com"
+                      value={field.value as string}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </>
+          ) : (
+            <>
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Address</FormLabel>
+                    <Input
+                      {...field}
+                      placeholder="Address"
+                      value={field.value as string}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <Input
+                      placeholder="Name"
+                      {...field}
+                      value={field.value as string}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="alias"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Alias</FormLabel>
+                    <Input
+                      type="text"
+                      {...field}
+                      placeholder="Alias"
+                      value={field.value as string}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="notes"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Notes</FormLabel>
+                    <Input
+                      {...field}
+                      type="text"
+                      placeholder="Notes"
+                      value={field.value as string}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </>
+          )
+        }
+
+        <Button type="submit" className="mt-4 uppercase">
+          Add {vaultType.label}
+        </Button>
       </form>
     </Form>
   );
