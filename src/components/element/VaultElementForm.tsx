@@ -15,7 +15,6 @@ import {
   SelectValue,
 } from '@core/ui/Select';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ADDRESS_TYPE } from '@models/address';
 import { VaultType } from '@models/space';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -28,7 +27,7 @@ interface VaultElementFormProps {
 const VaultElementForm: React.FC<VaultElementFormProps> = ({ vaultType }) => {
   const formSchema = z
     .object({
-      tags: z.string(),
+      variant: z.string(),
       entity: z.string(),
     })
     .required();
@@ -36,7 +35,7 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({ vaultType }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      tags: 'None',
+      variant: vaultType.variants[0].id,
       entity: '',
     },
   });
@@ -46,24 +45,26 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({ vaultType }) => {
       <form className="flex flex-col gap-4">
         <FormField
           control={form.control}
-          name="tags"
+          name="variant"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tags</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
+                    <SelectValue placeholder={`Select a ${vaultType.label}`} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value={ADDRESS_TYPE.CRYPTO}>Crypto</SelectItem>
-                  <SelectItem value={ADDRESS_TYPE.FIAT}>Fiat</SelectItem>
+                  {vaultType.variants.map((variant) => (
+                    <SelectItem key={variant.id} value={variant.id}>
+                      {variant.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormDescription>
-                Add a tag to your vault {vaultType.label} element to help you
-                identify it.
+                Select {vaultType.label} variant.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -83,11 +84,13 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({ vaultType }) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {vaultType.availableEntities.map((entity) => (
-                    <SelectItem key={entity.value} value={entity.value}>
-                      {entity.label}
-                    </SelectItem>
-                  ))}
+                  {vaultType.variants
+                    .find((variant) => variant.id === form.getValues().variant)!
+                    .availableEntities.map((entity) => (
+                      <SelectItem key={entity.value} value={entity.value}>
+                        {entity.label}
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
               <FormDescription>

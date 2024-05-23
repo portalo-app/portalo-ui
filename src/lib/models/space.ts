@@ -19,6 +19,12 @@ export interface VaultType {
   id: string;
   label: string;
   icon: LucideIcon;
+  variants: ElementVariant[];
+}
+
+export interface ElementVariant {
+  id: string;
+  label: string;
   entityLabel: string;
   availableEntities: Entity[];
 }
