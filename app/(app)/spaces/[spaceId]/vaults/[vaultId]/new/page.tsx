@@ -5,7 +5,7 @@ import { ROUTES } from '@constants/routes.const';
 import { TypographyH1 } from '@core/ui/Typography';
 import { Vault, VaultElement } from '@models/space';
 import { spacesState } from '@states/spaces.atom';
-import router from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
@@ -21,6 +21,7 @@ const NewElementPage: React.FC<NewElementPageProps> = ({ params }) => {
   // const pathName = usePathname();
 
   const spacesData = useRecoilValue(spacesState);
+  const router = useRouter();
 
   useEffect(() => {
     if (!spaceId) return;
@@ -43,7 +44,18 @@ const NewElementPage: React.FC<NewElementPageProps> = ({ params }) => {
     <div className="flex flex-col gap-6">
       <TypographyH1>Add {vaultId}</TypographyH1>
 
-      {vault && <VaultElementForm vaultType={vault?.type} />}
+      {vault && (
+        <VaultElementForm
+          spaceId={spaceId}
+          vaultId={vaultId}
+          vaultType={vault?.type}
+          onComplete={() =>
+            router.push(
+              `${ROUTES.APP_SPACE}/${spaceId}${ROUTES.APP_VAULT}/${vaultId}`
+            )
+          }
+        />
+      )}
     </div>
   );
 };

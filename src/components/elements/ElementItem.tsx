@@ -4,11 +4,11 @@ import {
   TypographyMuted,
   TypographyMutedXS,
 } from '@core/ui/Typography';
-import { AddressElement, SocialElement } from '@models/space';
+import { VaultElement } from '@models/space';
 import { Circle } from 'lucide-react';
 
 interface ElementItemProps {
-  element: AddressElement | SocialElement;
+  element: VaultElement;
 }
 
 // TODO: Complete the ElementItem component

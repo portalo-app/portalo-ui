@@ -41,9 +41,6 @@ const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
     setVault(selectedVault);
   }, [spacesData, spaceId, vaultId]);
 
-  // TODO: Change this to the actual vault elements
-  const elements = new Array(5).fill(null);
-
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -55,7 +52,7 @@ const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
       <div>VARIANT FILTER</div>
 
       <div className="space-y-4">
-        {elements.map((element, index) => (
+        {vault?.elements.map((element, index) => (
           <ElementItem key={index} element={element} />
         ))}
       </div>

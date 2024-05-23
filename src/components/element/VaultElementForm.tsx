@@ -16,16 +16,27 @@ import {
   SelectValue,
 } from '@core/ui/Select';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { VaultType } from '@models/space';
+import useVaultElement from '@hooks/element/useVaultElement';
+import { VaultElement, VaultType } from '@models/space';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 interface VaultElementFormProps {
+  spaceId: string;
+  vaultId: string;
   vaultType: VaultType;
+  onComplete: () => void;
 }
 
-const VaultElementForm: React.FC<VaultElementFormProps> = ({ vaultType }) => {
+const VaultElementForm: React.FC<VaultElementFormProps> = ({
+  spaceId,
+  vaultId,
+  vaultType,
+  onComplete,
+}) => {
+  const { createElement } = useVaultElement();
+
   const formSchema = z
     .object({
       ...{
@@ -63,7 +74,18 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({ vaultType }) => {
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log({ data });
+    createElement(spaceId, vaultId, {
+      ...data,
+      id: '',
+      tags: [],
+      entity: vaultType.variants
+        .find((variant) => variant.id === data.variant)!
+        .availableEntities.find((entity) => entity.value === data.entity)!,
+    } as VaultElement);
+
+    form.reset();
+
+    onComplete && onComplete();
   };
 
   return (
