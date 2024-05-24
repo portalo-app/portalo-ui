@@ -39,6 +39,7 @@ banks.forEach((bank) =>
         width={30}
         height={30}
         style={{ objectFit: 'contain', height: '100%' }}
+        objectFit="contain"
       />
     ),
   })

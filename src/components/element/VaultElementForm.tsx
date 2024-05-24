@@ -1,3 +1,4 @@
+import EntityIcon from '@components/entities/EntityIcon';
 import { Button } from '@core/ui/Button';
 import {
   Form,
@@ -164,10 +165,18 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
                       .availableEntities.map((entity) => (
                         <SelectItem key={entity.value} value={entity.value}>
                           <div className="flex gap-2 items-center">
-                            <SocialIcon
-                              network={entity.icon as SocialNetwork}
-                              size={20}
-                            />
+                            {vaultType.id === 'social' ? (
+                              <SocialIcon
+                                network={entity.icon as SocialNetwork}
+                                size={20}
+                              />
+                            ) : (
+                              <EntityIcon
+                                entity={entity.value}
+                                width={4}
+                                height={4}
+                              />
+                            )}
                             {entity.label}
                           </div>
                         </SelectItem>
