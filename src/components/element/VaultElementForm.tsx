@@ -39,7 +39,7 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
   action = 'new',
   initialData,
 }) => {
-  const { createElement } = useVaultElement();
+  const { createElement, editElement } = useVaultElement();
 
   const formSchema = z
     .object({
@@ -80,14 +80,25 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    createElement(spaceId, vaultId, {
-      ...data,
-      id: '',
-      tags: [],
-      entity: vaultType.variants
-        .find((variant) => variant.id === data.variant)!
-        .availableEntities.find((entity) => entity.value === data.entity)!,
-    } as VaultElement);
+    if (action === 'new') {
+      createElement(spaceId, vaultId, {
+        ...data,
+        id: '',
+        tags: [],
+        entity: vaultType.variants
+          .find((variant) => variant.id === data.variant)!
+          .availableEntities.find((entity) => entity.value === data.entity)!,
+      } as VaultElement);
+    } else {
+      editElement(spaceId, vaultId, {
+        ...initialData,
+        ...data,
+        tags: [],
+        entity: vaultType.variants
+          .find((variant) => variant.id === data.variant)!
+          .availableEntities.find((entity) => entity.value === data.entity)!,
+      } as VaultElement);
+    }
 
     form.reset();
 
