@@ -1,15 +1,18 @@
 'use client';
 
 import { ROUTES } from '@constants/routes.const';
+import DeleteModal from '@core/components/DeleteModal';
 import { Card } from '@core/ui/Card';
 import {
   TypographyH5,
   TypographyMuted,
   TypographyMutedXS,
 } from '@core/ui/Typography';
+import useVaultElement from '@hooks/element/useVaultElement';
 import { AddressElement, SocialElement, VaultElement } from '@models/space';
-import { Circle } from 'lucide-react';
+import { Circle, TrashIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { MouseEvent, useState } from 'react';
 
 interface ElementItemProps {
   spaceId: string;
@@ -24,6 +27,9 @@ const ElementItem: React.FC<ElementItemProps> = ({
   vaultId,
 }) => {
   const router = useRouter();
+  const { deleteElement } = useVaultElement();
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const entity = element.entity.label;
   const mainData = (element as SocialElement).username
@@ -39,23 +45,45 @@ const ElementItem: React.FC<ElementItemProps> = ({
     );
   };
 
+  const handleDelete = (event: MouseEvent) => {
+    event.stopPropagation();
+    setIsDeleteModalOpen(true);
+  };
+
   return (
-    <Card
-      className="relative p-4 space-y-2 border-muted-foreground/20 bg-muted hover:cursor-pointer"
-      onClick={handleCardClick}
-    >
-      <div className="flex items-center gap-2">
-        <Circle />
+    <>
+      <DeleteModal
+        message="Are you sure you want to delete this element?"
+        onDelete={() => (
+          deleteElement(spaceId, vaultId, element.id),
+          setIsDeleteModalOpen(false)
+        )}
+        onClose={() => setIsDeleteModalOpen(false)}
+        open={isDeleteModalOpen}
+        title="Delete Element"
+      />
+      <Card
+        className="relative p-4 space-y-2 border-muted-foreground/20 bg-muted hover:cursor-pointer"
+        onClick={handleCardClick}
+      >
+        <div className="flex items-center gap-2 w-100">
+          <Circle />
 
-        <TypographyMuted>{entity}</TypographyMuted>
-      </div>
+          <TypographyMuted>{entity}</TypographyMuted>
 
-      <div>
-        <TypographyH5>{mainData}</TypographyH5>
+          <TrashIcon
+            className="w-4 h-4 ml-auto mr-1 hover:text-red-600"
+            onClick={handleDelete}
+          />
+        </div>
 
-        <TypographyMutedXS>{secondaryData}</TypographyMutedXS>
-      </div>
-    </Card>
+        <div>
+          <TypographyH5>{mainData}</TypographyH5>
+
+          <TypographyMutedXS>{secondaryData}</TypographyMutedXS>
+        </div>
+      </Card>
+    </>
   );
 };
 

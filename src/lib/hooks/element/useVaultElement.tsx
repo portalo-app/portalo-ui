@@ -63,7 +63,33 @@ const useVaultElement = () => {
     setSpaces(newSpaces);
   };
 
-  return { createElement, editElement };
+  const deleteElement = (
+    spaceId: string,
+    vaultId: string,
+    elementId: string
+  ) => {
+    const newSpaces = spaces.map((space) => {
+      if (space.id !== spaceId) return space;
+
+      return {
+        ...space,
+        vaults: space.vaults.map((vault) => {
+          if (vault.id !== vaultId) return vault;
+
+          return {
+            ...vault,
+            elements: vault.elements.filter(
+              (element) => element.id !== elementId
+            ),
+          } as Vault<AddressElement> | Vault<SocialElement>;
+        }),
+      };
+    });
+
+    setSpaces(newSpaces);
+  };
+
+  return { createElement, editElement, deleteElement };
 };
 
 export default useVaultElement;
