@@ -19,6 +19,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useVaultElement from '@hooks/element/useVaultElement';
 import { VaultElement, VaultType } from '@models/space';
 import React from 'react';
+import { SocialIcon } from 'react-custom-social-icons';
+import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -154,13 +156,23 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {vaultType.variants
-                    .find((variant) => variant.id === form.getValues().variant)!
-                    .availableEntities.map((entity) => (
-                      <SelectItem key={entity.value} value={entity.value}>
-                        {entity.label}
-                      </SelectItem>
-                    ))}
+                  <p>
+                    {vaultType.variants
+                      .find(
+                        (variant) => variant.id === form.getValues().variant
+                      )!
+                      .availableEntities.map((entity) => (
+                        <SelectItem key={entity.value} value={entity.value}>
+                          <div className="flex gap-2 items-center">
+                            <SocialIcon
+                              network={entity.icon as SocialNetwork}
+                              size={20}
+                            />
+                            {entity.label}
+                          </div>
+                        </SelectItem>
+                      ))}
+                  </p>
                 </SelectContent>
               </Select>
               <FormMessage />

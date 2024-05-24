@@ -18,19 +18,11 @@ export const MESSAGING_ENTITIES: Entity[] = [
     defaultTags: [],
   },
   {
-    label: 'Signal',
-    value: 'SIGNAL',
-    icon: 'signal',
-    color: '#2596be',
-    validationRegex: /https:\/\/signal.org\/.*/,
-    defaultTags: [],
-  },
-  {
-    label: 'Slack',
-    value: 'SLACK',
-    icon: 'slack',
-    color: '#4a154b',
-    validationRegex: /https:\/\/slack.com\/.*/,
+    label: 'Skype',
+    value: 'SKYPE',
+    icon: 'skype',
+    color: '#00aff0',
+    validationRegex: /https:\/\/join.skype.com\/.*/,
     defaultTags: [],
   },
   {
@@ -39,6 +31,14 @@ export const MESSAGING_ENTITIES: Entity[] = [
     icon: 'discord',
     color: '#7289da',
     validationRegex: /https:\/\/discord.com\/.*/,
+    defaultTags: [],
+  },
+  {
+    label: 'Gmail',
+    value: 'GMAIL',
+    icon: 'gmail',
+    color: '#d14836',
+    validationRegex: /https:\/\/mail.google.com\/.*/,
     defaultTags: [],
   },
 ];
@@ -111,10 +111,10 @@ export const getSocialUrlByUsername = (
       return `https://wa.me/${username}`;
     case 'TELEGRAM':
       return `https://t.me/${username}`;
-    case 'SIGNAL':
-      return `https://signal.org/${username}`;
-    case 'SLACK':
-      return `https://slack.com/${username}`;
+    case 'SKYPE':
+      return `https://join.skype.com/${username}`;
+    case 'GMAIL':
+      return `https://mail.google.com/${username}`;
     case 'DISCORD':
       return `https://discord.com/${username}`;
     case 'LINKEDIN':
