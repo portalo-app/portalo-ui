@@ -8,12 +8,52 @@ import Eth from 'cryptocurrency-icons/svg/icon/eth.svg';
 import Matic from 'cryptocurrency-icons/svg/icon/matic.svg';
 import { Landmark, Wallet } from 'lucide-react';
 import Image from 'next/legacy/image';
+import { SocialIcon } from 'react-custom-social-icons';
+import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
 
 interface EntityIconProps {
   entity: ChainValue | BankValue | 'DEFAULT_BANK' | 'DEFAULT_CHAIN';
   width?: number;
   height?: number;
 }
+
+const socialNetworks = [
+  'zoom',
+  'discord',
+  'github',
+  'facebook',
+  'twitter',
+  'instagram',
+  'whatsapp',
+  'vk',
+  'linkedin',
+  'vimeo',
+  'youtube',
+  'tumblr',
+  'skype',
+  'pinterest',
+  'behance',
+  'dribbble',
+  'google-analytics',
+  'facebook-pixel',
+  'reddit',
+  'messenger',
+  'snapchat',
+  'apple',
+  'telegram',
+  'google',
+  'tiktok',
+  'spotify',
+  'trustpilot',
+  'twitch',
+  'google-meet',
+  'google-maps',
+  'gmail',
+  'soundcloud',
+  'patreon',
+  'tinder',
+  'google-calendar',
+] as const;
 
 const chainIcons: {
   [key in ChainValue]: React.ReactNode;
@@ -45,7 +85,17 @@ banks.forEach((bank) =>
   })
 );
 
+// TODO: Refactor to make it dynamic through an Icon Directory
 const EntityIcon: React.FC<EntityIconProps> = ({ entity, width, height }) => {
+  if (socialNetworks.includes(entity.toLowerCase() as any)) {
+    return (
+      <SocialIcon
+        network={entity.toLowerCase() as SocialNetwork}
+        size={width}
+      />
+    );
+  }
+
   const icon =
     chainIcons[entity as ChainValue] ||
     bankIcons[entity as BankValue] ||

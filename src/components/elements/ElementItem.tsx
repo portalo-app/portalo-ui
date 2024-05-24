@@ -1,5 +1,6 @@
 'use client';
 
+import EntityIcon from '@components/entities/EntityIcon';
 import { ROUTES } from '@constants/routes.const';
 import DeleteModal from '@core/components/DeleteModal';
 import { Card } from '@core/ui/Card';
@@ -10,7 +11,7 @@ import {
 } from '@core/ui/Typography';
 import useVaultElement from '@hooks/element/useVaultElement';
 import { AddressElement, SocialElement, VaultElement } from '@models/space';
-import { Circle, TrashIcon } from 'lucide-react';
+import { TrashIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { MouseEvent, useState } from 'react';
 
@@ -31,13 +32,13 @@ const ElementItem: React.FC<ElementItemProps> = ({
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const entity = element.entity.label;
+  const entity = element.entity;
   const mainData = (element as SocialElement).username
     ? (element as SocialElement).username
-    : (element as AddressElement).address;
-  const secondaryData = (element as SocialElement).url
-    ? (element as SocialElement).url
     : (element as AddressElement).name;
+  const secondaryData = (element as SocialElement).url
+    ? ''
+    : (element as AddressElement).address;
 
   const handleCardClick = () => {
     router.push(
@@ -53,7 +54,7 @@ const ElementItem: React.FC<ElementItemProps> = ({
   return (
     <>
       <DeleteModal
-        message="Are you sure you want to delete this element?"
+        message={`Are you sure you want to delete this ${entity.label.toLowerCase()}?`}
         onDelete={() => (
           deleteElement(spaceId, vaultId, element.id),
           setIsDeleteModalOpen(false)
@@ -67,9 +68,9 @@ const ElementItem: React.FC<ElementItemProps> = ({
         onClick={handleCardClick}
       >
         <div className="flex items-center gap-2 w-100">
-          <Circle />
+          <EntityIcon entity={entity.value} width={24} height={24} />
 
-          <TypographyMuted>{entity}</TypographyMuted>
+          <TypographyMuted>{entity.label}</TypographyMuted>
 
           <TrashIcon
             className="w-4 h-4 ml-auto mr-1 hover:text-red-600"

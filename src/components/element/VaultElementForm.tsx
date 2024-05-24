@@ -118,7 +118,7 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
           name="variant"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tags</FormLabel>
+              <FormLabel>Variant</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
