@@ -4,7 +4,7 @@ import {
   TypographyMuted,
   TypographyMutedXS,
 } from '@core/ui/Typography';
-import { VaultElement } from '@models/space';
+import { AddressElement, SocialElement, VaultElement } from '@models/space';
 import { Circle } from 'lucide-react';
 
 interface ElementItemProps {
@@ -12,13 +12,14 @@ interface ElementItemProps {
 }
 
 // TODO: Complete the ElementItem component
-const ElementItem: React.FC<ElementItemProps> = ({}) => {
-  // TODO: Add mapping logic to convert from the element prop to the elementData object
-  const { entity, mainData, secondaryData } = {
-    entity: 'Entity Name', // 'Entity Name
-    mainData: 'Name',
-    secondaryData: '0x123456789123456',
-  };
+const ElementItem: React.FC<ElementItemProps> = ({ element }) => {
+  const entity = element.entity.label;
+  const mainData = (element as SocialElement).username
+    ? (element as SocialElement).username
+    : (element as AddressElement).address;
+  const secondaryData = (element as SocialElement).url
+    ? (element as SocialElement).url
+    : (element as AddressElement).name;
 
   return (
     <Card className="relative p-4 space-y-2 border-muted-foreground/20 bg-muted">
