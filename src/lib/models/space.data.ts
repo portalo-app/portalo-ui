@@ -5,7 +5,7 @@ import { AddressElement, SocialElement, Vault, VaultType } from './space';
 
 export const ADDRESS_TYPE: VaultType = {
   id: 'address',
-  label: 'Addresses',
+  label: 'Address',
   icon: Wallet,
   variants: [
     {

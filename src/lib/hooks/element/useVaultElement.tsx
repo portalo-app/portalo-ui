@@ -18,6 +18,8 @@ const useVaultElement = () => {
     const newSpaces = spaces.map((space) => {
       if (space.id !== spaceId) return space;
 
+      newElement.id = `${newElement.entity.label}-${Date.now()}`;
+
       return {
         ...space,
         vaults: space.vaults.map((vault) => {

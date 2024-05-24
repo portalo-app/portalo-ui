@@ -27,6 +27,8 @@ interface VaultElementFormProps {
   vaultId: string;
   vaultType: VaultType;
   onComplete: () => void;
+  action?: 'new' | 'edit';
+  initialData?: VaultElement;
 }
 
 const VaultElementForm: React.FC<VaultElementFormProps> = ({
@@ -34,6 +36,8 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
   vaultId,
   vaultType,
   onComplete,
+  action = 'new',
+  initialData,
 }) => {
   const { createElement } = useVaultElement();
 
@@ -56,21 +60,23 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      variant: vaultType.variants[0].id,
-      entity: '',
-      ...(vaultType.id === 'social'
-        ? {
-            username: '',
-            url: '',
-          }
-        : {
-            address: '',
-            name: '',
-            alias: '',
-            notes: '',
-          }),
-    },
+    defaultValues: initialData
+      ? { ...initialData, entity: initialData.entity.value }
+      : {
+          variant: vaultType.variants[0].id,
+          entity: '',
+          ...(vaultType.id === 'social'
+            ? {
+                username: '',
+                url: '',
+              }
+            : {
+                address: '',
+                name: '',
+                alias: '',
+                notes: '',
+              }),
+        },
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
@@ -263,7 +269,7 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
         }
 
         <Button type="submit" className="mt-4 uppercase">
-          Add {vaultType.label}
+          {action === 'new' ? 'Add' : 'Edit'} {vaultType.label}
         </Button>
       </form>
     </Form>

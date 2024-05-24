@@ -53,7 +53,12 @@ const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
 
       <div className="space-y-4">
         {vault?.elements.map((element, index) => (
-          <ElementItem key={index} element={element} />
+          <ElementItem
+            key={index}
+            element={element}
+            spaceId={spaceId}
+            vaultId={vaultId}
+          />
         ))}
       </div>
     </div>
