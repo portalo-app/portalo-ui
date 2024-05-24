@@ -48,7 +48,7 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
         entity: z.string(),
       },
       ...(vaultType.id === 'social'
-        ? { username: z.string(), url: z.string() }
+        ? { username: z.string() }
         : {
             address: z.string(),
             name: z.string().optional(),
@@ -68,7 +68,6 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
           ...(vaultType.id === 'social'
             ? {
                 username: '',
-                url: '',
               }
             : {
                 address: '',
@@ -189,24 +188,7 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
-
-              <FormField
-                control={form.control}
-                name="url"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>URL</FormLabel>
-                    <Input
-                      type="text"
-                      {...field}
-                      placeholder="https://example.com"
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              />{' '}
             </>
           ) : (
             <>

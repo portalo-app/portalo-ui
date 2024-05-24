@@ -1,3 +1,4 @@
+import { getSocialUrlByUsername } from '@models/social.entities';
 import {
   AddressElement,
   SocialElement,
@@ -24,6 +25,14 @@ const useVaultElement = () => {
         ...space,
         vaults: space.vaults.map((vault) => {
           if (vault.id !== vaultId) return vault;
+
+          if (vault.type.id === 'social') {
+            (newElement as SocialElement).url = getSocialUrlByUsername(
+              newElement.entity,
+              (newElement as SocialElement).username
+            );
+          }
+
           return {
             ...vault,
             elements: [...vault.elements, newElement],
@@ -47,6 +56,13 @@ const useVaultElement = () => {
         ...space,
         vaults: space.vaults.map((vault) => {
           if (vault.id !== vaultId) return vault;
+
+          if (vault.type.id === 'social') {
+            (editedElement as SocialElement).url = getSocialUrlByUsername(
+              editedElement.entity,
+              (editedElement as SocialElement).username
+            );
+          }
 
           return {
             ...vault,

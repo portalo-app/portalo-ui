@@ -1,5 +1,3 @@
-'use client';
-
 import VaultElementContainer from '@components/element/VaultElementContainer';
 
 interface NewElementPageProps {
