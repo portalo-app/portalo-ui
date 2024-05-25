@@ -10,7 +10,7 @@ import {
   TypographyMuted,
   TypographyMutedXS,
 } from '@core/ui/Typography';
-import useVaultElement from '@hooks/element/useVaultElement';
+import useVaultElement from '@hooks/elements/useVaultElement';
 import { AddressElement, SocialElement, VaultElement } from '@models/space';
 import { TrashIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';

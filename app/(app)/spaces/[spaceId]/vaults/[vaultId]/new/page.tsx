@@ -1,4 +1,4 @@
-import VaultElementContainer from '@components/element/VaultElementContainer';
+import VaultElementContainer from '@components/elements/VaultElementContainer';
 
 interface NewElementPageProps {
   params: { vaultId: string; spaceId: string };

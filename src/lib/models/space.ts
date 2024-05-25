@@ -22,18 +22,19 @@ export interface VaultType {
   variants: ElementVariant[];
 }
 
-export interface ElementVariant {
-  id: string;
-  label: string;
-  entityLabel: string;
-  availableEntities: Entity[];
-}
-
 // Elements
 export interface VaultElement {
   id: string;
   entity: Entity;
   tags: Tag[];
+}
+
+// An element variant is a sub-type of an element
+export interface ElementVariant {
+  id: string;
+  label: string;
+  entityLabel: string;
+  availableEntities: Entity[];
 }
 
 export interface AddressElement extends VaultElement {

@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from '@core/ui/Select';
 import { zodResolver } from '@hookform/resolvers/zod';
-import useVaultElement from '@hooks/element/useVaultElement';
+import useVaultElement from '@hooks/elements/useVaultElement';
 import { VaultElement, VaultType } from '@models/space';
 import React from 'react';
 import { SocialIcon } from 'react-custom-social-icons';

@@ -7,7 +7,7 @@ import { spacesState } from '@states/spaces.atom';
 import { useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import VaultElementForm from './VaultElementForm';
+import VaultElementForm from '../elements/VaultElementForm';
 
 interface VaultElementContainerProps {
   spaceId: string;
