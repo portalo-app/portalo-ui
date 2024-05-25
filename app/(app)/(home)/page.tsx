@@ -24,9 +24,9 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
       icon: spaces[0]?.vaults[0],
     },
     {
-      space: spaces[1],
-      vault: spaces[1]?.vaults[0],
-      icon: spaces[1]?.vaults[0],
+      space: spaces[0],
+      vault: spaces[0]?.vaults[1],
+      icon: spaces[0]?.vaults[1],
     },
   ];
 

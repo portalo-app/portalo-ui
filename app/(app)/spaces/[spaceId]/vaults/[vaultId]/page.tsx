@@ -49,7 +49,7 @@ const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
         <CreateButton href={`${pathName}/new`} />
       </div>
 
-      <div>VARIANT FILTER</div>
+      {/* <div>VARIANT FILTER</div> */}
 
       <div className="space-y-4">
         {vault?.elements.map((element, index) => (

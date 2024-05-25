@@ -11,7 +11,7 @@ export default function AppLayout({ children }: LayoutProps) {
     <Root>
       <Navbar />
 
-      <main className="container max-w-md px-4 mt-4">{children}</main>
+      <main className="container max-w-md px-4 mt-4 pb-[70px]">{children}</main>
 
       <MobileBottomNavbar />
       {/* {!isDesktop ? <MobileBottomNavbar /> : null} */}
