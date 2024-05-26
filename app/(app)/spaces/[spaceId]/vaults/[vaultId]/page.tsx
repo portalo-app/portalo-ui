@@ -4,11 +4,11 @@ import ElementItem from '@components/elements/ElementItem';
 import VaultTitle from '@components/vaults/VaultTitle';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
+import State from '@core/components/State';
 import { Space, Vault, VaultElement } from '@models/space';
 import { spacesState } from '@states/spaces.atom';
 import { NextPage } from 'next';
-import { usePathname } from 'next/navigation';
-import router from 'next/router';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
@@ -17,6 +17,7 @@ interface VaultDetailsProps {
 }
 
 const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
+  const router = useRouter();
   const [space, setSpace] = useState<Space | null>(null);
   const [vault, setVault] = useState<Vault<VaultElement> | null>(null);
   const pathName = usePathname();
@@ -39,7 +40,7 @@ const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
 
     setSpace(selectedSpace);
     setVault(selectedVault);
-  }, [spacesData, spaceId, vaultId]);
+  }, [spacesData, spaceId, vaultId, router]);
 
   return (
     <div className="space-y-4">
@@ -52,14 +53,25 @@ const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
       {/* <div>VARIANT FILTER</div> */}
 
       <div className="space-y-4">
-        {vault?.elements.map((element, index) => (
-          <ElementItem
-            key={index}
-            element={element}
-            spaceId={spaceId}
-            vaultId={vaultId}
+        {vault?.elements?.length ?? 0 > 0 ? (
+          vault?.elements.map((element, index) => (
+            <ElementItem
+              key={index}
+              element={element}
+              spaceId={spaceId}
+              vaultId={vaultId}
+            />
+          ))
+        ) : (
+          <State
+            type="empty"
+            label="You don't have any elements yet"
+            action={{
+              label: 'Create Element',
+              onClick: () => router.push(`${pathName}/new`),
+            }}
           />
-        ))}
+        )}
       </div>
     </div>
   );

@@ -70,7 +70,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
             </div>
           ) : (
             <div className="flex content-center justify-center mt-4">
-              <State type="info" size={100} label={emptySpacesMessage} />
+              <State type="empty" label={emptySpacesMessage} />
             </div>
           )}
         </div>
@@ -90,7 +90,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
             </div>
           ) : (
             <div className="flex content-center justify-center mt-4">
-              <State type="info" size={100} label={emptyShortcutsMessage} />
+              <State type="empty" label={emptyShortcutsMessage} />
             </div>
           )}
         </div>
