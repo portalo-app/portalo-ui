@@ -1,74 +1,38 @@
-import { NextLinkComposed } from '@/core/components/Link';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Button, Fab, IconButton, Stack, Typography } from '@mui/material';
+import { TypographyH3 } from '@core/ui/Typography';
+import { ChevronLeft } from 'lucide-react';
+import Link from 'next/link';
 
 interface PageLayoutProps {
   children: React.ReactNode;
-  title: string;
-  action?: ActionData;
+  title?: string;
   backPath?: string;
   backClick?: () => void;
 }
 
-interface ActionData {
-  icon: React.ReactNode;
-  onClick: () => void;
-  label?: string;
-}
-
-const Action: React.FC<ActionData> = ({ label, icon, onClick }) => {
-  return label ? (
-    <Button variant="contained" startIcon={icon} onClick={onClick}>
-      {label}
-    </Button>
-  ) : (
-    <Fab size="small" color="primary" onClick={onClick}>
-      {icon}
-    </Fab>
-  );
-};
-
 const PageLayout: React.FC<PageLayoutProps> = ({
   children,
   title,
-  action,
   backPath,
   backClick,
 }) => {
   return (
-    <Stack>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        mb={2}
-      >
-        <Stack direction="row" gap={1} alignItems="center">
-          {backPath && (
-            <IconButton
-              component={NextLinkComposed}
-              to={{
-                pathname: backPath,
-              }}
-            >
-              <ArrowBackIcon />
-            </IconButton>
-          )}
+    <div className="pb-20">
+      {title && (
+        <div className="mb-4">
+          <div className="flex gap-2 items-center justify-start">
+            {backPath && (
+              <Link href={backPath} onClick={() => backClick && backClick()}>
+                <ChevronLeft aria-label="go back" />
+              </Link>
+            )}
 
-          {backClick && (
-            <IconButton onClick={backClick}>
-              <ArrowBackIcon />
-            </IconButton>
-          )}
-
-          <Typography variant="h4">{title}</Typography>
-        </Stack>
-
-        {action && <Action {...action} />}
-      </Stack>
+            <TypographyH3>{title}</TypographyH3>
+          </div>
+        </div>
+      )}
 
       {children}
-    </Stack>
+    </div>
   );
 };
 

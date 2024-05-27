@@ -1,97 +1,86 @@
-import { NextLinkComposed } from '@/core/components/Link';
-import { ROUTES } from '@/lib/constants/routes.const';
-import { profilesState } from '@/lib/store/profiles.atom';
-import PortaloLogo from '@images/portalo_logo.svg';
-import GroupIcon from '@mui/icons-material/Group';
-import FAQIcon from '@mui/icons-material/Help';
-import HomeIcon from '@mui/icons-material/Home';
-import SettingsIcon from '@mui/icons-material/Settings';
-import {
-  Divider,
-  ListItemIcon,
-  MenuItem,
-  MenuList,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { ROUTES } from '@constants/routes.const';
+import { Separator } from '@core/ui/Separator';
+import { spacesState } from '@states/spaces.atom';
 import Avvvatars from 'avvvatars-react';
+import { HelpCircle, Settings, User } from 'lucide-react';
 import { useRecoilValue } from 'recoil';
 
-interface DrawerMenuItemsProps {
-  onClick: () => void;
-}
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+} from '@core/ui/NavigationMenu';
+import {
+  TypographyLead,
+  TypographyP,
+  TypographySmall,
+} from '@core/ui/Typography';
+import Link from 'next/link';
 
 const menuItems = [
   {
-    label: 'Home',
-    href: ROUTES.HOME,
-    icon: <HomeIcon />,
-  },
-  {
-    label: 'Profiles',
+    label: 'Spaces',
     href: ROUTES.APP,
-    icon: <GroupIcon />,
+    icon: <User />,
   },
   {
     label: 'Help',
     href: ROUTES.APP_HELP,
-    icon: <FAQIcon />,
+    icon: <HelpCircle />,
   },
   {
     label: 'Settings',
     href: ROUTES.APP,
-    icon: <SettingsIcon />,
+    icon: <Settings />,
   },
 ];
 
-const DrawerMenuItems: React.FC<DrawerMenuItemsProps> = ({ onClick }) => {
-  const profiles = useRecoilValue(profilesState);
+const DrawerMenuItems: React.FC = () => {
+  const spaces = useRecoilValue(spacesState);
 
   const welcomeMessage = 'Hi anon! 👋🏻';
-  const profilesCount = profiles?.length || 0;
-  const profilesCountMessage = `${profilesCount} profile${
-    profilesCount > 1 ? 's' : ''
+  const spacesCount = spaces?.length || 0;
+  const spacesCountMessage = `${spacesCount} space${
+    spacesCount > 1 ? 's' : ''
   }`;
-  const noProfilesMessage = 'No profiles yet';
+  const emptyMessage = 'No spaces yet';
 
   return (
     <>
-      <Stack px={1}>
-        <PortaloLogo width="50%" />
-      </Stack>
+      <div className="p-2 my-4">
+        <div className="flex flex-row content-center gap-3">
+          <Avvvatars value={spaces.toString()} size={48} style="shape" />
 
-      <Divider />
+          <div>
+            <TypographyLead>{welcomeMessage}</TypographyLead>
 
-      <Stack p={2} my={2}>
-        <Stack direction="row" alignItems="center" gap={2}>
-          <Avvvatars value={profiles.toString()} size={48} style="shape" />
+            <TypographySmall className="text-primary">
+              {spacesCount ? spacesCountMessage : emptyMessage}
+            </TypographySmall>
+          </div>
+        </div>
+      </div>
 
-          <Stack>
-            <Typography variant="h6">{welcomeMessage}</Typography>
+      <Separator />
 
-            <Typography variant="caption" color="text.secondary">
-              {profilesCount ? profilesCountMessage : noProfilesMessage}
-            </Typography>
-          </Stack>
-        </Stack>
-      </Stack>
+      <NavigationMenu>
+        <NavigationMenuList>
+          <div className="w-vw p-2">
+            {menuItems.map((item, index) => (
+              <NavigationMenuItem key={index}>
+                <Link
+                  href={item.href}
+                  className="flex p-2 gap-2 w-full items-center"
+                >
+                  {item.icon}
 
-      <Divider />
-
-      <MenuList>
-        {menuItems.map(({ label, href, icon }) => (
-          <MenuItem
-            key={label}
-            component={NextLinkComposed}
-            to={{ pathname: href }}
-            onClick={onClick}
-          >
-            <ListItemIcon>{icon}</ListItemIcon>
-
-            {label}
-          </MenuItem>
-        ))}
-      </MenuList>
+                  <TypographyP className="!m-0">{item.label}</TypographyP>
+                </Link>
+              </NavigationMenuItem>
+            ))}
+          </div>
+        </NavigationMenuList>
+      </NavigationMenu>
     </>
   );
 };

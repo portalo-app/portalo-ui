@@ -1,63 +1,30 @@
-import useIsMobile from '@/lib/hooks/common/useIsMobile';
-import createEmotionCache from '@/styles/createEmotionCache';
-import GlobalStyles from '@/styles/globals.style';
-import { THEME } from '@/styles/theme.style';
-import { CacheProvider, EmotionCache } from '@emotion/react';
-import {
-  CssBaseline,
-  ThemeProvider,
-  createTheme,
-  responsiveFontSizes,
-} from '@mui/material';
+'use client';
+
+import { ThemeProvider } from '@providers/ThemeProvider';
+import dynamic from 'next/dynamic';
 import { SnackbarProvider } from 'notistack';
 import { Suspense } from 'react';
-import { RecoilRoot } from 'recoil';
-import Layout from './Layout';
 
 interface RootProps {
-  Component: any;
-  pageProps: any;
-  emotionCache?: EmotionCache;
+  children: React.ReactNode;
 }
 
-const globalStyles = <GlobalStyles />;
+const RecoilRoot = dynamic(
+  () => import('recoil').then((recoil) => recoil.RecoilRoot),
+  { ssr: false }
+);
 
-// Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache();
-
-const Root: React.FC<RootProps> = ({
-  Component,
-  pageProps,
-  emotionCache = clientSideEmotionCache,
-}) => {
-  const isMobile = useIsMobile();
-
+const Root: React.FC<RootProps> = ({ children }) => {
   return (
     <>
       <RecoilRoot>
-        <CacheProvider value={emotionCache}>
-          {globalStyles}
-
-          <ThemeProvider theme={responsiveFontSizes(createTheme(THEME))}>
-            <CssBaseline enableColorScheme />
-
-            <Layout>
-              <Suspense fallback={'Loading...'}>
-                <SnackbarProvider
-                  autoHideDuration={3000}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: isMobile ? 'center' : 'left',
-                  }}
-                  dense={isMobile}
-                  disableWindowBlurListener
-                >
-                  <Component {...pageProps} />
-                </SnackbarProvider>
-              </Suspense>
-            </Layout>
+        <Suspense fallback={'Loading...'}>
+          <ThemeProvider>
+            <SnackbarProvider autoHideDuration={3000} disableWindowBlurListener>
+              {children}
+            </SnackbarProvider>
           </ThemeProvider>
-        </CacheProvider>
+        </Suspense>
       </RecoilRoot>
     </>
   );
