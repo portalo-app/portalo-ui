@@ -53,10 +53,26 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
       ...(vaultType.id === 'social'
         ? { username: z.string() }
         : {
-            address: z.string(),
-            name: z.string().optional(),
-            alias: z.string().optional(),
-            notes: z.string().optional(),
+            address: z
+              .string()
+              .max(512, {
+                message: 'Address must be at most 512 characters long.',
+              })
+              .optional(),
+            name: z
+              .string()
+              .max(30, { message: 'Name must be at most 30 characters long.' })
+              .optional(),
+            alias: z
+              .string()
+              .max(30, { message: 'Alias must be at most 30 characters long.' })
+              .optional(),
+            notes: z
+              .string()
+              .max(200, {
+                message: 'Notes must be at most 200 characters long.',
+              })
+              .optional(),
           }),
     })
     .required();
