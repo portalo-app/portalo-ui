@@ -25,6 +25,7 @@ module.exports = async (phase) => {
       swSrc: 'public/service-worker/app-worker.ts',
       swDest: 'public/sw.js',
       reloadOnOnline: true,
+      cacheOnNavigation: true,
     });
     return withSerwist(nextConfig);
   }
