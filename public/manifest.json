@@ -1,0 +1,38 @@
+{
+  "theme_color": "#181817",
+  "background_color": "#161616",
+  "display": "browser",
+  "scope": "/",
+  "start_url": "/",
+  "name": "Portalo",
+  "short_name": "Portalo",
+  "description": "Take your private data everywhere'",
+  "icons": [
+    {
+      "src": "assets/logo/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logo/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logo/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logo/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "id": "portalo-id",
+  "dir": "ltr",
+  "lang": "en",
+  "categories": ["business"],
+  "prefer_related_applications": false,
+  "iarc_rating_id": "13"
+}
