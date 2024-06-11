@@ -1,17 +1,16 @@
 import Image from 'next/image';
 
-interface AppLogoProps {}
+interface AppLogoProps {
+  theme: string | undefined;
+}
 
-const AppLogo: React.FC<AppLogoProps> = () => {
-  return (
-    <Image
-      priority
-      src="/portalo_dark.svg"
-      alt="Portalo"
-      width={120}
-      height={30}
-    />
-  );
+const AppLogo: React.FC<AppLogoProps> = ({ theme }) => {
+  const logoSrc =
+    theme === 'light'
+      ? '/assets/images/portalo_light.svg'
+      : '/assets/images/portalo_dark.svg';
+
+  return <Image priority src={logoSrc} alt="Portalo" width={120} height={30} />;
 };
 
 export default AppLogo;
