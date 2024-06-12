@@ -1,6 +1,6 @@
 'use client';
 
-import { ROUTES } from '@constants/routes.const';
+import { ROUTES, ROUTES_LAYOUT } from '@constants/routes.const';
 import DeleteModal from '@core/components/DeleteModal';
 import {
   MEDIAQUERY_DESKTOP,
@@ -8,10 +8,11 @@ import {
 } from '@hooks/general/useMediaQuery';
 import { spacesState } from '@states/spaces.atom';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useResetRecoilState } from 'recoil';
 import AppLogo from './AppLogo';
+import FeatureHeader from './FeatureHeader';
 import Sidebar from './Sidebar';
 
 interface NavbarProps {}
@@ -22,6 +23,8 @@ const Navbar: React.FC<NavbarProps> = () => {
   const router = useRouter();
 
   const isDesktop = useMediaQuery(MEDIAQUERY_DESKTOP);
+  const pathname = usePathname();
+  const currentRoute = ROUTES_LAYOUT.find((route) => route.url === pathname);
 
   const resetAccountLabel = 'Reset Account';
   const resetAccountMessage =
@@ -41,9 +44,13 @@ const Navbar: React.FC<NavbarProps> = () => {
   return (
     <>
       <div className="sticky top-0 z-50 flex w-full items-center justify-between bg-muted p-1 pl-2">
-        <Link href={ROUTES.APP}>
-          <AppLogo />
-        </Link>
+        {currentRoute?.url === ROUTES.APP ? (
+          <Link href={ROUTES.APP}>
+            <AppLogo />
+          </Link>
+        ) : (
+          <FeatureHeader title={currentRoute?.title ?? ''} />
+        )}
 
         {isDesktop ? (
           <Sidebar

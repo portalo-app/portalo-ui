@@ -14,3 +14,57 @@ export type ObjectValues<T> = T[keyof T];
 
 export type Routes = ObjectValues<typeof ROUTES>;
 export type RoutesKeys = keyof typeof ROUTES;
+
+export type route = {
+  title: string;
+  url: Routes;
+  readOnly: boolean;
+};
+
+export const ROUTES_LAYOUT: route[] = [
+  {
+    title: 'Home',
+    url: ROUTES.APP,
+    readOnly: true,
+  },
+  {
+    title: 'Help',
+    url: ROUTES.APP_HELP,
+    readOnly: true,
+  },
+  {
+    title: 'Spaces',
+    url: ROUTES.APP_SPACE,
+    readOnly: true,
+  },
+  {
+    title: 'Create Space',
+    url: ROUTES.APP_CREATE_SPACE,
+    readOnly: true,
+  },
+  {
+    title: 'Vaults',
+    url: ROUTES.APP_VAULT,
+    readOnly: true,
+  },
+  {
+    title: 'Create Vaults',
+    url: ROUTES.APP_CREATE_VAULT,
+    readOnly: true,
+  },
+  {
+    title: 'Addresses',
+    url: ROUTES.APP_ADDRESS,
+    readOnly: true,
+  },
+  {
+    title: 'Create Address',
+    url: ROUTES.APP_CREATE_ADDRESS,
+    readOnly: true,
+  },
+  {
+    title: 'Select Entity',
+    url: ROUTES.APP_SELECT_ENTITY,
+    readOnly: true,
+  },
+];
