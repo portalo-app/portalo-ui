@@ -45,19 +45,19 @@ const Navbar: React.FC<NavbarProps> = () => {
     <>
       <div className="sticky top-0 z-50 flex w-full items-center justify-between bg-muted p-1 pl-2">
         {currentRoute?.url === ROUTES.APP ? (
-          <Link href={ROUTES.APP}>
-            <AppLogo />
-          </Link>
+          !isDesktop ? (
+            <Link href={ROUTES.APP}>
+              <AppLogo />
+            </Link>
+          ) : (
+            <Sidebar
+              handleResetAccountModal={handleResetAccountModal}
+              resetAccountLabel={resetAccountLabel}
+            />
+          )
         ) : (
           <FeatureHeader title={currentRoute?.title ?? ''} />
         )}
-
-        {isDesktop ? (
-          <Sidebar
-            handleResetAccountModal={handleResetAccountModal}
-            resetAccountLabel={resetAccountLabel}
-          />
-        ) : null}
 
         <DeleteModal
           title={resetAccountLabel}

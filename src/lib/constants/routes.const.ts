@@ -8,6 +8,8 @@ export const ROUTES = {
   APP_ADDRESS: '/addresses',
   APP_CREATE_ADDRESS: '/addresses/new',
   APP_SELECT_ENTITY: '/select-entity',
+  APP_NOTIFICATION: '/notifications',
+  APP_SETTINGS: '/settings',
 } as const;
 
 export type ObjectValues<T> = T[keyof T];
@@ -65,6 +67,16 @@ export const ROUTES_LAYOUT: route[] = [
   {
     title: 'Select Entity',
     url: ROUTES.APP_SELECT_ENTITY,
+    readOnly: true,
+  },
+  {
+    title: 'Notifications',
+    url: ROUTES.APP_NOTIFICATION,
+    readOnly: true,
+  },
+  {
+    title: 'Settings',
+    url: ROUTES.APP_SETTINGS,
     readOnly: true,
   },
 ];

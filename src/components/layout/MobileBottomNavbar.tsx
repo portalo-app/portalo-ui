@@ -2,7 +2,7 @@
 
 import { ROUTES } from '@constants/routes.const';
 import { TypographyXS } from '@core/ui/Typography';
-import { HelpCircle, Home, Menu, User } from 'lucide-react';
+import { Bell, Home, Menu, Plus, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -34,7 +34,7 @@ const MobileBottomNavbar = () => {
       id: 'spaces',
       name: 'Spaces',
       icon: User,
-      url: ROUTES.APP,
+      url: ROUTES.APP_CREATE_SPACE,
     },
     {
       id: 'cta',
@@ -44,16 +44,16 @@ const MobileBottomNavbar = () => {
       url: '#',
     },
     {
-      id: 'help',
-      name: 'Help',
-      icon: HelpCircle,
-      url: ROUTES.APP_HELP,
+      id: 'notification',
+      name: 'Notification',
+      icon: Bell,
+      url: ROUTES.APP_NOTIFICATION,
     },
     {
       id: 'settings',
-      name: 'Más',
+      name: 'More',
       icon: Menu,
-      url: ROUTES.APP,
+      url: ROUTES.APP_SETTINGS,
     },
   ];
 
@@ -63,7 +63,7 @@ const MobileBottomNavbar = () => {
         <div key={id} className="grid place-items-center">
           {isCTA ? (
             <div className="relative bottom-2 grid h-14 w-14 place-items-center rounded-full bg-primary">
-              <Portalo />
+              <Plus size={40} />
             </div>
           ) : (
             <Link
@@ -72,11 +72,11 @@ const MobileBottomNavbar = () => {
             >
               <Icon
                 size={20}
-                className={`${pathname === url && 'text-secondary'}`}
+                className={`${pathname === url && 'text-primary brightness-150'}`}
               />
 
               <TypographyXS
-                className={`font-medium ${pathname === url && 'text-secondary'}`}
+                className={`font-medium ${pathname === url && 'text-primary brightness-150'}`}
               >
                 {name}
               </TypographyXS>

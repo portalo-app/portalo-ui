@@ -35,7 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </Button>
       </SheetTrigger>
 
-      <SheetContent>
+      <SheetContent side="left">
         <SheetHeader>
           <SheetTitle>
             <AppLogo />

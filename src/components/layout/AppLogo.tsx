@@ -8,7 +8,7 @@ const AppLogo: React.FC<AppLogoProps> = () => {
       priority
       src="/portalo_dark.svg"
       alt="Portalo"
-      width={120}
+      width={90}
       height={30}
     />
   );
