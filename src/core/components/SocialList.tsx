@@ -45,7 +45,7 @@ const SocialList = () => {
         <Button
           key={label}
           onClick={action}
-          className="bg-default flex w-full items-center justify-start gap-2 text-foreground hover:bg-transparent focus:outline-none active:bg-transparent"
+          className="bg-default flex w-full items-center justify-start gap-2 text-foreground hover:bg-transparent focus:outline-none active:bg-transparent hover:text-primary"
         >
           <Icon />
           <TypographyP className="!mt-0">{label}</TypographyP>
