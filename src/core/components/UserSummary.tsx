@@ -18,8 +18,8 @@ const UserSummary = () => {
   const emptyMessage = 'No spaces yet';
 
   return (
-    <div className="p-2 my-4">
-      <div className="flex flex-row content-center gap-3">
+    <div className="my-3 px-4">
+      <div className="flex flex-row content-center gap-3 ">
         <Avvvatars value={spaces.toString()} size={48} style="shape" />
 
         <div>

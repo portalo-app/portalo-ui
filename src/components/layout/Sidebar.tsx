@@ -1,68 +1,43 @@
-import CreatedByNeoPower from '@core/components/CreatedByNeoPower';
-import { Button } from '@core/ui/Button';
 import { ModeToggle } from '@core/ui/ModeToggle';
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@core/ui/Sheet';
-import { Separator } from '@radix-ui/react-separator';
-import { Menu, Trash2 } from 'lucide-react';
-import AppLogo from './AppLogo';
-import DrawerMenuItems from './DrawerMenuItems';
 
-interface SidebarProps {
-  handleResetAccountModal: () => void;
-  resetAccountLabel: string;
-}
+import AboutPortalo from '@core/components/AboutPortalo';
+import MenuItems from '@core/components/MenuItems';
+import ResetAccountButton from '@core/components/ResetAccountButton';
+import SocialList from '@core/components/SocialList';
+import UserSummary from '@core/components/UserSummary';
+import { Separator } from '@core/ui/Separator';
 
-const Sidebar: React.FC<SidebarProps> = ({
-  handleResetAccountModal,
-  resetAccountLabel,
-}) => {
+interface SidebarProps {}
+
+const Sidebar: React.FC<SidebarProps> = () => {
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Menu size={24} />
-        </Button>
-      </SheetTrigger>
+    <aside className="w-72 sticky left-0 top-0  h-screen flex flex-col border-r border-muted-foreground">
+      <div className="w-72 bg-muted border-r border-b border-muted-foreground">
+        <UserSummary />
+      </div>
 
-      <SheetContent side="left">
-        <SheetHeader>
-          <SheetTitle>
-            <AppLogo width={140} height={40} />
-          </SheetTitle>
-        </SheetHeader>
+      <div className="p-3">
+        <MenuItems />
 
         <Separator />
 
-        <SheetDescription className="flex flex-col min-h-[550px] justify-between">
-          <div>
-            <DrawerMenuItems />
+        <SocialList />
 
-            <div className="ml-4">
-              <ModeToggle />
-            </div>
-          </div>
+        <Separator />
 
-          <div className="flex flex-col justify-center">
-            <Button variant="destructive" onClick={handleResetAccountModal}>
-              <Trash2 className="mr-2" />
+        <AboutPortalo />
 
-              {resetAccountLabel}
-            </Button>
+        <div className="mt-2">
+          <ResetAccountButton />
+        </div>
 
-            <div className="mt-4 p-1">
-              <CreatedByNeoPower />
-            </div>
-          </div>
-        </SheetDescription>
-      </SheetContent>
-    </Sheet>
+        <Separator className="mt-2" />
+
+        <div className="ml-4 mt-4">
+          <ModeToggle />
+        </div>
+      </div>
+    </aside>
   );
 };
 

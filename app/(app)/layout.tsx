@@ -3,6 +3,7 @@
 import MobileBottomNavbar from '@components/layout/MobileBottomNavbar';
 import Navbar from '@components/layout/Navbar';
 import Root from '@components/layout/Root';
+import Sidebar from '@components/layout/Sidebar';
 import {
   MEDIAQUERY_DESKTOP,
   useMediaQuery,
@@ -17,9 +18,13 @@ export default function AppLayout({ children }: LayoutProps) {
 
   return (
     <Root>
-      <Navbar />
-
-      <main className="container max-w-md px-4 mt-4 pb-[70px]">{children}</main>
+      <div className="flex w-full h-screen">
+        {isDesktop && <Sidebar />}
+        <main className="flex  flex-col w-full h-screen overflow-auto">
+          <Navbar />
+          <div className="mt-8 container max-w-md ">{children}</div>
+        </main>
+      </div>
 
       {!isDesktop ? <MobileBottomNavbar /> : null}
     </Root>

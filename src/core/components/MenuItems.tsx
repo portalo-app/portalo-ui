@@ -7,10 +7,15 @@ import {
   NavigationMenuList,
 } from '@core/ui/NavigationMenu';
 import { TypographyP } from '@core/ui/Typography';
-import { Bell, HelpCircle, User } from 'lucide-react';
+import { Bell, HelpCircle, Home, User } from 'lucide-react';
 import Link from 'next/link';
 
 const menuItems = [
+  {
+    label: 'Home',
+    href: ROUTES.APP,
+    icon: <Home />,
+  },
   {
     label: 'Spaces',
     href: ROUTES.APP,
