@@ -1,15 +1,18 @@
 import Image from 'next/image';
 
-interface AppLogoProps {}
+interface AppLogoProps {
+  width: number;
+  height: number;
+}
 
-const AppLogo: React.FC<AppLogoProps> = () => {
+const AppLogo: React.FC<AppLogoProps> = ({ width, height }) => {
   return (
     <Image
       priority
       src="/portalo_dark.svg"
       alt="Portalo"
-      width={90}
-      height={30}
+      width={width}
+      height={height}
     />
   );
 };

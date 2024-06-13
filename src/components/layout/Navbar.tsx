@@ -47,7 +47,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         {currentRoute?.url === ROUTES.APP ? (
           !isDesktop ? (
             <Link href={ROUTES.APP}>
-              <AppLogo />
+              <AppLogo width={90} height={30} />
             </Link>
           ) : (
             <Sidebar

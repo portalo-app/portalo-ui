@@ -11,6 +11,8 @@ export const ROUTES = {
   APP_NOTIFICATION: '/notifications',
   APP_SETTINGS: '/settings',
   APP_ABOUT: '/about',
+  APP_TERMS_AND_CONDITIONS: '/terms-and-conditions',
+  APP_PRIVACY_POLICY: '/privacy-policy',
 } as const;
 
 export type ObjectValues<T> = T[keyof T];
@@ -83,6 +85,16 @@ export const ROUTES_LAYOUT: route[] = [
   {
     title: 'About',
     url: ROUTES.APP_ABOUT,
+    readOnly: true,
+  },
+  {
+    title: 'Privacy policy',
+    url: ROUTES.APP_PRIVACY_POLICY,
+    readOnly: true,
+  },
+  {
+    title: 'Terms and conditions',
+    url: ROUTES.APP_TERMS_AND_CONDITIONS,
     readOnly: true,
   },
 ];

@@ -41,7 +41,7 @@ const MobileBottomNavbar = () => {
       name: 'CTA',
       icon: Portalo,
       isCTA: true,
-      url: '#',
+      url: ROUTES.APP_CREATE_SPACE,
     },
     {
       id: 'notification',
@@ -62,9 +62,12 @@ const MobileBottomNavbar = () => {
       {navbarItems.map(({ id, name, icon: Icon, isCTA, url }) => (
         <div key={id} className="grid place-items-center">
           {isCTA ? (
-            <div className="relative bottom-2 grid h-14 w-14 place-items-center rounded-full bg-primary">
+            <Link
+              href={url}
+              className="relative bottom-2 grid h-14 w-14 place-items-center rounded-full bg-primary"
+            >
               <Plus size={40} />
-            </div>
+            </Link>
           ) : (
             <Link
               href={url}

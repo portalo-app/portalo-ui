@@ -34,7 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       <SheetContent side="left">
         <SheetHeader>
           <SheetTitle>
-            <AppLogo />
+            <AppLogo width={140} height={40} />
           </SheetTitle>
         </SheetHeader>
 
