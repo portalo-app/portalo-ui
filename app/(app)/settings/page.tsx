@@ -1,5 +1,4 @@
 import { ROUTES } from '@constants/routes.const';
-import CreatedByNeoPower from '@core/components/CreatedByNeoPower';
 import MenuItems from '@core/components/MenuItems';
 import SocialList from '@core/components/SocialList';
 import UserSummary from '@core/components/UserSummary';
@@ -35,10 +34,6 @@ const Settings = () => {
         <Info />
         <TypographyP className="!m-0">{aboutPortalo}</TypographyP>
       </Link>
-
-      <div className="relative top-24">
-        <CreatedByNeoPower />
-      </div>
     </div>
   );
 };
