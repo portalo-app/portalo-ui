@@ -1,3 +1,5 @@
+'use client';
+
 import { ROUTES } from '@constants/routes.const';
 import { TypographyP } from '@core/ui/Typography';
 import { cn } from '@utils/utils';
