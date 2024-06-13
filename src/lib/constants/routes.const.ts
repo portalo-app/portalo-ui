@@ -10,6 +10,7 @@ export const ROUTES = {
   APP_SELECT_ENTITY: '/select-entity',
   APP_NOTIFICATION: '/notifications',
   APP_SETTINGS: '/settings',
+  APP_ABOUT: '/about',
 } as const;
 
 export type ObjectValues<T> = T[keyof T];
@@ -77,6 +78,11 @@ export const ROUTES_LAYOUT: route[] = [
   {
     title: 'Settings',
     url: ROUTES.APP_SETTINGS,
+    readOnly: true,
+  },
+  {
+    title: 'About',
+    url: ROUTES.APP_ABOUT,
     readOnly: true,
   },
 ];

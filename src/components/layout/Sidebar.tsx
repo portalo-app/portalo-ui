@@ -1,4 +1,4 @@
-import { EXTERNAL_LINKS } from '@constants/externalLinks.const';
+import CreatedByNeoPower from '@core/components/CreatedByNeoPower';
 import { Button } from '@core/ui/Button';
 import { ModeToggle } from '@core/ui/ModeToggle';
 import {
@@ -11,8 +11,6 @@ import {
 } from '@core/ui/Sheet';
 import { Separator } from '@radix-ui/react-separator';
 import { Menu, Trash2 } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
 import AppLogo from './AppLogo';
 import DrawerMenuItems from './DrawerMenuItems';
 
@@ -25,8 +23,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   handleResetAccountModal,
   resetAccountLabel,
 }) => {
-  const createdByNeoPower = 'Created by NeoPower';
-
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -61,23 +57,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             </Button>
 
             <div className="mt-4 p-1">
-              <Link
-                href={EXTERNAL_LINKS.NEOPOWER}
-                color="inherit"
-                target="_blank"
-              >
-                <div className="flex justify-center flex-row items-center">
-                  <Image
-                    src="/neopower.svg"
-                    alt="neopower"
-                    width="24"
-                    height="24"
-                    style={{ marginRight: '8px' }}
-                  />
-
-                  {createdByNeoPower}
-                </div>
-              </Link>
+              <CreatedByNeoPower />
             </div>
           </div>
         </SheetDescription>
