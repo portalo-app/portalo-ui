@@ -33,8 +33,6 @@ const Navbar: React.FC<NavbarProps> = () => {
   const router = useRouter();
   const { theme } = useTheme();
 
-  console.log(theme);
-
   const resetAccountLabel = 'Reset Account';
   const resetAccountMessage =
     'Are you sure you want to clear the account data? This will remove every Space and all the data associated with them. This action cannot be undone.';
