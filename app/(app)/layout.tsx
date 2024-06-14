@@ -20,9 +20,11 @@ export default function AppLayout({ children }: LayoutProps) {
     <Root>
       <div className="flex w-full h-screen">
         {isDesktop && <Sidebar />}
-        <main className="flex  flex-col w-full h-screen overflow-auto">
+        <main className="flex flex-col w-full h-screen overflow-auto">
           <Navbar />
-          <div className="mt-8 container max-w-md ">{children}</div>
+          <div className="mt-6 self-center md:w-96 w-full px-6 md:px-0 pb-20">
+            {children}
+          </div>
         </main>
       </div>
 

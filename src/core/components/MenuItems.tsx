@@ -29,7 +29,7 @@ const menuItems = [
     icon: <HelpCircle />,
   },
   {
-    label: 'Notification',
+    label: 'Notifications',
     href: ROUTES.APP_NOTIFICATION,
     icon: <Bell />,
   },
@@ -41,20 +41,17 @@ const MenuItems = () => {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        <div className="w-vw p-2">
+        <div className="py-2">
           {menuItems.map((item, index) => (
             <NavigationMenuItem
               key={index}
               className={cn(
                 pathname === item.href &&
                   'border-l-4 border-primary text-primary ',
-                'hover:text-primary'
+                'hover:bg-primary/5 px-2 w-72'
               )}
             >
-              <Link
-                href={item.href}
-                className="flex p-2 gap-2 w-full items-center"
-              >
+              <Link href={item.href} className="flex p-2 gap-2 items-center">
                 {item.icon}
 
                 <TypographyP className="!m-0">{item.label}</TypographyP>

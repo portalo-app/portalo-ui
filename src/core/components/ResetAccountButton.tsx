@@ -2,6 +2,7 @@
 
 import { ROUTES } from '@constants/routes.const';
 import { Button } from '@core/ui/Button';
+import { TypographyP } from '@core/ui/Typography';
 import { spacesState } from '@states/spaces.atom';
 import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -33,12 +34,14 @@ const ResetAccountButton = () => {
     <div>
       <Button
         variant="ghost"
-        className="hover:text-destructive  hover:border-none hover:bg-transparent hover:brightness-200"
+        className="hover:text-destructive  hover:border-none hover:bg-destructive/5 hover:brightness-200 w-full rounded-none flex justify-start"
         onClick={handleResetAccountModal}
       >
         <Trash2 className="mr-2" />
 
-        {resetAccountLabel}
+        <TypographyP className="!m-0 text-base font-light">
+          {resetAccountLabel}
+        </TypographyP>
       </Button>
 
       <DeleteModal

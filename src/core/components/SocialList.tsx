@@ -45,10 +45,12 @@ const SocialList = () => {
         <Button
           key={label}
           onClick={action}
-          className="bg-default flex w-full items-center justify-start gap-2 text-foreground hover:bg-transparent focus:outline-none active:bg-transparent hover:text-primary"
+          className="bg-default flex w-full items-center justify-start gap-2 text-foreground hover:bg-primary/5 focus:outline-none active:bg-transparent  rounded-none"
         >
           <Icon />
-          <TypographyP className="!mt-0">{label}</TypographyP>
+          <TypographyP className="!mt-0 text-base font-light">
+            {label}
+          </TypographyP>
         </Button>
       ))}
     </div>

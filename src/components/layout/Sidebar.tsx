@@ -11,12 +11,12 @@ interface SidebarProps {}
 
 const Sidebar: React.FC<SidebarProps> = () => {
   return (
-    <aside className="w-72 sticky left-0 top-0  h-screen flex flex-col border-r border-muted-foreground">
-      <div className="w-72 bg-muted border-r border-b border-muted-foreground">
+    <aside className="w-72 sticky left-0 top-0  h-screen flex flex-col border-r border-muted">
+      <div className="w-72 bg-muted border-r border-muted-foreground/10 ">
         <UserSummary />
       </div>
 
-      <div className="p-3">
+      <div className="py-3 w-full">
         <MenuItems />
 
         <Separator />
@@ -27,9 +27,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
 
         <AboutPortalo />
 
-        <div className="mt-2">
-          <ResetAccountButton />
-        </div>
+        <ResetAccountButton />
 
         <Separator className="mt-2" />
 
