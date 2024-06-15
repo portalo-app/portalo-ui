@@ -56,7 +56,7 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
             address: z
               .string()
               .max(100, {
-                message: 'Address must be at most 512 characters long.',
+                message: 'Address must be at most 100 characters long.',
               })
               .optional(),
             name: z
