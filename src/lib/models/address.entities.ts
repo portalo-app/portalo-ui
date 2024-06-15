@@ -1,16 +1,7 @@
-import chainsList from 'cryptocurrency-icons/manifest.json';
 import { CryptoAddress, CryptoAddressesRegex, FIATAddress } from './address';
+import { banks } from './bankList';
+import chainsList, { chainsSymbols } from './chainList';
 import { Entity } from './space';
-
-export const chainsSymbols = [
-  'BTC',
-  'ETH',
-  'MATIC',
-  'DOT',
-  'ALGO',
-  'SOL',
-  'UNI',
-] as const;
 
 const filteredUniqueChains = Object.values(
   chainsList
@@ -44,59 +35,6 @@ export const chains: Entity[] = filteredUniqueChains.map((chain) => ({
     CryptoAddressesRegex[chain.symbol as keyof typeof CryptoAddressesRegex],
   defaultTags: [],
 }));
-
-const CBU_REGEX = /^[0-9]{22}$/;
-
-export const banks: Entity[] = [
-  {
-    color: '#007894',
-    icon: 'nacion',
-    value: 'NACION',
-    label: 'Nacion',
-    validationRegex: CBU_REGEX,
-    defaultTags: [],
-  },
-  {
-    color: '#e60000',
-    icon: 'santander',
-    value: 'SANTANDER',
-    label: 'Santander',
-    validationRegex: CBU_REGEX,
-    defaultTags: [],
-  },
-  {
-    color: '#f7931a',
-    icon: 'galicia',
-    value: 'GALICIA',
-    label: 'Galicia',
-    validationRegex: CBU_REGEX,
-    defaultTags: [],
-  },
-  {
-    color: '#1e3096',
-    icon: 'bbva',
-    value: 'BBVA',
-    label: 'BBVA',
-    validationRegex: CBU_REGEX,
-    defaultTags: [],
-  },
-  {
-    color: '#003057',
-    icon: 'macro',
-    value: 'MACRO',
-    label: 'Macro',
-    validationRegex: CBU_REGEX,
-    defaultTags: [],
-  },
-  {
-    color: '#db0011',
-    icon: 'hsbc',
-    value: 'HSBC',
-    label: 'Hsbc',
-    validationRegex: CBU_REGEX,
-    defaultTags: [],
-  },
-] as const;
 
 export const ENTITIES = [...chains, ...banks] as Entity[];
 
@@ -146,3 +84,4 @@ export const EntityValue = [
   'DEFAULT_CHAIN',
   'DEFAULT_BANK',
 ] as const;
+export { banks };

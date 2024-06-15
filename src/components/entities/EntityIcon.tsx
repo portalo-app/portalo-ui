@@ -1,11 +1,17 @@
 import { BankValue, ChainValue, banks } from '@models/address.entities';
 import Algo from 'cryptocurrency-icons/svg/color/algo.svg';
 import Sol from 'cryptocurrency-icons/svg/color/sol.svg';
-import Uni from 'cryptocurrency-icons/svg/color/uni.svg';
+import Ada from 'cryptocurrency-icons/svg/icon/ada.svg';
+import Atom from 'cryptocurrency-icons/svg/icon/atom.svg';
+import Avax from 'cryptocurrency-icons/svg/icon/avax.svg';
+import Bnb from 'cryptocurrency-icons/svg/icon/bnb.svg';
 import Btc from 'cryptocurrency-icons/svg/icon/btc.svg';
 import Dot from 'cryptocurrency-icons/svg/icon/dot.svg';
 import Eth from 'cryptocurrency-icons/svg/icon/eth.svg';
+import Gnosis from 'cryptocurrency-icons/svg/icon/gno.svg';
 import Matic from 'cryptocurrency-icons/svg/icon/matic.svg';
+import Trx from 'cryptocurrency-icons/svg/icon/trx.svg';
+
 import { Landmark, Wallet } from 'lucide-react';
 import Image from 'next/legacy/image';
 import { SocialIcon } from 'react-custom-social-icons';
@@ -64,7 +70,12 @@ const chainIcons: {
   DOT: <Dot />,
   ALGO: <Algo />,
   SOL: <Sol />,
-  UNI: <Uni />,
+  TRX: <Trx />,
+  BNB: <Bnb />,
+  AVAX: <Avax />,
+  GNO: <Gnosis />,
+  ADA: <Ada />,
+  ATOM: <Atom />,
 };
 
 const bankIcons: {
