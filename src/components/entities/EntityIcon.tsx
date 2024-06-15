@@ -1,3 +1,4 @@
+import { socialNetworks } from '@constants/socialNetworksList';
 import { BankValue, ChainValue, banks } from '@models/address.entities';
 import Algo from 'cryptocurrency-icons/svg/color/algo.svg';
 import Sol from 'cryptocurrency-icons/svg/color/sol.svg';
@@ -22,44 +23,6 @@ interface EntityIconProps {
   width?: number;
   height?: number;
 }
-
-const socialNetworks = [
-  'zoom',
-  'discord',
-  'github',
-  'facebook',
-  'twitter',
-  'instagram',
-  'whatsapp',
-  'vk',
-  'linkedin',
-  'vimeo',
-  'youtube',
-  'tumblr',
-  'skype',
-  'pinterest',
-  'behance',
-  'dribbble',
-  'google-analytics',
-  'facebook-pixel',
-  'reddit',
-  'messenger',
-  'snapchat',
-  'apple',
-  'telegram',
-  'google',
-  'tiktok',
-  'spotify',
-  'trustpilot',
-  'twitch',
-  'google-meet',
-  'google-maps',
-  'gmail',
-  'soundcloud',
-  'patreon',
-  'tinder',
-  'google-calendar',
-] as const;
 
 const chainIcons: {
   [key in ChainValue]: React.ReactNode;

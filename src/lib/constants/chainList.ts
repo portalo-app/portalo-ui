@@ -13,7 +13,7 @@ export const chainsSymbols = [
   'ATOM',
 ] as const;
 
-const cryptocurrencies = [
+const chains = [
   {
     symbol: 'BTC',
     name: 'Bitcoin',
@@ -76,4 +76,4 @@ const cryptocurrencies = [
   },
 ] as const;
 
-export default cryptocurrencies;
+export default chains;

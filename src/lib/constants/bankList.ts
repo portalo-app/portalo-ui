@@ -1,4 +1,4 @@
-import { Entity } from './space';
+import { Entity } from '../models/space';
 
 const CBU_REGEX = /^[0-9]{22}$/;
 
@@ -48,6 +48,38 @@ export const banks: Entity[] = [
     icon: 'hsbc',
     value: 'HSBC',
     label: 'Hsbc',
+    validationRegex: CBU_REGEX,
+    defaultTags: [],
+  },
+  {
+    color: '#4caf50',
+    icon: 'itau',
+    value: 'ITAU',
+    label: 'Itau',
+    validationRegex: CBU_REGEX,
+    defaultTags: [],
+  },
+  {
+    color: '#673ab7',
+    icon: 'ciudad',
+    value: 'CIUDAD',
+    label: 'Ciudad',
+    validationRegex: CBU_REGEX,
+    defaultTags: [],
+  },
+  {
+    color: '#8b0000',
+    icon: 'brubank',
+    value: 'BRUBANK',
+    label: 'Brubank',
+    validationRegex: CBU_REGEX,
+    defaultTags: [],
+  },
+  {
+    color: '#2ecc71',
+    icon: 'galicia',
+    value: 'GALICIA',
+    label: 'Galicia',
     validationRegex: CBU_REGEX,
     defaultTags: [],
   },

@@ -1,4 +1,4 @@
-import { chainsSymbols } from './chainList';
+import { chainsSymbols } from '../constants/chainList';
 import { Entity } from './space';
 
 export interface Address {
