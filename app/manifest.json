@@ -4,6 +4,7 @@
   "display": "browser",
   "scope": "/",
   "start_url": "/",
+  "orientation": "any",
   "name": "Portalo",
   "short_name": "Portalo",
   "description": "Take your private data everywhere'",
@@ -27,6 +28,20 @@
       "src": "assets/logo/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Create Space",
+      "url": "/spaces/new",
+      "description": "Create a space",
+      "icons": [
+        {
+          "src": "assets/shortcut/logo_96x96.png",
+          "type": "image/png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ],
   "id": "portalo-id",
