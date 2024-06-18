@@ -19,6 +19,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import useVaultElement from '@hooks/elements/useVaultElement';
 import { VaultElement, VaultType } from '@models/space';
+import { createMaxErrorMessage } from '@utils/utils';
 import React from 'react';
 import { SocialIcon } from 'react-custom-social-icons';
 import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
@@ -55,23 +56,19 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
         : {
             address: z
               .string()
-              .max(100, {
-                message: 'Address must be at most 100 characters long.',
-              })
+              .max(100, { message: createMaxErrorMessage('Address', 100) })
               .optional(),
             name: z
               .string()
-              .max(30, { message: 'Name must be at most 30 characters long.' })
+              .max(30, { message: createMaxErrorMessage('Name', 30) })
               .optional(),
             alias: z
               .string()
-              .max(30, { message: 'Alias must be at most 30 characters long.' })
+              .max(30, { message: createMaxErrorMessage('Alias', 30) })
               .optional(),
             notes: z
               .string()
-              .max(200, {
-                message: 'Notes must be at most 200 characters long.',
-              })
+              .max(200, { message: createMaxErrorMessage('Notes', 200) })
               .optional(),
           }),
     })
