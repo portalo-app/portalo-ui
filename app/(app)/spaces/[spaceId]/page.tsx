@@ -1,12 +1,13 @@
 'use client';
 
+import DeleteSpaceModal from '@components/spaces/DeleteSpaceModal';
 import VaultItem from '@components/vaults/VaultItem';
 import { ROUTES } from '@constants/routes.const';
-import CreateButton from '@core/components/CreateButton';
+import { Button } from '@core/ui/Button';
 import { TypographyH3 } from '@core/ui/Typography';
 import { Space } from '@models/space';
 import { spacesState } from '@states/spaces.atom';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Trash } from 'lucide-react';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -20,6 +21,7 @@ interface SpacePageProps {
 const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
   const [space, setSpace] = useState<Space | null>(null);
   const spacesData = useRecoilValue(spacesState);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const { spaceId } = params;
   const router = useRouter();
 
@@ -36,14 +38,26 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
     setSpace(selectedSpace);
   }, [spacesData, router, spaceId]);
 
+  const deleteSpace = () => {
+    setOpenModal(true);
+  };
+
+  const onCloseModal = () => {
+    setOpenModal(false);
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center">
         <TypographyH3>{space?.name}</TypographyH3>
-
-        <CreateButton
-          href={`${ROUTES.APP_SPACE}/${spaceId}/${ROUTES.APP_CREATE_VAULT}`}
-        />
+        <Button
+          className="gap-1 bg-transparent text-destructive brightness-150 hover:bg-transparent border border-destructive hover:brightness-200"
+          variant="destructive"
+          onClick={deleteSpace}
+        >
+          <Trash size={16} />
+          Delete
+        </Button>
       </div>
 
       <div className="divide-y-2 *:block">
@@ -62,6 +76,13 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
           </Link>
         ))}
       </div>
+      {space && (
+        <DeleteSpaceModal
+          open={openModal}
+          space={space}
+          onClose={onCloseModal}
+        />
+      )}
     </div>
   );
 };
