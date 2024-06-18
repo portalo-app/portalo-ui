@@ -15,12 +15,16 @@ export function ModeToggle() {
   const { setTheme } = useTheme();
 
   const handleOnChecked = () => {
-    setDarkMode(!darkMode);
+    setDarkMode((prevDarkMode) => {
+      const newDarkMode = !prevDarkMode;
+      setTheme(newDarkMode ? 'dark' : 'light');
+      localStorage.setItem('darkMode', newDarkMode.toString());
+      return newDarkMode;
+    });
   };
 
   useEffect(() => {
-    darkMode ? setTheme('dark') : setTheme('light');
-    localStorage.setItem('darkMode', darkMode.toString());
+    setTheme(darkMode ? 'dark' : 'light');
   }, [darkMode, setTheme]);
 
   return (
