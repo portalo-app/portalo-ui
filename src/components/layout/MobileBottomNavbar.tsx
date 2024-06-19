@@ -75,11 +75,15 @@ const MobileBottomNavbar = () => {
             >
               <Icon
                 size={20}
-                className={`${pathname === url && 'text-primary brightness-150'}`}
+                className={`${
+                  pathname === url && 'text-primary brightness-150'
+                }`}
               />
 
               <TypographyXS
-                className={`font-medium ${pathname === url && 'text-primary brightness-150'}`}
+                className={`font-medium ${
+                  pathname === url && 'text-primary brightness-150'
+                }`}
               >
                 {name}
               </TypographyXS>

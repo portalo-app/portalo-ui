@@ -1,3 +1,4 @@
+import { usePortaloTheme } from '@hooks/general/usePortaloTheme';
 import Image from 'next/image';
 
 interface AppLogoProps {
@@ -6,14 +7,15 @@ interface AppLogoProps {
 }
 
 const AppLogo: React.FC<AppLogoProps> = ({ width, height }) => {
+  const { theme } = usePortaloTheme();
+
+  const logoSrc =
+    theme === 'dark'
+      ? '/assets/images/portalo_dark.svg'
+      : '/assets/images/portalo_light.svg';
+
   return (
-    <Image
-      priority
-      src="/portalo_dark.svg"
-      alt="Portalo"
-      width={width}
-      height={height}
-    />
+    <Image priority src={logoSrc} alt="Portalo" width={width} height={height} />
   );
 };
 

@@ -1,3 +1,5 @@
+'use client';
+
 import AppLogo from '@components/layout/AppLogo';
 import { ROUTES } from '@constants/routes.const';
 import CreatedByNeoPower from '@core/components/CreatedByNeoPower';

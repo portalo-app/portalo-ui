@@ -3,7 +3,12 @@ import { type ThemeProviderProps } from 'next-themes/dist/types';
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return (
-    <NextThemesProvider attribute="class" {...props}>
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="system"
+      storageKey="portalo.theme"
+      {...props}
+    >
       {children}
     </NextThemesProvider>
   );
