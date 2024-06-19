@@ -19,6 +19,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import useVaultElement from '@hooks/elements/useVaultElement';
 import { VaultElement, VaultType } from '@models/space';
+import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
 import React from 'react';
 import { SocialIcon } from 'react-custom-social-icons';
 import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
@@ -48,21 +49,35 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
     .object({
       ...{
         variant: z.string(),
-        entity: z.string(),
+        entity: z.string().min(1, `Field is required`),
       },
       ...(vaultType.id === 'social'
         ? { username: z.string() }
         : {
-            address: z.string(),
-            name: z.string().optional(),
-            alias: z.string().optional(),
-            notes: z.string().optional(),
+            address: z
+              .string()
+              .min(10, { message: createMinErrorMessage('Address', 10) })
+              .max(100, { message: createMaxErrorMessage('Address', 100) }),
+            name: z
+              .string()
+              .min(4, { message: createMinErrorMessage('Name', 4) })
+              .max(30, { message: createMaxErrorMessage('Name', 30) }),
+
+            alias: z
+              .string()
+              .max(30, { message: createMaxErrorMessage('Alias', 30) })
+              .optional(),
+            notes: z
+              .string()
+              .max(200, { message: createMaxErrorMessage('Notes', 200) })
+              .optional(),
           }),
     })
     .required();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: 'onSubmit',
     defaultValues: initialData
       ? { ...initialData, entity: initialData.entity.value }
       : {
