@@ -76,7 +76,6 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
       <div>
         <div className="flex justify-between items-center">
           <TypographyH3>{shortcutsTitle}</TypographyH3>
-
           <CreateButton href={ROUTES.APP_CREATE_SPACE} />
         </div>
 
