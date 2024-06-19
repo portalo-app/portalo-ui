@@ -1,7 +1,6 @@
 'use client';
 
 import StoreWidget from '@components/dashboard/StoreWidget';
-import PageLayout from '@components/layout/PageLayout';
 import SpaceItem from '@components/spaces/SpaceItem';
 import VaultItem from '@components/vaults/VaultItem';
 import { ROUTES } from '@constants/routes.const';
@@ -39,17 +38,16 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
   const hasSpaces = spaces?.length > 0;
 
   return (
-    <PageLayout>
-      <div className="space-y-4">
-        <StoreWidget />
+    <div className="space-y-4">
+      <StoreWidget />
 
-        <div>
-          <div className="flex justify-between items-center">
-            <TypographyH3>{spacesTitle}</TypographyH3>
+      <div>
+        <div className="flex justify-between items-center">
+          <TypographyH3>{spacesTitle}</TypographyH3>
 
-            <CreateButton href={ROUTES.APP_CREATE_SPACE} />
+          <CreateButton href={ROUTES.APP_CREATE_SPACE} />
 
-            {/* <ResponsiveDialog
+          {/* <ResponsiveDialog
               title="Create Space"
               description="Create a new space to organize your vaults"
               trigger={<div>Create</div>}
@@ -60,41 +58,40 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
                 onComplete={() => router.push(ROUTES.APP)}
               />
             </ResponsiveDialog> */}
-          </div>
-
-          {hasSpaces ? (
-            <div className="divide-y-2 *:block">
-              {spaces.map((space, index) => (
-                <SpaceItem space={space} key={index} />
-              ))}
-            </div>
-          ) : (
-            <div className="flex content-center justify-center mt-4">
-              <State type="empty" label={emptySpacesMessage} />
-            </div>
-          )}
         </div>
 
-        <div>
-          <div className="flex justify-between items-center">
-            <TypographyH3>{shortcutsTitle}</TypographyH3>
-            <CreateButton href={ROUTES.APP_CREATE_SPACE} />{' '}
+        {hasSpaces ? (
+          <div className="divide-y-2 *:block">
+            {spaces.map((space, index) => (
+              <SpaceItem space={space} key={index} />
+            ))}
           </div>
-
-          {hasSpaces ? (
-            <div className="divide-y-2 *:block">
-              {shortcuts.map(({ space, vault }, index) => (
-                <VaultItem key={index} space={space} vault={vault} />
-              ))}
-            </div>
-          ) : (
-            <div className="flex content-center justify-center mt-4">
-              <State type="empty" label={emptyShortcutsMessage} />
-            </div>
-          )}
-        </div>
+        ) : (
+          <div className="flex content-center justify-center mt-4">
+            <State type="empty" label={emptySpacesMessage} />
+          </div>
+        )}
       </div>
-    </PageLayout>
+
+      <div>
+        <div className="flex justify-between items-center">
+          <TypographyH3>{shortcutsTitle}</TypographyH3>
+          <CreateButton href={ROUTES.APP_CREATE_SPACE} />
+        </div>
+
+        {hasSpaces ? (
+          <div className="divide-y-2 *:block">
+            {shortcuts.map(({ space, vault }, index) => (
+              <VaultItem key={index} space={space} vault={vault} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex content-center justify-center mt-4">
+            <State type="empty" label={emptyShortcutsMessage} />
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
