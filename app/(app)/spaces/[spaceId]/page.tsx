@@ -51,8 +51,9 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
       <div className="flex justify-between items-center">
         <TypographyH3>{space?.name}</TypographyH3>
         <Button
-          className="gap-1 bg-transparent text-destructive brightness-150 hover:bg-transparent border border-destructive hover:brightness-200"
-          variant="destructive"
+          size="sm"
+          className="gap-1 bg-transparent text-destructive brightness-150 hover:bg-transparent hover:brightness-200 hover:text-destructive"
+          variant="ghost"
           onClick={deleteSpace}
         >
           <Trash size={16} />
