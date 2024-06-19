@@ -16,7 +16,6 @@ import {
 } from '@core/ui/Sheet';
 import { spacesState } from '@states/spaces.atom';
 import { Menu, Trash2 } from 'lucide-react';
-import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -31,7 +30,6 @@ const Navbar: React.FC<NavbarProps> = () => {
   const resetSpaces = useResetRecoilState(spacesState);
   const [resetAccountModalOpen, setResetAccountModalOpen] = useState(false);
   const router = useRouter();
-  const { theme } = useTheme();
 
   const resetAccountLabel = 'Reset Account';
   const resetAccountMessage =
@@ -54,7 +52,7 @@ const Navbar: React.FC<NavbarProps> = () => {
     <>
       <div className="sticky top-0 z-50 flex w-full items-center justify-between bg-muted p-2 pl-4">
         <Link href={ROUTES.APP}>
-          <AppLogo theme={theme} />
+          <AppLogo />
         </Link>
 
         <Sheet>
@@ -67,7 +65,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           <SheetContent>
             <SheetHeader>
               <SheetTitle>
-                <AppLogo theme={theme} />
+                <AppLogo />
               </SheetTitle>
             </SheetHeader>
 
