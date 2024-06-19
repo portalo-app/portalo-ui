@@ -22,7 +22,7 @@ export default function AppLayout({ children }: LayoutProps) {
         {isDesktop && <Sidebar />}
         <main className="flex flex-col w-full h-screen overflow-auto">
           <Navbar />
-          <div className="mt-6 self-center md:w-96 w-full px-6 md:px-0 pb-20">
+          <div className="mt-6 self-center md:w-112 lg:w-152 w-full px-6 md:px-0 pb-20">
             {children}
           </div>
         </main>
