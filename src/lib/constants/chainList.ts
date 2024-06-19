@@ -51,7 +51,7 @@ const chains = [
   },
   {
     symbol: 'BNB',
-    name: 'Binance chain',
+    name: 'BNB Smart Chain',
     color: '#f3ba2f',
   },
   {
