@@ -36,7 +36,10 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={onClose}>{cancelLabel}</AlertDialogCancel>
-          <AlertDialogAction onClick={onDelete}>
+          <AlertDialogAction
+            className="bg-destructive hover:bg-destructive hover:brightness-125"
+            onClick={onDelete}
+          >
             {deleteLabel}
           </AlertDialogAction>
         </AlertDialogFooter>
