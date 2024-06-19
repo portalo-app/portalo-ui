@@ -2,7 +2,7 @@
 
 import { ROUTES } from '@constants/routes.const';
 import { TypographyXS } from '@core/ui/Typography';
-import { HelpCircle, Home, Menu, User } from 'lucide-react';
+import { Bell, Home, Menu, Plus, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -34,26 +34,26 @@ const MobileBottomNavbar = () => {
       id: 'spaces',
       name: 'Spaces',
       icon: User,
-      url: ROUTES.APP,
+      url: ROUTES.APP_CREATE_SPACE,
     },
     {
       id: 'cta',
       name: 'CTA',
       icon: Portalo,
       isCTA: true,
-      url: '#',
+      url: ROUTES.APP_CREATE_SPACE,
     },
     {
-      id: 'help',
-      name: 'Help',
-      icon: HelpCircle,
-      url: ROUTES.APP_HELP,
+      id: 'notification',
+      name: 'Notification',
+      icon: Bell,
+      url: ROUTES.APP_NOTIFICATION,
     },
     {
       id: 'settings',
-      name: 'Más',
+      name: 'More',
       icon: Menu,
-      url: ROUTES.APP,
+      url: ROUTES.APP_SETTINGS,
     },
   ];
 
@@ -62,9 +62,12 @@ const MobileBottomNavbar = () => {
       {navbarItems.map(({ id, name, icon: Icon, isCTA, url }) => (
         <div key={id} className="grid place-items-center">
           {isCTA ? (
-            <div className="relative bottom-2 grid h-14 w-14 place-items-center rounded-full bg-primary">
-              <Portalo />
-            </div>
+            <Link
+              href={url}
+              className="relative bottom-2 grid h-14 w-14 place-items-center rounded-full bg-primary"
+            >
+              <Plus size={40} />
+            </Link>
           ) : (
             <Link
               href={url}
@@ -73,13 +76,13 @@ const MobileBottomNavbar = () => {
               <Icon
                 size={20}
                 className={`${
-                  pathname === url && 'text-primary dark:text-secondary'
+                  pathname === url && 'text-primary brightness-150'
                 }`}
               />
 
               <TypographyXS
                 className={`font-medium ${
-                  pathname === url && 'text-primary dark:text-secondary'
+                  pathname === url && 'text-primary brightness-150'
                 }`}
               >
                 {name}
