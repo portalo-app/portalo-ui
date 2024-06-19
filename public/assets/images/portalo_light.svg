@@ -70,7 +70,7 @@
     <g clip-path="url(#c0771aca46)">
         <g clip-path="url(#6850cac9ab)">
             <g clip-path="url(#b1875f56df)">
-                <path fill="#ffffff"
+                <path fill="#000000"
                     d="M 71.078125 37.742188 L 98.238281 64.636719 L 65.140625 98.066406 L 37.976562 71.171875 Z M 71.078125 37.742188 "
                     fill-opacity="1" fill-rule="nonzero" />
             </g>
@@ -82,7 +82,7 @@
                 <g clip-path="url(#59d7418185)">
                     <g clip-path="url(#b2e92d5ab9)">
                         <g clip-path="url(#c2da2758ee)">
-                            <path fill="#ffffff"
+                            <path fill="#000000"
                                 d="M 34.078125 0.769531 L 61.238281 27.664062 L 28.140625 61.097656 L 0.976562 34.199219 Z M 34.078125 0.769531 "
                                 fill-opacity="1" fill-rule="nonzero" />
                         </g>
@@ -97,7 +97,7 @@
                 <g clip-path="url(#530fa2cc80)">
                     <g clip-path="url(#bc591fdad8)">
                         <g clip-path="url(#b457c1d9fe)">
-                            <path fill="#ffffff"
+                            <path fill="#000000"
                                 d="M 34.078125 0.257812 L 61.238281 27.152344 L 28.140625 60.582031 L 0.976562 33.6875 Z M 34.078125 0.257812 "
                                 fill-opacity="1" fill-rule="nonzero" />
                         </g>
@@ -106,7 +106,7 @@
             </g>
         </g>
     </g>
-    <g fill="#ffffff" fill-opacity="1">
+    <g fill="#000000" fill-opacity="1">
         <g transform="translate(110.20577, 106.107376)">
             <g>
                 <path
@@ -114,7 +114,7 @@
             </g>
         </g>
     </g>
-    <g fill="#ffffff" fill-opacity="1">
+    <g fill="#000000" fill-opacity="1">
         <g transform="translate(149.026074, 106.107376)">
             <g>
                 <path
@@ -122,7 +122,7 @@
             </g>
         </g>
     </g>
-    <g fill="#ffffff" fill-opacity="1">
+    <g fill="#000000" fill-opacity="1">
         <g transform="translate(187.554932, 106.107376)">
             <g>
                 <path
@@ -130,7 +130,7 @@
             </g>
         </g>
     </g>
-    <g fill="#ffffff" fill-opacity="1">
+    <g fill="#000000" fill-opacity="1">
         <g transform="translate(216.582724, 106.107376)">
             <g>
                 <path
@@ -138,7 +138,7 @@
             </g>
         </g>
     </g>
-    <g fill="#ffffff" fill-opacity="1">
+    <g fill="#000000" fill-opacity="1">
         <g transform="translate(239.606773, 106.107376)">
             <g>
                 <path
@@ -146,14 +146,14 @@
             </g>
         </g>
     </g>
-    <g fill="#ffffff" fill-opacity="1">
+    <g fill="#000000" fill-opacity="1">
         <g transform="translate(279.417985, 106.107376)">
             <g>
                 <path d="M 3.5 0 L 3.5 -50.140625 L 13.8125 -50.140625 L 13.8125 0 Z M 3.5 0 " />
             </g>
         </g>
     </g>
-    <g fill="#ffffff" fill-opacity="1">
+    <g fill="#000000" fill-opacity="1">
         <g transform="translate(296.729737, 106.107376)">
             <g>
                 <path
