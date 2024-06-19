@@ -24,6 +24,7 @@ module.exports = {
     extend: {
       width: {
         112: '28rem',
+        152: '38rem',
       },
       colors: {
         border: 'hsl(var(--border))',
