@@ -1,31 +1,20 @@
 'use client';
 
+import { usePortaloTheme } from '@hooks/general/usePortaloTheme';
 import { Moon, Sun } from 'lucide-react';
-import { useTheme } from 'next-themes';
 import { Switch } from './Switch';
 
 export function ModeToggle() {
-  const { theme, systemTheme, setTheme } = useTheme();
-
-  const getCurrentTheme = () => {
-    if (['light', 'dark'].includes(theme!)) return theme;
-
-    return systemTheme;
-  };
+  const { theme, setTheme } = usePortaloTheme();
 
   const handleOnChecked = () => {
-    const currentTheme = getCurrentTheme();
-
-    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
   return (
     <div className="flex space-x-2">
-      <Switch
-        checked={getCurrentTheme() === 'dark'}
-        onCheckedChange={handleOnChecked}
-      />
-      {getCurrentTheme() === 'dark' ? <Moon /> : <Sun />}
+      <Switch checked={theme === 'dark'} onCheckedChange={handleOnChecked} />
+      {theme === 'dark' ? <Moon /> : <Sun />}
     </div>
   );
 }
