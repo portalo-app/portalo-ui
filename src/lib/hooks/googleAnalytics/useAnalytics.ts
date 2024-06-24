@@ -34,26 +34,34 @@ const trackMobileBottomNavbarMenuItem = (item: string) => {
   trackGAEvent('MobileBottomNavbarMenuItem', 'ClickMenuItem', item);
 };
 
-const trackSettingsClickNavigationOrFeature = (item: string) => {
-  trackGAEvent('Settings', 'ClickNavigationOrFeature', item);
+const trackClickNavigationOrFeature = (item: string) => {
+  trackGAEvent('MenuItems', 'ClickNavigationOrFeature', item);
 };
 
-// Spaces events
-const trackCreateSpace = (item: string) => {
-  trackGAEvent('Space', 'Create', item);
+// Profile events
+const trackCreateProfile = (id: string) => {
+  trackGAEvent('Profile', 'Create', id);
 };
 
-const trackDeleteSpace = (item: string) => {
-  trackGAEvent('Space', 'Delete', item);
+const trackDeleteProfile = (id: string) => {
+  trackGAEvent('Profile', 'Delete', id);
 };
 
-// Elements events
-const trackCreateElement = (item: string) => {
-  trackGAEvent('Element', 'Create', item);
+const trackEditProfile = (id: string) => {
+  trackGAEvent('Profile', 'Edit', id);
 };
 
-const trackDeleteElement = (item: string) => {
-  trackGAEvent('Element', 'Delete', item);
+// File events
+const trackCreateFile = (item: string) => {
+  trackGAEvent('File', 'Create', item);
+};
+
+const trackDeleteFile = (item: string) => {
+  trackGAEvent('File', 'Delete', item);
+};
+
+const trackEditFile = (item: string) => {
+  trackGAEvent('File', 'Edit', item);
 };
 
 /**
@@ -72,15 +80,17 @@ const useAnalytics = () => {
     trackMobileBottomNavbarMenuItem,
 
     // Settings events
-    trackSettingsClickNavigationOrFeature,
+    trackClickNavigationOrFeature,
 
-    // Spaces events
-    trackCreateSpace,
-    trackDeleteSpace,
+    // Profile events
+    trackCreateProfile,
+    trackDeleteProfile,
+    trackEditProfile,
 
-    // Elements events
-    trackCreateElement,
-    trackDeleteElement,
+    // File events
+    trackCreateFile,
+    trackDeleteFile,
+    trackEditFile,
   };
 };
 

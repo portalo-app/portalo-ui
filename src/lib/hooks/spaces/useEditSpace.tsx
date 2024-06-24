@@ -1,3 +1,4 @@
+import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
 import { spacesState } from '@states/spaces.atom';
 import { useRecoilState } from 'recoil';
 
@@ -7,6 +8,7 @@ type UseEditSpace = () => EditSpace;
 
 const useEditSpace: UseEditSpace = () => {
   const [spaces, setSpaces] = useRecoilState(spacesState);
+  const { trackEditProfile } = useAnalytics();
 
   const editSpace: EditSpace = (id: string, name: string) => {
     const newSpaces = spaces.map((space) => {
@@ -19,6 +21,7 @@ const useEditSpace: UseEditSpace = () => {
       return space;
     });
 
+    trackEditProfile(id);
     setSpaces(newSpaces);
   };
 
