@@ -38,7 +38,7 @@ export const ROUTES_LAYOUT: route[] = [
     readOnly: true,
   },
   {
-    title: 'Profiles',
+    title: 'Profile',
     url: ROUTES.APP_PROFILE,
     readOnly: true,
   },
@@ -48,12 +48,12 @@ export const ROUTES_LAYOUT: route[] = [
     readOnly: true,
   },
   {
-    title: 'Folders',
+    title: 'Folder',
     url: ROUTES.APP_FOLDER,
     readOnly: true,
   },
   {
-    title: 'Create Folders',
+    title: 'Create Folder',
     url: ROUTES.APP_CREATE_FOLDER,
     readOnly: true,
   },
