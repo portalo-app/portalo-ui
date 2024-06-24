@@ -1,4 +1,4 @@
-import { Entity } from './space';
+import { Entity } from './profile';
 
 export const MESSAGING_ENTITIES: Entity[] = [
   {

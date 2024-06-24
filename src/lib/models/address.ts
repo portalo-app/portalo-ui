@@ -1,5 +1,5 @@
 import { chainsSymbols } from './address.entities';
-import { Entity } from './space';
+import { Entity } from './profile';
 
 export interface Address {
   id: string;

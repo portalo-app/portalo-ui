@@ -1,15 +1,15 @@
 import { Avatar } from '@core/ui/Avatar';
 import { TypographyH4, TypographyMuted } from '@core/ui/Typography';
-import { Folder, Space } from '@models/space';
+import { Folder, Profile } from '@models/profile';
 import { Wallet } from 'lucide-react';
 
 interface FolderTitleProps {
-  space: Space;
+  profile: Profile;
   folder: Folder<any>;
 }
 
-const FolderTitle: React.FC<FolderTitleProps> = ({ space, folder }) => {
-  if (!space || !folder) return null;
+const FolderTitle: React.FC<FolderTitleProps> = ({ profile, folder }) => {
+  if (!profile || !folder) return null;
 
   return (
     <div className="flex items-center gap-4">
@@ -18,7 +18,7 @@ const FolderTitle: React.FC<FolderTitleProps> = ({ space, folder }) => {
       </Avatar>
 
       <div>
-        <TypographyMuted>{space.name}</TypographyMuted>
+        <TypographyMuted>{profile.name}</TypographyMuted>
 
         <TypographyH4>{folder.type.label}</TypographyH4>
       </div>

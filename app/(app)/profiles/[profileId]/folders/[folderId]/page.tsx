@@ -5,47 +5,49 @@ import FolderTitle from '@components/folders/FolderTitle';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
-import { Folder, FolderFile, Space } from '@models/space';
-import { spacesState } from '@states/spaces.atom';
+import { Folder, FolderFile, Profile } from '@models/profile';
+import { profilesState } from '@states/profiles.atom';
 import { NextPage } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 interface FolderDetailsProps {
-  params: { folderId: string; spaceId: string };
+  params: { folderId: string; profileId: string };
 }
 
 const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
   const router = useRouter();
-  const [space, setSpace] = useState<Space | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [folder, setFolder] = useState<Folder<FolderFile> | null>(null);
   const pathName = usePathname();
 
-  const spacesData = useRecoilValue(spacesState);
-  const { folderId, spaceId } = params;
+  const profilesData = useRecoilValue(profilesState);
+  const { folderId, profileId } = params;
 
   useEffect(() => {
-    if (!spaceId) return;
+    if (!profileId) return;
 
-    const selectedSpace = spacesData.find((space) => space.id === spaceId);
-    const selectedFolder = selectedSpace?.folders.find(
+    const selectedProfile = profilesData.find(
+      (profile) => profile.id === profileId
+    );
+    const selectedFolder = selectedProfile?.folders.find(
       (folder) => folder.id === folderId
     );
 
-    if (!selectedSpace || !selectedFolder) {
+    if (!selectedProfile || !selectedFolder) {
       router.push(ROUTES.APP);
       return;
     }
 
-    setSpace(selectedSpace);
+    setProfile(selectedProfile);
     setFolder(selectedFolder);
-  }, [spacesData, spaceId, folderId, router]);
+  }, []);
 
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <FolderTitle space={space!} folder={folder!} />
+        <FolderTitle profile={profile!} folder={folder!} />
 
         <CreateButton href={`${pathName}/new`} />
       </div>
@@ -58,7 +60,7 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
             <FileItem
               key={index}
               file={file}
-              spaceId={spaceId}
+              profileId={profileId}
               folderId={folderId}
             />
           ))

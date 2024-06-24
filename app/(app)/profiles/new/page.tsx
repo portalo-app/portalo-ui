@@ -1,18 +1,18 @@
 'use client';
 
-import SpaceForm from '@components/spaces/SpaceForm';
+import ProfileForm from '@components/profiles/ProfileForm';
 import { ROUTES } from '@constants/routes.const';
 import { NextPage } from 'next';
 import { useRouter } from 'next/navigation';
 
-interface CreateSpaceProps {}
+interface CreateProfileProps {}
 
-const CreateSpace: NextPage<CreateSpaceProps> = () => {
+const CreateProfile: NextPage<CreateProfileProps> = () => {
   const router = useRouter();
 
   return (
-    <SpaceForm action="CREATE" onComplete={() => router.push(ROUTES.APP)} />
+    <ProfileForm action="CREATE" onComplete={() => router.push(ROUTES.APP)} />
   );
 };
 
-export default CreateSpace;
+export default CreateProfile;

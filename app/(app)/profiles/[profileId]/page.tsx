@@ -1,12 +1,12 @@
 'use client';
 
 import FolderItem from '@components/folders/FolderItem';
-import DeleteSpaceModal from '@components/spaces/DeleteSpaceModal';
+import DeleteProfileModal from '@components/profiles/DeleteProfileModal';
 import { ROUTES } from '@constants/routes.const';
 import { Button } from '@core/ui/Button';
 import { TypographyH3 } from '@core/ui/Typography';
-import { Space } from '@models/space';
-import { spacesState } from '@states/spaces.atom';
+import { Profile } from '@models/profile';
+import { profilesState } from '@states/profiles.atom';
 import { ChevronRight, Trash } from 'lucide-react';
 import { NextPage } from 'next';
 import Link from 'next/link';
@@ -14,31 +14,33 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
-interface SpacePageProps {
-  params: { spaceId: string };
+interface ProfilePageProps {
+  params: { profileId: string };
 }
 
-const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
-  const [space, setSpace] = useState<Space | null>(null);
-  const spacesData = useRecoilValue(spacesState);
+const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const profilesData = useRecoilValue(profilesState);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const { spaceId } = params;
+  const { profileId } = params;
   const router = useRouter();
 
   useEffect(() => {
-    if (!spaceId) return;
+    if (!profileId) return;
 
-    const selectedSpace = spacesData.find((space) => space.id === spaceId);
+    const selectedProfile = profilesData.find(
+      (profile) => profile.id === profileId
+    );
 
-    if (!selectedSpace) {
+    if (!selectedProfile) {
       router.push(ROUTES.APP);
       return;
     }
 
-    setSpace(selectedSpace);
-  }, [spacesData, router, spaceId]);
+    setProfile(selectedProfile);
+  }, [profilesData, router, profileId]);
 
-  const deleteSpace = () => {
+  const deleteProfile = () => {
     setOpenModal(true);
   };
 
@@ -49,12 +51,12 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <TypographyH3>{space?.name}</TypographyH3>
+        <TypographyH3>{profile?.name}</TypographyH3>
         <Button
           size="sm"
           className="gap-1 bg-transparent text-destructive brightness-150 hover:bg-transparent hover:brightness-200 hover:text-destructive"
           variant="ghost"
-          onClick={deleteSpace}
+          onClick={deleteProfile}
         >
           <Trash size={16} />
           Delete
@@ -62,13 +64,13 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
       </div>
 
       <div className="divide-y-2 *:block">
-        {space?.folders.map((folder, index) => (
+        {profile?.folders.map((folder, index) => (
           <Link
             className="relative"
             key={index}
-            href={`${ROUTES.APP_SPACE}/${spaceId}/${ROUTES.APP_FOLDER}/${folder.id}`}
+            href={`${ROUTES.APP_PROFILE}/${profileId}/${ROUTES.APP_FOLDER}/${folder.id}`}
           >
-            <FolderItem space={space} folder={folder} />
+            <FolderItem profile={profile} folder={folder} />
 
             <ChevronRight
               size={24}
@@ -77,10 +79,10 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
           </Link>
         ))}
       </div>
-      {space && (
-        <DeleteSpaceModal
+      {profile && (
+        <DeleteProfileModal
           open={openModal}
-          space={space}
+          profile={profile}
           onClose={onCloseModal}
         />
       )}
@@ -88,4 +90,4 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
   );
 };
 
-export default SpacePage;
+export default ProfilePage;

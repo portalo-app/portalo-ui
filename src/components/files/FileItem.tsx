@@ -11,20 +11,20 @@ import {
   TypographyMutedXS,
 } from '@core/ui/Typography';
 import useFolderFile from '@hooks/files/useFolderFile';
-import { AddressFile, FolderFile, SocialFile } from '@models/space';
+import { AddressFile, FolderFile, SocialFile } from '@models/profile';
 import { TrashIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { MouseEvent, useState } from 'react';
 import FileDetail from './FileDetail';
 
 interface FileItemProps {
-  spaceId: string;
+  profileId: string;
   folderId: string;
   file: FolderFile;
 }
 
 // TODO: Complete the FileItem component
-const FileItem: React.FC<FileItemProps> = ({ file, spaceId, folderId }) => {
+const FileItem: React.FC<FileItemProps> = ({ file, profileId, folderId }) => {
   const router = useRouter();
   const { deleteFile } = useFolderFile();
 
@@ -40,7 +40,7 @@ const FileItem: React.FC<FileItemProps> = ({ file, spaceId, folderId }) => {
 
   const navigateToEdit = () => {
     router.push(
-      `${ROUTES.APP_SPACE}/${spaceId}${ROUTES.APP_FOLDER}/${folderId}/edit/${file.id}`
+      `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}/edit/${file.id}`
     );
   };
 
@@ -86,7 +86,7 @@ const FileItem: React.FC<FileItemProps> = ({ file, spaceId, folderId }) => {
       <DeleteModal
         message={`Are you sure you want to delete this ${entity.label.toLowerCase()}?`}
         onDelete={() => (
-          deleteFile(spaceId, folderId, file.id), setIsDeleteModalOpen(false)
+          deleteFile(profileId, folderId, file.id), setIsDeleteModalOpen(false)
         )}
         onClose={() => setIsDeleteModalOpen(false)}
         open={isDeleteModalOpen}

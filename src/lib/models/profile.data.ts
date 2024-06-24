@@ -1,7 +1,7 @@
 import { Share2, Wallet } from 'lucide-react';
 import { banks, chains } from './address.entities';
+import { AddressFile, Folder, FolderType, SocialFile } from './profile';
 import { MEDIA_ENTITIES, MESSAGING_ENTITIES } from './social.entities';
-import { AddressFile, Folder, FolderType, SocialFile } from './space';
 
 export const ADDRESS_TYPE: FolderType = {
   id: 'address',

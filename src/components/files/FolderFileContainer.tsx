@@ -2,22 +2,22 @@
 
 import { ROUTES } from '@constants/routes.const';
 import { TypographyH1 } from '@core/ui/Typography';
-import { Folder, FolderFile } from '@models/space';
-import { spacesState } from '@states/spaces.atom';
+import { Folder, FolderFile } from '@models/profile';
+import { profilesState } from '@states/profiles.atom';
 import { useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import FolderFileForm from './FolderFileForm';
 
 interface FolderFileContainerProps {
-  spaceId: string;
+  profileId: string;
   folderId: string;
   fileId?: string;
   action: 'new' | 'edit';
 }
 
 const FolderFileContainer: FC<FolderFileContainerProps> = ({
-  spaceId,
+  profileId,
   folderId,
   action,
   fileId,
@@ -25,18 +25,20 @@ const FolderFileContainer: FC<FolderFileContainerProps> = ({
   const [folder, setFolder] = useState<Folder<FolderFile> | null>(null);
   const [file, setFile] = useState<FolderFile | null>(null);
 
-  const spacesData = useRecoilValue(spacesState);
+  const profilesData = useRecoilValue(profilesState);
   const router = useRouter();
 
   useEffect(() => {
-    if (!spaceId) return;
+    if (!profileId) return;
 
-    const selectedSpace = spacesData.find((space) => space.id === spaceId);
-    const selectedFolder = selectedSpace?.folders.find(
+    const selectedProfile = profilesData.find(
+      (profile) => profile.id === profileId
+    );
+    const selectedFolder = selectedProfile?.folders.find(
       (folder) => folder.id === folderId
     );
 
-    if (!selectedSpace || !selectedFolder) {
+    if (!selectedProfile || !selectedFolder) {
       router.push(ROUTES.APP);
       return;
     }
@@ -48,7 +50,7 @@ const FolderFileContainer: FC<FolderFileContainerProps> = ({
 
       if (!selectedFile) {
         router.push(
-          `${ROUTES.APP_SPACE}/${spaceId}${ROUTES.APP_FOLDER}/${folderId}`
+          `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}`
         );
         return;
       }
@@ -57,7 +59,7 @@ const FolderFileContainer: FC<FolderFileContainerProps> = ({
     }
 
     setFolder(selectedFolder);
-  }, [spacesData, spaceId, folderId, router, action, fileId]);
+  }, [profilesData, profileId, folderId, router, action, fileId]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -67,13 +69,13 @@ const FolderFileContainer: FC<FolderFileContainerProps> = ({
 
       {folder && (
         <FolderFileForm
-          spaceId={spaceId}
+          profileId={profileId}
           folderId={folderId}
           folderType={folder?.type}
           initialData={file || undefined}
           onComplete={() =>
             router.push(
-              `${ROUTES.APP_SPACE}/${spaceId}${ROUTES.APP_FOLDER}/${folderId}`
+              `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}`
             )
           }
           action={action}

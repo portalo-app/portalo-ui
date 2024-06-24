@@ -1,8 +1,8 @@
 export const ROUTES = {
   APP: '/',
   APP_HELP: '/help',
-  APP_SPACE: '/spaces',
-  APP_CREATE_SPACE: '/spaces/new',
+  APP_PROFILE: '/profiles',
+  APP_CREATE_PROFILE: '/profiles/new',
   APP_FOLDER: '/folders',
   APP_CREATE_FOLDER: '/folders/new',
   APP_ADDRESS: '/addresses',
@@ -38,13 +38,13 @@ export const ROUTES_LAYOUT: route[] = [
     readOnly: true,
   },
   {
-    title: 'Spaces',
-    url: ROUTES.APP_SPACE,
+    title: 'Profiles',
+    url: ROUTES.APP_PROFILE,
     readOnly: true,
   },
   {
-    title: 'Create Space',
-    url: ROUTES.APP_CREATE_SPACE,
+    title: 'Create Profile',
+    url: ROUTES.APP_CREATE_PROFILE,
     readOnly: true,
   },
   {

@@ -1,7 +1,7 @@
 import EntityIcon from '@components/entities/EntityIcon';
 import { Button } from '@core/ui/Button';
 import { TypographyH5, TypographyMuted } from '@core/ui/Typography';
-import { Entity } from '@models/space';
+import { Entity } from '@models/profile';
 import { Pencil } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import React from 'react';

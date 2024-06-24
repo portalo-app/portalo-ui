@@ -1,15 +1,15 @@
 import FolderFileContainer from '@components/files/FolderFileContainer';
 
 interface EditFilePageProps {
-  params: { folderId: string; spaceId: string; fileId: string };
+  params: { folderId: string; profileId: string; fileId: string };
 }
 
 const NewFilePage: React.FC<EditFilePageProps> = ({ params }) => {
-  const { folderId, spaceId, fileId } = params;
+  const { folderId, profileId, fileId } = params;
 
   return (
     <FolderFileContainer
-      spaceId={spaceId}
+      profileId={profileId}
       folderId={folderId}
       fileId={fileId}
       action="edit"

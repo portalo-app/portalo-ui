@@ -18,7 +18,7 @@ import {
 } from '@core/ui/Select';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useFolderFile from '@hooks/files/useFolderFile';
-import { FolderFile, FolderType } from '@models/space';
+import { FolderFile, FolderType } from '@models/profile';
 import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
 import React from 'react';
 import { SocialIcon } from 'react-custom-social-icons';
@@ -27,7 +27,7 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 interface FolderFileFormProps {
-  spaceId: string;
+  profileId: string;
   folderId: string;
   folderType: FolderType;
   onComplete: () => void;
@@ -36,7 +36,7 @@ interface FolderFileFormProps {
 }
 
 const FolderFileForm: React.FC<FolderFileFormProps> = ({
-  spaceId,
+  profileId,
   folderId,
   folderType,
   onComplete,
@@ -98,7 +98,7 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     if (action === 'new') {
-      createFile(spaceId, folderId, {
+      createFile(profileId, folderId, {
         ...data,
         id: '',
         tags: [],
@@ -107,7 +107,7 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
           .availableEntities.find((entity) => entity.value === data.entity)!,
       } as FolderFile);
     } else {
-      editFile(spaceId, folderId, {
+      editFile(profileId, folderId, {
         ...initialData,
         ...data,
         tags: [],

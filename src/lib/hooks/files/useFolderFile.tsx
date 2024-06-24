@@ -1,24 +1,24 @@
+import { AddressFile, Folder, FolderFile, SocialFile } from '@models/profile';
 import { getSocialUrlByUsername } from '@models/social.entities';
-import { AddressFile, Folder, FolderFile, SocialFile } from '@models/space';
-import { spacesState } from '@states/spaces.atom';
+import { profilesState } from '@states/profiles.atom';
 import { useRecoilState } from 'recoil';
 
 const useFolderFile = () => {
-  const [spaces, setSpaces] = useRecoilState(spacesState);
+  const [profiles, setProfiles] = useRecoilState(profilesState);
 
   const createFile = (
-    spaceId: string,
+    profileId: string,
     folderId: string,
     newFile: FolderFile
   ) => {
-    const newSpaces = spaces.map((space) => {
-      if (space.id !== spaceId) return space;
+    const newProfiles = profiles.map((profile) => {
+      if (profile.id !== profileId) return profile;
 
       newFile.id = `${newFile.entity.label}-${Date.now()}`;
 
       return {
-        ...space,
-        folders: space.folders.map((folder) => {
+        ...profile,
+        folders: profile.folders.map((folder) => {
           if (folder.id !== folderId) return folder;
 
           if (folder.type.id === 'social') {
@@ -36,20 +36,20 @@ const useFolderFile = () => {
       };
     });
 
-    setSpaces(newSpaces);
+    setProfiles(newProfiles);
   };
 
   const editFile = (
-    spaceId: string,
+    profileId: string,
     folderId: string,
     editedFile: FolderFile
   ) => {
-    const newSpaces = spaces.map((space) => {
-      if (space.id !== spaceId) return space;
+    const newProfiles = profiles.map((profile) => {
+      if (profile.id !== profileId) return profile;
 
       return {
-        ...space,
-        folders: space.folders.map((folder) => {
+        ...profile,
+        folders: profile.folders.map((folder) => {
           if (folder.id !== folderId) return folder;
 
           if (folder.type.id === 'social') {
@@ -71,16 +71,16 @@ const useFolderFile = () => {
       };
     });
 
-    setSpaces(newSpaces);
+    setProfiles(newProfiles);
   };
 
-  const deleteFile = (spaceId: string, folderId: string, fileId: string) => {
-    const newSpaces = spaces.map((space) => {
-      if (space.id !== spaceId) return space;
+  const deleteFile = (profileId: string, folderId: string, fileId: string) => {
+    const newProfiles = profiles.map((profile) => {
+      if (profile.id !== profileId) return profile;
 
       return {
-        ...space,
-        folders: space.folders.map((folder) => {
+        ...profile,
+        folders: profile.folders.map((folder) => {
           if (folder.id !== folderId) return folder;
 
           return {
@@ -91,7 +91,7 @@ const useFolderFile = () => {
       };
     });
 
-    setSpaces(newSpaces);
+    setProfiles(newProfiles);
   };
 
   return { createFile, editFile, deleteFile };

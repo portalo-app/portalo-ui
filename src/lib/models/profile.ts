@@ -1,7 +1,7 @@
 import { LucideIcon } from 'lucide-react';
 
-// Space model
-export interface Space {
+// Profile model
+export interface Profile {
   id: string;
   icon?: string;
   name: string;

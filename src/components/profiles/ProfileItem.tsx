@@ -1,22 +1,22 @@
 import { ROUTES } from '@constants/routes.const';
 import { TypographyH4, TypographyMutedXS } from '@core/ui/Typography';
-import { Space } from '@models/space';
+import { Profile } from '@models/profile';
 import Avvvatars from 'avvvatars-react';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
-interface SpaceItemProps {
-  space: Space;
+interface ProfileItemProps {
+  profile: Profile;
 }
 
-const SpaceItem: React.FC<SpaceItemProps> = ({ space }) => {
-  const { id, name, folders } = space;
+const ProfileItem: React.FC<ProfileItemProps> = ({ profile }) => {
+  const { id, name, folders } = profile;
 
   const count = folders.length;
   const countLabel = `${count} active folder${count > 1 || count === 0 ? 's' : ''}`;
 
   return (
-    <Link href={`${ROUTES.APP_SPACE}/${id}`}>
+    <Link href={`${ROUTES.APP_PROFILE}/${id}`}>
       <div className="relative py-4">
         <div className="flex items-center gap-4">
           <Avvvatars value={name} size={42} style="character" />
@@ -39,4 +39,4 @@ const SpaceItem: React.FC<SpaceItemProps> = ({ space }) => {
   );
 };
 
-export default SpaceItem;
+export default ProfileItem;

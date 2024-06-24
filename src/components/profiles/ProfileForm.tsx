@@ -9,21 +9,25 @@ import {
 } from '@core/ui/Form';
 import { Input } from '@core/ui/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import useCreateSpace from '@hooks/spaces/useCreateSpace';
-import useEditSpace from '@hooks/spaces/useEditSpace';
-import { Space } from '@models/space';
+import useCreateProfile from '@hooks/profiles/useCreateProfile';
+import useEditProfile from '@hooks/profiles/useEditProfile';
+import { Profile } from '@models/profile';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-interface SpaceFormProps {
+interface ProfileFormProps {
   action: 'CREATE' | 'EDIT';
   onComplete?: () => void;
-  space?: Space;
+  profile?: Profile;
 }
 
-const SpaceForm: React.FC<SpaceFormProps> = ({ action, space, onComplete }) => {
-  const createSpace = useCreateSpace();
-  const editSpace = useEditSpace();
+const ProfileForm: React.FC<ProfileFormProps> = ({
+  action,
+  profile,
+  onComplete,
+}) => {
+  const createProfile = useCreateProfile();
+  const editProfile = useEditProfile();
 
   const actionLabel = action === 'CREATE' ? 'Create' : 'Edit';
   const nameLabel = 'Name';
@@ -40,18 +44,18 @@ const SpaceForm: React.FC<SpaceFormProps> = ({ action, space, onComplete }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: space?.name || '',
+      name: profile?.name || '',
     },
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const { name } = data;
     if (action === 'CREATE') {
-      createSpace(name);
+      createProfile(name);
     } else {
-      if (!space?.id) return;
+      if (!profile?.id) return;
 
-      editSpace(space?.id || '', name);
+      editProfile(profile?.id || '', name);
     }
 
     onComplete && onComplete();
@@ -83,4 +87,4 @@ const SpaceForm: React.FC<SpaceFormProps> = ({ action, space, onComplete }) => {
   );
 };
 
-export default SpaceForm;
+export default ProfileForm;

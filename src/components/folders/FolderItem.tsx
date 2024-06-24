@@ -1,26 +1,26 @@
 import { ROUTES } from '@constants/routes.const';
-import { Folder, Space } from '@models/space';
+import { Folder, Profile } from '@models/profile';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import FolderTitle from './FolderTitle';
 
 interface FolderItemProps {
-  space: Space;
+  profile: Profile;
   folder: Folder<any>;
 }
 
-const FolderItem: React.FC<FolderItemProps> = ({ space, folder }) => {
+const FolderItem: React.FC<FolderItemProps> = ({ profile, folder }) => {
   // TODO: Define an icon directory to better fetch the icon.
   // const Icon = folder.type.icon as LucideIcon;
 
-  if (!space || !folder) return null;
+  if (!profile || !folder) return null;
 
   return (
     <Link
-      href={`${ROUTES.APP_SPACE}/${space?.id}/${ROUTES.APP_FOLDER}/${folder?.id}`}
+      href={`${ROUTES.APP_PROFILE}/${profile?.id}/${ROUTES.APP_FOLDER}/${folder?.id}`}
     >
       <div className="py-4 relative">
-        <FolderTitle space={space} folder={folder} />
+        <FolderTitle profile={profile} folder={folder} />
 
         <ChevronRight
           size={24}
