@@ -1,3 +1,4 @@
+import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
 import { getSocialUrlByUsername } from '@models/social.entities';
 import {
   AddressElement,
@@ -10,6 +11,7 @@ import { useRecoilState } from 'recoil';
 
 const useVaultElement = () => {
   const [spaces, setSpaces] = useRecoilState(spacesState);
+  const { trackCreateFile, trackDeleteFile, trackEditFile } = useAnalytics();
 
   const createElement = (
     spaceId: string,
@@ -40,7 +42,7 @@ const useVaultElement = () => {
         }),
       };
     });
-
+    trackCreateFile(vaultId);
     setSpaces(newSpaces);
   };
 
@@ -75,7 +77,7 @@ const useVaultElement = () => {
         }),
       };
     });
-
+    trackEditFile(vaultId);
     setSpaces(newSpaces);
   };
 
@@ -102,6 +104,7 @@ const useVaultElement = () => {
       };
     });
 
+    trackDeleteFile(vaultId);
     setSpaces(newSpaces);
   };
 

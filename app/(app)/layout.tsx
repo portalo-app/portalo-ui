@@ -11,6 +11,8 @@ import {
   MEDIAQUERY_DESKTOP,
   useMediaQuery,
 } from '@hooks/general/useMediaQuery';
+import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
+import { useEffect } from 'react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -18,6 +20,13 @@ interface LayoutProps {
 
 export default function AppLayout({ children }: LayoutProps) {
   const isDesktop = useMediaQuery(MEDIAQUERY_DESKTOP);
+
+  const { initializeGA } = useAnalytics();
+
+  useEffect(() => {
+    initializeGA();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Root>

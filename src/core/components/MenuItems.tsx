@@ -7,6 +7,7 @@ import {
   NavigationMenuList,
 } from '@core/ui/NavigationMenu';
 import { TypographyP } from '@core/ui/Typography';
+import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
 import { cn } from '@utils/utils';
 import { Bell, HelpCircle, Home, User } from 'lucide-react';
 import Link from 'next/link';
@@ -37,6 +38,7 @@ const menuItems = [
 
 const MenuItems = () => {
   const pathname = usePathname();
+  const { trackClickNavigationOrFeature } = useAnalytics();
 
   return (
     <NavigationMenu>
@@ -51,7 +53,11 @@ const MenuItems = () => {
                 'hover:bg-primary/5 px-2 w-72'
               )}
             >
-              <Link href={item.href} className="flex p-2 gap-2 items-center">
+              <Link
+                href={item.href}
+                className="flex p-2 gap-2 items-center"
+                onClick={() => trackClickNavigationOrFeature(item.label)}
+              >
                 {item.icon}
 
                 <TypographyP className="!m-0">{item.label}</TypographyP>
