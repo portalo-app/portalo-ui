@@ -4,6 +4,9 @@ import MobileBottomNavbar from '@components/layout/MobileBottomNavbar';
 import Navbar from '@components/layout/Navbar';
 import Root from '@components/layout/Root';
 import Sidebar from '@components/layout/Sidebar';
+import { ALERT_MESSAGE } from '@constants/constants.const';
+import AlertMessage from '@core/components/AlertMessage';
+
 import {
   MEDIAQUERY_DESKTOP,
   useMediaQuery,
@@ -22,6 +25,7 @@ export default function AppLayout({ children }: LayoutProps) {
         {isDesktop && <Sidebar />}
         <main className="flex flex-col w-full h-screen overflow-auto">
           <Navbar />
+          {ALERT_MESSAGE && <AlertMessage text={ALERT_MESSAGE} />}
           <div className="mt-6 self-center md:w-112 lg:w-152 w-full px-6 md:px-0 pb-20">
             {children}
           </div>
