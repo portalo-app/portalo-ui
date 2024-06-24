@@ -1,7 +1,7 @@
 'use client';
 
+import FolderItem from '@components/folders/FolderItem';
 import DeleteSpaceModal from '@components/spaces/DeleteSpaceModal';
-import VaultItem from '@components/vaults/VaultItem';
 import { ROUTES } from '@constants/routes.const';
 import { Button } from '@core/ui/Button';
 import { TypographyH3 } from '@core/ui/Typography';
@@ -62,13 +62,13 @@ const SpacePage: NextPage<SpacePageProps> = ({ params }) => {
       </div>
 
       <div className="divide-y-2 *:block">
-        {space?.vaults.map((vault, index) => (
+        {space?.folders.map((folder, index) => (
           <Link
             className="relative"
             key={index}
-            href={`${ROUTES.APP_SPACE}/${spaceId}/${ROUTES.APP_VAULT}/${vault.id}`}
+            href={`${ROUTES.APP_SPACE}/${spaceId}/${ROUTES.APP_FOLDER}/${folder.id}`}
           >
-            <VaultItem space={space} vault={vault} />
+            <FolderItem space={space} folder={folder} />
 
             <ChevronRight
               size={24}

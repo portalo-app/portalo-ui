@@ -1,9 +1,9 @@
 import { Share2, Wallet } from 'lucide-react';
 import { banks, chains } from './address.entities';
 import { MEDIA_ENTITIES, MESSAGING_ENTITIES } from './social.entities';
-import { AddressElement, SocialElement, Vault, VaultType } from './space';
+import { AddressFile, Folder, FolderType, SocialFile } from './space';
 
-export const ADDRESS_TYPE: VaultType = {
+export const ADDRESS_TYPE: FolderType = {
   id: 'address',
   label: 'Address',
   icon: Wallet,
@@ -23,7 +23,7 @@ export const ADDRESS_TYPE: VaultType = {
   ],
 };
 
-export const SOCIAL_TYPE: VaultType = {
+export const SOCIAL_TYPE: FolderType = {
   id: 'social',
   label: 'Social',
   icon: Share2,
@@ -43,16 +43,19 @@ export const SOCIAL_TYPE: VaultType = {
   ],
 };
 
-export const DEFAULT_ADDRESSES_VAULT: Vault<AddressElement> = {
+export const DEFAULT_ADDRESSES_FOLDER: Folder<AddressFile> = {
   id: 'address',
   type: ADDRESS_TYPE,
-  elements: [],
+  files: [],
 };
 
-export const DEFAULT_SOCIAL_VAULT: Vault<SocialElement> = {
+export const DEFAULT_SOCIAL_FOLDER: Folder<SocialFile> = {
   id: 'social',
   type: SOCIAL_TYPE,
-  elements: [],
+  files: [],
 };
 
-export const DEFAULT_VAULTS = [DEFAULT_ADDRESSES_VAULT, DEFAULT_SOCIAL_VAULT];
+export const DEFAULT_FOLDERS = [
+  DEFAULT_ADDRESSES_FOLDER,
+  DEFAULT_SOCIAL_FOLDER,
+];

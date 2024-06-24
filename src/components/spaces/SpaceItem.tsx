@@ -10,10 +10,10 @@ interface SpaceItemProps {
 }
 
 const SpaceItem: React.FC<SpaceItemProps> = ({ space }) => {
-  const { id, name, vaults } = space;
+  const { id, name, folders } = space;
 
-  const count = vaults.length;
-  const countLabel = `${count} active vault${count > 1 || count === 0 ? 's' : ''}`;
+  const count = folders.length;
+  const countLabel = `${count} active folder${count > 1 || count === 0 ? 's' : ''}`;
 
   return (
     <Link href={`${ROUTES.APP_SPACE}/${id}`}>

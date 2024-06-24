@@ -1,5 +1,5 @@
 import { Space } from '@models/space';
-import { DEFAULT_VAULTS } from '@models/space.data';
+import { DEFAULT_FOLDERS } from '@models/space.data';
 import { spacesState } from '@states/spaces.atom';
 import { useSetRecoilState } from 'recoil';
 
@@ -14,7 +14,7 @@ const useCreateSpace: UseCreateSpace = () => {
     const space: Space = {
       id: Date.now().toString(),
       name,
-      vaults: [...DEFAULT_VAULTS],
+      folders: [...DEFAULT_FOLDERS],
     };
 
     setSpaces((spaces) => [...spaces, space]);

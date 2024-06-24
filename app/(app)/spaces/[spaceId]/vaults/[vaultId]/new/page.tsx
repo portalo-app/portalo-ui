@@ -1,15 +1,15 @@
-import VaultElementContainer from '@components/elements/VaultElementContainer';
+import FolderFileContainer from '@components/files/FolderFileContainer';
 
-interface NewElementPageProps {
-  params: { vaultId: string; spaceId: string };
+interface NewFilePageProps {
+  params: { folderId: string; spaceId: string };
 }
 
-const NewElementPage: React.FC<NewElementPageProps> = ({ params }) => {
-  const { vaultId, spaceId } = params;
+const NewFilePage: React.FC<NewFilePageProps> = ({ params }) => {
+  const { folderId, spaceId } = params;
 
   return (
-    <VaultElementContainer spaceId={spaceId} vaultId={vaultId} action="new" />
+    <FolderFileContainer spaceId={spaceId} folderId={folderId} action="new" />
   );
 };
 
-export default NewElementPage;
+export default NewFilePage;

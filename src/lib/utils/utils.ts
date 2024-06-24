@@ -6,8 +6,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const extractRouteFromPathname = (pathname: string): string => {
-  if (pathname.includes('/vaults')) {
-    return '/vaults';
+  if (pathname.includes('/folders')) {
+    return '/folders';
   } else if (pathname.includes('/spaces')) {
     return '/spaces';
   }

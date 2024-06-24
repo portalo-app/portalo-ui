@@ -6,14 +6,14 @@ import { Pencil } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import React from 'react';
 
-interface ElementDetailProps {
+interface FileDetailProps {
   mainData: string;
   secondaryData: string;
   entity: Entity;
   navigateToEdit: () => void;
 }
 
-const ElementDetail: React.FC<ElementDetailProps> = ({
+const FileDetail: React.FC<FileDetailProps> = ({
   mainData,
   secondaryData,
   entity,
@@ -51,4 +51,4 @@ const ElementDetail: React.FC<ElementDetailProps> = ({
   );
 };
 
-export default ElementDetail;
+export default FileDetail;

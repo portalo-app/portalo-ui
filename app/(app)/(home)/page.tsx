@@ -1,8 +1,8 @@
 'use client';
 
 import StoreWidget from '@components/dashboard/StoreWidget';
+import FolderItem from '@components/folders/FolderItem';
 import SpaceItem from '@components/spaces/SpaceItem';
-import VaultItem from '@components/vaults/VaultItem';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
@@ -19,13 +19,13 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
   const shortcuts = [
     {
       space: spaces[0],
-      vault: spaces[0]?.vaults[0],
-      icon: spaces[0]?.vaults[0],
+      folder: spaces[0]?.folders[0],
+      icon: spaces[0]?.folders[0],
     },
     {
       space: spaces[0],
-      vault: spaces[0]?.vaults[1],
-      icon: spaces[0]?.vaults[1],
+      folder: spaces[0]?.folders[1],
+      icon: spaces[0]?.folders[1],
     },
   ];
 
@@ -49,7 +49,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
 
           {/* <ResponsiveDialog
               title="Create Space"
-              description="Create a new space to organize your vaults"
+              description="Create a new space to organize your folders"
               trigger={<div>Create</div>}
               closeButtonLabel="Close"
             >
@@ -81,8 +81,8 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
 
         {hasSpaces ? (
           <div className="divide-y-2 *:block">
-            {shortcuts.map(({ space, vault }, index) => (
-              <VaultItem key={index} space={space} vault={vault} />
+            {shortcuts.map(({ space, folder }, index) => (
+              <FolderItem key={index} space={space} folder={folder} />
             ))}
           </div>
         ) : (

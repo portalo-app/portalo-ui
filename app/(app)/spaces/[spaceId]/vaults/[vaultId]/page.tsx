@@ -1,51 +1,51 @@
 'use client';
 
-import ElementItem from '@components/elements/ElementItem';
-import VaultTitle from '@components/vaults/VaultTitle';
+import FileItem from '@components/files/FileItem';
+import FolderTitle from '@components/folders/FolderTitle';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
-import { Space, Vault, VaultElement } from '@models/space';
+import { Folder, FolderFile, Space } from '@models/space';
 import { spacesState } from '@states/spaces.atom';
 import { NextPage } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
-interface VaultDetailsProps {
-  params: { vaultId: string; spaceId: string };
+interface FolderDetailsProps {
+  params: { folderId: string; spaceId: string };
 }
 
-const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
+const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
   const router = useRouter();
   const [space, setSpace] = useState<Space | null>(null);
-  const [vault, setVault] = useState<Vault<VaultElement> | null>(null);
+  const [folder, setFolder] = useState<Folder<FolderFile> | null>(null);
   const pathName = usePathname();
 
   const spacesData = useRecoilValue(spacesState);
-  const { vaultId, spaceId } = params;
+  const { folderId, spaceId } = params;
 
   useEffect(() => {
     if (!spaceId) return;
 
     const selectedSpace = spacesData.find((space) => space.id === spaceId);
-    const selectedVault = selectedSpace?.vaults.find(
-      (vault) => vault.id === vaultId
+    const selectedFolder = selectedSpace?.folders.find(
+      (folder) => folder.id === folderId
     );
 
-    if (!selectedSpace || !selectedVault) {
+    if (!selectedSpace || !selectedFolder) {
       router.push(ROUTES.APP);
       return;
     }
 
     setSpace(selectedSpace);
-    setVault(selectedVault);
-  }, [spacesData, spaceId, vaultId, router]);
+    setFolder(selectedFolder);
+  }, [spacesData, spaceId, folderId, router]);
 
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <VaultTitle space={space!} vault={vault!} />
+        <FolderTitle space={space!} folder={folder!} />
 
         <CreateButton href={`${pathName}/new`} />
       </div>
@@ -53,21 +53,21 @@ const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
       {/* <div>VARIANT FILTER</div> */}
 
       <div className="space-y-4">
-        {vault?.elements?.length ?? 0 > 0 ? (
-          vault?.elements.map((element, index) => (
-            <ElementItem
+        {folder?.files?.length ?? 0 > 0 ? (
+          folder?.files.map((file, index) => (
+            <FileItem
               key={index}
-              element={element}
+              file={file}
               spaceId={spaceId}
-              vaultId={vaultId}
+              folderId={folderId}
             />
           ))
         ) : (
           <State
             type="empty"
-            label="You don't have any elements yet"
+            label="You don't have any files yet"
             action={{
-              label: 'Create Element',
+              label: 'Create File',
               onClick: () => router.push(`${pathName}/new`),
             }}
           />
@@ -77,4 +77,4 @@ const VaultDetail: NextPage<VaultDetailsProps> = ({ params }) => {
   );
 };
 
-export default VaultDetail;
+export default FolderDetail;

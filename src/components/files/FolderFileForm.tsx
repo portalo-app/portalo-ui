@@ -17,8 +17,8 @@ import {
   SelectValue,
 } from '@core/ui/Select';
 import { zodResolver } from '@hookform/resolvers/zod';
-import useVaultElement from '@hooks/elements/useVaultElement';
-import { VaultElement, VaultType } from '@models/space';
+import useFolderFile from '@hooks/files/useFolderFile';
+import { FolderFile, FolderType } from '@models/space';
 import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
 import React from 'react';
 import { SocialIcon } from 'react-custom-social-icons';
@@ -26,24 +26,24 @@ import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-interface VaultElementFormProps {
+interface FolderFileFormProps {
   spaceId: string;
-  vaultId: string;
-  vaultType: VaultType;
+  folderId: string;
+  folderType: FolderType;
   onComplete: () => void;
   action?: 'new' | 'edit';
-  initialData?: VaultElement;
+  initialData?: FolderFile;
 }
 
-const VaultElementForm: React.FC<VaultElementFormProps> = ({
+const FolderFileForm: React.FC<FolderFileFormProps> = ({
   spaceId,
-  vaultId,
-  vaultType,
+  folderId,
+  folderType,
   onComplete,
   action = 'new',
   initialData,
 }) => {
-  const { createElement, editElement } = useVaultElement();
+  const { createFile, editFile } = useFolderFile();
 
   const formSchema = z
     .object({
@@ -51,7 +51,7 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
         variant: z.string(),
         entity: z.string().min(1, `Field is required`),
       },
-      ...(vaultType.id === 'social'
+      ...(folderType.id === 'social'
         ? { username: z.string() }
         : {
             address: z
@@ -81,9 +81,9 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
     defaultValues: initialData
       ? { ...initialData, entity: initialData.entity.value }
       : {
-          variant: vaultType.variants[0].id,
+          variant: folderType.variants[0].id,
           entity: '',
-          ...(vaultType.id === 'social'
+          ...(folderType.id === 'social'
             ? {
                 username: '',
               }
@@ -98,23 +98,23 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     if (action === 'new') {
-      createElement(spaceId, vaultId, {
+      createFile(spaceId, folderId, {
         ...data,
         id: '',
         tags: [],
-        entity: vaultType.variants
+        entity: folderType.variants
           .find((variant) => variant.id === data.variant)!
           .availableEntities.find((entity) => entity.value === data.entity)!,
-      } as VaultElement);
+      } as FolderFile);
     } else {
-      editElement(spaceId, vaultId, {
+      editFile(spaceId, folderId, {
         ...initialData,
         ...data,
         tags: [],
-        entity: vaultType.variants
+        entity: folderType.variants
           .find((variant) => variant.id === data.variant)!
           .availableEntities.find((entity) => entity.value === data.entity)!,
-      } as VaultElement);
+      } as FolderFile);
     }
 
     form.reset();
@@ -137,11 +137,11 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder={`Select a ${vaultType.label}`} />
+                    <SelectValue placeholder={`Select a ${folderType.label}`} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {vaultType.variants.map((variant) => (
+                  {folderType.variants.map((variant) => (
                     <SelectItem key={variant.id} value={variant.id}>
                       {variant.label}
                     </SelectItem>
@@ -160,7 +160,7 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
             <FormItem>
               <FormLabel>
                 {
-                  vaultType.variants.find(
+                  folderType.variants.find(
                     (variant) => variant.id === form.getValues().variant
                   )!.entityLabel
                 }
@@ -173,14 +173,14 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
                 </FormControl>
                 <SelectContent>
                   <p>
-                    {vaultType.variants
+                    {folderType.variants
                       .find(
                         (variant) => variant.id === form.getValues().variant
                       )!
                       .availableEntities.map((entity) => (
                         <SelectItem key={entity.value} value={entity.value}>
                           <div className="flex gap-2 items-center">
-                            {vaultType.id === 'social' ? (
+                            {folderType.id === 'social' ? (
                               <SocialIcon
                                 network={entity.icon as SocialNetwork}
                                 size={20}
@@ -206,8 +206,8 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
 
         {
           // Render the form fields for the selected entity
-          // based on the selected vault
-          vaultType.id === 'social' ? (
+          // based on the selected folder
+          folderType.id === 'social' ? (
             <>
               <FormField
                 control={form.control}
@@ -298,11 +298,11 @@ const VaultElementForm: React.FC<VaultElementFormProps> = ({
         }
 
         <Button type="submit" className="mt-4 uppercase">
-          {action === 'new' ? 'Add' : 'Edit'} {vaultType.label}
+          {action === 'new' ? 'Add' : 'Edit'} {folderType.label}
         </Button>
       </form>
     </Form>
   );
 };
 
-export default VaultElementForm;
+export default FolderFileForm;

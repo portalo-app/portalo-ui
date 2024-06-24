@@ -5,46 +5,46 @@ export interface Space {
   id: string;
   icon?: string;
   name: string;
-  vaults: (Vault<AddressElement> | Vault<SocialElement>)[];
+  folders: (Folder<AddressFile> | Folder<SocialFile>)[];
 }
 
-// Vaults
-export interface Vault<T extends VaultElement> {
+// Folders
+export interface Folder<T extends FolderFile> {
   id: string;
-  type: VaultType;
-  elements: T[];
+  type: FolderType;
+  files: T[];
 }
 
-export interface VaultType {
+export interface FolderType {
   id: string;
   label: string;
   icon: LucideIcon;
-  variants: ElementVariant[];
+  variants: FileVariant[];
 }
 
-// Elements
-export interface VaultElement {
+// Files
+export interface FolderFile {
   id: string;
   entity: Entity;
   tags: Tag[];
 }
 
-// An element variant is a sub-type of an element
-export interface ElementVariant {
+// A file variant is a sub-type of an file
+export interface FileVariant {
   id: string;
   label: string;
   entityLabel: string;
   availableEntities: Entity[];
 }
 
-export interface AddressElement extends VaultElement {
+export interface AddressFile extends FolderFile {
   address: string;
   name?: string;
   alias?: string;
   notes?: string;
 }
 
-export interface SocialElement extends VaultElement {
+export interface SocialFile extends FolderFile {
   url: string;
   username: string;
 }

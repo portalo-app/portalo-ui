@@ -3,8 +3,8 @@ export const ROUTES = {
   APP_HELP: '/help',
   APP_SPACE: '/spaces',
   APP_CREATE_SPACE: '/spaces/new',
-  APP_VAULT: '/vaults',
-  APP_CREATE_VAULT: '/vaults/new',
+  APP_FOLDER: '/folders',
+  APP_CREATE_FOLDER: '/folders/new',
   APP_ADDRESS: '/addresses',
   APP_CREATE_ADDRESS: '/addresses/new',
   APP_SELECT_ENTITY: '/select-entity',
@@ -48,13 +48,13 @@ export const ROUTES_LAYOUT: route[] = [
     readOnly: true,
   },
   {
-    title: 'Vaults',
-    url: ROUTES.APP_VAULT,
+    title: 'Folders',
+    url: ROUTES.APP_FOLDER,
     readOnly: true,
   },
   {
-    title: 'Create Vaults',
-    url: ROUTES.APP_CREATE_VAULT,
+    title: 'Create Folders',
+    url: ROUTES.APP_CREATE_FOLDER,
     readOnly: true,
   },
   {

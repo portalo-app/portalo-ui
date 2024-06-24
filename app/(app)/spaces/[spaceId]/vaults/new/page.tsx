@@ -1,7 +1,7 @@
-interface NewVaultPageProps {}
+interface NewFolderPageProps {}
 
-const NewVaultPage: React.FC<NewVaultPageProps> = () => {
-  return <div>NewVaultPage</div>;
+const NewFolderPage: React.FC<NewFolderPageProps> = () => {
+  return <div>NewFolderPage</div>;
 };
 
-export default NewVaultPage;
+export default NewFolderPage;

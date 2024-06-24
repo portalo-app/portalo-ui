@@ -10,41 +10,37 @@ import {
   TypographyMuted,
   TypographyMutedXS,
 } from '@core/ui/Typography';
-import useVaultElement from '@hooks/elements/useVaultElement';
-import { AddressElement, SocialElement, VaultElement } from '@models/space';
+import useFolderFile from '@hooks/files/useFolderFile';
+import { AddressFile, FolderFile, SocialFile } from '@models/space';
 import { TrashIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { MouseEvent, useState } from 'react';
-import ElementDetail from './ElementDetail';
+import FileDetail from './FileDetail';
 
-interface ElementItemProps {
+interface FileItemProps {
   spaceId: string;
-  vaultId: string;
-  element: VaultElement;
+  folderId: string;
+  file: FolderFile;
 }
 
-// TODO: Complete the ElementItem component
-const ElementItem: React.FC<ElementItemProps> = ({
-  element,
-  spaceId,
-  vaultId,
-}) => {
+// TODO: Complete the FileItem component
+const FileItem: React.FC<FileItemProps> = ({ file, spaceId, folderId }) => {
   const router = useRouter();
-  const { deleteElement } = useVaultElement();
+  const { deleteFile } = useFolderFile();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const entity = element.entity;
-  const mainData = (element as SocialElement).username
-    ? (element as SocialElement).username || ''
-    : (element as AddressElement).name || '';
-  const secondaryData = (element as SocialElement).url
-    ? (element as SocialElement).url
-    : (element as AddressElement).address;
+  const entity = file.entity;
+  const mainData = (file as SocialFile).username
+    ? (file as SocialFile).username || ''
+    : (file as AddressFile).name || '';
+  const secondaryData = (file as SocialFile).url
+    ? (file as SocialFile).url
+    : (file as AddressFile).address;
 
   const navigateToEdit = () => {
     router.push(
-      `${ROUTES.APP_SPACE}/${spaceId}${ROUTES.APP_VAULT}/${vaultId}/edit/${element.id}`
+      `${ROUTES.APP_SPACE}/${spaceId}${ROUTES.APP_FOLDER}/${folderId}/edit/${file.id}`
     );
   };
 
@@ -79,7 +75,7 @@ const ElementItem: React.FC<ElementItemProps> = ({
         }
         closeButtonLabel="Close"
       >
-        <ElementDetail
+        <FileDetail
           mainData={mainData}
           secondaryData={secondaryData}
           entity={entity}
@@ -90,15 +86,14 @@ const ElementItem: React.FC<ElementItemProps> = ({
       <DeleteModal
         message={`Are you sure you want to delete this ${entity.label.toLowerCase()}?`}
         onDelete={() => (
-          deleteElement(spaceId, vaultId, element.id),
-          setIsDeleteModalOpen(false)
+          deleteFile(spaceId, folderId, file.id), setIsDeleteModalOpen(false)
         )}
         onClose={() => setIsDeleteModalOpen(false)}
         open={isDeleteModalOpen}
-        title="Delete Element"
+        title="Delete File"
       />
     </>
   );
 };
 
-export default ElementItem;
+export default FileItem;
