@@ -1,4 +1,4 @@
-import { Entity } from '../models/space';
+import { Entity } from '../models/profile';
 
 const CBU_REGEX = /^[0-9]{22}$/;
 
