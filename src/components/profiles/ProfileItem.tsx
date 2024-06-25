@@ -13,13 +13,13 @@ const ProfileItem: React.FC<ProfileItemProps> = ({ profile }) => {
   const { id, name, folders } = profile;
 
   const count = folders.length;
-  const countLabel = `${count} active folder${count > 1 || count === 0 ? 's' : ''}`;
+  const countLabel = `${count} folder${count > 1 || count === 0 ? 's' : ''}`;
 
   return (
     <Link href={`${ROUTES.APP_PROFILE}/${id}`}>
       <div className="relative py-4">
         <div className="flex items-center gap-4">
-          <Avvvatars value={name} size={42} style="character" />
+          <Avvvatars value={name} size={36} style="character" />
 
           <div>
             <TypographyH4>{name}</TypographyH4>

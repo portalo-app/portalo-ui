@@ -1,5 +1,6 @@
 import AboutPortalo from '@core/components/AboutPortalo';
 import MenuItems from '@core/components/MenuItems';
+import ResetAccountButton from '@core/components/ResetAccountButton';
 import SocialList from '@core/components/SocialList';
 import UserSummary from '@core/components/UserSummary';
 import { ModeToggle } from '@core/ui/ModeToggle';
@@ -26,6 +27,8 @@ const Settings = () => {
       <Separator />
 
       <AboutPortalo />
+
+      <ResetAccountButton />
     </div>
   );
 };

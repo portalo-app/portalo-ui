@@ -1,35 +1,32 @@
 import { ROUTES } from '@constants/routes.const';
 import { TypographyH4, TypographyMuted } from '@core/ui/Typography';
 import { Folder, Profile } from '@models/profile';
-import { ChevronRight, Landmark } from 'lucide-react';
+import { ChevronRight, Landmark, UserRound } from 'lucide-react';
 import Link from 'next/link';
 
-interface FolderItemProps {
+interface FolderShortcutProps {
   profile: Profile;
   folder: Folder<any>;
 }
 
-const FolderItem: React.FC<FolderItemProps> = ({ profile, folder }) => {
-  // TODO: Define an icon directory to better fetch the icon.
-  // const Icon = folder.type.icon as LucideIcon;
-
+const FolderShortcut: React.FC<FolderShortcutProps> = ({ profile, folder }) => {
   if (!profile || !folder) return null;
-
-  const filesLabel = `${folder.files.length} file${
-    folder.files.length > 1 || folder.files.length === 0 ? 's' : ''
-  }`;
 
   return (
     <Link
       href={`${ROUTES.APP_PROFILE}/${profile?.id}/${ROUTES.APP_FOLDER}/${folder?.id}`}
     >
-      <div className="relative">
+      <div className="py-4 relative">
         <div className="flex gap-4 items-center">
-          <Landmark className="text-muted-foreground" size={36} />
+          <Landmark size={36} className="text-muted-foreground" />
 
           <div>
+            <div className="flex items-center gap-1">
+              <UserRound size={16} className="text-muted-foreground" />
+              <TypographyMuted>{profile.name}</TypographyMuted>
+            </div>
+
             <TypographyH4>{folder.type.label}</TypographyH4>
-            <TypographyMuted>{filesLabel}</TypographyMuted>
           </div>
         </div>
 
@@ -42,4 +39,4 @@ const FolderItem: React.FC<FolderItemProps> = ({ profile, folder }) => {
   );
 };
 
-export default FolderItem;
+export default FolderShortcut;

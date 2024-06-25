@@ -1,12 +1,14 @@
 'use client';
 
 import FileItem from '@components/files/FileItem';
-import FolderTitle from '@components/folders/FolderTitle';
+import ProfileHeader from '@components/profiles/ProfileHeader';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
+import { TypographyH3 } from '@core/ui/Typography';
 import { Folder, FolderFile, Profile } from '@models/profile';
 import { profilesState } from '@states/profiles.atom';
+import { Landmark } from 'lucide-react';
 import { NextPage } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -42,17 +44,20 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
 
     setProfile(selectedProfile);
     setFolder(selectedFolder);
-  }, []);
+  }, [folderId, profileId, profilesData, router]);
 
   return (
     <div className="space-y-4">
+      <ProfileHeader profile={profile!} />
+
       <div className="flex justify-between items-center">
-        <FolderTitle profile={profile!} folder={folder!} />
+        <div className="flex items-center gap-2">
+          <Landmark />
+          <TypographyH3>{folder?.type.label} folder</TypographyH3>
+        </div>
 
         <CreateButton href={`${pathName}/new`} />
       </div>
-
-      {/* <div>VARIANT FILTER</div> */}
 
       <div className="space-y-4">
         {folder?.files?.length ?? 0 > 0 ? (

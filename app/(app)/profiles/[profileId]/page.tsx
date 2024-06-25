@@ -1,13 +1,14 @@
 'use client';
 
 import FolderItem from '@components/folders/FolderItem';
-import DeleteProfileModal from '@components/profiles/DeleteProfileModal';
+import ProfileHeader from '@components/profiles/ProfileHeader';
 import { ROUTES } from '@constants/routes.const';
-import { Button } from '@core/ui/Button';
+import CreateButton from '@core/components/CreateButton';
+import { Card } from '@core/ui/Card';
 import { TypographyH3 } from '@core/ui/Typography';
 import { Profile } from '@models/profile';
 import { profilesState } from '@states/profiles.atom';
-import { ChevronRight, Trash } from 'lucide-react';
+import { Folder } from 'lucide-react';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -21,7 +22,7 @@ interface ProfilePageProps {
 const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const profilesData = useRecoilValue(profilesState);
-  const [openModal, setOpenModal] = useState<boolean>(false);
+
   const { profileId } = params;
   const router = useRouter();
 
@@ -40,52 +41,31 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
     setProfile(selectedProfile);
   }, [profilesData, router, profileId]);
 
-  const deleteProfile = () => {
-    setOpenModal(true);
-  };
-
-  const onCloseModal = () => {
-    setOpenModal(false);
-  };
-
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <TypographyH3>{profile?.name}</TypographyH3>
-        <Button
-          size="sm"
-          className="gap-1 bg-transparent text-destructive brightness-150 hover:bg-transparent hover:brightness-200 hover:text-destructive"
-          variant="ghost"
-          onClick={deleteProfile}
-        >
-          <Trash size={16} />
-          Delete
-        </Button>
+      <ProfileHeader profile={profile!} />
+
+      <div className="flex justify-between mt-4 items-center">
+        <div className="flex items-center gap-2">
+          <Folder />
+          <TypographyH3>Your folders</TypographyH3>
+        </div>
+
+        <CreateButton disabled title="Add Folder" href="" />
       </div>
 
-      <div className="divide-y-2 *:block">
+      <div className="*:block space-y-4 mt-4">
         {profile?.folders.map((folder, index) => (
           <Link
-            className="relative"
             key={index}
             href={`${ROUTES.APP_PROFILE}/${profileId}/${ROUTES.APP_FOLDER}/${folder.id}`}
           >
-            <FolderItem profile={profile} folder={folder} />
-
-            <ChevronRight
-              size={24}
-              className="absolute top-[calc(50%-12px)] right-2"
-            />
+            <Card className="relative p-2 px-4 border-muted-foreground/20 bg-muted hover:cursor-pointer">
+              <FolderItem profile={profile} folder={folder} />
+            </Card>
           </Link>
         ))}
       </div>
-      {profile && (
-        <DeleteProfileModal
-          open={openModal}
-          profile={profile}
-          onClose={onCloseModal}
-        />
-      )}
     </div>
   );
 };
