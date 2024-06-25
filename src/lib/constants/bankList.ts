@@ -60,7 +60,7 @@ export const banks: Entity[] = [
     defaultTags: [],
   },
   {
-    color: '#673ab7',
+    color: '#003057',
     icon: 'ciudad',
     value: 'CIUDAD',
     label: 'Ciudad',
@@ -68,7 +68,7 @@ export const banks: Entity[] = [
     defaultTags: [],
   },
   {
-    color: '#8b0000',
+    color: '#673ab7',
     icon: 'brubank',
     value: 'BRUBANK',
     label: 'Brubank',
@@ -84,7 +84,7 @@ export const banks: Entity[] = [
     defaultTags: [],
   },
   {
-    color: '#4caf50',
+    color: '#003057',
     icon: 'uala',
     value: 'UALA',
     label: 'UALA',
@@ -92,7 +92,7 @@ export const banks: Entity[] = [
     defaultTags: [],
   },
   {
-    color: '#4caf50',
+    color: '#003057',
     icon: 'rebank',
     value: 'REBANK',
     label: 'Reba',
@@ -116,7 +116,7 @@ export const banks: Entity[] = [
     defaultTags: [],
   },
   {
-    color: '#4caf50',
+    color: '#db0011',
     icon: 'supervielle',
     value: 'SUPERVIELLE',
     label: 'Supervielle',
@@ -124,7 +124,7 @@ export const banks: Entity[] = [
     defaultTags: [],
   },
   {
-    color: '#4caf50',
+    color: '#003057',
     icon: 'mercadopago',
     value: 'MERCADOPAGO',
     label: 'Mercado pago',
@@ -132,7 +132,7 @@ export const banks: Entity[] = [
     defaultTags: [],
   },
   {
-    color: '#4caf50',
+    color: '#f7931a',
     icon: 'naranjax',
     value: 'NARANJAX',
     label: 'Naranja X',
@@ -140,7 +140,7 @@ export const banks: Entity[] = [
     defaultTags: [],
   },
   {
-    color: '#4caf50',
+    color: '#673ab7',
     icon: 'belo',
     value: 'BELO',
     label: 'Belo',
@@ -156,7 +156,7 @@ export const banks: Entity[] = [
     defaultTags: [],
   },
   {
-    color: '#4caf50',
+    color: '#003057',
     icon: 'buenbit',
     value: 'BUENBIT',
     label: 'Buen Bit',
@@ -164,7 +164,7 @@ export const banks: Entity[] = [
     defaultTags: [],
   },
   {
-    color: '#4caf50',
+    color: '#f7931a',
     icon: 'fiwind',
     value: 'FIWIND',
     label: 'Fiwind',
