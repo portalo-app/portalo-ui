@@ -22,6 +22,10 @@ module.exports = {
       sans: ['var(--font-sans)', ...fontFamily.sans],
     },
     extend: {
+      width: {
+        112: '28rem',
+        152: '38rem',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

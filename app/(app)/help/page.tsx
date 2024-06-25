@@ -1,7 +1,5 @@
 'use client';
 
-import PageLayout from '@components/layout/PageLayout';
-import { ROUTES } from '@constants/routes.const';
 import {
   Accordion,
   AccordionContent,
@@ -14,8 +12,6 @@ import { NextPage } from 'next';
 interface HelpPageProps {}
 
 const HelpPage: NextPage<HelpPageProps> = () => {
-  const helpTitle = 'Help';
-
   const faqs = [
     {
       id: '1',
@@ -35,7 +31,7 @@ const HelpPage: NextPage<HelpPageProps> = () => {
   ];
 
   return (
-    <PageLayout title={helpTitle} backPath={ROUTES.APP}>
+    <>
       {faqs.map(({ question, answer, id }, index) => (
         <Accordion key={index} type="single" collapsible>
           <AccordionItem value={id}>
@@ -47,7 +43,7 @@ const HelpPage: NextPage<HelpPageProps> = () => {
           </AccordionItem>
         </Accordion>
       ))}
-    </PageLayout>
+    </>
   );
 };
 
