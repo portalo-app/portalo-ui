@@ -14,7 +14,7 @@ import Matic from 'cryptocurrency-icons/svg/icon/matic.svg';
 import Trx from 'cryptocurrency-icons/svg/icon/trx.svg';
 
 import { Landmark, Wallet } from 'lucide-react';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { SocialIcon } from 'react-custom-social-icons';
 import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
 
@@ -52,7 +52,7 @@ banks.forEach((bank) =>
         src={`/assets/icons/banks/${bank.icon}.png`}
         width={30}
         height={30}
-        style={{ objectFit: 'contain', height: '100%' }}
+        style={{ objectFit: 'contain', height: '100%', borderRadius: '32px' }}
         objectFit="contain"
       />
     ),
@@ -78,14 +78,24 @@ const EntityIcon: React.FC<EntityIconProps> = ({ entity, width, height }) => {
   return (
     <div>
       {typeof icon !== 'string' ? (
-        <div style={{ width: `${width}`, height: `${height}` }}>{icon}</div>
+        <div
+          style={{
+            width: `${width}`,
+            height: `${height}`,
+          }}
+        >
+          {icon}
+        </div>
       ) : (
-        <Image
-          src={icon as string}
-          alt="SVG Icon"
-          width={width}
-          height={height}
-        />
+        <div>
+          asd
+          <Image
+            src={icon as string}
+            alt="SVG Icon"
+            width={width}
+            height={height}
+          />
+        </div>
       )}
     </div>
   );

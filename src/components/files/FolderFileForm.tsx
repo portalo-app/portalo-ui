@@ -179,7 +179,7 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
                       )!
                       .availableEntities.map((entity) => (
                         <SelectItem key={entity.value} value={entity.value}>
-                          <div className="flex gap-2 items-center">
+                          <div className="flex gap-2 items-center rounded-full">
                             {folderType.id === 'social' ? (
                               <SocialIcon
                                 network={entity.icon as SocialNetwork}
