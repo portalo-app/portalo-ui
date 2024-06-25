@@ -1,7 +1,7 @@
 import { banks } from '../constants/bankList';
 import chainsList, { chainsSymbols } from '../constants/chainList';
 import { CryptoAddress, CryptoAddressesRegex, FIATAddress } from './address';
-import { Entity } from './space';
+import { Entity } from './profile';
 
 const filteredUniqueChains = Object.values(
   chainsList

@@ -20,8 +20,8 @@ const menuItems = [
     icon: <Home />,
   },
   {
-    label: 'Spaces',
-    href: ROUTES.APP_CREATE_SPACE,
+    label: 'Profiles',
+    href: ROUTES.APP_CREATE_PROFILE,
     icon: <User />,
   },
   {

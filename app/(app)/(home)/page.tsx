@@ -1,41 +1,41 @@
 'use client';
 
 import StoreWidget from '@components/dashboard/StoreWidget';
-import SpaceItem from '@components/spaces/SpaceItem';
-import VaultItem from '@components/vaults/VaultItem';
+import FolderItem from '@components/folders/FolderItem';
+import ProfileItem from '@components/profiles/ProfileItem';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
 import { TypographyH3 } from '@core/ui/Typography';
-import { spacesState } from '@states/spaces.atom';
+import { profilesState } from '@states/profiles.atom';
 import { FunctionComponent } from 'react';
 import { useRecoilValue } from 'recoil';
 
 interface AppPageProps {}
 
 const AppPage: FunctionComponent<AppPageProps> = () => {
-  const spaces = useRecoilValue(spacesState);
+  const profiles = useRecoilValue(profilesState);
 
   const shortcuts = [
     {
-      space: spaces[0],
-      vault: spaces[0]?.vaults[0],
-      icon: spaces[0]?.vaults[0],
+      profile: profiles[0],
+      folder: profiles[0]?.folders[0],
+      icon: profiles[0]?.folders[0],
     },
     {
-      space: spaces[0],
-      vault: spaces[0]?.vaults[1],
-      icon: spaces[0]?.vaults[1],
+      profile: profiles[0],
+      folder: profiles[0]?.folders[1],
+      icon: profiles[0]?.folders[1],
     },
   ];
 
-  const spacesTitle = 'Spaces';
-  const emptySpacesMessage = "You don't have any spaces yet";
+  const profilesTitle = 'Profiles';
+  const emptyProfilesMessage = "You don't have any profiles yet";
 
   const shortcutsTitle = 'Shortcuts';
   const emptyShortcutsMessage = "You don't have any shortcuts yet";
 
-  const hasSpaces = spaces?.length > 0;
+  const hasProfiles = profiles?.length > 0;
 
   return (
     <div className="space-y-4">
@@ -43,32 +43,20 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
 
       <div>
         <div className="flex justify-between items-center">
-          <TypographyH3>{spacesTitle}</TypographyH3>
+          <TypographyH3>{profilesTitle}</TypographyH3>
 
-          <CreateButton href={ROUTES.APP_CREATE_SPACE} />
-
-          {/* <ResponsiveDialog
-              title="Create Space"
-              description="Create a new space to organize your vaults"
-              trigger={<div>Create</div>}
-              closeButtonLabel="Close"
-            >
-              <SpaceForm
-                action="CREATE"
-                onComplete={() => router.push(ROUTES.APP)}
-              />
-            </ResponsiveDialog> */}
+          <CreateButton href={ROUTES.APP_CREATE_PROFILE} />
         </div>
 
-        {hasSpaces ? (
+        {hasProfiles ? (
           <div className="divide-y-2 *:block">
-            {spaces.map((space, index) => (
-              <SpaceItem space={space} key={index} />
+            {profiles.map((profile, index) => (
+              <ProfileItem profile={profile} key={index} />
             ))}
           </div>
         ) : (
           <div className="flex content-center justify-center mt-4">
-            <State type="empty" label={emptySpacesMessage} />
+            <State type="empty" label={emptyProfilesMessage} />
           </div>
         )}
       </div>
@@ -76,13 +64,13 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
       <div>
         <div className="flex justify-between items-center">
           <TypographyH3>{shortcutsTitle}</TypographyH3>
-          <CreateButton href={ROUTES.APP_CREATE_SPACE} />
+          <CreateButton href={ROUTES.APP_CREATE_PROFILE} />
         </div>
 
-        {hasSpaces ? (
+        {hasProfiles ? (
           <div className="divide-y-2 *:block">
-            {shortcuts.map(({ space, vault }, index) => (
-              <VaultItem key={index} space={space} vault={vault} />
+            {shortcuts.map(({ profile, folder }, index) => (
+              <FolderItem key={index} profile={profile} folder={folder} />
             ))}
           </div>
         ) : (

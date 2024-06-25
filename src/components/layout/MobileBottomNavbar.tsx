@@ -34,17 +34,17 @@ const MobileBottomNavbar = () => {
       url: ROUTES.APP,
     },
     {
-      id: 'spaces',
-      name: 'Spaces',
+      id: 'profiles',
+      name: 'Profiles',
       icon: User,
-      url: ROUTES.APP_CREATE_SPACE,
+      url: ROUTES.APP_CREATE_PROFILE,
     },
     {
       id: 'cta',
       name: 'CTA',
       icon: Portalo,
       isCTA: true,
-      url: ROUTES.APP_CREATE_SPACE,
+      url: ROUTES.APP_CREATE_PROFILE,
     },
     {
       id: 'notification',
