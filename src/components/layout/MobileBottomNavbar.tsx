@@ -2,6 +2,7 @@
 
 import { ROUTES } from '@constants/routes.const';
 import { TypographyXS } from '@core/ui/Typography';
+import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
 import { Bell, Home, Menu, Plus, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -22,6 +23,8 @@ const MobileBottomNavbar = () => {
   const pathname = usePathname();
 
   const isRouteReadOnly = true;
+
+  const { trackMobileBottomNavbarMenuItem } = useAnalytics();
 
   const navbarItems = [
     {
@@ -63,6 +66,7 @@ const MobileBottomNavbar = () => {
         <div key={id} className="grid place-items-center">
           {isCTA ? (
             <Link
+              onClick={() => trackMobileBottomNavbarMenuItem(id)}
               href={url}
               className="relative bottom-2 grid h-14 w-14 place-items-center rounded-full bg-primary"
             >
@@ -70,6 +74,7 @@ const MobileBottomNavbar = () => {
             </Link>
           ) : (
             <Link
+              onClick={() => trackMobileBottomNavbarMenuItem(id)}
               href={url}
               className="grid place-items-center gap-2 place-self-center active:text-secondary"
             >

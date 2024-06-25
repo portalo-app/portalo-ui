@@ -1,3 +1,4 @@
+import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
 import { Profile } from '@models/profile';
 import { DEFAULT_FOLDERS } from '@models/profile.data';
 import { profilesState } from '@states/profiles.atom';
@@ -8,6 +9,7 @@ type CreateProfile = (name: string) => void;
 type UseCreateProfile = () => CreateProfile;
 
 const useCreateProfile: UseCreateProfile = () => {
+  const { trackCreateProfile } = useAnalytics();
   const setProfiles = useSetRecoilState(profilesState);
 
   const createProfile: CreateProfile = (name: string) => {
@@ -18,6 +20,7 @@ const useCreateProfile: UseCreateProfile = () => {
     };
 
     setProfiles((profiles) => [...profiles, profile]);
+    trackCreateProfile(profile.id);
   };
 
   return createProfile;

@@ -4,10 +4,14 @@ import { APP_TITLE, CONTACT_MAIL } from '@constants/constants.const';
 import { EXTERNAL_LINKS } from '@constants/externalLinks.const';
 import { Button } from '@core/ui/Button';
 import { TypographyP } from '@core/ui/Typography';
+import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
 import { Mail, Share2, Twitter } from 'lucide-react';
 
 const SocialList = () => {
+  const { trackShareAppClicked, trackTwitterClicked } = useAnalytics();
+
   const handleShare = () => {
+    trackShareAppClicked();
     navigator?.share({
       text: APP_TITLE,
       url: EXTERNAL_LINKS.PORTALO_URL,
@@ -15,6 +19,7 @@ const SocialList = () => {
   };
 
   const handleTwitter = () => {
+    trackTwitterClicked();
     window.open(EXTERNAL_LINKS.TWITTER, '_blank');
   };
 

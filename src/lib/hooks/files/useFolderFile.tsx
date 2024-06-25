@@ -1,3 +1,4 @@
+import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
 import { AddressFile, Folder, FolderFile, SocialFile } from '@models/profile';
 import { getSocialUrlByUsername } from '@models/social.entities';
 import { profilesState } from '@states/profiles.atom';
@@ -5,6 +6,7 @@ import { useRecoilState } from 'recoil';
 
 const useFolderFile = () => {
   const [profiles, setProfiles] = useRecoilState(profilesState);
+  const { trackCreateFile, trackDeleteFile, trackEditFile } = useAnalytics();
 
   const createFile = (
     profileId: string,
@@ -36,6 +38,7 @@ const useFolderFile = () => {
       };
     });
 
+    trackCreateFile(folderId);
     setProfiles(newProfiles);
   };
 
@@ -71,6 +74,7 @@ const useFolderFile = () => {
       };
     });
 
+    trackEditFile(folderId);
     setProfiles(newProfiles);
   };
 
@@ -91,6 +95,7 @@ const useFolderFile = () => {
       };
     });
 
+    trackDeleteFile(folderId);
     setProfiles(newProfiles);
   };
 
