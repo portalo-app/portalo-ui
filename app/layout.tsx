@@ -47,6 +47,7 @@ export default function RootLayout({
           });
         `}
       </Script>
+
       <head>
         {links.map(({ rel, href }) => (
           <link key={href} rel={rel} href={href} />

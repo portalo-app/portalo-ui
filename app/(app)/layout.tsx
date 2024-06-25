@@ -30,11 +30,14 @@ export default function AppLayout({ children }: LayoutProps) {
 
   return (
     <Root>
+      {ALERT_MESSAGE && <AlertMessage text={ALERT_MESSAGE} />}
+
       <div className="flex w-full h-screen">
         {isDesktop && <Sidebar />}
+
         <main className="flex flex-col w-full h-screen overflow-auto">
           <Navbar />
-          {ALERT_MESSAGE && <AlertMessage text={ALERT_MESSAGE} />}
+
           <div className="mt-6 self-center md:w-112 lg:w-152 w-full px-6 md:px-0 pb-20">
             {children}
           </div>

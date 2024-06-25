@@ -1,4 +1,4 @@
-import { Share2, Wallet } from 'lucide-react';
+import { Landmark, MessageSquare } from 'lucide-react';
 import { banks, chains } from './address.entities';
 import { AddressFile, Folder, FolderType, SocialFile } from './profile';
 import { MEDIA_ENTITIES, MESSAGING_ENTITIES } from './social.entities';
@@ -6,7 +6,7 @@ import { MEDIA_ENTITIES, MESSAGING_ENTITIES } from './social.entities';
 export const ADDRESS_TYPE: FolderType = {
   id: 'address',
   label: 'Address',
-  icon: Wallet,
+  icon: Landmark,
   variants: [
     {
       id: 'crypto',
@@ -26,7 +26,7 @@ export const ADDRESS_TYPE: FolderType = {
 export const SOCIAL_TYPE: FolderType = {
   id: 'social',
   label: 'Social',
-  icon: Share2,
+  icon: MessageSquare,
   variants: [
     {
       id: 'messaging',

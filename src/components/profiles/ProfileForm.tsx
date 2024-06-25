@@ -8,10 +8,13 @@ import {
   FormMessage,
 } from '@core/ui/Form';
 import { Input } from '@core/ui/Input';
+import { Separator } from '@core/ui/Separator';
+import { TypographyH4, TypographyP } from '@core/ui/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateProfile from '@hooks/profiles/useCreateProfile';
 import useEditProfile from '@hooks/profiles/useEditProfile';
 import { Profile } from '@models/profile';
+import { UserRound } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -29,8 +32,9 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   const createProfile = useCreateProfile();
   const editProfile = useEditProfile();
 
-  const actionLabel = action === 'CREATE' ? 'Create' : 'Edit';
-  const nameLabel = 'Name';
+  const description = 'Create a profile to store folders inside.';
+  const actionLabel = action === 'CREATE' ? '+ Create Profile' : 'Edit Profile';
+  const nameLabel = 'Profile Name';
 
   const formSchema = z
     .object({
@@ -62,7 +66,16 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   };
 
   return (
-    <div>
+    <div className="space-y-4">
+      <div className="flex gap-2 items-center">
+        <UserRound />
+        <TypographyH4>Add Profile</TypographyH4>
+      </div>
+
+      <TypographyP>{description}</TypographyP>
+
+      <Separator />
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
@@ -72,13 +85,14 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
               <FormItem>
                 <FormLabel>{nameLabel}</FormLabel>
                 <FormControl>
-                  <Input placeholder="name" {...field} />
+                  <Input placeholder="My Profile" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" className="mt-4">
+
+          <Button type="submit" className="mt-4 w-full">
             {actionLabel}
           </Button>
         </form>
