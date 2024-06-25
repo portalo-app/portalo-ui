@@ -88,10 +88,9 @@ const EntityIcon: React.FC<EntityIconProps> = ({ entity, width, height }) => {
         </div>
       ) : (
         <div>
-          asd
           <Image
             src={icon as string}
-            alt="SVG Icon"
+            alt="icon"
             width={width}
             height={height}
           />
