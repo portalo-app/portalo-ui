@@ -3,7 +3,7 @@
 import { ROUTES } from '@constants/routes.const';
 import { Button } from '@core/ui/Button';
 import { TypographyP } from '@core/ui/Typography';
-import { spacesState } from '@states/spaces.atom';
+import { profilesState } from '@states/profiles.atom';
 import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -12,16 +12,16 @@ import DeleteModal from './DeleteModal';
 
 const ResetAccountButton = () => {
   const [resetAccountModalOpen, setResetAccountModalOpen] = useState(false);
-  const resetSpaces = useResetRecoilState(spacesState);
+  const resetProfiles = useResetRecoilState(profilesState);
   const router = useRouter();
 
   const resetAccountLabel = 'Reset Account';
   const resetAccountMessage =
-    'Are you sure you want to clear the account data? This will remove every Space and all the data associated with them. This action cannot be undone.';
+    'Are you sure you want to clear the account data? This will remove every Profile and all the data associated with them. This action cannot be undone.';
 
   const resetAccount = () => {
     router.push(ROUTES.APP);
-    resetSpaces();
+    resetProfiles();
 
     setResetAccountModalOpen(false);
   };

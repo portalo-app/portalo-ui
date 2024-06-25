@@ -1,6 +1,6 @@
 import chainsList from 'cryptocurrency-icons/manifest.json';
 import { CryptoAddress, CryptoAddressesRegex, FIATAddress } from './address';
-import { Entity } from './space';
+import { Entity } from './profile';
 
 export const chainsSymbols = [
   'BTC',
