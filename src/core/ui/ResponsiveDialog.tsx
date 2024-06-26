@@ -31,7 +31,7 @@ interface ResponsiveDialogProps {
   description?: string;
   trigger: React.ReactNode;
   children?: React.ReactNode;
-  closeButtonLabel: string;
+  closeButtonLabel?: string;
 }
 
 const ResponsiveDialog: React.FC<ResponsiveDialogProps> = ({
@@ -49,7 +49,7 @@ const ResponsiveDialog: React.FC<ResponsiveDialogProps> = ({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger className="w-full">{trigger}</DialogTrigger>
 
-        <DialogContent className="max-h-[70vh] overflow-auto">
+        <DialogContent className="overflow-auto">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
             {description && (
@@ -74,14 +74,16 @@ const ResponsiveDialog: React.FC<ResponsiveDialogProps> = ({
         </DrawerHeader>
 
         {children && (
-          <div className="mb-2 max-h-[70vh] overflow-auto px-4">{children}</div>
+          <div className="mb-2 max-h-[80vh] overflow-auto px-4">{children}</div>
         )}
 
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline">{closeButtonLabel}</Button>
-          </DrawerClose>
-        </DrawerFooter>
+        {closeButtonLabel && (
+          <DrawerFooter className="pt-2">
+            <DrawerClose asChild>
+              <Button variant="outline">{closeButtonLabel}</Button>
+            </DrawerClose>
+          </DrawerFooter>
+        )}
       </DrawerContent>
     </Drawer>
   );

@@ -38,6 +38,11 @@ const FileItem: React.FC<FileItemProps> = ({ file, profileId, folderId }) => {
     ? (file as SocialFile).url
     : (file as AddressFile).address;
 
+  const alias = (element as AddressElement).alias || '';
+  const notes = (element as AddressElement).notes || '';
+
+  console.log('element', element);
+
   const navigateToEdit = () => {
     router.push(
       `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}/edit/${file.id}`
@@ -73,13 +78,14 @@ const FileItem: React.FC<FileItemProps> = ({ file, profileId, folderId }) => {
             </div>
           </Card>
         }
-        closeButtonLabel="Close"
       >
         <FileDetail
           mainData={mainData}
           secondaryData={secondaryData}
           entity={entity}
           navigateToEdit={navigateToEdit}
+          alias={alias}
+          notes={notes}
         />
       </ResponsiveDialog>
 
