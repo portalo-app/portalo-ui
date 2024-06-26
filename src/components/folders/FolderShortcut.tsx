@@ -1,5 +1,5 @@
 import { ROUTES } from '@constants/routes.const';
-import { TypographyH4, TypographyMuted } from '@core/ui/Typography';
+import { TypographyH5, TypographyMuted } from '@core/ui/Typography';
 import { Folder, Profile } from '@models/profile';
 import { ChevronRight, Landmark, UserRound } from 'lucide-react';
 import Link from 'next/link';
@@ -21,12 +21,11 @@ const FolderShortcut: React.FC<FolderShortcutProps> = ({ profile, folder }) => {
           <Landmark size={36} className="text-muted-foreground" />
 
           <div>
+            <TypographyH5>{folder.type.label}</TypographyH5>
             <div className="flex items-center gap-1">
               <UserRound size={16} className="text-muted-foreground" />
               <TypographyMuted>{profile.name}</TypographyMuted>
             </div>
-
-            <TypographyH4>{folder.type.label}</TypographyH4>
           </div>
         </div>
 

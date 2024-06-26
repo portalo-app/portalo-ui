@@ -1,5 +1,5 @@
 import { ROUTES } from '@constants/routes.const';
-import { TypographyH4, TypographyMutedXS } from '@core/ui/Typography';
+import { TypographyH5, TypographyMuted } from '@core/ui/Typography';
 import { Profile } from '@models/profile';
 import Avvvatars from 'avvvatars-react';
 import { ChevronRight } from 'lucide-react';
@@ -22,11 +22,11 @@ const ProfileItem: React.FC<ProfileItemProps> = ({ profile }) => {
           <Avvvatars value={name} size={36} style="character" />
 
           <div>
-            <TypographyH4>{name}</TypographyH4>
+            <TypographyH5>{name}</TypographyH5>
 
-            <TypographyMutedXS className="text-primary">
+            <TypographyMuted className="text-primary">
               {countLabel}
-            </TypographyMutedXS>
+            </TypographyMuted>
           </div>
         </div>
 

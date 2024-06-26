@@ -17,9 +17,9 @@ const CreateButton: React.FC<CreateButtonProps & ButtonProps> = ({
   return (
     <Link href={href} aria-disabled={disabled}>
       <Button
-        variant="outline"
+        variant="ghost"
         size="sm"
-        className="flex items-center"
+        className="flex items-center text-secondary"
         disabled={disabled}
       >
         <Plus size={16} className="mr-1" />

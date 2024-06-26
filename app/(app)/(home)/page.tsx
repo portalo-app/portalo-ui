@@ -6,7 +6,9 @@ import ProfileItem from '@components/profiles/ProfileItem';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
-import { TypographyH3 } from '@core/ui/Typography';
+import { Card } from '@core/ui/Card';
+import { Separator } from '@core/ui/Separator';
+import { TypographyH5 } from '@core/ui/Typography';
 import { profilesState } from '@states/profiles.atom';
 import { Layers2, UserRound } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -44,11 +46,11 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
     <div className="space-y-4">
       <StoreWidget />
 
-      <div>
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
+      <Card>
+        <div className="flex justify-between items-center py-2 px-4 bg-muted rounded-t">
+          <div className="flex items-center gap-2 text-muted-foreground">
             <UserRound />
-            <TypographyH3>{profilesTitle}</TypographyH3>
+            <TypographyH5>{profilesTitle}</TypographyH5>
           </div>
 
           {hasProfiles && (
@@ -56,8 +58,10 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
           )}
         </div>
 
+        <Separator className="border-t border-muted" />
+
         {hasProfiles ? (
-          <div className="divide-y-2 *:block">
+          <div className="divide-y-2 *:block py-2 px-4">
             {profiles.map((profile, index) => (
               <ProfileItem profile={profile} key={index} />
             ))}
@@ -74,13 +78,13 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
             />
           </div>
         )}
-      </div>
+      </Card>
 
-      <div>
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
+      <Card>
+        <div className="flex justify-between items-center py-2 px-4 bg-muted rounded-t">
+          <div className="flex items-center gap-2 text-muted-foreground">
             <Layers2 />
-            <TypographyH3>{shortcutsTitle}</TypographyH3>
+            <TypographyH5>{shortcutsTitle}</TypographyH5>
           </div>
 
           {hasProfiles && (
@@ -88,8 +92,10 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
           )}
         </div>
 
+        <Separator className="border-t border-muted" />
+
         {hasProfiles ? (
-          <div className="divide-y-2 *:block">
+          <div className="divide-y-2 *:block py-2 px-4">
             {shortcuts.map(({ profile, folder }, index) => (
               <FolderShortcut key={index} profile={profile} folder={folder} />
             ))}
@@ -99,7 +105,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
             <State type="empty" label={emptyShortcutsMessage} />
           </div>
         )}
-      </div>
+      </Card>
     </div>
   );
 };
