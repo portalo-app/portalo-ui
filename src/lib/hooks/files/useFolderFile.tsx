@@ -1,6 +1,8 @@
+import { getSocialUrlByUsername } from '@constants/social/social.entities';
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
-import { AddressFile, Folder, FolderFile, SocialFile } from '@models/profile';
-import { getSocialUrlByUsername } from '@models/social.entities';
+import { FolderFile } from '@models/business/file';
+import { Folder } from '@models/business/folder';
+import { AddressFile, SocialFile } from '@models/business/profile';
 import { profilesState } from '@states/profiles.atom';
 import { useRecoilState } from 'recoil';
 

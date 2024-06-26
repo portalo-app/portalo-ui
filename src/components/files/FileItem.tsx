@@ -1,7 +1,6 @@
 'use client';
 
 import EntityIcon from '@components/entities/EntityIcon';
-import { ROUTES } from '@constants/routes.const';
 import DeleteModal from '@core/components/DeleteModal';
 import { Card } from '@core/ui/Card';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
@@ -11,11 +10,10 @@ import {
   TypographyMutedXS,
 } from '@core/ui/Typography';
 import useFolderFile from '@hooks/files/useFolderFile';
-import { AddressFile, FolderFile, SocialFile } from '@models/profile';
+import { FolderFile } from '@models/business/file';
+import { AddressFile, SocialFile } from '@models/business/profile';
 import { TrashIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { MouseEvent, useState } from 'react';
-import FileDetail from './FileDetail';
 
 interface FileItemProps {
   profileId: string;
@@ -25,7 +23,7 @@ interface FileItemProps {
 
 // TODO: Complete the FileItem component
 const FileItem: React.FC<FileItemProps> = ({ file, profileId, folderId }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const { deleteFile } = useFolderFile();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -38,16 +36,16 @@ const FileItem: React.FC<FileItemProps> = ({ file, profileId, folderId }) => {
     ? (file as SocialFile).url
     : (file as AddressFile).address;
 
-  const alias = (element as AddressElement).alias || '';
-  const notes = (element as AddressElement).notes || '';
+  // const alias = (file as AddressFile).alias || '';
+  // const notes = (file as AddressFile).notes || '';
 
-  console.log('element', element);
+  console.log('element', file);
 
-  const navigateToEdit = () => {
-    router.push(
-      `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}/edit/${file.id}`
-    );
-  };
+  // const navigateToEdit = () => {
+  //   router.push(
+  //     `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}/edit/${file.id}`
+  //   );
+  // };
 
   const handleDelete = (event: MouseEvent) => {
     event.stopPropagation();
@@ -79,14 +77,7 @@ const FileItem: React.FC<FileItemProps> = ({ file, profileId, folderId }) => {
           </Card>
         }
       >
-        <FileDetail
-          mainData={mainData}
-          secondaryData={secondaryData}
-          entity={entity}
-          navigateToEdit={navigateToEdit}
-          alias={alias}
-          notes={notes}
-        />
+        {/* <FileDetail file={fileMock} navigateToEdit={navigateToEdit} /> */}
       </ResponsiveDialog>
 
       <DeleteModal

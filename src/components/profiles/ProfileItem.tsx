@@ -1,6 +1,6 @@
 import { ROUTES } from '@constants/routes.const';
 import { TypographyH4, TypographyMutedXS } from '@core/ui/Typography';
-import { Profile } from '@models/profile';
+import { Profile } from '@models/business/profile';
 import Avvvatars from 'avvvatars-react';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';

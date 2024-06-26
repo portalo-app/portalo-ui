@@ -2,7 +2,8 @@
 
 import { ROUTES } from '@constants/routes.const';
 import { TypographyH1 } from '@core/ui/Typography';
-import { Folder, FolderFile } from '@models/profile';
+import { FolderFile } from '@models/business/file';
+import { Folder } from '@models/business/profile';
 import { profilesState } from '@states/profiles.atom';
 import { useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';

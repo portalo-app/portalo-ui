@@ -18,7 +18,8 @@ import {
 } from '@core/ui/Select';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useFolderFile from '@hooks/files/useFolderFile';
-import { FolderFile, FolderType } from '@models/profile';
+import { FolderFile } from '@models/business/file';
+import { FolderType } from '@models/business/profile';
 import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
 import React from 'react';
 import { SocialIcon } from 'react-custom-social-icons';

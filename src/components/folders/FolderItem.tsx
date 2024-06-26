@@ -1,5 +1,5 @@
 import { ROUTES } from '@constants/routes.const';
-import { Folder, Profile } from '@models/profile';
+import { Folder, Profile } from '@models/business/profile';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import FolderTitle from './FolderTitle';

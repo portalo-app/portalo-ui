@@ -11,7 +11,7 @@ import { Input } from '@core/ui/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateProfile from '@hooks/profiles/useCreateProfile';
 import useEditProfile from '@hooks/profiles/useEditProfile';
-import { Profile } from '@models/profile';
+import { Profile } from '@models/business/profile';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 

@@ -1,5 +1,5 @@
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
-import { Profile } from '@models/profile';
+import { Profile } from '@models/business/profile';
 import { DEFAULT_FOLDERS } from '@models/profile.data';
 import { profilesState } from '@states/profiles.atom';
 import { useSetRecoilState } from 'recoil';

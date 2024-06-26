@@ -5,7 +5,7 @@ import DeleteProfileModal from '@components/profiles/DeleteProfileModal';
 import { ROUTES } from '@constants/routes.const';
 import { Button } from '@core/ui/Button';
 import { TypographyH3 } from '@core/ui/Typography';
-import { Profile } from '@models/profile';
+import { Profile } from '@models/business/profile';
 import { profilesState } from '@states/profiles.atom';
 import { ChevronRight, Trash } from 'lucide-react';
 import { NextPage } from 'next';

@@ -1,6 +1,6 @@
 import { Avatar } from '@core/ui/Avatar';
 import { TypographyH4, TypographyMuted } from '@core/ui/Typography';
-import { Folder, Profile } from '@models/profile';
+import { Folder, Profile } from '@models/business/profile';
 import { Wallet } from 'lucide-react';
 
 interface FolderTitleProps {

@@ -1,8 +1,10 @@
-import { Entity } from '../models/profile';
+import { Entity } from '@models/business/file';
 
 const CBU_REGEX = /^[0-9]{22}$/;
 
-export const banks: Entity[] = [
+export type BankValue = (typeof ADDRESS_FIAT_ENTITIES)[number]['value'];
+
+export const ADDRESS_FIAT_ENTITIES: Entity[] = [
   {
     color: '#007894',
     icon: 'nacion',
