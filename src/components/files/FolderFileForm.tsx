@@ -1,309 +1,326 @@
-import EntityIcon from '@components/entities/EntityIcon';
-import { Button } from '@core/ui/Button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@core/ui/Form';
-import { Input } from '@core/ui/Input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@core/ui/Select';
-import { zodResolver } from '@hookform/resolvers/zod';
-import useFolderFile from '@hooks/files/useFolderFile';
-import { FolderFile } from '@models/business/file';
-import { FolderType } from '@models/business/profile';
-import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
-import React from 'react';
-import { SocialIcon } from 'react-custom-social-icons';
-import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+// import EntityIcon from '@components/entities/EntityIcon';
+// import { Button } from '@core/ui/Button';
+// import {
+//   Form,
+//   FormControl,
+//   FormField,
+//   FormItem,
+//   FormLabel,
+//   FormMessage,
+// } from '@core/ui/Form';
+// import { Input } from '@core/ui/Input';
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from '@core/ui/Select';
+// import { zodResolver } from '@hookform/resolvers/zod';
+// import useFolderFile from '@hooks/files/useFolderFile';
+// import { FolderFile } from '@models/business/file';
+// import { FolderType } from '@models/business/folder';
+// import { FoldersTypes } from '@states/app/app.data';
+// import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
+// import React from 'react';
+// import { SocialIcon } from 'react-custom-social-icons';
+// import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
+// import { useForm } from 'react-hook-form';
+// import * as z from 'zod';
 
-interface FolderFileFormProps {
-  profileId: string;
-  folderId: string;
-  folderType: FolderType;
-  onComplete: () => void;
-  action?: 'new' | 'edit';
-  initialData?: FolderFile;
-}
+// interface FolderFileFormProps {
+//   profileId: string;
+//   folderId: string;
+//   folderType: FolderType;
+//   onComplete: () => void;
+//   action?: 'new' | 'edit';
+//   initialData?: FolderFile;
+// }
 
-const FolderFileForm: React.FC<FolderFileFormProps> = ({
-  profileId,
-  folderId,
-  folderType,
-  onComplete,
-  action = 'new',
-  initialData,
-}) => {
-  const { createFile, editFile } = useFolderFile();
+// const FolderFileForm: React.FC<FolderFileFormProps> = ({
+//   profileId,
+//   folderId,
+//   folderType,
+//   onComplete,
+//   action = 'new',
+//   initialData,
+// }) => {
+//   const { createFile, editFile } = useFolderFile();
 
-  const formSchema = z
-    .object({
-      ...{
-        variant: z.string(),
-        entity: z.string().min(1, `Field is required`),
-      },
-      ...(folderType.id === 'social'
-        ? { username: z.string() }
-        : {
-            address: z
-              .string()
-              .min(10, { message: createMinErrorMessage('Address', 10) })
-              .max(100, { message: createMaxErrorMessage('Address', 100) }),
-            name: z
-              .string()
-              .min(4, { message: createMinErrorMessage('Name', 4) })
-              .max(30, { message: createMaxErrorMessage('Name', 30) }),
+//   console.log('folderType: ', folderType);
 
-            alias: z
-              .string()
-              .max(30, { message: createMaxErrorMessage('Alias', 30) })
-              .optional(),
-            notes: z
-              .string()
-              .max(200, { message: createMaxErrorMessage('Notes', 200) })
-              .optional(),
-          }),
-    })
-    .required();
+//   const getEntitiesBasedFolderType = () => {
+//     FoldersTypes.map((folder) => {
+//       console.log(folder);
+//     });
+//   };
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    mode: 'onSubmit',
-    defaultValues: initialData
-      ? { ...initialData, entity: initialData.entity.value }
-      : {
-          variant: folderType.variants[0].id,
-          entity: '',
-          ...(folderType.id === 'social'
-            ? {
-                username: '',
-              }
-            : {
-                address: '',
-                name: '',
-                alias: '',
-                notes: '',
-              }),
-        },
-  });
+//   const x = getEntitiesBasedFolderType(folderType);
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (action === 'new') {
-      createFile(profileId, folderId, {
-        ...data,
-        id: '',
-        tags: [],
-        entity: folderType.variants
-          .find((variant) => variant.id === data.variant)!
-          .availableEntities.find((entity) => entity.value === data.entity)!,
-      } as FolderFile);
-    } else {
-      editFile(profileId, folderId, {
-        ...initialData,
-        ...data,
-        tags: [],
-        entity: folderType.variants
-          .find((variant) => variant.id === data.variant)!
-          .availableEntities.find((entity) => entity.value === data.entity)!,
-      } as FolderFile);
-    }
+//   console.log('x', x);
 
-    form.reset();
+//   const AvailableEntities = FoldersTypes;
 
-    onComplete && onComplete();
-  };
+//   console.log('FOLDERS TYPES', AvailableEntities);
 
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
-      >
-        <FormField
-          control={form.control}
-          name="variant"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Variant</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder={`Select a ${folderType.label}`} />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {folderType.variants.map((variant) => (
-                    <SelectItem key={variant.id} value={variant.id}>
-                      {variant.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+//   const formSchema = z
+//     .object({
+//       ...{
+//         variant: z.string(),
+//         entity: z.string().min(1, `Field is required`),
+//       },
+//       ...(folderType.id === 'social'
+//         ? { username: z.string() }
+//         : {
+//             address: z
+//               .string()
+//               .min(10, { message: createMinErrorMessage('Address', 10) })
+//               .max(100, { message: createMaxErrorMessage('Address', 100) }),
+//             name: z
+//               .string()
+//               .min(4, { message: createMinErrorMessage('Name', 4) })
+//               .max(30, { message: createMaxErrorMessage('Name', 30) }),
 
-        <FormField
-          control={form.control}
-          name="entity"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                {
-                  folderType.variants.find(
-                    (variant) => variant.id === form.getValues().variant
-                  )!.entityLabel
-                }
-              </FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select an option" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <p>
-                    {folderType.variants
-                      .find(
-                        (variant) => variant.id === form.getValues().variant
-                      )!
-                      .availableEntities.map((entity) => (
-                        <SelectItem key={entity.value} value={entity.value}>
-                          <div className="flex gap-2 items-center rounded-full">
-                            {folderType.id === 'social' ? (
-                              <SocialIcon
-                                network={entity.icon as SocialNetwork}
-                                size={20}
-                              />
-                            ) : (
-                              <EntityIcon
-                                entity={entity.value}
-                                width={4}
-                                height={4}
-                              />
-                            )}
-                            {entity.label}
-                          </div>
-                        </SelectItem>
-                      ))}
-                  </p>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+//             alias: z
+//               .string()
+//               .max(30, { message: createMaxErrorMessage('Alias', 30) })
+//               .optional(),
+//             notes: z
+//               .string()
+//               .max(200, { message: createMaxErrorMessage('Notes', 200) })
+//               .optional(),
+//           }),
+//     })
+//     .required();
 
-        {
-          // Render the form fields for the selected entity
-          // based on the selected folder
-          folderType.id === 'social' ? (
-            <>
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <Input
-                      type="text"
-                      {...field}
-                      placeholder="Username"
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />{' '}
-            </>
-          ) : (
-            <>
-              <FormField
-                control={form.control}
-                name="address"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Address</FormLabel>
-                    <Input
-                      {...field}
-                      placeholder="Address"
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+//   const form = useForm<z.infer<typeof formSchema>>({
+//     resolver: zodResolver(formSchema),
+//     mode: 'onSubmit',
+//     defaultValues: initialData
+//       ? { ...initialData, entity: initialData.entity.value }
+//       : {
+//           variant: folderType.variants[0].id,
+//           entity: '',
+//           ...(folderType.id === 'social'
+//             ? {
+//                 username: '',
+//               }
+//             : {
+//                 address: '',
+//                 name: '',
+//                 alias: '',
+//                 notes: '',
+//               }),
+//         },
+//   });
 
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <Input
-                      placeholder="Name"
-                      {...field}
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+//   const onSubmit = (data: z.infer<typeof formSchema>) => {
+//     if (action === 'new') {
+//       createFile(profileId, folderId, {
+//         ...data,
+//         id: '',
+//         tags: [],
+//         entity: folderType.variants
+//           .find((variant) => variant.id === data.variant)!
+//           .ACAAAAA.find((entity) => entity.value === data.entity)!,
+//       } as FolderFile);
+//     } else {
+//       editFile(profileId, folderId, {
+//         ...initialData,
+//         ...data,
+//         tags: [],
+//         entity: folderType.variants
+//           .find((variant) => variant.id === data.variant)!
+//           .availableEntities.find((entity) => entity.value === data.entity)!,
+//       } as FolderFile);
+//     }
 
-              <FormField
-                control={form.control}
-                name="alias"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Alias</FormLabel>
-                    <Input
-                      type="text"
-                      {...field}
-                      placeholder="Alias"
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+//     form.reset();
 
-              <FormField
-                control={form.control}
-                name="notes"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Notes</FormLabel>
-                    <Input
-                      {...field}
-                      type="text"
-                      placeholder="Notes"
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </>
-          )
-        }
+//     onComplete && onComplete();
+//   };
 
-        <Button type="submit" className="mt-4 uppercase">
-          {action === 'new' ? 'Add' : 'Edit'} {folderType.label}
-        </Button>
-      </form>
-    </Form>
-  );
-};
+//   return (
+//     <Form {...form}>
+//       <form
+//         onSubmit={form.handleSubmit(onSubmit)}
+//         className="flex flex-col gap-4"
+//       >
+//         <FormField
+//           control={form.control}
+//           name="variant"
+//           render={({ field }) => (
+//             <FormItem>
+//               <FormLabel>Variant</FormLabel>
+//               <Select onValueChange={field.onChange} defaultValue={field.value}>
+//                 <FormControl>
+//                   <SelectTrigger>
+//                     <SelectValue placeholder={`Select a ${folderType.label}`} />
+//                   </SelectTrigger>
+//                 </FormControl>
+//                 <SelectContent>
+//                   {folderType.variants.map((variant) => (
+//                     <SelectItem key={variant.id} value={variant.id}>
+//                       {variant.label}
+//                     </SelectItem>
+//                   ))}
+//                 </SelectContent>
+//               </Select>
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
 
-export default FolderFileForm;
+//         <FormField
+//           control={form.control}
+//           name="entity"
+//           render={({ field }) => (
+//             <FormItem>
+//               <FormLabel>
+//                 {
+//                   folderType.variants.find(
+//                     (variant) => variant.id === form.getValues().variant
+//                   )!.entityLabel
+//                 }
+//               </FormLabel>
+//               <Select onValueChange={field.onChange} defaultValue={field.value}>
+//                 <FormControl>
+//                   <SelectTrigger>
+//                     <SelectValue placeholder="Select an option" />
+//                   </SelectTrigger>
+//                 </FormControl>
+//                 <SelectContent>
+//                   <p>
+//                     {folderType.variants
+//                       .find(
+//                         (variant) => variant.id === form.getValues().variant
+//                       )!
+//                       .availableEntities.map((entity) => (
+//                         <SelectItem key={entity.value} value={entity.value}>
+//                           <div className="flex gap-2 items-center rounded-full">
+//                             {folderType.id === 'social' ? (
+//                               <SocialIcon
+//                                 network={entity.icon as SocialNetwork}
+//                                 size={20}
+//                               />
+//                             ) : (
+//                               <EntityIcon
+//                                 entity={entity.value}
+//                                 width={4}
+//                                 height={4}
+//                               />
+//                             )}
+//                             {entity.label}
+//                           </div>
+//                         </SelectItem>
+//                       ))}
+//                   </p>
+//                 </SelectContent>
+//               </Select>
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
+
+//         {
+//           // Render the form fields for the selected entity
+//           // based on the selected folder
+//           folderType.id === 'social' ? (
+//             <>
+//               <FormField
+//                 control={form.control}
+//                 name="username"
+//                 render={({ field }) => (
+//                   <FormItem>
+//                     <FormLabel>Username</FormLabel>
+//                     <Input
+//                       type="text"
+//                       {...field}
+//                       placeholder="Username"
+//                       value={field.value as string}
+//                     />
+//                     <FormMessage />
+//                   </FormItem>
+//                 )}
+//               />{' '}
+//             </>
+//           ) : (
+//             <>
+//               <FormField
+//                 control={form.control}
+//                 name="address"
+//                 render={({ field }) => (
+//                   <FormItem>
+//                     <FormLabel>Address</FormLabel>
+//                     <Input
+//                       {...field}
+//                       placeholder="Address"
+//                       value={field.value as string}
+//                     />
+//                     <FormMessage />
+//                   </FormItem>
+//                 )}
+//               />
+
+//               <FormField
+//                 control={form.control}
+//                 name="name"
+//                 render={({ field }) => (
+//                   <FormItem>
+//                     <FormLabel>Name</FormLabel>
+//                     <Input
+//                       placeholder="Name"
+//                       {...field}
+//                       value={field.value as string}
+//                     />
+//                     <FormMessage />
+//                   </FormItem>
+//                 )}
+//               />
+
+//               <FormField
+//                 control={form.control}
+//                 name="alias"
+//                 render={({ field }) => (
+//                   <FormItem>
+//                     <FormLabel>Alias</FormLabel>
+//                     <Input
+//                       type="text"
+//                       {...field}
+//                       placeholder="Alias"
+//                       value={field.value as string}
+//                     />
+//                     <FormMessage />
+//                   </FormItem>
+//                 )}
+//               />
+
+//               <FormField
+//                 control={form.control}
+//                 name="notes"
+//                 render={({ field }) => (
+//                   <FormItem>
+//                     <FormLabel>Notes</FormLabel>
+//                     <Input
+//                       {...field}
+//                       type="text"
+//                       placeholder="Notes"
+//                       value={field.value as string}
+//                     />
+//                     <FormMessage />
+//                   </FormItem>
+//                 )}
+//               />
+//             </>
+//           )
+//         }
+
+//         <Button type="submit" className="mt-4 uppercase">
+//           {action === 'new' ? 'Add' : 'Edit'} {folderType.label}
+//         </Button>
+//       </form>
+//     </Form>
+//   );
+// };
+
+// export default FolderFileForm;

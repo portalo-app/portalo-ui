@@ -2,10 +2,10 @@ import { FolderFile } from './file';
 import { FileVariant } from './profile';
 
 // Folders
-export interface Folder<T extends FolderFile> {
+export interface Folder {
   id: string;
   type: FolderType;
-  files: T[];
+  files: FolderFile[];
 }
 
 export interface FolderType {

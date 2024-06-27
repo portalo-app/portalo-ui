@@ -7,7 +7,6 @@ export const MESSAGING_ENTITIES: Entity[] = [
     icon: 'whatsapp',
     color: '#25d366',
     validationRegex: /https:\/\/web.whatsapp.com\/.*/,
-    defaultTags: [],
   },
   {
     label: 'Telegram',
@@ -15,7 +14,6 @@ export const MESSAGING_ENTITIES: Entity[] = [
     icon: 'telegram',
     color: '#0088cc',
     validationRegex: /https:\/\/t.me\/.*/,
-    defaultTags: [],
   },
   {
     label: 'Skype',
@@ -23,7 +21,6 @@ export const MESSAGING_ENTITIES: Entity[] = [
     icon: 'skype',
     color: '#00aff0',
     validationRegex: /https:\/\/join.skype.com\/.*/,
-    defaultTags: [],
   },
   {
     label: 'Discord',
@@ -31,7 +28,6 @@ export const MESSAGING_ENTITIES: Entity[] = [
     icon: 'discord',
     color: '#7289da',
     validationRegex: /https:\/\/discord.com\/.*/,
-    defaultTags: [],
   },
   {
     label: 'Gmail',
@@ -39,6 +35,5 @@ export const MESSAGING_ENTITIES: Entity[] = [
     icon: 'gmail',
     color: '#d14836',
     validationRegex: /https:\/\/mail.google.com\/.*/,
-    defaultTags: [],
   },
 ];

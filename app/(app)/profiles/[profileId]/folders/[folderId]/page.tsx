@@ -5,7 +5,6 @@ import FolderTitle from '@components/folders/FolderTitle';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
-import { FolderFile } from '@models/business/file';
 import { Folder } from '@models/business/folder';
 import { Profile } from '@models/business/profile';
 import { profilesState } from '@states/profiles.atom';
@@ -21,7 +20,7 @@ interface FolderDetailsProps {
 const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
   const router = useRouter();
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [folder, setFolder] = useState<Folder<FolderFile> | null>(null);
+  const [folder, setFolder] = useState<Folder | null>(null);
   const pathName = usePathname();
 
   const profilesData = useRecoilValue(profilesState);

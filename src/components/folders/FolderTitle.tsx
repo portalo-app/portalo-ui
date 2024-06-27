@@ -1,11 +1,12 @@
 import { Avatar } from '@core/ui/Avatar';
 import { TypographyH4, TypographyMuted } from '@core/ui/Typography';
-import { Folder, Profile } from '@models/business/profile';
+import { Folder } from '@models/business/folder';
+import { Profile } from '@models/business/profile';
 import { Wallet } from 'lucide-react';
 
 interface FolderTitleProps {
   profile: Profile;
-  folder: Folder<any>;
+  folder: Folder;
 }
 
 const FolderTitle: React.FC<FolderTitleProps> = ({ profile, folder }) => {

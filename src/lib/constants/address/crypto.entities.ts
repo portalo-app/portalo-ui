@@ -130,6 +130,5 @@ export const ADDRESS_CRYPTO_ENTITIES: Entity[] = filteredUniqueChains.map(
       CRYPTO_ADDRESSES_REGEX[
         chain.symbol as keyof typeof CRYPTO_ADDRESSES_REGEX
       ],
-    defaultTags: [],
   })
 );

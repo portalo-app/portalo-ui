@@ -1,9 +1,6 @@
-import { Tag } from '@models/business/profile';
-
 export interface FolderFile {
   id: string;
   entity: Entity;
-  tags: Tag[];
   // getFileDetail(): FileDetailData;
 }
 
@@ -13,5 +10,11 @@ export interface Entity {
   value: string;
   label: string;
   validationRegex: RegExp;
-  defaultTags: Tag[];
+}
+
+export interface FileVariant {
+  id: string;
+  label: string;
+  entityLabel: string;
+  availableEntities: Entity[];
 }

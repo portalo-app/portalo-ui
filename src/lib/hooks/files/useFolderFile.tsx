@@ -1,9 +1,9 @@
-import { getSocialUrlByUsername } from '@constants/social/social.entities';
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
 import { FolderFile } from '@models/business/file';
 import { Folder } from '@models/business/folder';
-import { AddressFile, SocialFile } from '@models/business/profile';
+import { SocialFile } from '@models/business/profile';
 import { profilesState } from '@states/profiles.atom';
+import { getSocialUrlByUsername } from '@utils/social/social.util';
 import { useRecoilState } from 'recoil';
 
 const useFolderFile = () => {
@@ -35,7 +35,7 @@ const useFolderFile = () => {
           return {
             ...folder,
             files: [...folder.files, newFile],
-          } as Folder<AddressFile> | Folder<SocialFile>;
+          } as Folder;
         }),
       };
     });
@@ -71,7 +71,7 @@ const useFolderFile = () => {
 
               return editedFile;
             }),
-          } as Folder<AddressFile> | Folder<SocialFile>;
+          } as Folder;
         }),
       };
     });
@@ -92,7 +92,7 @@ const useFolderFile = () => {
           return {
             ...folder,
             files: folder.files.filter((file) => file.id !== fileId),
-          } as Folder<AddressFile> | Folder<SocialFile>;
+          } as Folder;
         }),
       };
     });

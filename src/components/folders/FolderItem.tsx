@@ -1,12 +1,13 @@
 import { ROUTES } from '@constants/routes.const';
-import { Folder, Profile } from '@models/business/profile';
+import { Folder } from '@models/business/folder';
+import { Profile } from '@models/business/profile';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import FolderTitle from './FolderTitle';
 
 interface FolderItemProps {
   profile: Profile;
-  folder: Folder<any>;
+  folder: Folder;
 }
 
 const FolderItem: React.FC<FolderItemProps> = ({ profile, folder }) => {

@@ -1,12 +1,9 @@
 import { FileDetailData } from '@components/files/FileDetail';
-import { Entity } from '@models/business/file';
-import { Tag } from '@models/business/profile';
-import { FolderFile } from '../business/file';
+import { Entity, FolderFile } from '@models/business/file';
 
 export class SocialFile implements FolderFile {
   id: string;
   entity: Entity;
-  tags: Tag[];
   private address: string;
   private name: string;
   private alias: string;
@@ -15,7 +12,6 @@ export class SocialFile implements FolderFile {
   constructor(
     id: string,
     entity: Entity,
-    tags: Tag[],
     address: string,
     name: string,
     alias: string,
@@ -27,7 +23,6 @@ export class SocialFile implements FolderFile {
     this.notes = notes;
     this.id = id;
     this.entity = entity;
-    this.tags = tags;
   }
 
   getFileDetail(): FileDetailData {
@@ -35,7 +30,6 @@ export class SocialFile implements FolderFile {
       title: this.name,
       entity: this.entity,
       QRInfo: this.address,
-      tags: this.tags,
       dataPoints: [
         {
           key: 'Alias',

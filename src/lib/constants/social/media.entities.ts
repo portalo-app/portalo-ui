@@ -7,7 +7,6 @@ export const MEDIA_ENTITIES: Entity[] = [
     icon: 'linkedin',
     color: '#0077b5',
     validationRegex: /https:\/\/www.linkedin.com\/.*/,
-    defaultTags: [],
   },
   {
     label: 'Facebook',
@@ -15,7 +14,6 @@ export const MEDIA_ENTITIES: Entity[] = [
     icon: 'facebook',
     color: '#1877f2',
     validationRegex: /https:\/\/www.facebook.com\/.*/,
-    defaultTags: [],
   },
   {
     label: 'Youtube',
@@ -23,7 +21,6 @@ export const MEDIA_ENTITIES: Entity[] = [
     icon: 'youtube',
     color: '#ff0000',
     validationRegex: /https:\/\/www.youtube.com\/.*/,
-    defaultTags: [],
   },
   {
     color: '#1e88e5',
@@ -31,7 +28,6 @@ export const MEDIA_ENTITIES: Entity[] = [
     value: 'TWITTER',
     label: 'Twitter',
     validationRegex: /https:\/\/twitter.com\/.*/,
-    defaultTags: [],
   },
   {
     color: '#3b5998',
@@ -39,7 +35,6 @@ export const MEDIA_ENTITIES: Entity[] = [
     value: 'REDDIT',
     label: 'Reddit',
     validationRegex: /https:\/\/www.reddit.com\/.*/,
-    defaultTags: [],
   },
   {
     color: '#ff4500',
@@ -47,7 +42,6 @@ export const MEDIA_ENTITIES: Entity[] = [
     value: 'INSTAGRAM',
     label: 'Instagram',
     validationRegex: /https:\/\/www.instagram.com\/.*/,
-    defaultTags: [],
   },
   {
     label: 'TikTok',
@@ -55,6 +49,5 @@ export const MEDIA_ENTITIES: Entity[] = [
     icon: 'tiktok',
     color: '#000000',
     validationRegex: /https:\/\/www.tiktok.com\/.*/,
-    defaultTags: [],
   },
 ];
