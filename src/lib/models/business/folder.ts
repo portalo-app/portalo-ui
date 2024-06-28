@@ -1,16 +1,17 @@
-import { FolderFile } from './file';
-import { FileVariant } from './profile';
-
 // Folders
-export interface Folder {
+export class Folder {
   id: string;
-  type: FolderType;
-  files: FolderFile[];
+  files: File[];
+  folderType: FolderType;
+
+  constructor(id: string, folderType: FolderType) {
+    this.id = id;
+    this.files = [];
+    this.folderType = folderType;
+  }
 }
 
 export interface FolderType {
   id: string;
   label: string;
-  // icon: LucideIcon;
-  variants: FileVariant[];
 }

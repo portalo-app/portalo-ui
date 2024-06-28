@@ -1,5 +1,5 @@
 import { DEFAULT_FOLDERS } from '@states/app/app.data';
-import { Entity, FolderFile } from './file';
+import { Entity, File } from './file';
 import { Folder } from './folder';
 
 // Profile class
@@ -23,14 +23,14 @@ export interface FileVariant {
   availableEntities: Entity[];
 }
 
-export interface AddressFile extends FolderFile {
+export interface AddressFile extends File {
   address: string;
   name?: string;
   alias?: string;
   notes?: string;
 }
 
-export interface SocialFile extends FolderFile {
+export interface SocialFile extends File {
   url: string;
   username: string;
 }

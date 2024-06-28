@@ -1,6 +1,4 @@
-// File should be a Class ?
-
-export interface File {
+export interface FolderFile {
   id: string;
   entity: Entity;
   // getFileDetail(): FileDetailData;
@@ -8,8 +6,8 @@ export interface File {
 
 export interface Entity {
   color: string;
-  icon: string;
   value: string;
+  icon: string;
   label: string;
   validationRegex: RegExp;
 }
