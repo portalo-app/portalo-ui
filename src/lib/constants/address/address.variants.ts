@@ -1,4 +1,4 @@
-import { FileVariant } from '@models/business/profile';
+import { FileVariant } from '@models/business/file/fileVariant';
 import { ADDRESS_CRYPTO_ENTITIES } from './crypto.entities';
 import { ADDRESS_FIAT_ENTITIES } from './fiat.entities';
 

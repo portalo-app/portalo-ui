@@ -1,23 +1,16 @@
-import { AddressFolderType } from '../address/address.folderType';
-import { Folder, FolderType } from '../folder';
-import { SocialFolderType } from '../social/social.folderType';
+import { AddressFolderType } from '../folder/address.folderType';
+import { SocialFolderType } from '../folder/social.folderType';
 
 // ToDo: Add factory method to create a factory type based on its ID
 export class FolderTypeFactory {
-  // type: string | null;
-
-  constructor() {
-    //this.type = null; // ¿This is necessary?
-  }
-
-  createFolderType(folderId: string, folderType: FolderType) {
+  static createFolderType(folderId: string) {
     switch (folderId) {
       case 'address':
         return new AddressFolderType();
       case 'social':
         return new SocialFolderType();
       default:
-        return new Folder(folderId, folderType);
+        throw new Error('Folder type ID does not exist');
     }
   }
 }

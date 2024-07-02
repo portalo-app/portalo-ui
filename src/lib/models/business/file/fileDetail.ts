@@ -1,8 +1,8 @@
-import { Entity } from '@models/business/file';
+import { FileVariantEntity } from './fileVariant';
 
 export interface FileDetail {
   title: string;
-  entity: Entity;
+  entity: FileVariantEntity;
   QRInfo: string;
   dataPoints: Array<{
     key: string;

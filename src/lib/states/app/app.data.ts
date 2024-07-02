@@ -1,16 +1,16 @@
-import { AddressFolderType } from '@models/business/address/address.folderType';
-import { Folder } from '@models/business/folder';
-import { SocialFolderType } from '@models/business/social/social.folderType';
+import { AddressFolderType } from '@models/business/folder/address.folderType';
+import { Folder } from '@models/business/folder/folder';
+import { SocialFolderType } from '@models/business/folder/social.folderType';
 
 export const EMPTY_SOCIAL_FOLDER: Folder = {
   id: 'social',
-  type: new SocialFolderType(),
+  folderType: new SocialFolderType(),
   files: [],
 };
 
 export const EMPTY_ADDRESS_FOLDER: Folder = {
   id: 'address',
-  type: new AddressFolderType(),
+  folderType: new AddressFolderType(),
   files: [],
 };
 

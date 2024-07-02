@@ -1,9 +1,9 @@
 import { FileDetailData } from '@components/files/FileDetail';
-import { Entity, FolderFile } from '@models/business/file';
+import { FileVariantEntity } from './file/fileVariant';
 
-export class SocialFile implements FolderFile {
+export class SocialFile {
   id: string;
-  entity: Entity;
+  entity: FileVariantEntity;
   private address: string;
   private name: string;
   private alias: string;
@@ -11,7 +11,7 @@ export class SocialFile implements FolderFile {
 
   constructor(
     id: string,
-    entity: Entity,
+    entity: FileVariantEntity,
     address: string,
     name: string,
     alias: string,
