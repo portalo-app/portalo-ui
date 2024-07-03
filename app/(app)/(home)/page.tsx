@@ -1,7 +1,7 @@
 'use client';
 
 import StoreWidget from '@components/dashboard/StoreWidget';
-import FolderItem from '@components/folders/FolderItem';
+import FolderListItem from '@components/folders/FolderItem';
 import ProfileItem from '@components/profiles/ProfileItem';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
@@ -28,6 +28,8 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
       icon: profiles[0]?.folders[1],
     },
   ];
+
+  console.log(shortcuts);
 
   const profilesTitle = 'Profiles';
   const emptyProfilesMessage = "You don't have any profiles yet";
@@ -70,7 +72,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
         {hasProfiles ? (
           <div className="divide-y-2 *:block">
             {shortcuts.map(({ profile, folder }, index) => (
-              <FolderItem key={index} profile={profile} folder={folder} />
+              <FolderListItem key={index} profile={profile} folder={folder} />
             ))}
           </div>
         ) : (

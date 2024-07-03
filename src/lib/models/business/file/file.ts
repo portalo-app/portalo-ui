@@ -1,9 +1,9 @@
-import { FileType } from './fileType';
-import { FileVariantEntity } from './fileVariant';
-
 export interface File {
   id: string;
-  entity: FileVariantEntity;
-  type: FileType;
+  data: any;
+  // entity: FileVariantEntity;
+  // type: FileType;
+
+  // ToDo: I think this should be in FileType, because it depends on the type strategy.
   // getFileDetail(): FileDetailData;
 }

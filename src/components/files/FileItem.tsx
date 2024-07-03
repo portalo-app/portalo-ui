@@ -15,14 +15,18 @@ import { AddressFile, SocialFile } from '@models/business/profile';
 import { TrashIcon } from 'lucide-react';
 import { MouseEvent, useState } from 'react';
 
-interface FileItemProps {
+interface FileListItemProps {
   profileId: string;
   folderId: string;
   file: FolderFile;
 }
 
 // TODO: Complete the FileItem component
-const FileItem: React.FC<FileItemProps> = ({ file, profileId, folderId }) => {
+const FileListItem: React.FC<FileListItemProps> = ({
+  file,
+  profileId,
+  folderId,
+}) => {
   // const router = useRouter();
   const { deleteFile } = useFolderFile();
 
@@ -93,4 +97,4 @@ const FileItem: React.FC<FileItemProps> = ({ file, profileId, folderId }) => {
   );
 };
 
-export default FileItem;
+export default FileListItem;

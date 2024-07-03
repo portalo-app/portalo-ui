@@ -2,7 +2,9 @@
 
 import { ROUTES } from '@constants/routes.const';
 import { TypographyH1 } from '@core/ui/Typography';
-import { Folder } from '@models/business/folder/folder';
+import useFolderType from '@hooks/useFolderType';
+import { FileDTO } from '@models/dto/file.dto';
+import { FolderDTO } from '@models/dto/folder.dto';
 import { profilesState } from '@states/profiles.atom';
 import { useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';
@@ -22,11 +24,13 @@ const FileContainer: FC<FileContainerProps> = ({
   action,
   fileId,
 }) => {
-  const [folder, setFolder] = useState<Folder | null>(null);
-  const [file, setFile] = useState<any | null>(null);
+  const [folder, setFolder] = useState<FolderDTO>();
+  const [file, setFile] = useState<FileDTO>();
 
   const profilesData = useRecoilValue(profilesState);
   const router = useRouter();
+
+  const folderType = useFolderType(folder?.folderTypeId);
 
   useEffect(() => {
     if (!profileId) return;
@@ -70,12 +74,12 @@ const FileContainer: FC<FileContainerProps> = ({
         {action === 'new' ? 'Add' : 'Edit'} {folderId}
       </TypographyH1>
 
-      {folder && (
+      {folder && folderType && (
         <FileForm
           profileId={profileId}
           folderId={folderId}
-          folderType={folder.folderType}
-          initialData={file || undefined}
+          folderType={folderType}
+          initialData={file}
           onComplete={() =>
             router.push(
               `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}`

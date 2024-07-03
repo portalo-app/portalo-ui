@@ -1,18 +1,21 @@
 import { ROUTES } from '@constants/routes.const';
-import { Folder } from '@models/business/folder';
-import { Profile } from '@models/business/profile';
+import useFolderType from '@hooks/useFolderType';
+import { FolderDTO } from '@models/dto/folder.dto';
+import { ProfileDTO } from '@models/dto/profile.dto';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import FolderTitle from './FolderTitle';
 
-interface FolderItemProps {
-  profile: Profile;
-  folder: Folder;
+interface FolderListItemProps {
+  profile: ProfileDTO;
+  folder: FolderDTO;
 }
 
-const FolderItem: React.FC<FolderItemProps> = ({ profile, folder }) => {
+const FolderListItem: React.FC<FolderListItemProps> = ({ profile, folder }) => {
   // TODO: Define an icon directory to better fetch the icon.
   // const Icon = folder.type.icon as LucideIcon;
+
+  const folderType = useFolderType(folder?.folderTypeId);
 
   if (!profile || !folder) return null;
 
@@ -21,7 +24,10 @@ const FolderItem: React.FC<FolderItemProps> = ({ profile, folder }) => {
       href={`${ROUTES.APP_PROFILE}/${profile?.id}/${ROUTES.APP_FOLDER}/${folder?.id}`}
     >
       <div className="py-4 relative">
-        <FolderTitle profile={profile} folder={folder} />
+        <FolderTitle
+          profileName={profile.name}
+          folderTypeName={folderType?.label}
+        />
 
         <ChevronRight
           size={24}
@@ -32,4 +38,4 @@ const FolderItem: React.FC<FolderItemProps> = ({ profile, folder }) => {
   );
 };
 
-export default FolderItem;
+export default FolderListItem;

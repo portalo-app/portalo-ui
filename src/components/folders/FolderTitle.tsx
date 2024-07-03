@@ -1,19 +1,16 @@
 import { Avatar } from '@core/ui/Avatar';
 import { TypographyH4, TypographyMuted } from '@core/ui/Typography';
-import { IFolder } from '@models/business/folder/folder';
-import { Profile } from '@models/business/profile';
 import { Wallet } from 'lucide-react';
 
 interface FolderTitleProps {
-  profile: Profile;
-  folder: IFolder;
+  profileName: string;
+  folderTypeName: string | undefined;
 }
 
-const FolderTitle: React.FC<FolderTitleProps> = ({ profile, folder }) => {
-  if (!profile || !folder) return null;
-
-  console.log(folder);
-
+const FolderTitle: React.FC<FolderTitleProps> = ({
+  profileName,
+  folderTypeName,
+}) => {
   return (
     <div className="flex items-center gap-4">
       <Avatar className="bg-muted grid place-items-center w-[42px] h-[42px]">
@@ -21,9 +18,9 @@ const FolderTitle: React.FC<FolderTitleProps> = ({ profile, folder }) => {
       </Avatar>
 
       <div>
-        <TypographyMuted>{profile.name}</TypographyMuted>
+        <TypographyMuted>{profileName}</TypographyMuted>
 
-        <TypographyH4>{folder.folderType.label}</TypographyH4>
+        <TypographyH4>{folderTypeName}</TypographyH4>
       </div>
     </div>
   );

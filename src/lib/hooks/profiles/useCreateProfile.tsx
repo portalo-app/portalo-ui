@@ -1,5 +1,6 @@
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
 import { Profile } from '@models/business/profile';
+import { mapperProfileToProfileDTO } from '@models/mappers/profileMapper';
 import { profilesState } from '@states/profiles.atom';
 import { useSetRecoilState } from 'recoil';
 
@@ -14,7 +15,10 @@ const useCreateProfile: UseCreateProfile = () => {
   const createProfile: CreateProfile = (name: string) => {
     const profile = new Profile(name);
 
-    setProfiles((profiles) => [...profiles, profile]);
+    setProfiles((profiles) => [
+      ...profiles,
+      mapperProfileToProfileDTO(profile),
+    ]);
     trackCreateProfile(profile.id);
   };
 

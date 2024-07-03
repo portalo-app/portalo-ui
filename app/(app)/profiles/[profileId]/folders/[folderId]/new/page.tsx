@@ -1,4 +1,4 @@
-import FileContainer from '@components/files/FolderFileContainer';
+import FileContainer from '@components/files/FileContainer';
 
 interface NewFilePageProps {
   params: { folderId: string; profileId: string };

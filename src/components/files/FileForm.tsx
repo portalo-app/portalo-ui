@@ -1,4 +1,5 @@
 import EntityIcon from '@components/entities/EntityIcon';
+import DataPointFormField from '@components/form/DataPointFormField';
 import { Button } from '@core/ui/Button';
 import {
   Form,
@@ -8,7 +9,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@core/ui/Form';
-import { Input } from '@core/ui/Input';
 import {
   Select,
   SelectContent,
@@ -115,62 +115,32 @@ const FileForm: React.FC<FileFormProps> = ({
     });
   };
 
-  console.log(
-    'createZodSchema',
-    createZodSchema(folderType.fileType.datapoints)
-  );
+  console.log(folderType.fileType.datapoints);
 
   const formSchema = createZodSchema(folderType.fileType.datapoints);
-
-  // const formSchema = z
-  //   .object({
-  //     ...{
-  //       variant: z.string(),
-  //       entity: z.string().min(1, `Field is required`),
-  //     },
-  //     ...(folderType.id === 'social'
-  //       ? { username: z.string() }
-  //       : {
-  //           address: z
-  //             .string()
-  //             .min(10, { message: createMinErrorMessage('Address', 10) })
-  //             .max(100, { message: createMaxErrorMessage('Address', 100) }),
-  //           name: z
-  //             .string()
-  //             .min(4, { message: createMinErrorMessage('Name', 4) })
-  //             .max(30, { message: createMaxErrorMessage('Name', 30) }),
-
-  //           alias: z
-  //             .string()
-  //             .max(30, { message: createMaxErrorMessage('Alias', 30) })
-  //             .optional(),
-  //           notes: z
-  //             .string()
-  //             .max(200, { message: createMaxErrorMessage('Notes', 200) })
-  //             .optional(),
-  //         }),
-  //   })
-  //   .required();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onSubmit',
-    defaultValues: initialData
-      ? { ...initialData, entity: initialData.entity.value }
-      : {
-          variant: folderType.id,
-          entity: '',
-          ...(folderType.id === 'social'
-            ? {
-                username: '',
-              }
-            : {
-                address: '',
-                name: '',
-                alias: '',
-                notes: '',
-              }),
-        },
+    // defaultValues: initialData
+    //   ? { ...initialData, entity: initialData.entity.value }
+    //   : {
+    //       variant: folderType.id,
+    //       entity: '',
+    //       ...(folderType.id === 'social'
+    //         ? {
+    //             username: '',
+    //           }
+    //         : {
+    //             address: '',
+    //             name: '',
+    //             alias: '',
+    //             notes: '',
+    //           }),
+    //     },
+    defaultValues: initialData ?? {
+      variant: folderType.fileType.variants[0].id,
+    },
   });
 
   const onSubmit = () => {
@@ -204,6 +174,8 @@ const FileForm: React.FC<FileFormProps> = ({
   //   onComplete && onComplete();
   // };
 
+  console.log('folderType', folderType);
+
   return (
     <Form {...form}>
       <form
@@ -219,7 +191,7 @@ const FileForm: React.FC<FileFormProps> = ({
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder={`Select a ${folderType.label}`} />
+                    <SelectValue />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -287,96 +259,108 @@ const FileForm: React.FC<FileFormProps> = ({
         />
 
         {
-          // Render the form fields for the selected entity
-          // based on the selected folder
-          folderType.id === 'social' ? (
-            <>
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <Input
-                      type="text"
-                      {...field}
-                      placeholder="Username"
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />{' '}
-            </>
-          ) : (
-            <>
-              <FormField
-                control={form.control}
-                name="address"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Address</FormLabel>
-                    <Input
-                      {...field}
-                      placeholder="Address"
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
+          // folderType.fileType.datapoints
+          [...folderType.fileType.datapoints]
+            .sort((a, b) => a.order - b.order)
+            .map((dataPoint, index) => (
+              <DataPointFormField
+                key={index}
+                form={form}
+                label={dataPoint.name}
+                placeholder={dataPoint.name}
+                dataPointType={dataPoint.type}
               />
+            ))
+        }
 
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <Input
-                      placeholder="Name"
-                      {...field}
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="alias"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Alias</FormLabel>
-                    <Input
-                      type="text"
-                      {...field}
-                      placeholder="Alias"
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="notes"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Notes</FormLabel>
-                    <Input
-                      {...field}
-                      type="text"
-                      placeholder="Notes"
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </>
-          )
+        {
+          // // Render the form fields for the selected entity
+          // // based on the selected folder
+          // folderType.id === 'social' ? (
+          //   <>
+          //     <FormField
+          //       control={form.control}
+          //       name="username"
+          //       render={({ field }) => (
+          //         <FormItem>
+          //           <FormLabel>Username</FormLabel>
+          //           <Input
+          //             type="text"
+          //             {...field}
+          //             placeholder="Username"
+          //             value={field.value as string}
+          //           />
+          //           <FormMessage />
+          //         </FormItem>
+          //       )}
+          //     />{' '}
+          //   </>
+          // ) : (
+          //   <>
+          //     <FormField
+          //       control={form.control}
+          //       name="address"
+          //       render={({ field }) => (
+          //         <FormItem>
+          //           <FormLabel>Address</FormLabel>
+          //           <Input
+          //             {...field}
+          //             placeholder="Address"
+          //             value={field.value as string}
+          //           />
+          //           <FormMessage />
+          //         </FormItem>
+          //       )}
+          //     />
+          //     <FormField
+          //       control={form.control}
+          //       name="name"
+          //       render={({ field }) => (
+          //         <FormItem>
+          //           <FormLabel>Name</FormLabel>
+          //           <Input
+          //             placeholder="Name"
+          //             {...field}
+          //             value={field.value as string}
+          //           />
+          //           <FormMessage />
+          //         </FormItem>
+          //       )}
+          //     />
+          //     <FormField
+          //       control={form.control}
+          //       name="alias"
+          //       render={({ field }) => (
+          //         <FormItem>
+          //           <FormLabel>Alias</FormLabel>
+          //           <Input
+          //             type="text"
+          //             {...field}
+          //             placeholder="Alias"
+          //             value={field.value as string}
+          //           />
+          //           <FormMessage />
+          //         </FormItem>
+          //       )}
+          //     />
+          //     <FormField
+          //       control={form.control}
+          //       name="notes"
+          //       render={({ field }) => (
+          //         <FormItem>
+          //           <FormLabel>Notes</FormLabel>
+          //           <Input
+          //             {...field}
+          //             type="text"
+          //             placeholder="Notes"
+          //             value={field.value as string}
+          //           />
+          //           <FormMessage />
+          //         </FormItem>
+          //       )}
+          //     />
+          //   </>
+          // )
         }
 
         <Button type="submit" className="mt-4 uppercase">

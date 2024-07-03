@@ -1,6 +1,6 @@
 'use client';
 
-import FolderItem from '@components/folders/FolderItem';
+import FolderListItem from '@components/folders/FolderItem';
 import DeleteProfileModal from '@components/profiles/DeleteProfileModal';
 import { ROUTES } from '@constants/routes.const';
 import { Button } from '@core/ui/Button';
@@ -70,7 +70,7 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
             key={index}
             href={`${ROUTES.APP_PROFILE}/${profileId}/${ROUTES.APP_FOLDER}/${folder.id}`}
           >
-            <FolderItem profile={profile} folder={folder} />
+            <FolderListItem profile={profile} folder={folder} />
 
             <ChevronRight
               size={24}
