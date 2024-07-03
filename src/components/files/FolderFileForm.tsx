@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@core/ui/Select';
+import { Tabs, TabsList, TabsTrigger } from '@core/ui/Tab';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useFolderFile from '@hooks/files/useFolderFile';
 import { FolderFile, FolderType } from '@models/profile';
@@ -133,22 +134,28 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
           name="variant"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Variant</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormLabel>Choose a variant</FormLabel>
+              <Tabs>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder={`Select a ${folderType.label}`} />
-                  </SelectTrigger>
+                  <TabsList
+                    className="w-full"
+                    onChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    {folderType.variants.map((variant) => (
+                      <TabsTrigger
+                        key={variant.id}
+                        value={variant.id}
+                        className="flex-1"
+                      >
+                        {variant.label}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
                 </FormControl>
-                <SelectContent>
-                  {folderType.variants.map((variant) => (
-                    <SelectItem key={variant.id} value={variant.id}>
-                      {variant.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
+
+                <FormMessage />
+              </Tabs>
             </FormItem>
           )}
         />
