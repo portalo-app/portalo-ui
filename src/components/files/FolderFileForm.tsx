@@ -1,11 +1,12 @@
 import EntityIcon from '@components/entities/EntityIcon';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@core/ui/Accordion';
 import { Button } from '@core/ui/Button';
 import { Card } from '@core/ui/Card';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@core/ui/Collapsible';
 import { DrawerClose } from '@core/ui/Drawer';
 import {
   Form,
@@ -23,7 +24,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useFolderFile from '@hooks/files/useFolderFile';
 import { Entity, FolderFile, FolderType } from '@models/profile';
 import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
-import { ChevronDown, SquareMousePointer } from 'lucide-react';
+import { SquareMousePointer } from 'lucide-react';
 import React from 'react';
 import { SocialIcon } from 'react-custom-social-icons';
 import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
@@ -290,78 +291,80 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
                 )}
               />
 
-              <Collapsible>
-                <CollapsibleTrigger className="text-primary cursor-pointer flex items-center justify-center w-full">
-                  Optional fields <ChevronDown />
-                </CollapsibleTrigger>
+              <Accordion type="single" collapsible>
+                <AccordionItem value="item" className="border-0">
+                  <AccordionTrigger className="text-primary cursor-pointer flex items-center justify-center w-full gap-2">
+                    Optional fields
+                  </AccordionTrigger>
 
-                <CollapsibleContent className="py-2 flex flex-col gap-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Name{' '}
-                          <span className="text-sm text-gray-500">
-                            (optional)
-                          </span>
-                        </FormLabel>
-                        <Input
-                          placeholder="John Doe"
-                          {...field}
-                          value={field.value as string}
-                        />
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <AccordionContent className="py-2 flex flex-col gap-4">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            Name{' '}
+                            <span className="text-sm text-gray-500">
+                              (optional)
+                            </span>
+                          </FormLabel>
+                          <Input
+                            placeholder="John Doe"
+                            {...field}
+                            value={field.value as string}
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <FormField
-                    control={form.control}
-                    name="alias"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Alias{' '}
-                          <span className="text-sm text-gray-500">
-                            (optional)
-                          </span>
-                        </FormLabel>
-                        <Input
-                          type="text"
-                          {...field}
-                          placeholder="johndoe123"
-                          value={field.value as string}
-                        />
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                    <FormField
+                      control={form.control}
+                      name="alias"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            Alias{' '}
+                            <span className="text-sm text-gray-500">
+                              (optional)
+                            </span>
+                          </FormLabel>
+                          <Input
+                            type="text"
+                            {...field}
+                            placeholder="johndoe123"
+                            value={field.value as string}
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <FormField
-                    control={form.control}
-                    name="notes"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Notes{' '}
-                          <span className="text-sm text-gray-500">
-                            (optional)
-                          </span>
-                        </FormLabel>
-                        <Input
-                          {...field}
-                          type="text"
-                          placeholder="Notes"
-                          value={field.value as string}
-                        />
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </CollapsibleContent>
-              </Collapsible>
+                    <FormField
+                      control={form.control}
+                      name="notes"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            Notes{' '}
+                            <span className="text-sm text-gray-500">
+                              (optional)
+                            </span>
+                          </FormLabel>
+                          <Input
+                            {...field}
+                            type="text"
+                            placeholder="Notes"
+                            value={field.value as string}
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </>
           )
         }
