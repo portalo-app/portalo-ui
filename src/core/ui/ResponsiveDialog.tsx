@@ -49,7 +49,7 @@ const ResponsiveDialog: React.FC<ResponsiveDialogProps> = ({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger className="w-full">{trigger}</DialogTrigger>
 
-        <DialogContent className="max-h-[70vh] overflow-auto">
+        <DialogContent className="max-h-[70vh] overflow-scroll no-scrollbar">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
             {description && (

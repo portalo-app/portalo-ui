@@ -1,5 +1,7 @@
 import EntityIcon from '@components/entities/EntityIcon';
 import { Button } from '@core/ui/Button';
+import { Card } from '@core/ui/Card';
+import { DrawerClose } from '@core/ui/Drawer';
 import {
   Form,
   FormControl,
@@ -9,18 +11,14 @@ import {
   FormMessage,
 } from '@core/ui/Form';
 import { Input } from '@core/ui/Input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@core/ui/Select';
+import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { Tabs, TabsList, TabsTrigger } from '@core/ui/Tab';
+import { TypographyMuted } from '@core/ui/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useFolderFile from '@hooks/files/useFolderFile';
-import { FolderFile, FolderType } from '@models/profile';
+import { Entity, FolderFile, FolderType } from '@models/profile';
 import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
+import { SquareMousePointer } from 'lucide-react';
 import React from 'react';
 import { SocialIcon } from 'react-custom-social-icons';
 import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
@@ -137,16 +135,15 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
               <FormLabel>Choose a variant</FormLabel>
               <Tabs>
                 <FormControl>
-                  <TabsList
-                    className="w-full"
-                    onChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <TabsList className="w-full" defaultValue={field.value}>
                     {folderType.variants.map((variant) => (
                       <TabsTrigger
                         key={variant.id}
                         value={variant.id}
                         className="flex-1"
+                        onClick={() => {
+                          field.onChange(variant.id);
+                        }}
                       >
                         {variant.label}
                       </TabsTrigger>
@@ -165,28 +162,64 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
           name="entity"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                {
-                  folderType.variants.find(
-                    (variant) => variant.id === form.getValues().variant
-                  )!.entityLabel
-                }
-              </FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select an option" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <p>
+              <ResponsiveDialog
+                title=""
+                trigger={
+                  <Card className="mt-2 relative h-12 space-y-2 border-muted hover:cursor-pointer hover:bg-primary/10 rounded-full flex justify-center items-center">
                     {folderType.variants
                       .find(
                         (variant) => variant.id === form.getValues().variant
-                      )!
-                      .availableEntities.map((entity) => (
-                        <SelectItem key={entity.value} value={entity.value}>
-                          <div className="flex gap-2 items-center rounded-full">
+                      )
+                      ?.availableEntities.find(
+                        (entity: Entity) => entity.value === field.value
+                      ) ? (
+                      <div className="flex gap-2 items-center rounded-full">
+                        {folderType.id === 'social' ? (
+                          <SocialIcon
+                            network={field.value as SocialNetwork}
+                            size={20}
+                          />
+                        ) : (
+                          <EntityIcon
+                            entity={field.value}
+                            width={4}
+                            height={4}
+                          />
+                        )}
+
+                        {
+                          folderType.variants
+                            .find(
+                              (variant) =>
+                                variant.id === form.getValues().variant
+                            )
+                            ?.availableEntities.find(
+                              (entity: Entity) => entity.value === field.value
+                            )?.label
+                        }
+                        <TypographyMuted>| {field.value}</TypographyMuted>
+                      </div>
+                    ) : (
+                      <span className="flex align-center gap-2">
+                        <SquareMousePointer className="text-primary " />
+                        Choose an entity
+                      </span>
+                    )}
+                  </Card>
+                }
+                closeButtonLabel="Close"
+              >
+                <div className="grid grid-cols-2 gap-3">
+                  {folderType.variants
+                    .find((variant) => variant.id === form.getValues().variant)!
+                    .availableEntities.map((entity) => (
+                      <DrawerClose key={entity.value}>
+                        <Card
+                          className={`cursor-pointer border-primary/20 h-24 hover:bg-primary/15
+                      `}
+                          onClick={() => field.onChange(entity.value)}
+                        >
+                          <div className="flex flex-col gap-2 justify-center h-full items-center rounded-full ">
                             {folderType.id === 'social' ? (
                               <SocialIcon
                                 network={entity.icon as SocialNetwork}
@@ -201,11 +234,12 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
                             )}
                             {entity.label}
                           </div>
-                        </SelectItem>
-                      ))}
-                  </p>
-                </SelectContent>
-              </Select>
+                        </Card>
+                      </DrawerClose>
+                    ))}
+                </div>
+              </ResponsiveDialog>
+
               <FormMessage />
             </FormItem>
           )}
