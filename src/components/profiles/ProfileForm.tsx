@@ -13,7 +13,7 @@ import { TypographyH4, TypographyP } from '@core/ui/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateProfile from '@hooks/profiles/useCreateProfile';
 import useEditProfile from '@hooks/profiles/useEditProfile';
-import { Profile } from '@models/profile';
+import { Profile } from '@models/business/profile';
 import { UserRound } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';

@@ -1,18 +1,15 @@
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
-import { AddressFile, Folder, FolderFile, SocialFile } from '@models/profile';
-import { getSocialUrlByUsername } from '@models/social.entities';
+import { File } from '@models/business/file/file';
+import { SocialFile } from '@models/business/profile';
 import { profilesState } from '@states/profiles.atom';
+import { getSocialUrlByUsername } from '@utils/social/social.util';
 import { useRecoilState } from 'recoil';
 
 const useFolderFile = () => {
   const [profiles, setProfiles] = useRecoilState(profilesState);
   const { trackCreateFile, trackDeleteFile, trackEditFile } = useAnalytics();
 
-  const createFile = (
-    profileId: string,
-    folderId: string,
-    newFile: FolderFile
-  ) => {
+  const createFile = (profileId: string, folderId: string, newFile: File) => {
     const newProfiles = profiles.map((profile) => {
       if (profile.id !== profileId) return profile;
 
@@ -33,7 +30,7 @@ const useFolderFile = () => {
           return {
             ...folder,
             files: [...folder.files, newFile],
-          } as Folder<AddressFile> | Folder<SocialFile>;
+          } as Folder;
         }),
       };
     });
@@ -69,7 +66,7 @@ const useFolderFile = () => {
 
               return editedFile;
             }),
-          } as Folder<AddressFile> | Folder<SocialFile>;
+          } as Folder;
         }),
       };
     });
@@ -90,7 +87,7 @@ const useFolderFile = () => {
           return {
             ...folder,
             files: folder.files.filter((file) => file.id !== fileId),
-          } as Folder<AddressFile> | Folder<SocialFile>;
+          } as Folder;
         }),
       };
     });

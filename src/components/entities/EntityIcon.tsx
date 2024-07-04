@@ -1,5 +1,8 @@
-import { socialNetworks } from '@constants/socialNetworksList';
-import { BankValue, ChainValue, banks } from '@models/address.entities';
+import { ChainValue } from '@constants/address/crypto.entities';
+import {
+  ADDRESS_FIAT_ENTITIES,
+  BankValue,
+} from '@constants/address/fiat.entities';
 import Algo from 'cryptocurrency-icons/svg/color/algo.svg';
 import Sol from 'cryptocurrency-icons/svg/color/sol.svg';
 import Ada from 'cryptocurrency-icons/svg/icon/ada.svg';
@@ -24,6 +27,44 @@ interface EntityIconProps {
   height?: number;
 }
 
+export const socialNetworksIcons = [
+  'zoom',
+  'discord',
+  'github',
+  'facebook',
+  'twitter',
+  'instagram',
+  'whatsapp',
+  'vk',
+  'linkedin',
+  'vimeo',
+  'youtube',
+  'tumblr',
+  'skype',
+  'pinterest',
+  'behance',
+  'dribbble',
+  'google-analytics',
+  'facebook-pixel',
+  'reddit',
+  'messenger',
+  'snapchat',
+  'apple',
+  'telegram',
+  'google',
+  'tiktok',
+  'spotify',
+  'trustpilot',
+  'twitch',
+  'google-meet',
+  'google-maps',
+  'gmail',
+  'soundcloud',
+  'patreon',
+  'tinder',
+  'google-calendar',
+] as const;
+
 const chainIcons: {
   [key in ChainValue]: React.ReactNode;
 } = {
@@ -44,7 +85,7 @@ const chainIcons: {
 const bankIcons: {
   [key in BankValue]?: React.ReactNode;
 } = {};
-banks.forEach((bank) =>
+ADDRESS_FIAT_ENTITIES.forEach((bank) =>
   Object.assign(bankIcons, {
     [bank.value]: (
       <Image
@@ -61,7 +102,7 @@ banks.forEach((bank) =>
 
 // TODO: Refactor to make it dynamic through an Icon Directory
 const EntityIcon: React.FC<EntityIconProps> = ({ entity, width, height }) => {
-  if (socialNetworks.includes(entity.toLowerCase() as any)) {
+  if (socialNetworksIcons.includes(entity.toLowerCase() as any)) {
     return (
       <SocialIcon
         network={entity.toLowerCase() as SocialNetwork}

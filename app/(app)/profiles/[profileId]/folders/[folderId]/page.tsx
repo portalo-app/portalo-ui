@@ -1,12 +1,14 @@
 'use client';
 
-import FileItem from '@components/files/FileItem';
+import FileListItem from '@components/files/FileItem';
 import ProfileHeader from '@components/profiles/ProfileHeader';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
 import { TypographyH3 } from '@core/ui/Typography';
-import { Folder, FolderFile, Profile } from '@models/profile';
+import { File } from '@models/business/file/file';
+import { Folder } from '@models/business/folder/folder';
+import { Profile } from '@models/business/profile';
 import { profilesState } from '@states/profiles.atom';
 import { Landmark } from 'lucide-react';
 import { NextPage } from 'next';
@@ -21,7 +23,7 @@ interface FolderDetailsProps {
 const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
   const router = useRouter();
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [folder, setFolder] = useState<Folder<FolderFile> | null>(null);
+  const [folder, setFolder] = useState<Folder | null>(null);
   const pathName = usePathname();
 
   const profilesData = useRecoilValue(profilesState);
@@ -61,8 +63,8 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
 
       <div className="space-y-4">
         {folder?.files?.length ?? 0 > 0 ? (
-          folder?.files.map((file, index) => (
-            <FileItem
+          folder?.files.map((file: File, index: number) => (
+            <FileListItem
               key={index}
               file={file}
               profileId={profileId}

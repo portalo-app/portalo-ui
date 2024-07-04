@@ -1,4 +1,4 @@
-import FolderFileContainer from '@components/files/FolderFileContainer';
+import FileContainer from '@components/files/FileContainer';
 
 interface NewFilePageProps {
   params: { folderId: string; profileId: string };
@@ -8,11 +8,7 @@ const NewFilePage: React.FC<NewFilePageProps> = ({ params }) => {
   const { folderId, profileId } = params;
 
   return (
-    <FolderFileContainer
-      profileId={profileId}
-      folderId={folderId}
-      action="new"
-    />
+    <FileContainer profileId={profileId} folderId={folderId} action="new" />
   );
 };
 

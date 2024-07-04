@@ -1,12 +1,12 @@
 import { ROUTES } from '@constants/routes.const';
 import { TypographyH5, TypographyMuted } from '@core/ui/Typography';
-import { Profile } from '@models/profile';
+import { ProfileDTO } from '@models/dto/profile.dto';
 import Avvvatars from 'avvvatars-react';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
 interface ProfileItemProps {
-  profile: Profile;
+  profile: ProfileDTO;
 }
 
 const ProfileItem: React.FC<ProfileItemProps> = ({ profile }) => {

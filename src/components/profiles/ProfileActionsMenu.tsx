@@ -9,7 +9,7 @@ import {
 } from '@core/ui/Dialog';
 import { Popover, PopoverContent, PopoverTrigger } from '@core/ui/PopOver';
 import { TypographySmall } from '@core/ui/Typography';
-import { Profile } from '@models/profile';
+import { Profile } from '@models/business/profile';
 import { MoreVertical, Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import DeleteProfileModal from './DeleteProfileModal';

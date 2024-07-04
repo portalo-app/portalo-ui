@@ -1,15 +1,16 @@
-import { Entity } from '../models/profile';
+import { Entity } from '@models/business/file';
 
 const CBU_REGEX = /^[0-9]{22}$/;
 
-export const banks: Entity[] = [
+export type BankValue = (typeof ADDRESS_FIAT_ENTITIES)[number]['value'];
+
+export const ADDRESS_FIAT_ENTITIES: Entity[] = [
   {
     color: '#007894',
     icon: 'nacion',
     value: 'NACION',
     label: 'Nacion',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#e60000',
@@ -17,7 +18,6 @@ export const banks: Entity[] = [
     value: 'SANTANDER',
     label: 'Santander',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#f7931a',
@@ -25,7 +25,6 @@ export const banks: Entity[] = [
     value: 'GALICIA',
     label: 'Galicia',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#1e3096',
@@ -33,7 +32,6 @@ export const banks: Entity[] = [
     value: 'BBVA',
     label: 'BBVA',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#003057',
@@ -41,7 +39,6 @@ export const banks: Entity[] = [
     value: 'MACRO',
     label: 'Macro',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#db0011',
@@ -49,7 +46,6 @@ export const banks: Entity[] = [
     value: 'HSBC',
     label: 'Hsbc',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#4caf50',
@@ -57,7 +53,6 @@ export const banks: Entity[] = [
     value: 'ITAU',
     label: 'Itau',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#003057',
@@ -65,7 +60,6 @@ export const banks: Entity[] = [
     value: 'CIUDAD',
     label: 'Ciudad',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#673ab7',
@@ -73,7 +67,6 @@ export const banks: Entity[] = [
     value: 'BRUBANK',
     label: 'Brubank',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#db0011',
@@ -81,7 +74,6 @@ export const banks: Entity[] = [
     value: 'ICBC',
     label: 'ICBC',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#003057',
@@ -89,7 +81,6 @@ export const banks: Entity[] = [
     value: 'UALA',
     label: 'UALA',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#003057',
@@ -97,7 +88,6 @@ export const banks: Entity[] = [
     value: 'REBANK',
     label: 'Reba',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#4caf50',
@@ -105,7 +95,6 @@ export const banks: Entity[] = [
     value: 'PREX',
     label: 'Prex',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#4caf50',
@@ -113,7 +102,6 @@ export const banks: Entity[] = [
     value: 'PROVINCIA',
     label: 'Banco provincia',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#db0011',
@@ -121,7 +109,6 @@ export const banks: Entity[] = [
     value: 'SUPERVIELLE',
     label: 'Supervielle',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#003057',
@@ -129,7 +116,6 @@ export const banks: Entity[] = [
     value: 'MERCADOPAGO',
     label: 'Mercado pago',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#f7931a',
@@ -137,7 +123,6 @@ export const banks: Entity[] = [
     value: 'NARANJAX',
     label: 'Naranja X',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#673ab7',
@@ -145,7 +130,6 @@ export const banks: Entity[] = [
     value: 'BELO',
     label: 'Belo',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#4caf50',
@@ -153,7 +137,6 @@ export const banks: Entity[] = [
     value: 'LEMON',
     label: 'Lemon',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#003057',
@@ -161,7 +144,6 @@ export const banks: Entity[] = [
     value: 'BUENBIT',
     label: 'Buen Bit',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
   {
     color: '#f7931a',
@@ -169,6 +151,5 @@ export const banks: Entity[] = [
     value: 'FIWIND',
     label: 'Fiwind',
     validationRegex: CBU_REGEX,
-    defaultTags: [],
   },
 ] as const;

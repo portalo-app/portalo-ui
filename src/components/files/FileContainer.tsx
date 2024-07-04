@@ -2,31 +2,35 @@
 
 import { ROUTES } from '@constants/routes.const';
 import { TypographyH1 } from '@core/ui/Typography';
-import { Folder, FolderFile } from '@models/profile';
+import useFolderType from '@hooks/useFolderType';
+import { FileDTO } from '@models/dto/file.dto';
+import { FolderDTO } from '@models/dto/folder.dto';
 import { profilesState } from '@states/profiles.atom';
 import { useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import FolderFileForm from './FolderFileForm';
+import FileForm from './FileForm';
 
-interface FolderFileContainerProps {
+interface FileContainerProps {
   profileId: string;
   folderId: string;
   fileId?: string;
   action: 'new' | 'edit';
 }
 
-const FolderFileContainer: FC<FolderFileContainerProps> = ({
+const FileContainer: FC<FileContainerProps> = ({
   profileId,
   folderId,
   action,
   fileId,
 }) => {
-  const [folder, setFolder] = useState<Folder<FolderFile> | null>(null);
-  const [file, setFile] = useState<FolderFile | null>(null);
+  const [folder, setFolder] = useState<FolderDTO>();
+  const [file, setFile] = useState<FileDTO>();
 
   const profilesData = useRecoilValue(profilesState);
   const router = useRouter();
+
+  const folderType = useFolderType(folder?.folderTypeId);
 
   useEffect(() => {
     if (!profileId) return;
@@ -34,9 +38,12 @@ const FolderFileContainer: FC<FolderFileContainerProps> = ({
     const selectedProfile = profilesData.find(
       (profile) => profile.id === profileId
     );
+
     const selectedFolder = selectedProfile?.folders.find(
       (folder) => folder.id === folderId
     );
+
+    console.log('selectedFolder', selectedFolder);
 
     if (!selectedProfile || !selectedFolder) {
       router.push(ROUTES.APP);
@@ -67,12 +74,12 @@ const FolderFileContainer: FC<FolderFileContainerProps> = ({
         {folderId}
       </TypographyH1>
 
-      {folder && (
-        <FolderFileForm
+      {folder && folderType && (
+        <FileForm
           profileId={profileId}
           folderId={folderId}
-          folderType={folder?.type}
-          initialData={file || undefined}
+          folderType={folderType}
+          initialData={file}
           onComplete={() =>
             router.push(
               `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}`
@@ -85,4 +92,4 @@ const FolderFileContainer: FC<FolderFileContainerProps> = ({
   );
 };
 
-export default FolderFileContainer;
+export default FileContainer;

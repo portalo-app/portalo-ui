@@ -1,6 +1,6 @@
 import DeleteModal from '@core/components/DeleteModal';
 import useDeleteProfile from '@hooks/profiles/useDeleteProfile';
-import { Profile } from '@models/profile';
+import { Profile } from '@models/business/profile';
 
 interface DeleteProfileModalProps {
   profile: Profile;
