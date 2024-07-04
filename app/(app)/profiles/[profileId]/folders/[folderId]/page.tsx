@@ -6,9 +6,10 @@ import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
 import { TypographyH3 } from '@core/ui/Typography';
+import useFolderType from '@hooks/useFolderType';
 import { File } from '@models/business/file/file';
-import { Folder } from '@models/business/folder/folder';
-import { Profile } from '@models/business/profile';
+import { FolderDTO } from '@models/dto/folder.dto';
+import { ProfileDTO } from '@models/dto/profile.dto';
 import { profilesState } from '@states/profiles.atom';
 import { Landmark } from 'lucide-react';
 import { NextPage } from 'next';
@@ -22,12 +23,14 @@ interface FolderDetailsProps {
 
 const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
   const router = useRouter();
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [folder, setFolder] = useState<Folder | null>(null);
+  const [profile, setProfile] = useState<ProfileDTO | null>(null);
+  const [folder, setFolder] = useState<FolderDTO | null>(null);
   const pathName = usePathname();
 
   const profilesData = useRecoilValue(profilesState);
   const { folderId, profileId } = params;
+
+  const folderType = useFolderType(folder?.folderTypeId);
 
   useEffect(() => {
     if (!profileId) return;
@@ -55,7 +58,7 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Landmark />
-          <TypographyH3>{folder?.type.label} folder</TypographyH3>
+          <TypographyH3>{folderType?.label} folder</TypographyH3>
         </div>
 
         <CreateButton href={`${pathName}/new`} />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import EntityIcon from '@components/entities/EntityIcon';
 import DataPointFormField from '@components/form/DataPointFormField';
 import { Button } from '@core/ui/Button';

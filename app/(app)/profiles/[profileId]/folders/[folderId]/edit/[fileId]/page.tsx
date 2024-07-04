@@ -1,4 +1,4 @@
-import FileContainer from '@components/files/FolderFileContainer';
+import FileContainer from '@components/files/FileContainer';
 
 interface EditFilePageProps {
   params: { folderId: string; profileId: string; fileId: string };

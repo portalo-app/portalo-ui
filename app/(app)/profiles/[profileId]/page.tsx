@@ -5,7 +5,7 @@ import ProfileHeader from '@components/profiles/ProfileHeader';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import { TypographyH3 } from '@core/ui/Typography';
-import { Profile } from '@models/business/profile';
+import { ProfileDTO } from '@models/dto/profile.dto';
 import { profilesState } from '@states/profiles.atom';
 import { ChevronRight, Folder } from 'lucide-react';
 import { NextPage } from 'next';
@@ -19,7 +19,7 @@ interface ProfilePageProps {
 }
 
 const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<ProfileDTO | null>(null);
   const profilesData = useRecoilValue(profilesState);
 
   const { profileId } = params;

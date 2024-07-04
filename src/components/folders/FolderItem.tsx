@@ -19,9 +19,9 @@ const FolderListItem: React.FC<FolderListItemProps> = ({ profile, folder }) => {
 
   if (!profile || !folder) return null;
 
-  const filesLabel = `${folder.files.length} file${
-    folder.files.length > 1 || folder.files.length === 0 ? 's' : ''
-  }`;
+  // const filesLabel = `${folder.files.length} file${
+  //   folder.files.length > 1 || folder.files.length === 0 ? 's' : ''
+  // }`;
 
   return (
     <Link
