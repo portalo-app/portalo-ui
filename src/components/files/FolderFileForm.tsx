@@ -24,7 +24,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useFolderFile from '@hooks/files/useFolderFile';
 import { Entity, FolderFile, FolderType } from '@models/profile';
 import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
-import { SquareMousePointer } from 'lucide-react';
+import { Pencil, Plus, SquareMousePointer } from 'lucide-react';
 import React from 'react';
 import { SocialIcon } from 'react-custom-social-icons';
 import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
@@ -141,12 +141,15 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
               <FormLabel>Choose a variant</FormLabel>
               <Tabs>
                 <FormControl>
-                  <TabsList className="w-full" defaultValue={field.value}>
+                  <TabsList
+                    className="w-full border border-muted rounded-full h-10 px-1 bg-muted/25"
+                    defaultValue={field.value}
+                  >
                     {folderType.variants.map((variant) => (
                       <TabsTrigger
                         key={variant.id}
                         value={variant.id}
-                        className="flex-1"
+                        className="flex-1 rounded-full"
                         onClick={() => {
                           field.onChange(variant.id);
                         }}
@@ -171,7 +174,7 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
               <ResponsiveDialog
                 title=""
                 trigger={
-                  <Card className="mt-2 relative h-12 space-y-2 border-muted hover:cursor-pointer hover:bg-primary/10 rounded-full flex justify-center items-center">
+                  <Card className="mt-2 relative h-12 space-y-2 border-0 border-muted hover:cursor-pointer hover:bg-primary/10 rounded-full flex justify-center items-center">
                     {folderType.variants
                       .find(
                         (variant) => variant.id === form.getValues().variant
@@ -208,7 +211,12 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
                     ) : (
                       <span className="flex align-center gap-2">
                         <SquareMousePointer className="text-primary " />
-                        Choose an entity
+                        Choose a{' '}
+                        {folderType.variants
+                          .find(
+                            (variant) => variant.id === form.getValues().variant
+                          )
+                          ?.entityLabel.toLocaleLowerCase()}
                       </span>
                     )}
                   </Card>
@@ -291,34 +299,32 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
                 )}
               />
 
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Name{' '}
+                      <span className="text-sm text-gray-500">(optional)</span>
+                    </FormLabel>
+                    <Input
+                      placeholder="John Doe"
+                      {...field}
+                      value={field.value as string}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <Accordion type="single" collapsible>
                 <AccordionItem value="item" className="border-0">
                   <AccordionTrigger className="text-primary cursor-pointer flex items-center justify-center w-full gap-2">
-                    Optional fields
+                    Other fields
                   </AccordionTrigger>
 
                   <AccordionContent className="py-2 flex flex-col gap-4">
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>
-                            Name{' '}
-                            <span className="text-sm text-gray-500">
-                              (optional)
-                            </span>
-                          </FormLabel>
-                          <Input
-                            placeholder="John Doe"
-                            {...field}
-                            value={field.value as string}
-                          />
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
                     <FormField
                       control={form.control}
                       name="alias"
@@ -369,8 +375,18 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
           )
         }
 
-        <Button type="submit" className="mt-auto uppercase ">
-          {action === 'new' ? 'Add' : 'Edit'} {folderType.label}
+        <Button type="submit" className="mt-auto uppercase flex gap-1 ">
+          {action === 'new' ? (
+            <>
+              <Plus />
+              Create
+            </>
+          ) : (
+            <>
+              <Pencil size={18} />
+              Edit
+            </>
+          )}
         </Button>
       </form>
     </Form>

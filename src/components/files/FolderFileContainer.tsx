@@ -63,8 +63,8 @@ const FolderFileContainer: FC<FolderFileContainerProps> = ({
 
   return (
     <div className="flex flex-col gap-6">
-      <TypographyH1>
-        {action === 'new' ? 'Add' : 'Edit'} {folderId}
+      <TypographyH1 className="self-center capitalize flex items-center text-primary">
+        {folderId}
       </TypographyH1>
 
       {folder && (
