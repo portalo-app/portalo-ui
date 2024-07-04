@@ -1,6 +1,11 @@
 import EntityIcon from '@components/entities/EntityIcon';
 import { Button } from '@core/ui/Button';
 import { Card } from '@core/ui/Card';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@core/ui/Collapsible';
 import { DrawerClose } from '@core/ui/Drawer';
 import {
   Form,
@@ -18,7 +23,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useFolderFile from '@hooks/files/useFolderFile';
 import { Entity, FolderFile, FolderType } from '@models/profile';
 import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
-import { SquareMousePointer } from 'lucide-react';
+import { ChevronDown, SquareMousePointer } from 'lucide-react';
 import React from 'react';
 import { SocialIcon } from 'react-custom-social-icons';
 import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
@@ -125,7 +130,7 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-4 h-[calc(75vh-2rem)]"
       >
         <FormField
           control={form.control}
@@ -259,7 +264,7 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
                     <Input
                       type="text"
                       {...field}
-                      placeholder="Username"
+                      placeholder="john_doe"
                       value={field.value as string}
                     />
                     <FormMessage />
@@ -277,7 +282,7 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
                     <FormLabel>Address</FormLabel>
                     <Input
                       {...field}
-                      placeholder="Address"
+                      placeholder="0x123..."
                       value={field.value as string}
                     />
                     <FormMessage />
@@ -285,60 +290,83 @@ const FolderFileForm: React.FC<FolderFileFormProps> = ({
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <Input
-                      placeholder="Name"
-                      {...field}
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <Collapsible>
+                <CollapsibleTrigger className="text-primary cursor-pointer flex items-center justify-center w-full">
+                  Optional fields <ChevronDown />
+                </CollapsibleTrigger>
 
-              <FormField
-                control={form.control}
-                name="alias"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Alias</FormLabel>
-                    <Input
-                      type="text"
-                      {...field}
-                      placeholder="Alias"
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <CollapsibleContent className="py-2 flex flex-col gap-4">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Name{' '}
+                          <span className="text-sm text-gray-500">
+                            (optional)
+                          </span>
+                        </FormLabel>
+                        <Input
+                          placeholder="John Doe"
+                          {...field}
+                          value={field.value as string}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-              <FormField
-                control={form.control}
-                name="notes"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Notes</FormLabel>
-                    <Input
-                      {...field}
-                      type="text"
-                      placeholder="Notes"
-                      value={field.value as string}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                  <FormField
+                    control={form.control}
+                    name="alias"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Alias{' '}
+                          <span className="text-sm text-gray-500">
+                            (optional)
+                          </span>
+                        </FormLabel>
+                        <Input
+                          type="text"
+                          {...field}
+                          placeholder="johndoe123"
+                          value={field.value as string}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="notes"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Notes{' '}
+                          <span className="text-sm text-gray-500">
+                            (optional)
+                          </span>
+                        </FormLabel>
+                        <Input
+                          {...field}
+                          type="text"
+                          placeholder="Notes"
+                          value={field.value as string}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </CollapsibleContent>
+              </Collapsible>
             </>
           )
         }
 
-        <Button type="submit" className="mt-4 uppercase">
+        <Button type="submit" className="mt-auto uppercase ">
           {action === 'new' ? 'Add' : 'Edit'} {folderType.label}
         </Button>
       </form>
