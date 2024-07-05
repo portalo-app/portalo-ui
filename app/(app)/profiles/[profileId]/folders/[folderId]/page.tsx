@@ -7,10 +7,10 @@ import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
 import { TypographyH3 } from '@core/ui/Typography';
 import useFolderType from '@hooks/useFolderType';
-import { File } from '@models/business/file/file';
 import { FolderDTO } from '@models/dto/folder.dto';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { profilesState } from '@states/profiles.atom';
+import { motion } from 'framer-motion';
 import { Landmark } from 'lucide-react';
 import { NextPage } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
@@ -66,13 +66,23 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
 
       <div className="space-y-4">
         {folder?.files?.length ?? 0 > 0 ? (
-          folder?.files.map((file: File, index: number) => (
-            <FileListItem
+          folder?.files.map((file, index) => (
+            <motion.div
               key={index}
-              file={file}
-              profileId={profileId}
-              folderId={folderId}
-            />
+              variants={{
+                open: { opacity: 1 },
+                closed: { opacity: 0 },
+              }}
+              initial="closed"
+              animate="open"
+              transition={{ delay: index * 0.2 }}
+            >
+              <FileListItem
+                file={file}
+                profileId={profileId}
+                folderId={folderId}
+              />
+            </motion.div>
           ))
         ) : (
           <State

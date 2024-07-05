@@ -10,15 +10,14 @@ import {
   TypographyMutedXS,
 } from '@core/ui/Typography';
 import useFolderFile from '@hooks/files/useFolderFile';
-import { FolderFile } from '@models/business/file';
-import { AddressFile, SocialFile } from '@models/business/profile';
+import { motion } from 'framer-motion';
 import { TrashIcon } from 'lucide-react';
 import { MouseEvent, useState } from 'react';
 
 interface FileListItemProps {
   profileId: string;
   folderId: string;
-  file: FolderFile;
+  file: File;
 }
 
 // TODO: Complete the FileItem component
@@ -56,29 +55,52 @@ const FileListItem: React.FC<FileListItemProps> = ({
     setIsDeleteModalOpen(true);
   };
 
+  const variants = {
+    open: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        y: { stiffness: 2000, velocity: -100 },
+      },
+    },
+    closed: {
+      y: 10,
+      opacity: 0,
+      transition: {
+        y: { stiffness: 2000 },
+      },
+    },
+  };
+
   return (
     <>
       <ResponsiveDialog
         title=""
         trigger={
-          <Card className="relative p-4 space-y-2 border-muted-foreground/20 bg-muted hover:cursor-pointer">
-            <div className="flex items-center gap-2 w-100">
-              <EntityIcon entity={entity.value} width={24} height={24} />
+          <motion.div
+            variants={variants}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Card className="relative p-4 space-y-2 border-muted-foreground/20 bg-muted hover:cursor-pointer">
+              <div className="flex items-center gap-2 w-100">
+                <EntityIcon entity={entity.value} width={24} height={24} />
 
-              <TypographyMuted>{entity.label}</TypographyMuted>
+                <TypographyMuted>{entity.label}</TypographyMuted>
 
-              <TrashIcon
-                className="w-4 h-4 ml-auto mr-1 hover:text-red-600"
-                onClick={handleDelete}
-              />
-            </div>
+                <TrashIcon
+                  className="w-4 h-4 ml-auto mr-1 hover:text-red-600"
+                  onClick={handleDelete}
+                />
+              </div>
 
-            <div className="text-left">
-              <TypographyH5>{mainData}</TypographyH5>
+              <div className="text-left">
+                <TypographyH5>{mainData}</TypographyH5>
 
-              <TypographyMutedXS>{secondaryData}</TypographyMutedXS>
-            </div>
-          </Card>
+                <TypographyMutedXS>{secondaryData}</TypographyMutedXS>
+              </div>
+            </Card>
+          </motion.div>
         }
       >
         {/* <FileDetail file={fileMock} navigateToEdit={navigateToEdit} /> */}
