@@ -30,24 +30,23 @@ const DataPointFormField: React.FC<dataPointFormFieldProps> = ({
   };
 
   return (
-    <>
-      <FormField
-        control={form.control}
-        name={name}
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>{label}</FormLabel>
-            <Input
-              type={getInputType()}
-              {...field}
-              placeholder={placeholder}
-              value={field.value}
-            />
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    </>
+    <FormField
+      control={form.control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>{label}</FormLabel>
+          <Input
+            type={getInputType()}
+            {...field}
+            placeholder={placeholder}
+            value={field.value}
+          />
+
+          <FormMessage />
+        </FormItem>
+      )}
+    />
   );
 };
 

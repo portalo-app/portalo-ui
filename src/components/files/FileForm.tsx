@@ -27,6 +27,7 @@ import { FileVariantEntity } from '@models/business/file/fileVariant';
 import { FolderType } from '@models/business/folder/folderType';
 
 import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
+import { cn } from '@utils/utils';
 import { Pencil, Plus, SquareMousePointer } from 'lucide-react';
 import React from 'react';
 import { SocialIcon } from 'react-custom-social-icons';
@@ -54,39 +55,34 @@ const FileForm: React.FC<FileFormProps> = ({
 }) => {
   // const { createFile, editFile } = useFolderFile();
 
-  console.log('folderType: ', folderType);
-
-  console.log('initialData', initialData);
-
   const createZodSchema = (datapoints: Datapoint[]): ZodSchema => {
     // Shape are the form fields that will be rendered depending on the datapoints
     const shape: { [key: string]: ZodSchema } = {};
 
     datapoints.forEach((datapoint: Datapoint) => {
-      let shapeField = shape[datapoint.name];
-
       switch (datapoint.type) {
         case 'string':
-          shapeField = z.string();
+          shape[datapoint.name] = z.string();
           break;
         case 'number':
-          shapeField = z.number();
+          shape[datapoint.name] = z.number();
           break;
         case 'boolean':
-          shapeField = z.boolean();
+          shape[datapoint.name] = z.boolean();
           break;
         default:
           throw new Error(`Unknown type: ${datapoint.type}`);
       }
 
       datapoint.validations?.forEach((validation: DatapointValidation) => {
+        const shapeField = shape[datapoint.name];
         switch (validation.type) {
           case 'min':
             if (
               shapeField instanceof z.ZodNumber ||
               shapeField instanceof z.ZodString
             ) {
-              shapeField = shapeField.min(Number(validation.value), {
+              shape[datapoint.name] = shapeField.min(Number(validation.value), {
                 message:
                   validation.errorMessage ??
                   createMinErrorMessage(
@@ -95,12 +91,14 @@ const FileForm: React.FC<FileFormProps> = ({
                   ),
               });
             }
+            break;
+
           case 'max':
             if (
               shapeField instanceof z.ZodNumber ||
               shapeField instanceof z.ZodString
             ) {
-              shapeField = shapeField.max(Number(validation.value), {
+              shape[datapoint.name] = shapeField.max(Number(validation.value), {
                 message:
                   validation.errorMessage ??
                   createMaxErrorMessage(
@@ -109,20 +107,21 @@ const FileForm: React.FC<FileFormProps> = ({
                   ),
               });
             }
+            break;
+
           case 'isOptional':
-            shapeField = shapeField.optional();
+            shape[datapoint.name] = shapeField.optional();
+            break;
         }
       });
     });
 
     return z.object({
-      variant: z.string(),
+      variant: z.string().min(1, `Field is required`),
       entity: z.string().min(1, `Field is required`),
       ...shape,
     });
   };
-
-  console.log(folderType.fileType.datapoints);
 
   const formSchema = createZodSchema(folderType.fileType.datapoints);
 
@@ -136,10 +135,8 @@ const FileForm: React.FC<FileFormProps> = ({
 
   const onSubmit = () => {
     const values = form.getValues();
-    console.log(values);
+    console.log({ values });
   };
-
-  console.log('folderType', folderType);
 
   return (
     <Form {...form}>
@@ -157,7 +154,7 @@ const FileForm: React.FC<FileFormProps> = ({
                 <FormControl>
                   <TabsList
                     className="w-full border border-muted rounded-full h-10 px-1 bg-muted/25"
-                    defaultValue={field.value}
+                    defaultValue={folderType.fileType.variants[0].id}
                   >
                     {folderType.fileType.variants.map((variant) => (
                       <TabsTrigger
@@ -166,6 +163,7 @@ const FileForm: React.FC<FileFormProps> = ({
                         className="flex-1 rounded-full"
                         onClick={() => {
                           field.onChange(variant.id);
+                          form.setValue('entity', '');
                         }}
                       >
                         {variant.label}
@@ -185,10 +183,18 @@ const FileForm: React.FC<FileFormProps> = ({
           name="entity"
           render={({ field }) => (
             <FormItem>
+              <FormMessage />
+
               <ResponsiveDialog
                 title=""
                 trigger={
-                  <Card className="mt-2 relative h-12 space-y-2 border-0 border-muted hover:cursor-pointer hover:bg-primary/10 rounded-full flex justify-center items-center">
+                  <Card
+                    className={cn(
+                      'mt-2 relative h-12 space-y-2 border-0 border-muted hover:cursor-pointer hover:bg-primary/10 rounded-full flex justify-center items-center',
+                      form.control.getFieldState('entity').error &&
+                        'border border-red-900'
+                    )}
+                  >
                     {folderType.fileType.variants
                       .find(
                         (variant) => variant.id === form.getValues().variant
@@ -269,8 +275,6 @@ const FileForm: React.FC<FileFormProps> = ({
                     ))}
                 </div>
               </ResponsiveDialog>
-
-              <FormMessage />
             </FormItem>
           )}
         />
