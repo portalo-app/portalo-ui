@@ -290,6 +290,7 @@ const FileForm: React.FC<FileFormProps> = ({
                 key={index}
                 form={form}
                 label={dataPoint.name}
+                name={dataPoint.name}
                 placeholder={dataPoint.placeholder}
                 dataPointType={dataPoint.type}
               />
@@ -321,6 +322,7 @@ const FileForm: React.FC<FileFormProps> = ({
                       <DataPointFormField
                         key={index}
                         form={form}
+                        name={dataPoint.name}
                         label={dataPoint.name}
                         placeholder={dataPoint.placeholder}
                         dataPointType={dataPoint.type}

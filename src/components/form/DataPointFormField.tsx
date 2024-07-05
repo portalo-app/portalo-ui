@@ -8,6 +8,7 @@ interface dataPointFormFieldProps {
   label: string;
   placeholder: string;
   dataPointType: string;
+  name: string;
 }
 
 const DataPointFormField: React.FC<dataPointFormFieldProps> = ({
@@ -15,6 +16,7 @@ const DataPointFormField: React.FC<dataPointFormFieldProps> = ({
   label,
   placeholder,
   dataPointType,
+  name,
 }) => {
   const getInputType = (): HTMLInputTypeAttribute => {
     switch (dataPointType) {
@@ -31,7 +33,7 @@ const DataPointFormField: React.FC<dataPointFormFieldProps> = ({
     <>
       <FormField
         control={form.control}
-        name="alias"
+        name={name}
         render={({ field }) => (
           <FormItem>
             <FormLabel>{label}</FormLabel>
