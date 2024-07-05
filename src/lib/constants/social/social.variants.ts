@@ -5,13 +5,13 @@ import { MESSAGING_ENTITIES } from './messaging.entities';
 export const SOCIAL_MESSAGING_VARIANT: FileVariant = {
   id: 'messaging',
   label: 'Messaging',
-  entityLabel: 'Messaging',
+  entityLabel: 'Social network',
   availableEntities: MESSAGING_ENTITIES,
 };
 
 export const SOCIAL_MEDIA_VARIANT: FileVariant = {
   id: 'media',
   label: 'Media',
-  entityLabel: 'Media',
+  entityLabel: 'Social network',
   availableEntities: MEDIA_ENTITIES,
 };

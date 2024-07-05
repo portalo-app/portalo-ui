@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import EntityIcon from '@components/entities/EntityIcon';
 import DataPointFormField from '@components/form/DataPointFormField';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@core/ui/Accordion';
 import { Button } from '@core/ui/Button';
+import { Card } from '@core/ui/Card';
+import { DrawerClose } from '@core/ui/Drawer';
 import {
   Form,
   FormControl,
@@ -10,18 +18,16 @@ import {
   FormLabel,
   FormMessage,
 } from '@core/ui/Form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@core/ui/Select';
+import ResponsiveDialog from '@core/ui/ResponsiveDialog';
+import { Tabs, TabsList, TabsTrigger } from '@core/ui/Tab';
+import { TypographyMuted } from '@core/ui/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Datapoint, DatapointValidation } from '@models/business/file/fileType';
+import { FileVariantEntity } from '@models/business/file/fileVariant';
 import { FolderType } from '@models/business/folder/folderType';
 
 import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
+import { Pencil, Plus, SquareMousePointer } from 'lucide-react';
 import React from 'react';
 import { SocialIcon } from 'react-custom-social-icons';
 import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
@@ -123,22 +129,6 @@ const FileForm: React.FC<FileFormProps> = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onSubmit',
-    // defaultValues: initialData
-    //   ? { ...initialData, entity: initialData.entity.value }
-    //   : {
-    //       variant: folderType.id,
-    //       entity: '',
-    //       ...(folderType.id === 'social'
-    //         ? {
-    //             username: '',
-    //           }
-    //         : {
-    //             address: '',
-    //             name: '',
-    //             alias: '',
-    //             notes: '',
-    //           }),
-    //     },
     defaultValues: initialData ?? {
       variant: folderType.fileType.variants[0].id,
     },
@@ -149,61 +139,43 @@ const FileForm: React.FC<FileFormProps> = ({
     console.log(values);
   };
 
-  // const onSubmit = (data: z.infer<typeof formSchema>) => {
-  //   if (action === 'new') {
-  //     createFile(profileId, folderId, {
-  //       ...data,
-  //       id: '',
-  //       // tags: [],
-  //       entity: folderType.variants
-  //         .find((variant) => variant.id === data.variant)!
-  //         .availableEntities.find((entity) => entity.value === data.entity)!,
-  //     } as FolderFile);
-  //   } else {
-  //     editFile(profileId, folderId, {
-  //       ...initialData,
-  //       ...data,
-  //       // tags: [],
-  //       entity: folderType.variants
-  //         .find((variant) => variant.id === data.variant)!
-  //         .availableEntities.find((entity) => entity.value === data.entity)!,
-  //     } as FolderFile);
-  //   }
-
-  //   form.reset();
-
-  //   onComplete && onComplete();
-  // };
-
   console.log('folderType', folderType);
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-4 h-[calc(75vh-2rem)]"
       >
         <FormField
           control={form.control}
           name="variant"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Variant</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormLabel>Choose a variant</FormLabel>
+              <Tabs>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
+                  <TabsList
+                    className="w-full border border-muted rounded-full h-10 px-1 bg-muted/25"
+                    defaultValue={field.value}
+                  >
+                    {folderType.fileType.variants.map((variant) => (
+                      <TabsTrigger
+                        key={variant.id}
+                        value={variant.id}
+                        className="flex-1 rounded-full"
+                        onClick={() => {
+                          field.onChange(variant.id);
+                        }}
+                      >
+                        {variant.label}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
                 </FormControl>
-                <SelectContent>
-                  {folderType.fileType.variants.map((variant) => (
-                    <SelectItem key={variant.id} value={variant.id}>
-                      {variant.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
+
+                <FormMessage />
+              </Tabs>
             </FormItem>
           )}
         />
@@ -213,28 +185,71 @@ const FileForm: React.FC<FileFormProps> = ({
           name="entity"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                {
-                  folderType.fileType.variants.find(
-                    (variant) => variant.id === form.getValues().variant
-                  )!.entityLabel
-                }
-              </FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select an option" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <p>
+              <ResponsiveDialog
+                title=""
+                trigger={
+                  <Card className="mt-2 relative h-12 space-y-2 border-0 border-muted hover:cursor-pointer hover:bg-primary/10 rounded-full flex justify-center items-center">
                     {folderType.fileType.variants
                       .find(
                         (variant) => variant.id === form.getValues().variant
-                      )!
-                      .availableEntities.map((entity) => (
-                        <SelectItem key={entity.value} value={entity.value}>
-                          <div className="flex gap-2 items-center rounded-full">
+                      )
+                      ?.availableEntities.find(
+                        (entity: FileVariantEntity) =>
+                          entity.value === field.value
+                      ) ? (
+                      <div className="flex gap-2 items-center rounded-full">
+                        {folderType.id === 'social' ? (
+                          <SocialIcon
+                            network={field.value as SocialNetwork}
+                            size={20}
+                          />
+                        ) : (
+                          <EntityIcon
+                            entity={field.value}
+                            width={4}
+                            height={4}
+                          />
+                        )}
+
+                        {
+                          folderType.fileType.variants
+                            .find(
+                              (variant) =>
+                                variant.id === form.getValues().variant
+                            )
+                            ?.availableEntities.find(
+                              (entity: FileVariantEntity) =>
+                                entity.value === field.value
+                            )?.label
+                        }
+                        <TypographyMuted>| {field.value}</TypographyMuted>
+                      </div>
+                    ) : (
+                      <span className="flex align-center gap-2">
+                        <SquareMousePointer className="text-primary " />
+                        Choose a{' '}
+                        {folderType.fileType.variants
+                          .find(
+                            (variant) => variant.id === form.getValues().variant
+                          )
+                          ?.entityLabel.toLocaleLowerCase()}
+                      </span>
+                    )}
+                  </Card>
+                }
+                closeButtonLabel="Close"
+              >
+                <div className="grid grid-cols-2 gap-3">
+                  {folderType.fileType.variants
+                    .find((variant) => variant.id === form.getValues().variant)!
+                    .availableEntities.map((entity) => (
+                      <DrawerClose key={entity.value}>
+                        <Card
+                          className={`cursor-pointer border-primary/20 h-24 hover:bg-primary/15
+                      `}
+                          onClick={() => field.onChange(entity.value)}
+                        >
+                          <div className="flex flex-col gap-2 justify-center h-full items-center rounded-full ">
                             {folderType.id === 'social' ? (
                               <SocialIcon
                                 network={entity.icon as SocialNetwork}
@@ -249,11 +264,12 @@ const FileForm: React.FC<FileFormProps> = ({
                             )}
                             {entity.label}
                           </div>
-                        </SelectItem>
-                      ))}
-                  </p>
-                </SelectContent>
-              </Select>
+                        </Card>
+                      </DrawerClose>
+                    ))}
+                </div>
+              </ResponsiveDialog>
+
               <FormMessage />
             </FormItem>
           )}
@@ -262,110 +278,74 @@ const FileForm: React.FC<FileFormProps> = ({
         {
           // folderType.fileType.datapoints
           [...folderType.fileType.datapoints]
+            .filter(
+              (dataPoint) =>
+                !dataPoint.validations?.some(
+                  (validation) => validation.type === 'isOptional'
+                )
+            )
             .sort((a, b) => a.order - b.order)
             .map((dataPoint, index) => (
               <DataPointFormField
                 key={index}
                 form={form}
                 label={dataPoint.name}
-                placeholder={dataPoint.name}
+                placeholder={dataPoint.placeholder}
                 dataPointType={dataPoint.type}
               />
             ))
         }
 
-        {
-          // // Render the form fields for the selected entity
-          // // based on the selected folder
-          // folderType.id === 'social' ? (
-          //   <>
-          //     <FormField
-          //       control={form.control}
-          //       name="username"
-          //       render={({ field }) => (
-          //         <FormItem>
-          //           <FormLabel>Username</FormLabel>
-          //           <Input
-          //             type="text"
-          //             {...field}
-          //             placeholder="Username"
-          //             value={field.value as string}
-          //           />
-          //           <FormMessage />
-          //         </FormItem>
-          //       )}
-          //     />{' '}
-          //   </>
-          // ) : (
-          //   <>
-          //     <FormField
-          //       control={form.control}
-          //       name="address"
-          //       render={({ field }) => (
-          //         <FormItem>
-          //           <FormLabel>Address</FormLabel>
-          //           <Input
-          //             {...field}
-          //             placeholder="Address"
-          //             value={field.value as string}
-          //           />
-          //           <FormMessage />
-          //         </FormItem>
-          //       )}
-          //     />
-          //     <FormField
-          //       control={form.control}
-          //       name="name"
-          //       render={({ field }) => (
-          //         <FormItem>
-          //           <FormLabel>Name</FormLabel>
-          //           <Input
-          //             placeholder="Name"
-          //             {...field}
-          //             value={field.value as string}
-          //           />
-          //           <FormMessage />
-          //         </FormItem>
-          //       )}
-          //     />
-          //     <FormField
-          //       control={form.control}
-          //       name="alias"
-          //       render={({ field }) => (
-          //         <FormItem>
-          //           <FormLabel>Alias</FormLabel>
-          //           <Input
-          //             type="text"
-          //             {...field}
-          //             placeholder="Alias"
-          //             value={field.value as string}
-          //           />
-          //           <FormMessage />
-          //         </FormItem>
-          //       )}
-          //     />
-          //     <FormField
-          //       control={form.control}
-          //       name="notes"
-          //       render={({ field }) => (
-          //         <FormItem>
-          //           <FormLabel>Notes</FormLabel>
-          //           <Input
-          //             {...field}
-          //             type="text"
-          //             placeholder="Notes"
-          //             value={field.value as string}
-          //           />
-          //           <FormMessage />
-          //         </FormItem>
-          //       )}
-          //     />
-          //   </>
-          // )
-        }
+        {[...folderType.fileType.datapoints].some((dataPoint) =>
+          dataPoint.validations?.some(
+            (validation) => validation.type === 'isOptional'
+          )
+        ) ? (
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item" className="border-0">
+              <AccordionTrigger className="text-primary cursor-pointer flex items-center justify-center w-full gap-2">
+                Other fields
+              </AccordionTrigger>
 
-        <Button type="submit" className="mt-4 uppercase">
-          {action === 'new' ? 'Add' : 'Edit'} {folderType.label}
+              <AccordionContent className="py-2 flex flex-col gap-4">
+                {
+                  // folderType.fileType.datapoints
+                  [...folderType.fileType.datapoints]
+                    .filter((dataPoint) =>
+                      dataPoint.validations?.some(
+                        (validation) => validation.type === 'isOptional'
+                      )
+                    )
+                    .sort((a, b) => a.order - b.order)
+                    .map((dataPoint, index) => (
+                      <DataPointFormField
+                        key={index}
+                        form={form}
+                        label={dataPoint.name}
+                        placeholder={dataPoint.placeholder}
+                        dataPointType={dataPoint.type}
+                      />
+                    ))
+                }
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        ) : (
+          <></>
+        )}
+
+        <Button type="submit" className="mt-auto uppercase flex gap-1">
+          {action === 'new' ? (
+            <>
+              <Plus />
+              Create
+            </>
+          ) : (
+            <>
+              <Pencil size={18} />
+              Edit
+            </>
+          )}
         </Button>
       </form>
     </Form>

@@ -12,9 +12,10 @@ export class SocialFileType implements FileType {
   constructor() {
     this.datapoints = [
       {
-        name: 'username',
+        name: 'sername',
         type: 'string',
         order: 1,
+        placeholder: 'john_doe',
         validations: [
           {
             type: 'min',

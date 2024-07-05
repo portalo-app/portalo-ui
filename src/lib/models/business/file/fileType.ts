@@ -9,6 +9,7 @@ export interface Datapoint {
   name: string;
   type: DatapointType;
   order: number;
+  placeholder: string;
   validations?: DatapointValidation[];
 }
 

@@ -15,6 +15,7 @@ export class AddressFileType implements FileType {
         name: 'Address',
         type: 'string',
         order: 1,
+        placeholder: '0x123...',
         validations: [
           {
             type: 'min',
@@ -30,6 +31,7 @@ export class AddressFileType implements FileType {
         name: 'Name',
         type: 'string',
         order: 2,
+        placeholder: "John's Wallet",
         validations: [
           {
             type: 'min',
@@ -45,6 +47,7 @@ export class AddressFileType implements FileType {
         name: 'Alias',
         type: 'string',
         order: 3,
+        placeholder: 'john.eth',
         validations: [
           {
             type: 'min',
@@ -64,6 +67,7 @@ export class AddressFileType implements FileType {
         name: 'Notes',
         type: 'string',
         order: 4,
+        placeholder: 'Notes about this address',
         validations: [
           {
             type: 'max',
