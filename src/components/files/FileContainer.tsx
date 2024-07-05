@@ -43,8 +43,6 @@ const FileContainer: FC<FileContainerProps> = ({
       (folder) => folder.id === folderId
     );
 
-    console.log('selectedFolder', selectedFolder);
-
     if (!selectedProfile || !selectedFolder) {
       router.push(ROUTES.APP);
       return;

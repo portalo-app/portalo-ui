@@ -1,6 +1,6 @@
 'use client';
 
-import EntityIcon from '@components/entities/EntityIcon';
+import FileVariantEntityIcon from '@components/entities/FileVariantEntityIcon';
 import DeleteModal from '@core/components/DeleteModal';
 import { Card } from '@core/ui/Card';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
@@ -10,15 +10,14 @@ import {
   TypographyMutedXS,
 } from '@core/ui/Typography';
 import useFolderFile from '@hooks/files/useFolderFile';
-import { FolderFile } from '@models/business/file';
-import { AddressFile, SocialFile } from '@models/business/profile';
+import { FileDTO } from '@models/dto/file.dto';
 import { TrashIcon } from 'lucide-react';
 import { MouseEvent, useState } from 'react';
 
 interface FileListItemProps {
   profileId: string;
   folderId: string;
-  file: FolderFile;
+  file: FileDTO;
 }
 
 // TODO: Complete the FileItem component
@@ -43,8 +42,6 @@ const FileListItem: React.FC<FileListItemProps> = ({
   // const alias = (file as AddressFile).alias || '';
   // const notes = (file as AddressFile).notes || '';
 
-  console.log('element', file);
-
   // const navigateToEdit = () => {
   //   router.push(
   //     `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}/edit/${file.id}`
@@ -63,7 +60,11 @@ const FileListItem: React.FC<FileListItemProps> = ({
         trigger={
           <Card className="relative p-4 space-y-2 border-muted-foreground/20 bg-muted hover:cursor-pointer">
             <div className="flex items-center gap-2 w-100">
-              <EntityIcon entity={entity.value} width={24} height={24} />
+              <FileVariantEntityIcon
+                entity={entity.value}
+                width={24}
+                height={24}
+              />
 
               <TypographyMuted>{entity.label}</TypographyMuted>
 

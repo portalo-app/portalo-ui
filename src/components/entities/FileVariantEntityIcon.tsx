@@ -21,7 +21,7 @@ import Image from 'next/image';
 import { SocialIcon } from 'react-custom-social-icons';
 import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
 
-interface EntityIconProps {
+interface FileVariantEntityIconProps {
   entity: ChainValue | BankValue | 'DEFAULT_BANK' | 'DEFAULT_CHAIN';
   width?: number;
   height?: number;
@@ -101,7 +101,11 @@ ADDRESS_FIAT_ENTITIES.forEach((bank) =>
 );
 
 // TODO: Refactor to make it dynamic through an Icon Directory
-const EntityIcon: React.FC<EntityIconProps> = ({ entity, width, height }) => {
+const FileVariantEntityIcon: React.FC<FileVariantEntityIconProps> = ({
+  entity,
+  width,
+  height,
+}) => {
   if (socialNetworksIcons.includes(entity.toLowerCase() as any)) {
     return (
       <SocialIcon
@@ -141,4 +145,4 @@ const EntityIcon: React.FC<EntityIconProps> = ({ entity, width, height }) => {
   );
 };
 
-export default EntityIcon;
+export default FileVariantEntityIcon;

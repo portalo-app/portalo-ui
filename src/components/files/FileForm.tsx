@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import EntityIcon from '@components/entities/EntityIcon';
+import FileVariantEntityIcon from '@components/entities/FileVariantEntityIcon';
 import DataPointFormField from '@components/form/DataPointFormField';
 import {
   Accordion,
@@ -53,10 +52,6 @@ const FileForm: React.FC<FileFormProps> = ({
   initialData,
 }) => {
   // const { createFile, editFile } = useFolderFile();
-
-  console.log('folderType: ', folderType);
-
-  console.log('initialData', initialData);
 
   const createZodSchema = (datapoints: Datapoint[]): ZodSchema => {
     // Shape are the form fields that will be rendered depending on the datapoints
@@ -122,8 +117,6 @@ const FileForm: React.FC<FileFormProps> = ({
     });
   };
 
-  console.log(folderType.fileType.datapoints);
-
   const formSchema = createZodSchema(folderType.fileType.datapoints);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -139,7 +132,31 @@ const FileForm: React.FC<FileFormProps> = ({
     console.log(values);
   };
 
-  console.log('folderType', folderType);
+  // const onSubmit = (data: z.infer<typeof formSchema>) => {
+  //   if (action === 'new') {
+  //     createFile(profileId, folderId, {
+  //       ...data,
+  //       id: '',
+  //       // tags: [],
+  //       entity: folderType.variants
+  //         .find((variant) => variant.id === data.variant)!
+  //         .availableEntities.find((entity) => entity.value === data.entity)!,
+  //     } as FolderFile);
+  //   } else {
+  //     editFile(profileId, folderId, {
+  //       ...initialData,
+  //       ...data,
+  //       // tags: [],
+  //       entity: folderType.variants
+  //         .find((variant) => variant.id === data.variant)!
+  //         .availableEntities.find((entity) => entity.value === data.entity)!,
+  //     } as FolderFile);
+  //   }
+
+  //   form.reset();
+
+  //   onComplete && onComplete();
+  // };
 
   return (
     <Form {...form}>
@@ -153,12 +170,9 @@ const FileForm: React.FC<FileFormProps> = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Choose a variant</FormLabel>
-              <Tabs>
+              <Tabs defaultValue={field.value}>
                 <FormControl>
-                  <TabsList
-                    className="w-full border border-muted rounded-full h-10 px-1 bg-muted/25"
-                    defaultValue={field.value}
-                  >
+                  <TabsList className="w-full border border-muted rounded-full h-10 px-1 bg-muted/25">
                     {folderType.fileType.variants.map((variant) => (
                       <TabsTrigger
                         key={variant.id}
@@ -204,7 +218,7 @@ const FileForm: React.FC<FileFormProps> = ({
                             size={20}
                           />
                         ) : (
-                          <EntityIcon
+                          <FileVariantEntityIcon
                             entity={field.value}
                             width={4}
                             height={4}
@@ -242,27 +256,27 @@ const FileForm: React.FC<FileFormProps> = ({
                 <div className="grid grid-cols-2 gap-3">
                   {folderType.fileType.variants
                     .find((variant) => variant.id === form.getValues().variant)!
-                    .availableEntities.map((entity) => (
-                      <DrawerClose key={entity.value}>
+                    .availableEntities.map((variantEntity) => (
+                      <DrawerClose key={variantEntity.value}>
                         <Card
                           className={`cursor-pointer border-primary/20 h-24 hover:bg-primary/15
                       `}
-                          onClick={() => field.onChange(entity.value)}
+                          onClick={() => field.onChange(variantEntity.value)}
                         >
                           <div className="flex flex-col gap-2 justify-center h-full items-center rounded-full ">
                             {folderType.id === 'social' ? (
                               <SocialIcon
-                                network={entity.icon as SocialNetwork}
+                                network={variantEntity.icon as SocialNetwork}
                                 size={20}
                               />
                             ) : (
-                              <EntityIcon
-                                entity={entity.value}
+                              <FileVariantEntityIcon
+                                entity={variantEntity.value}
                                 width={4}
                                 height={4}
                               />
                             )}
-                            {entity.label}
+                            {variantEntity.label}
                           </div>
                         </Card>
                       </DrawerClose>

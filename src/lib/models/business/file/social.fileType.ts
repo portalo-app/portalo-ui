@@ -12,7 +12,7 @@ export class SocialFileType implements FileType {
   constructor() {
     this.datapoints = [
       {
-        name: 'sername',
+        name: 'Username',
         type: 'string',
         order: 1,
         placeholder: 'john_doe',
