@@ -20,13 +20,13 @@ import {
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { Tabs, TabsList, TabsTrigger } from '@core/ui/Tab';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Datapoint, DatapointValidation } from '@models/business/file/fileType';
+import useFile from '@hooks/files/useFile';
 import {
   FileVariant,
   FileVariantEntity,
 } from '@models/business/file/fileVariant';
 import { FolderType } from '@models/business/folder/folderType';
-import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
+import { FileDTO } from '@models/dto/file.dto';
 import { Pencil, Plus, SquareMousePointer } from 'lucide-react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -38,7 +38,7 @@ interface FileFormProps {
   folderType: FolderType;
   onComplete: () => void;
   action?: 'new' | 'edit';
-  initialData?: any;
+  initialData?: FileDTO;
 }
 
 const FileForm: React.FC<FileFormProps> = ({
@@ -49,7 +49,7 @@ const FileForm: React.FC<FileFormProps> = ({
   action = 'new',
   initialData,
 }) => {
-  // const { createFile, editFile } = useFolderFile();
+  const { generateZodFileSchema, createFile } = useFile();
 
   const getCurrentVariant = (): FileVariant | undefined => {
     return folderType.fileType.variants.find(
@@ -63,110 +63,37 @@ const FileForm: React.FC<FileFormProps> = ({
     )!;
   };
 
-  const createZodSchema = (datapoints: Datapoint[]): z.ZodSchema => {
-    // Shape are the form fields that will be rendered depending on the datapoints
-    const shape: { [key: string]: ZodSchema } = {};
-
-    datapoints.forEach((datapoint: Datapoint) => {
-      let shapeField = shape[datapoint.name];
-
-      switch (datapoint.type) {
-        case 'string':
-          shapeField = z.string();
-          break;
-        case 'number':
-          shapeField = z.number();
-          break;
-        case 'boolean':
-          shapeField = z.boolean();
-          break;
-        default:
-          throw new Error(`Unknown type: ${datapoint.type}`);
-      }
-
-      datapoint.validations?.forEach((validation: DatapointValidation) => {
-        switch (validation.type) {
-          case 'min':
-            if (
-              shapeField instanceof z.ZodNumber ||
-              shapeField instanceof z.ZodString
-            ) {
-              shapeField = shapeField.min(Number(validation.value), {
-                message:
-                  validation.errorMessage ??
-                  createMinErrorMessage(
-                    datapoint.name,
-                    Number(validation.value)
-                  ),
-              });
-            }
-          case 'max':
-            if (
-              shapeField instanceof z.ZodNumber ||
-              shapeField instanceof z.ZodString
-            ) {
-              shapeField = shapeField.max(Number(validation.value), {
-                message:
-                  validation.errorMessage ??
-                  createMaxErrorMessage(
-                    datapoint.name,
-                    Number(validation.value)
-                  ),
-              });
-            }
-          case 'isOptional':
-            shapeField = shapeField.optional();
-        }
-      });
-    });
-
-    return z.object({
-      variant: z.string(),
-      entity: z.string().min(1, `Field is required`),
-      ...shape,
-    });
-  };
-
-  const formSchema = createZodSchema(folderType.fileType.datapoints);
+  const formSchema = generateZodFileSchema(folderType.fileType.datapoints);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onSubmit',
-    defaultValues: initialData ?? {
+    defaultValues: initialData?.data ?? {
       variant: folderType.fileType.variants[0].id,
     },
   });
 
-  const onSubmit = () => {
-    const values = form.getValues();
-    console.log(values);
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    const formValues = form.getValues();
+    console.log({ formValues });
+
+    if (action === 'new') {
+      createFile(profileId, folderId, data.variant, data.entity, {
+        data,
+      } as FileDTO);
+    } else {
+      // editFile(profileId, folderId, {
+      //   ...initialData,
+      //   ...data,
+      //   // tags: [],
+      //   entity: folderType.variants
+      //     .find((variant) => variant.id === data.variant)!
+      //     .availableEntities.find((entity) => entity.value === data.entity)!,
+      // } as FolderFile);
+    }
+    form.reset();
+    onComplete && onComplete();
   };
-
-  // const onSubmit = (data: z.infer<typeof formSchema>) => {
-  //   if (action === 'new') {
-  //     createFile(profileId, folderId, {
-  //       ...data,
-  //       id: '',
-  //       // tags: [],
-  //       entity: folderType.variants
-  //         .find((variant) => variant.id === data.variant)!
-  //         .availableEntities.find((entity) => entity.value === data.entity)!,
-  //     } as FolderFile);
-  //   } else {
-  //     editFile(profileId, folderId, {
-  //       ...initialData,
-  //       ...data,
-  //       // tags: [],
-  //       entity: folderType.variants
-  //         .find((variant) => variant.id === data.variant)!
-  //         .availableEntities.find((entity) => entity.value === data.entity)!,
-  //     } as FolderFile);
-  //   }
-
-  //   form.reset();
-
-  //   onComplete && onComplete();
-  // };
 
   return (
     <Form {...form}>
@@ -265,15 +192,8 @@ const FileForm: React.FC<FileFormProps> = ({
               )
           )
           .sort((a, b) => a.order - b.order)
-          .map((dataPoint, index) => (
-            <DataPointFormField
-              key={index}
-              form={form}
-              label={dataPoint.name}
-              name={dataPoint.name}
-              placeholder={dataPoint.placeholder}
-              dataPointType={dataPoint.type}
-            />
+          .map((datapoint, index) => (
+            <DataPointFormField key={index} form={form} datapoint={datapoint} />
           ))}
 
         {[...folderType.fileType.datapoints].some((dataPoint) =>
@@ -295,14 +215,11 @@ const FileForm: React.FC<FileFormProps> = ({
                     )
                   )
                   .sort((a, b) => a.order - b.order)
-                  .map((dataPoint, index) => (
+                  .map((datapoint, index) => (
                     <DataPointFormField
                       key={index}
                       form={form}
-                      name={dataPoint.name}
-                      label={dataPoint.name}
-                      placeholder={dataPoint.placeholder}
-                      dataPointType={dataPoint.type}
+                      datapoint={datapoint}
                     />
                   ))}
               </AccordionContent>

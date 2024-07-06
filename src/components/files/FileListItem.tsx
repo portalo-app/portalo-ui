@@ -9,7 +9,8 @@ import {
   TypographyMuted,
   TypographyMutedXS,
 } from '@core/ui/Typography';
-import useFolderFile from '@hooks/files/useFolderFile';
+import useFile from '@hooks/files/useFile';
+import { FolderType } from '@models/business/folder/folderType';
 import { FileDTO } from '@models/dto/file.dto';
 import { TrashIcon } from 'lucide-react';
 import { MouseEvent, useState } from 'react';
@@ -18,29 +19,27 @@ interface FileListItemProps {
   profileId: string;
   folderId: string;
   file: FileDTO;
+  folderType?: FolderType;
 }
 
 // TODO: Complete the FileItem component
 const FileListItem: React.FC<FileListItemProps> = ({
-  file,
   profileId,
   folderId,
+  file,
+  folderType,
 }) => {
   // const router = useRouter();
-  const { deleteFile } = useFolderFile();
-
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const { deleteFile } = useFile();
 
-  const entity = file.entity;
-  const mainData = (file as SocialFile).username
-    ? (file as SocialFile).username || ''
-    : (file as AddressFile).name || '';
-  const secondaryData = (file as SocialFile).url
-    ? (file as SocialFile).url
-    : (file as AddressFile).address;
+  if (!folderType) return;
 
-  // const alias = (file as AddressFile).alias || '';
-  // const notes = (file as AddressFile).notes || '';
+  const entity = folderType.fileType.variants
+    .find((variant) => variant.id === file.data.variant)!
+    .availableEntities.find((entity) => entity.id === file.data.entity)!;
+
+  const keyData = folderType.fileType.getKeyData(file.data);
 
   // const navigateToEdit = () => {
   //   router.push(
@@ -60,11 +59,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
         trigger={
           <Card className="relative p-4 space-y-2 border-muted-foreground/20 bg-muted hover:cursor-pointer">
             <div className="flex items-center gap-2 w-100">
-              <FileVariantEntityIcon
-                entity={entity.value}
-                width={24}
-                height={24}
-              />
+              <FileVariantEntityIcon entity={entity} />
 
               <TypographyMuted>{entity.label}</TypographyMuted>
 
@@ -75,9 +70,9 @@ const FileListItem: React.FC<FileListItemProps> = ({
             </div>
 
             <div className="text-left">
-              <TypographyH5>{mainData}</TypographyH5>
+              <TypographyH5>{keyData.primary}</TypographyH5>
 
-              <TypographyMutedXS>{secondaryData}</TypographyMutedXS>
+              <TypographyMutedXS>{keyData.secondary}</TypographyMutedXS>
             </div>
           </Card>
         }

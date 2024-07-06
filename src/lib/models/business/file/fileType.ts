@@ -1,23 +1,9 @@
+import { FileDataDTO } from '@models/dto/file.dto';
+import { Datapoint } from './datapoint/datapoint';
 import { FileVariant } from './fileVariant';
 
 export interface FileType {
   variants: FileVariant[];
   datapoints: Datapoint[];
+  getKeyData(fileData: FileDataDTO): { primary: string; secondary: string };
 }
-
-export interface Datapoint {
-  name: string;
-  type: DatapointType;
-  order: number;
-  placeholder: string;
-  validations?: DatapointValidation[];
-}
-
-export interface DatapointValidation {
-  type: DatapointValidationType;
-  value: number | boolean;
-  errorMessage?: string;
-}
-
-export type DatapointType = 'string' | 'number' | 'boolean';
-export type DatapointValidationType = 'min' | 'max' | 'isOptional';

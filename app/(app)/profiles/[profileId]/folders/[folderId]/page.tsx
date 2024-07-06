@@ -1,13 +1,13 @@
 'use client';
 
-import FileListItem from '@components/files/FileItem';
+import FileListItem from '@components/files/FileListItem';
 import ProfileHeader from '@components/profiles/ProfileHeader';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
 import { TypographyH3 } from '@core/ui/Typography';
 import useFolderType from '@hooks/useFolderType';
-import { File } from '@models/business/file/file';
+import { FileDTO } from '@models/dto/file.dto';
 import { FolderDTO } from '@models/dto/folder.dto';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { profilesState } from '@states/profiles.atom';
@@ -66,12 +66,13 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
 
       <div className="space-y-4">
         {folder?.files?.length ?? 0 > 0 ? (
-          folder?.files.map((file: File, index: number) => (
+          folder?.files.map((file: FileDTO, index: number) => (
             <FileListItem
               key={index}
-              file={file}
               profileId={profileId}
               folderId={folderId}
+              file={file}
+              folderType={folderType}
             />
           ))
         ) : (

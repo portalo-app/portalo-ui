@@ -26,10 +26,8 @@ const FileContainer: FC<FileContainerProps> = ({
 }) => {
   const [folder, setFolder] = useState<FolderDTO>();
   const [file, setFile] = useState<FileDTO>();
-
   const profilesData = useRecoilValue(profilesState);
   const router = useRouter();
-
   const folderType = useFolderType(folder?.folderTypeId);
 
   useEffect(() => {
