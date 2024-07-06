@@ -4,6 +4,7 @@ import {
 } from '@constants/address/address.variants';
 import { FileDataDTO } from '@models/dto/file.dto';
 import { Datapoint } from './datapoint/datapoint';
+import { FileDetail } from './fileDetail';
 import { FileType } from './fileType';
 import { FileVariant } from './fileVariant';
 
@@ -91,5 +92,27 @@ export class AddressFileType implements FileType {
 
   getKeyData(fileData: FileDataDTO): { primary: string; secondary: string } {
     return { primary: fileData.name, secondary: fileData.address };
+  }
+
+  getDetailData(fileData: FileDataDTO): FileDetail {
+    const entity = this.variants
+      .find((variant) => variant.id === fileData.variant)
+      ?.availableEntities.find((entity) => entity.id === fileData.entity);
+
+    return {
+      title: fileData.name,
+      entity,
+      qrInfo: entity?.shareUrl + fileData.address,
+      extraDatapoints: [
+        {
+          label: 'Alias',
+          value: fileData.alias,
+        },
+        {
+          label: 'Notes',
+          value: fileData.notes,
+        },
+      ],
+    };
   }
 }

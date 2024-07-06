@@ -49,7 +49,7 @@ const FileForm: React.FC<FileFormProps> = ({
   action = 'new',
   initialData,
 }) => {
-  const { generateZodFileSchema, createFile } = useFile();
+  const { generateZodFileSchema, createFile, editFile } = useFile();
 
   const getCurrentVariant = (): FileVariant | undefined => {
     return folderType.fileType.variants.find(
@@ -82,15 +82,12 @@ const FileForm: React.FC<FileFormProps> = ({
         data,
       } as FileDTO);
     } else {
-      // editFile(profileId, folderId, {
-      //   ...initialData,
-      //   ...data,
-      //   // tags: [],
-      //   entity: folderType.variants
-      //     .find((variant) => variant.id === data.variant)!
-      //     .availableEntities.find((entity) => entity.value === data.entity)!,
-      // } as FolderFile);
+      editFile(profileId, folderId, {
+        id: initialData!.id,
+        data,
+      } as FileDTO);
     }
+
     form.reset();
     onComplete && onComplete();
   };
@@ -146,7 +143,6 @@ const FileForm: React.FC<FileFormProps> = ({
                           entity={getCurrentVariantEntity()!}
                         />
                         {getCurrentVariantEntity()?.label}
-                        {/* <TypographyMuted>| {field.value}</TypographyMuted> */}
                       </div>
                     ) : (
                       <span className="flex align-center gap-2">
@@ -238,7 +234,7 @@ const FileForm: React.FC<FileFormProps> = ({
           ) : (
             <>
               <Pencil size={18} />
-              Edit
+              Save
             </>
           )}
         </Button>

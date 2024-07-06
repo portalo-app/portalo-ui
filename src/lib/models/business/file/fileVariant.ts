@@ -10,5 +10,5 @@ export interface FileVariantEntity {
   color: string;
   icon: string;
   label: string;
-  validationRegex: RegExp;
+  shareUrl: string;
 }

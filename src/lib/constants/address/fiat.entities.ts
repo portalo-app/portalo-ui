@@ -1,7 +1,5 @@
 import { FileVariantEntity } from '@models/business/file/fileVariant';
 
-const CBU_REGEX = /^[0-9]{22}$/;
-
 const banks = [
   {
     id: 'nacion',
@@ -45,5 +43,5 @@ export const ADDRESS_FIAT_ENTITIES: FileVariantEntity[] = banks.map((bank) => ({
   icon: `banks/${bank.id}.webp`,
   id: bank.id,
   label: bank.label,
-  validationRegex: CBU_REGEX,
+  shareUrl: '',
 }));

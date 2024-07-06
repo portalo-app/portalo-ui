@@ -12,7 +12,7 @@ import z from 'zod';
 
 const useFile = () => {
   const [profiles, setProfiles] = useRecoilState(profilesState);
-  const { trackCreateFile, trackDeleteFile } = useAnalytics();
+  const { trackCreateFile, trackDeleteFile, trackEditFile } = useAnalytics();
 
   const generateZodFileSchema = (datapoints: Datapoint[]): z.ZodSchema => {
     // Shape are the form fields that will be rendered depending on the datapoints
@@ -114,41 +114,34 @@ const useFile = () => {
     setProfiles(newProfiles);
   };
 
-  // const editFile = (
-  //   profileId: string,
-  //   folderId: string,
-  //   editedFile: FolderFile
-  // ) => {
-  //   const newProfiles = profiles.map((profile) => {
-  //     if (profile.id !== profileId) return profile;
+  const editFile = (
+    profileId: string,
+    folderId: string,
+    editedFile: FileDTO
+  ) => {
+    const newProfiles = profiles.map((profile) => {
+      if (profile.id !== profileId) return profile;
 
-  //     return {
-  //       ...profile,
-  //       folders: profile.folders.map((folder) => {
-  //         if (folder.id !== folderId) return folder;
+      return {
+        ...profile,
+        folders: profile.folders.map((folder) => {
+          if (folder.id !== folderId) return folder;
 
-  //         if (folder.type.id === 'social') {
-  //           (editedFile as SocialFile).url = getSocialUrlByUsername(
-  //             editedFile.entity,
-  //             (editedFile as SocialFile).username
-  //           );
-  //         }
+          return {
+            ...folder,
+            files: folder.files.map((file) => {
+              if (file.id !== editedFile.id) return file;
 
-  //         return {
-  //           ...folder,
-  //           files: folder.files.map((File) => {
-  //             if (File.id !== editedFile.id) return File;
+              return editedFile;
+            }),
+          } as FolderDTO;
+        }),
+      };
+    });
 
-  //             return editedFile;
-  //           }),
-  //         } as Folder;
-  //       }),
-  //     };
-  //   });
-
-  //   trackEditFile(folderId);
-  //   setProfiles(newProfiles);
-  // };
+    trackEditFile(folderId);
+    setProfiles(newProfiles);
+  };
 
   const deleteFile = (profileId: string, folderId: string, fileId: string) => {
     const newProfiles = profiles.map((profile) => {
@@ -171,7 +164,7 @@ const useFile = () => {
     setProfiles(newProfiles);
   };
 
-  return { generateZodFileSchema, createFile, deleteFile };
+  return { generateZodFileSchema, createFile, editFile, deleteFile };
 };
 
 export default useFile;

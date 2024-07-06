@@ -1,6 +1,7 @@
 'use client';
 
 import FileVariantEntityIcon from '@components/entities/FileVariantEntityIcon';
+import { ROUTES } from '@constants/routes.const';
 import DeleteModal from '@core/components/DeleteModal';
 import { Card } from '@core/ui/Card';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
@@ -13,7 +14,9 @@ import useFile from '@hooks/files/useFile';
 import { FolderType } from '@models/business/folder/folderType';
 import { FileDTO } from '@models/dto/file.dto';
 import { TrashIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { MouseEvent, useState } from 'react';
+import FileDetail from './FileDetail';
 
 interface FileListItemProps {
   profileId: string;
@@ -29,8 +32,8 @@ const FileListItem: React.FC<FileListItemProps> = ({
   file,
   folderType,
 }) => {
-  // const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const router = useRouter();
   const { deleteFile } = useFile();
 
   if (!folderType) return;
@@ -41,11 +44,11 @@ const FileListItem: React.FC<FileListItemProps> = ({
 
   const keyData = folderType.fileType.getKeyData(file.data);
 
-  // const navigateToEdit = () => {
-  //   router.push(
-  //     `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}/edit/${file.id}`
-  //   );
-  // };
+  const navigateToEdit = () => {
+    router.push(
+      `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}/edit/${file.id}`
+    );
+  };
 
   const handleDelete = (event: MouseEvent) => {
     event.stopPropagation();
@@ -77,11 +80,15 @@ const FileListItem: React.FC<FileListItemProps> = ({
           </Card>
         }
       >
-        {/* <FileDetail file={fileMock} navigateToEdit={navigateToEdit} /> */}
+        <FileDetail
+          file={file}
+          fileType={folderType.fileType}
+          navigateToEdit={navigateToEdit}
+        />
       </ResponsiveDialog>
 
       <DeleteModal
-        message={`Are you sure you want to delete this ${entity.label.toLowerCase()}?`}
+        message={`Are you sure you want to delete the ${entity.label} file?`}
         onDelete={() => (
           deleteFile(profileId, folderId, file.id), setIsDeleteModalOpen(false)
         )}

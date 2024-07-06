@@ -4,6 +4,7 @@ import {
 } from '@constants/social/social.variants';
 import { FileDataDTO } from '@models/dto/file.dto';
 import { Datapoint } from './datapoint/datapoint';
+import { FileDetail } from './fileDetail';
 import { FileType } from './fileType';
 import { FileVariant } from './fileVariant';
 
@@ -35,6 +36,19 @@ export class SocialFileType implements FileType {
   }
 
   getKeyData(fileData: FileDataDTO): { primary: string; secondary: string } {
-    return { primary: fileData.username, secondary: 'www.google.com.ar' };
+    return { primary: fileData.username, secondary: '' };
+  }
+
+  getDetailData(fileData: FileDataDTO): FileDetail {
+    const entity = this.variants
+      .find((variant) => variant.id === fileData.variant)
+      ?.availableEntities.find((entity) => entity.id === fileData.entity);
+
+    return {
+      title: fileData.username,
+      entity,
+      qrInfo: entity?.shareUrl + fileData.username,
+      extraDatapoints: [],
+    };
   }
 }

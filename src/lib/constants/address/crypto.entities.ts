@@ -1,5 +1,47 @@
 import { FileVariantEntity } from '@models/business/file/fileVariant';
 
+// const filteredUniqueChains = Object.values(
+//   chains
+//     .filter((chain) =>
+//       (chainsSymbols as ReadonlyArray<string>).includes(chain.symbol)
+//     )
+//     .reduce(
+//       (
+//         accumulator: {
+//           [key: string]: {
+//             symbol: string;
+//             name: string;
+//             color: string;
+//           };
+//         },
+//         current
+//       ) => ({
+//         ...accumulator,
+//         [current.symbol]: current,
+//       }),
+//       {}
+//     )
+// );
+
+// export type ChainValue = (typeof chainsSymbols)[number];
+
+// const CRYPTO_ADDRESSES_REGEX: {
+//   [key in (typeof chainsSymbols)[number]]: RegExp;
+// } = {
+//   ALGO: /^([A-Za-z0-9]{58})$/,
+//   BTC: /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/,
+//   DOT: /^1[0-9a-zA-Z]{47}$/,
+//   ETH: /^0x[a-fA-F0-9]{40}$/,
+//   MATIC: /^0x[a-fA-F0-9]{40}$/,
+//   SOL: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/,
+//   TRX: /^T[a-zA-Z0-9]{33}$/,
+//   BNB: /^0x[a-fA-F0-9]{40}$/,
+//   AVAX: /^[XPC]-[a-zA-Z0-9]{41}$/,
+//   GNO: /^0x[a-fA-F0-9]{40}$/,
+//   ADA: /^addr1[0-9a-z]{58}$/,
+//   ATOM: /^cosmos1[a-z0-9]{38}$/,
+// };
+
 export const chainsSymbols = [
   'BTC',
   'ETH',
@@ -78,56 +120,12 @@ export const chains = [
   },
 ] as const;
 
-const filteredUniqueChains = Object.values(
-  chains
-    .filter((chain) =>
-      (chainsSymbols as ReadonlyArray<string>).includes(chain.symbol)
-    )
-    .reduce(
-      (
-        accumulator: {
-          [key: string]: {
-            symbol: string;
-            name: string;
-            color: string;
-          };
-        },
-        current
-      ) => ({
-        ...accumulator,
-        [current.symbol]: current,
-      }),
-      {}
-    )
-);
-
-export type ChainValue = (typeof chainsSymbols)[number];
-
-const CRYPTO_ADDRESSES_REGEX: {
-  [key in (typeof chainsSymbols)[number]]: RegExp;
-} = {
-  ALGO: /^([A-Za-z0-9]{58})$/,
-  BTC: /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/,
-  DOT: /^1[0-9a-zA-Z]{47}$/,
-  ETH: /^0x[a-fA-F0-9]{40}$/,
-  MATIC: /^0x[a-fA-F0-9]{40}$/,
-  SOL: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/,
-  TRX: /^T[a-zA-Z0-9]{33}$/,
-  BNB: /^0x[a-fA-F0-9]{40}$/,
-  AVAX: /^[XPC]-[a-zA-Z0-9]{41}$/,
-  GNO: /^0x[a-fA-F0-9]{40}$/,
-  ADA: /^addr1[0-9a-z]{58}$/,
-  ATOM: /^cosmos1[a-z0-9]{38}$/,
-};
-
-export const ADDRESS_CRYPTO_ENTITIES: FileVariantEntity[] =
-  filteredUniqueChains.map((chain) => ({
+export const ADDRESS_CRYPTO_ENTITIES: FileVariantEntity[] = chains.map(
+  (chain) => ({
     id: chain.symbol,
     color: chain.color,
     icon: `crypto/${chain.symbol.toLowerCase()}.webp`,
     label: chain.name,
-    validationRegex:
-      CRYPTO_ADDRESSES_REGEX[
-        chain.symbol as keyof typeof CRYPTO_ADDRESSES_REGEX
-      ],
-  }));
+    shareUrl: '',
+  })
+);
