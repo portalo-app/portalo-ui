@@ -7,6 +7,7 @@ import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
 import { TypographyH3 } from '@core/ui/Typography';
 import useFolderType from '@hooks/useFolderType';
+import { FileDTO } from '@models/dto/file.dto';
 import { FolderDTO } from '@models/dto/folder.dto';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { profilesState } from '@states/profiles.atom';
@@ -66,7 +67,7 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
 
       <div className="space-y-4">
         {folder?.files?.length ?? 0 > 0 ? (
-          folder?.files.map((fileDTO, index) => (
+          folder?.files.map((file: FileDTO, index: number) => (
             <motion.div
               key={index}
               variants={{
