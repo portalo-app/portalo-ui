@@ -19,20 +19,18 @@ import {
 } from '@core/ui/Form';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { Tabs, TabsList, TabsTrigger } from '@core/ui/Tab';
-import { TypographyMuted } from '@core/ui/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Datapoint, DatapointValidation } from '@models/business/file/fileType';
-import { FileVariantEntity } from '@models/business/file/fileVariant';
+import {
+  FileVariant,
+  FileVariantEntity,
+} from '@models/business/file/fileVariant';
 import { FolderType } from '@models/business/folder/folderType';
-
 import { createMaxErrorMessage, createMinErrorMessage } from '@utils/formUtils';
 import { Pencil, Plus, SquareMousePointer } from 'lucide-react';
 import React from 'react';
-import { SocialIcon } from 'react-custom-social-icons';
-import { SocialNetwork } from 'react-custom-social-icons/dist/esm/types';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { ZodSchema } from 'zod';
 
 interface FileFormProps {
   profileId: string;
@@ -53,7 +51,19 @@ const FileForm: React.FC<FileFormProps> = ({
 }) => {
   // const { createFile, editFile } = useFolderFile();
 
-  const createZodSchema = (datapoints: Datapoint[]): ZodSchema => {
+  const getCurrentVariant = (): FileVariant | undefined => {
+    return folderType.fileType.variants.find(
+      (variant) => variant.id === form.getValues().variant
+    );
+  };
+
+  const getCurrentVariantEntity = (): FileVariantEntity | undefined => {
+    return getCurrentVariant()?.availableEntities.find(
+      (entity) => entity.id === form.getValues().entity
+    )!;
+  };
+
+  const createZodSchema = (datapoints: Datapoint[]): z.ZodSchema => {
     // Shape are the form fields that will be rendered depending on the datapoints
     const shape: { [key: string]: ZodSchema } = {};
 
@@ -203,50 +213,19 @@ const FileForm: React.FC<FileFormProps> = ({
                 title=""
                 trigger={
                   <Card className="mt-2 relative h-12 space-y-2 border-0 border-muted hover:cursor-pointer hover:bg-primary/10 rounded-full flex justify-center items-center">
-                    {folderType.fileType.variants
-                      .find(
-                        (variant) => variant.id === form.getValues().variant
-                      )
-                      ?.availableEntities.find(
-                        (entity: FileVariantEntity) =>
-                          entity.value === field.value
-                      ) ? (
+                    {getCurrentVariantEntity() ? (
                       <div className="flex gap-2 items-center rounded-full">
-                        {folderType.id === 'social' ? (
-                          <SocialIcon
-                            network={field.value as SocialNetwork}
-                            size={20}
-                          />
-                        ) : (
-                          <FileVariantEntityIcon
-                            entity={field.value}
-                            width={4}
-                            height={4}
-                          />
-                        )}
-
-                        {
-                          folderType.fileType.variants
-                            .find(
-                              (variant) =>
-                                variant.id === form.getValues().variant
-                            )
-                            ?.availableEntities.find(
-                              (entity: FileVariantEntity) =>
-                                entity.value === field.value
-                            )?.label
-                        }
-                        <TypographyMuted>| {field.value}</TypographyMuted>
+                        <FileVariantEntityIcon
+                          entity={getCurrentVariantEntity()!}
+                        />
+                        {getCurrentVariantEntity()?.label}
+                        {/* <TypographyMuted>| {field.value}</TypographyMuted> */}
                       </div>
                     ) : (
                       <span className="flex align-center gap-2">
                         <SquareMousePointer className="text-primary " />
                         Choose a{' '}
-                        {folderType.fileType.variants
-                          .find(
-                            (variant) => variant.id === form.getValues().variant
-                          )
-                          ?.entityLabel.toLocaleLowerCase()}
+                        {getCurrentVariant()?.entityLabel.toLocaleLowerCase()}
                       </span>
                     )}
                   </Card>
@@ -254,33 +233,22 @@ const FileForm: React.FC<FileFormProps> = ({
                 closeButtonLabel="Close"
               >
                 <div className="grid grid-cols-2 gap-3">
-                  {folderType.fileType.variants
-                    .find((variant) => variant.id === form.getValues().variant)!
-                    .availableEntities.map((variantEntity) => (
-                      <DrawerClose key={variantEntity.value}>
+                  {getCurrentVariant()!.availableEntities.map(
+                    (variantEntity) => (
+                      <DrawerClose key={variantEntity.id}>
                         <Card
                           className={`cursor-pointer border-primary/20 h-24 hover:bg-primary/15
                       `}
-                          onClick={() => field.onChange(variantEntity.value)}
+                          onClick={() => field.onChange(variantEntity.id)}
                         >
                           <div className="flex flex-col gap-2 justify-center h-full items-center rounded-full ">
-                            {folderType.id === 'social' ? (
-                              <SocialIcon
-                                network={variantEntity.icon as SocialNetwork}
-                                size={20}
-                              />
-                            ) : (
-                              <FileVariantEntityIcon
-                                entity={variantEntity.value}
-                                width={4}
-                                height={4}
-                              />
-                            )}
+                            <FileVariantEntityIcon entity={variantEntity} />
                             {variantEntity.label}
                           </div>
                         </Card>
                       </DrawerClose>
-                    ))}
+                    )
+                  )}
                 </div>
               </ResponsiveDialog>
 
@@ -289,27 +257,24 @@ const FileForm: React.FC<FileFormProps> = ({
           )}
         />
 
-        {
-          // folderType.fileType.datapoints
-          [...folderType.fileType.datapoints]
-            .filter(
-              (dataPoint) =>
-                !dataPoint.validations?.some(
-                  (validation) => validation.type === 'isOptional'
-                )
-            )
-            .sort((a, b) => a.order - b.order)
-            .map((dataPoint, index) => (
-              <DataPointFormField
-                key={index}
-                form={form}
-                label={dataPoint.name}
-                name={dataPoint.name}
-                placeholder={dataPoint.placeholder}
-                dataPointType={dataPoint.type}
-              />
-            ))
-        }
+        {[...folderType.fileType.datapoints]
+          .filter(
+            (dataPoint) =>
+              !dataPoint.validations?.some(
+                (validation) => validation.type === 'isOptional'
+              )
+          )
+          .sort((a, b) => a.order - b.order)
+          .map((dataPoint, index) => (
+            <DataPointFormField
+              key={index}
+              form={form}
+              label={dataPoint.name}
+              name={dataPoint.name}
+              placeholder={dataPoint.placeholder}
+              dataPointType={dataPoint.type}
+            />
+          ))}
 
         {[...folderType.fileType.datapoints].some((dataPoint) =>
           dataPoint.validations?.some(
@@ -323,26 +288,23 @@ const FileForm: React.FC<FileFormProps> = ({
               </AccordionTrigger>
 
               <AccordionContent className="py-2 flex flex-col gap-4">
-                {
-                  // folderType.fileType.datapoints
-                  [...folderType.fileType.datapoints]
-                    .filter((dataPoint) =>
-                      dataPoint.validations?.some(
-                        (validation) => validation.type === 'isOptional'
-                      )
+                {[...folderType.fileType.datapoints]
+                  .filter((dataPoint) =>
+                    dataPoint.validations?.some(
+                      (validation) => validation.type === 'isOptional'
                     )
-                    .sort((a, b) => a.order - b.order)
-                    .map((dataPoint, index) => (
-                      <DataPointFormField
-                        key={index}
-                        form={form}
-                        name={dataPoint.name}
-                        label={dataPoint.name}
-                        placeholder={dataPoint.placeholder}
-                        dataPointType={dataPoint.type}
-                      />
-                    ))
-                }
+                  )
+                  .sort((a, b) => a.order - b.order)
+                  .map((dataPoint, index) => (
+                    <DataPointFormField
+                      key={index}
+                      form={form}
+                      name={dataPoint.name}
+                      label={dataPoint.name}
+                      placeholder={dataPoint.placeholder}
+                      dataPointType={dataPoint.type}
+                    />
+                  ))}
               </AccordionContent>
             </AccordionItem>
           </Accordion>

@@ -1,155 +1,49 @@
-import { Entity } from '@models/business/file';
+import { FileVariantEntity } from '@models/business/file/fileVariant';
 
 const CBU_REGEX = /^[0-9]{22}$/;
 
-export type BankValue = (typeof ADDRESS_FIAT_ENTITIES)[number]['value'];
-
-export const ADDRESS_FIAT_ENTITIES: Entity[] = [
+const banks = [
   {
-    color: '#007894',
-    icon: 'nacion',
-    value: 'NACION',
+    id: 'nacion',
     label: 'Nacion',
-    validationRegex: CBU_REGEX,
+    color: '#007894',
   },
   {
-    color: '#e60000',
-    icon: 'santander',
-    value: 'SANTANDER',
+    id: 'santander',
     label: 'Santander',
-    validationRegex: CBU_REGEX,
+    color: '#e60000',
   },
   {
-    color: '#f7931a',
-    icon: 'galicia',
-    value: 'GALICIA',
+    id: 'galicia',
     label: 'Galicia',
-    validationRegex: CBU_REGEX,
+    color: '#f7931a',
   },
   {
-    color: '#1e3096',
-    icon: 'bbva',
-    value: 'BBVA',
+    id: 'bbva',
     label: 'BBVA',
-    validationRegex: CBU_REGEX,
+    color: '#1e3096',
   },
   {
-    color: '#003057',
-    icon: 'macro',
-    value: 'MACRO',
+    id: 'macro',
     label: 'Macro',
-    validationRegex: CBU_REGEX,
+    color: '#003057',
   },
   {
-    color: '#db0011',
-    icon: 'hsbc',
-    value: 'HSBC',
+    id: 'hsbc',
     label: 'Hsbc',
-    validationRegex: CBU_REGEX,
+    color: '#db0011',
   },
   {
-    color: '#4caf50',
-    icon: 'itau',
-    value: 'ITAU',
-    label: 'Itau',
-    validationRegex: CBU_REGEX,
-  },
-  {
-    color: '#003057',
-    icon: 'ciudad',
-    value: 'CIUDAD',
+    id: 'ciudad',
     label: 'Ciudad',
-    validationRegex: CBU_REGEX,
-  },
-  {
-    color: '#673ab7',
-    icon: 'brubank',
-    value: 'BRUBANK',
-    label: 'Brubank',
-    validationRegex: CBU_REGEX,
-  },
-  {
-    color: '#db0011',
-    icon: 'icbc',
-    value: 'ICBC',
-    label: 'ICBC',
-    validationRegex: CBU_REGEX,
-  },
-  {
     color: '#003057',
-    icon: 'uala',
-    value: 'UALA',
-    label: 'UALA',
-    validationRegex: CBU_REGEX,
   },
-  {
-    color: '#003057',
-    icon: 'rebank',
-    value: 'REBANK',
-    label: 'Reba',
-    validationRegex: CBU_REGEX,
-  },
-  {
-    color: '#4caf50',
-    icon: 'prex',
-    value: 'PREX',
-    label: 'Prex',
-    validationRegex: CBU_REGEX,
-  },
-  {
-    color: '#4caf50',
-    icon: 'provincia',
-    value: 'PROVINCIA',
-    label: 'Banco provincia',
-    validationRegex: CBU_REGEX,
-  },
-  {
-    color: '#db0011',
-    icon: 'supervielle',
-    value: 'SUPERVIELLE',
-    label: 'Supervielle',
-    validationRegex: CBU_REGEX,
-  },
-  {
-    color: '#003057',
-    icon: 'mercadopago',
-    value: 'MERCADOPAGO',
-    label: 'Mercado pago',
-    validationRegex: CBU_REGEX,
-  },
-  {
-    color: '#f7931a',
-    icon: 'naranjax',
-    value: 'NARANJAX',
-    label: 'Naranja X',
-    validationRegex: CBU_REGEX,
-  },
-  {
-    color: '#673ab7',
-    icon: 'belo',
-    value: 'BELO',
-    label: 'Belo',
-    validationRegex: CBU_REGEX,
-  },
-  {
-    color: '#4caf50',
-    icon: 'lemon',
-    value: 'LEMON',
-    label: 'Lemon',
-    validationRegex: CBU_REGEX,
-  },
-  {
-    color: '#003057',
-    icon: 'buenbit',
-    value: 'BUENBIT',
-    label: 'Buen Bit',
-    validationRegex: CBU_REGEX,
-  },
-  {
-    color: '#f7931a',
-    icon: 'fiwind',
-    value: 'FIWIND',
-    label: 'Fiwind',
-    validationRegex: CBU_REGEX,
-  },
-] as const;
+];
+
+export const ADDRESS_FIAT_ENTITIES: FileVariantEntity[] = banks.map((bank) => ({
+  color: bank.color,
+  icon: `banks/${bank.id}.webp`,
+  id: bank.id,
+  label: bank.label,
+  validationRegex: CBU_REGEX,
+}));

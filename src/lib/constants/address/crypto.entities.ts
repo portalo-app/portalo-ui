@@ -1,4 +1,4 @@
-import { Entity } from '@models/business/file';
+import { FileVariantEntity } from '@models/business/file/fileVariant';
 
 export const chainsSymbols = [
   'BTC',
@@ -120,15 +120,14 @@ const CRYPTO_ADDRESSES_REGEX: {
   ATOM: /^cosmos1[a-z0-9]{38}$/,
 };
 
-export const ADDRESS_CRYPTO_ENTITIES: Entity[] = filteredUniqueChains.map(
-  (chain) => ({
+export const ADDRESS_CRYPTO_ENTITIES: FileVariantEntity[] =
+  filteredUniqueChains.map((chain) => ({
+    id: chain.symbol,
     color: chain.color,
-    icon: chain.symbol.toLowerCase(),
-    value: chain.symbol,
+    icon: `crypto/${chain.symbol.toLowerCase()}.webp`,
     label: chain.name,
     validationRegex:
       CRYPTO_ADDRESSES_REGEX[
         chain.symbol as keyof typeof CRYPTO_ADDRESSES_REGEX
       ],
-  })
-);
+  }));

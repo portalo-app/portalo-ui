@@ -1,39 +1,43 @@
-import { Entity } from '@models/business/file';
+import { FileVariantEntity } from '@models/business/file/fileVariant';
 
-export const MESSAGING_ENTITIES: Entity[] = [
+const messagingApplications = [
   {
+    id: 'whatsapp',
     label: 'WhatsApp',
-    value: 'WHATSAPP',
-    icon: 'whatsapp',
     color: '#25d366',
-    validationRegex: /https:\/\/web.whatsapp.com\/.*/,
+    url: 'https://web.whatsapp.com/',
   },
   {
+    id: 'telegram',
     label: 'Telegram',
-    value: 'TELEGRAM',
-    icon: 'telegram',
     color: '#0088cc',
-    validationRegex: /https:\/\/t.me\/.*/,
+    url: 'https://t.me/',
   },
   {
+    id: 'skype',
     label: 'Skype',
-    value: 'SKYPE',
-    icon: 'skype',
     color: '#00aff0',
-    validationRegex: /https:\/\/join.skype.com\/.*/,
+    url: 'https://join.skype.com/',
   },
   {
+    id: 'discord',
     label: 'Discord',
-    value: 'DISCORD',
-    icon: 'discord',
     color: '#7289da',
-    validationRegex: /https:\/\/discord.com\/.*/,
+    url: 'https://discord.com/',
   },
   {
+    id: 'gmail',
     label: 'Gmail',
-    value: 'GMAIL',
-    icon: 'gmail',
     color: '#d14836',
-    validationRegex: /https:\/\/mail.google.com\/.*/,
+    url: 'https://mail.google.com/',
   },
 ];
+
+export const MESSAGING_ENTITIES: FileVariantEntity[] =
+  messagingApplications.map((app) => ({
+    label: app.label,
+    id: app.id,
+    icon: `messaging/${app.id}.webp`,
+    color: app.color,
+    validationRegex: new RegExp(`${app.url}.*`),
+  }));
