@@ -1,17 +1,14 @@
 export interface Datapoint {
   id: string;
   name: string;
-  type: DatapointType;
+  type: 'string' | 'number' | 'boolean';
   order: number;
   placeholder: string;
   validations?: DatapointValidation[];
 }
 
 export interface DatapointValidation {
-  type: DatapointValidationType;
+  type: 'min' | 'max' | 'isOptional';
   value: number | boolean;
   errorMessage?: string;
 }
-
-export type DatapointType = 'string' | 'number' | 'boolean';
-export type DatapointValidationType = 'min' | 'max' | 'isOptional';
