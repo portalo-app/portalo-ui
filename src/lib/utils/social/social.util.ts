@@ -1,33 +1,33 @@
-import { Entity } from '@models/business/file';
+import { FileVariantEntity } from '@models/business/file/fileVariant';
 
 export const getSocialUrlByUsername = (
-  entity: Entity,
+  entity: FileVariantEntity,
   username: string
 ): string => {
-  switch (entity.value) {
-    case 'WHATSAPP':
+  switch (entity.id) {
+    case 'whatsapp':
       return `https://wa.me/${username}`;
-    case 'TELEGRAM':
+    case 'telegram':
       return `https://t.me/${username}`;
-    case 'SKYPE':
+    case 'skype':
       return `https://join.skype.com/${username}`;
-    case 'GMAIL':
+    case 'gmail':
       return `https://mail.google.com/${username}`;
-    case 'DISCORD':
+    case 'discord':
       return `https://discord.com/${username}`;
-    case 'LINKEDIN':
+    case 'linkedin':
       return `https://www.linkedin.com/in/${username}`;
-    case 'FACEBOOK':
+    case 'facebook':
       return `https://www.facebook.com/${username}`;
-    case 'YOUTUBE':
+    case 'youtube':
       return `https://www.youtube.com/${username}`;
-    case 'TWITTER':
+    case 'twitter':
       return `https://twitter.com/${username}`;
-    case 'REDDIT':
+    case 'reddit':
       return `https://www.reddit.com/user/${username}`;
-    case 'INSTAGRAM':
+    case 'instagram':
       return `https://www.instagram.com/${username}`;
-    case 'TIKTOK':
+    case 'tiktok':
       return `https://www.tiktok.com/@${username}`;
     default:
       return '';

@@ -60,7 +60,7 @@ const FileForm: React.FC<FileFormProps> = ({
   const getCurrentVariantEntity = (): FileVariantEntity | undefined => {
     return getCurrentVariant()?.availableEntities.find(
       (entity) => entity.id === form.getValues().entity
-    )!;
+    );
   };
 
   const formSchema = generateZodFileSchema(folderType.fileType.datapoints);

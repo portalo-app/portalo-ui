@@ -1,13 +1,13 @@
 import { Button } from '@core/ui/Button';
 import { TypographyH3 } from '@core/ui/Typography';
-import { Profile } from '@models/profile';
+import { ProfileDTO } from '@models/dto/profile.dto';
 import Avvvatars from 'avvvatars-react';
 import { Trash } from 'lucide-react';
 import { useState } from 'react';
 import DeleteProfileModal from './DeleteProfileModal';
 
 interface ProfileHeaderProps {
-  profile: Profile;
+  profile: ProfileDTO;
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profile }) => {

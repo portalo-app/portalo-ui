@@ -12,7 +12,7 @@
 // import { QRCodeSVG } from 'qrcode.react';
 // import React from 'react';
 
-import { Entity } from '@models/business/file';
+import { FileVariantEntity } from '@models/business/file/fileVariant';
 
 // interface FileDetailProps {
 //   file: FolderFile;
@@ -24,7 +24,7 @@ import { Entity } from '@models/business/file';
 
 export interface FileDetailData {
   title: string;
-  entity: Entity;
+  entity: FileVariantEntity;
   QRInfo: string;
   dataPoints: Array<{
     key: string;

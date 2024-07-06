@@ -12,7 +12,7 @@ import z from 'zod';
 
 const useFile = () => {
   const [profiles, setProfiles] = useRecoilState(profilesState);
-  const { trackCreateFile, trackDeleteFile, trackEditFile } = useAnalytics();
+  const { trackCreateFile, trackDeleteFile } = useAnalytics();
 
   const generateZodFileSchema = (datapoints: Datapoint[]): z.ZodSchema => {
     // Shape are the form fields that will be rendered depending on the datapoints
