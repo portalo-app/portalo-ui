@@ -9,11 +9,12 @@ import {
 } from '@core/ui/Form';
 import { Input } from '@core/ui/Input';
 import { Separator } from '@core/ui/Separator';
-import { TypographyH4, TypographyP } from '@core/ui/Typography';
+import { TypographyH2, TypographyMuted } from '@core/ui/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateProfile from '@hooks/profiles/useCreateProfile';
 import useEditProfile from '@hooks/profiles/useEditProfile';
 import { Profile } from '@models/business/profile';
+import { motion } from 'framer-motion';
 import { UserRound } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -66,13 +67,14 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex gap-2 items-center">
-        <UserRound />
-        <TypographyH4>Add Profile</TypographyH4>
+    <div className="space-y-2">
+      <div>
+        <div className="flex gap-2 items-center">
+          <UserRound size={30} />
+          <TypographyH2 className="!p-0">Create Profile</TypographyH2>
+        </div>
+        <TypographyMuted className="mt-2">{description}</TypographyMuted>
       </div>
-
-      <TypographyP>{description}</TypographyP>
 
       <Separator />
 
@@ -82,19 +84,21 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="mt-6">
                 <FormLabel>{nameLabel}</FormLabel>
                 <FormControl>
-                  <Input placeholder="My Profile" {...field} />
+                  <Input placeholder="profile..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <Button type="submit" className="mt-4 w-full">
-            {actionLabel}
-          </Button>
+          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.95 }}>
+            <Button type="submit" className="!mt-6 w-full">
+              {actionLabel}
+            </Button>
+          </motion.div>
         </form>
       </Form>
     </div>
