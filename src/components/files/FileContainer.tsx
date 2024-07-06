@@ -26,10 +26,8 @@ const FileContainer: FC<FileContainerProps> = ({
 }) => {
   const [folder, setFolder] = useState<FolderDTO>();
   const [file, setFile] = useState<FileDTO>();
-
   const profilesData = useRecoilValue(profilesState);
   const router = useRouter();
-
   const folderType = useFolderType(folder?.folderTypeId);
 
   useEffect(() => {
@@ -42,8 +40,6 @@ const FileContainer: FC<FileContainerProps> = ({
     const selectedFolder = selectedProfile?.folders.find(
       (folder) => folder.id === folderId
     );
-
-    console.log('selectedFolder', selectedFolder);
 
     if (!selectedProfile || !selectedFolder) {
       router.push(ROUTES.APP);

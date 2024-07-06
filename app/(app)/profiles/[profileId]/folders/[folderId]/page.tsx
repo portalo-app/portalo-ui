@@ -1,6 +1,6 @@
 'use client';
 
-import FileListItem from '@components/files/FileItem';
+import FileListItem from '@components/files/FileListItem';
 import ProfileHeader from '@components/profiles/ProfileHeader';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
@@ -66,7 +66,7 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
 
       <div className="space-y-4">
         {folder?.files?.length ?? 0 > 0 ? (
-          folder?.files.map((file, index) => (
+          folder?.files.map((fileDTO, index) => (
             <motion.div
               key={index}
               variants={{
@@ -78,9 +78,10 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
               transition={{ delay: index * 0.2 }}
             >
               <FileListItem
-                file={file}
                 profileId={profileId}
                 folderId={folderId}
+                file={file}
+                folderType={folderType}
               />
             </motion.div>
           ))

@@ -2,7 +2,10 @@ import {
   SOCIAL_MEDIA_VARIANT,
   SOCIAL_MESSAGING_VARIANT,
 } from '@constants/social/social.variants';
-import { Datapoint, FileType } from './fileType';
+import { FileDataDTO } from '@models/dto/file.dto';
+import { Datapoint } from './datapoint/datapoint';
+import { FileDetail } from './fileDetail';
+import { FileType } from './fileType';
 import { FileVariant } from './fileVariant';
 
 export class SocialFileType implements FileType {
@@ -12,6 +15,7 @@ export class SocialFileType implements FileType {
   constructor() {
     this.datapoints = [
       {
+        id: 'username',
         name: 'Username',
         type: 'string',
         order: 1,
@@ -29,5 +33,22 @@ export class SocialFileType implements FileType {
       },
     ];
     this.variants = [SOCIAL_MESSAGING_VARIANT, SOCIAL_MEDIA_VARIANT];
+  }
+
+  getKeyData(fileData: FileDataDTO): { primary: string; secondary: string } {
+    return { primary: fileData.username, secondary: '' };
+  }
+
+  getDetailData(fileData: FileDataDTO): FileDetail {
+    const entity = this.variants
+      .find((variant) => variant.id === fileData.variant)
+      ?.availableEntities.find((entity) => entity.id === fileData.entity);
+
+    return {
+      title: fileData.username,
+      entity,
+      qrInfo: entity?.shareUrl + fileData.username,
+      extraDatapoints: [],
+    };
   }
 }

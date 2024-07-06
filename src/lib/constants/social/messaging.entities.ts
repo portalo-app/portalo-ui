@@ -1,39 +1,43 @@
-import { Entity } from '@models/business/file';
+import { FileVariantEntity } from '@models/business/file/fileVariant';
 
-export const MESSAGING_ENTITIES: Entity[] = [
+const messagingApplications = [
   {
+    id: 'whatsapp',
     label: 'WhatsApp',
-    value: 'WHATSAPP',
-    icon: 'whatsapp',
     color: '#25d366',
-    validationRegex: /https:\/\/web.whatsapp.com\/.*/,
+    shareUrl: 'https://wa.me/',
   },
   {
+    id: 'telegram',
     label: 'Telegram',
-    value: 'TELEGRAM',
-    icon: 'telegram',
     color: '#0088cc',
-    validationRegex: /https:\/\/t.me\/.*/,
+    shareUrl: 'https://t.me/',
   },
   {
+    id: 'skype',
     label: 'Skype',
-    value: 'SKYPE',
-    icon: 'skype',
     color: '#00aff0',
-    validationRegex: /https:\/\/join.skype.com\/.*/,
+    shareUrl: '',
   },
   {
+    id: 'discord',
     label: 'Discord',
-    value: 'DISCORD',
-    icon: 'discord',
     color: '#7289da',
-    validationRegex: /https:\/\/discord.com\/.*/,
+    shareUrl: '',
   },
   {
+    id: 'gmail',
     label: 'Gmail',
-    value: 'GMAIL',
-    icon: 'gmail',
     color: '#d14836',
-    validationRegex: /https:\/\/mail.google.com\/.*/,
+    shareUrl: 'mailto:',
   },
 ];
+
+export const MESSAGING_ENTITIES: FileVariantEntity[] =
+  messagingApplications.map((app) => ({
+    label: app.label,
+    id: app.id,
+    icon: `messaging/${app.id}.webp`,
+    color: app.color,
+    shareUrl: app.shareUrl,
+  }));

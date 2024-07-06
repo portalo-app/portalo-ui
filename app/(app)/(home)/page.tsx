@@ -34,8 +34,6 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
     },
   ];
 
-  console.log(shortcuts);
-
   const profilesTitle = 'Profiles';
   const emptyProfilesMessage = 'Create a Profile to get started!';
 

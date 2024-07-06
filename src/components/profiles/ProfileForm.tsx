@@ -13,7 +13,7 @@ import { TypographyH2, TypographyMuted } from '@core/ui/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateProfile from '@hooks/profiles/useCreateProfile';
 import useEditProfile from '@hooks/profiles/useEditProfile';
-import { Profile } from '@models/business/profile';
+import { ProfileDTO } from '@models/dto/profile.dto';
 import { motion } from 'framer-motion';
 import { UserRound } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -22,7 +22,7 @@ import * as z from 'zod';
 interface ProfileFormProps {
   action: 'CREATE' | 'EDIT';
   onComplete?: () => void;
-  profile?: Profile;
+  profile?: ProfileDTO;
 }
 
 const ProfileForm: React.FC<ProfileFormProps> = ({
