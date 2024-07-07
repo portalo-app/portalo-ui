@@ -102,7 +102,13 @@ const FileForm: React.FC<FileFormProps> = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Choose a variant</FormLabel>
-              <Tabs defaultValue={field.value}>
+              <Tabs
+                defaultValue={field.value}
+                onValueChange={(value: string) => {
+                  field.onChange(value);
+                  form.setValue('entity', '');
+                }}
+              >
                 <FormControl>
                   <TabsList className="w-full border border-muted rounded-full h-10 px-1 bg-muted/25">
                     {folderType.fileType.variants.map((variant) => (
@@ -110,10 +116,6 @@ const FileForm: React.FC<FileFormProps> = ({
                         key={variant.id}
                         value={variant.id}
                         className="flex-1 rounded-full"
-                        onClick={() => {
-                          field.onChange(variant.id);
-                          form.setValue('entity', '');
-                        }}
                       >
                         {variant.label}
                       </TabsTrigger>
