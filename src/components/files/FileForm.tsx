@@ -1,5 +1,5 @@
 import FileVariantEntityIcon from '@components/entities/FileVariantEntityIcon';
-import DatapointFormField from '@components/form/DatapointFormField';
+import DatapointFormField from '@components/files/form/DatapointFormField';
 import {
   Accordion,
   AccordionContent,
