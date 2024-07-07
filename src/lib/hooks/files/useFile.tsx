@@ -76,13 +76,11 @@ const useFile = () => {
       });
     });
 
-    return z
-      .object({
-        variant: z.string().min(1, `Field is required`),
-        entity: z.string().min(1, `Field is required`),
-        ...shape,
-      })
-      .required();
+    return z.object({
+      variant: z.string().min(1, `Field is required`),
+      entity: z.string().min(1, `Field is required`),
+      ...shape,
+    });
   };
 
   const createFile = (

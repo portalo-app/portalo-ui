@@ -1,5 +1,5 @@
 import FileVariantEntityIcon from '@components/entities/FileVariantEntityIcon';
-import DataPointFormField from '@components/form/DataPointFormField';
+import DatapointFormField from '@components/form/DatapointFormField';
 import {
   Accordion,
   AccordionContent,
@@ -27,6 +27,7 @@ import {
 } from '@models/business/file/fileVariant';
 import { FolderType } from '@models/business/folder/folderType';
 import { FileDTO } from '@models/dto/file.dto';
+import { cn } from '@utils/utils';
 import { Pencil, Plus, SquareMousePointer } from 'lucide-react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -111,6 +112,7 @@ const FileForm: React.FC<FileFormProps> = ({
                         className="flex-1 rounded-full"
                         onClick={() => {
                           field.onChange(variant.id);
+                          form.setValue('entity', '');
                         }}
                       >
                         {variant.label}
@@ -130,10 +132,18 @@ const FileForm: React.FC<FileFormProps> = ({
           name="entity"
           render={({ field }) => (
             <FormItem>
+              <FormMessage />
+
               <ResponsiveDialog
                 title={`Choose a ${getCurrentVariant()?.entityLabel}`}
                 trigger={
-                  <Card className="mt-2 relative h-12 space-y-2 border-0 border-muted hover:cursor-pointer hover:bg-primary/10 rounded-full flex justify-center items-center">
+                  <Card
+                    className={cn(
+                      'mt-2 relative h-12 space-y-2 border-0 border-muted hover:cursor-pointer hover:bg-primary/10 rounded-full flex justify-center items-center',
+                      form.control.getFieldState('entity').error &&
+                        'border border-red-900'
+                    )}
+                  >
                     {getCurrentVariantEntity() ? (
                       <div className="flex gap-2 items-center rounded-full">
                         <FileVariantEntityIcon
@@ -170,8 +180,6 @@ const FileForm: React.FC<FileFormProps> = ({
                   )}
                 </div>
               </ResponsiveDialog>
-
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -185,7 +193,7 @@ const FileForm: React.FC<FileFormProps> = ({
           )
           .sort((a, b) => a.order - b.order)
           .map((datapoint, index) => (
-            <DataPointFormField key={index} form={form} datapoint={datapoint} />
+            <DatapointFormField key={index} form={form} datapoint={datapoint} />
           ))}
 
         {[...folderType.fileType.datapoints].some((dataPoint) =>
@@ -208,7 +216,7 @@ const FileForm: React.FC<FileFormProps> = ({
                   )
                   .sort((a, b) => a.order - b.order)
                   .map((datapoint, index) => (
-                    <DataPointFormField
+                    <DatapointFormField
                       key={index}
                       form={form}
                       datapoint={datapoint}
