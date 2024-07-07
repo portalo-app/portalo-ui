@@ -1,20 +1,18 @@
 'use client';
 
-import FileListItem from '@components/files/FileItem';
+import FileListItem from '@components/files/FileListItem';
 import ProfileHeader from '@components/profiles/ProfileHeader';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
 import { TypographyH3 } from '@core/ui/Typography';
 import useFolderType from '@hooks/useFolderType';
-import { File } from '@models/business/file/file';
-import { FolderDTO } from '@models/dto/folder.dto';
-import { ProfileDTO } from '@models/dto/profile.dto';
+import { FileDTO } from '@models/dto/file.dto';
 import { profilesState } from '@states/profiles.atom';
 import { Landmark } from 'lucide-react';
 import { NextPage } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 
 interface FolderDetailsProps {
@@ -23,33 +21,27 @@ interface FolderDetailsProps {
 
 const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
   const router = useRouter();
-  const [profile, setProfile] = useState<ProfileDTO | null>(null);
-  const [folder, setFolder] = useState<FolderDTO | null>(null);
   const pathName = usePathname();
 
   const profilesData = useRecoilValue(profilesState);
   const { folderId, profileId } = params;
 
+  const profile = useMemo(
+    () => profilesData.find((profile) => profile.id === profileId),
+    [profileId, profilesData]
+  );
+
+  const folder = useMemo(
+    () => profile?.folders.find((folder) => folder.id === folderId),
+    [folderId, profile]
+  );
+
   const folderType = useFolderType(folder?.folderTypeId);
 
-  useEffect(() => {
-    if (!profileId) return;
-
-    const selectedProfile = profilesData.find(
-      (profile) => profile.id === profileId
-    );
-    const selectedFolder = selectedProfile?.folders.find(
-      (folder) => folder.id === folderId
-    );
-
-    if (!selectedProfile || !selectedFolder) {
-      router.push(ROUTES.APP);
-      return;
-    }
-
-    setProfile(selectedProfile);
-    setFolder(selectedFolder);
-  }, [folderId, profileId, profilesData, router]);
+  if (!profileId || !profile || !folder || !folderType) {
+    router.push(ROUTES.APP);
+    return;
+  }
 
   return (
     <div className="space-y-4">
@@ -66,12 +58,13 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
 
       <div className="space-y-4">
         {folder?.files?.length ?? 0 > 0 ? (
-          folder?.files.map((file: File, index: number) => (
+          folder?.files.map((file: FileDTO, index: number) => (
             <FileListItem
               key={index}
-              file={file}
               profileId={profileId}
               folderId={folderId}
+              file={file}
+              folderType={folderType}
             />
           ))
         ) : (

@@ -5,7 +5,7 @@ import { ADDRESS_FIAT_ENTITIES } from './fiat.entities';
 export const ADDRESS_CRYPTO_VARIANT: FileVariant = {
   id: 'crypto',
   label: 'Crypto',
-  entityLabel: 'Chain',
+  entityLabel: 'Blockchain',
   availableEntities: ADDRESS_CRYPTO_ENTITIES,
 };
 

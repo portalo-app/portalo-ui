@@ -1,134 +1,86 @@
-import { Entity } from '@models/business/file';
+import { FileVariantEntity } from '@models/business/file/fileVariant';
 
-export const chainsSymbols = [
-  'BTC',
-  'ETH',
-  'MATIC',
-  'DOT',
-  'ALGO',
-  'SOL',
-  'TRX',
-  'BNB',
-  'AVAX',
-  'GNO',
-  'ADA',
-  'ATOM',
-] as const;
-
-export const chains = [
+const chains = [
   {
     symbol: 'BTC',
     name: 'Bitcoin',
     color: '#f7931a',
+    shareUrl: 'https://btcscan.org/address/',
   },
   {
     symbol: 'ETH',
     name: 'Ethereum',
     color: '#627eea',
+    shareUrl: 'https://etherscan.io/address/',
   },
   {
     symbol: 'MATIC',
     name: 'Polygon',
     color: '#6f41d8',
+    shareUrl: 'https://polygonscan.com/address/',
   },
   {
     symbol: 'DOT',
     name: 'Polkadot',
     color: '#e6007a',
+    shareUrl: 'https://polkadot.subscan.io/account/',
   },
   {
     symbol: 'ALGO',
     name: 'Algorand',
     color: '#000000',
+    shareUrl: 'https://explorer.perawallet.app/address/',
   },
   {
     symbol: 'SOL',
     name: 'Solana',
     color: '#66f9a1',
+    shareUrl: 'https://solscan.io/account/',
   },
   {
     symbol: 'TRX',
     name: 'TRON',
     color: '#ef0027',
+    shareUrl: 'https://tronscan.org/#/address/',
   },
   {
-    symbol: 'BNB',
-    name: 'BNB Smart Chain',
+    symbol: 'BSC',
+    name: 'BSC',
     color: '#f3ba2f',
+    shareUrl: 'https://bscscan.com/address/',
   },
   {
     symbol: 'AVAX',
     name: 'Avalanche',
     color: '#e84142',
+    shareUrl: 'https://subnets.avax.network/c-chain/address/',
   },
   {
     symbol: 'GNO',
     name: 'Gnosis',
     color: '#00a6c4',
+    shareUrl: 'https://gnosisscan.io/address/',
   },
   {
     symbol: 'ADA',
     name: 'Cardano',
     color: '#0d1e30',
+    shareUrl: 'https://cardanoscan.io/address/',
   },
   {
     symbol: 'ATOM',
     name: 'Cosmos',
     color: '#2e3148',
+    shareUrl: 'https://www.mintscan.io/cosmos/address/',
   },
-] as const;
+];
 
-const filteredUniqueChains = Object.values(
-  chains
-    .filter((chain) =>
-      (chainsSymbols as ReadonlyArray<string>).includes(chain.symbol)
-    )
-    .reduce(
-      (
-        accumulator: {
-          [key: string]: {
-            symbol: string;
-            name: string;
-            color: string;
-          };
-        },
-        current
-      ) => ({
-        ...accumulator,
-        [current.symbol]: current,
-      }),
-      {}
-    )
-);
-
-export type ChainValue = (typeof chainsSymbols)[number];
-
-const CRYPTO_ADDRESSES_REGEX: {
-  [key in (typeof chainsSymbols)[number]]: RegExp;
-} = {
-  ALGO: /^([A-Za-z0-9]{58})$/,
-  BTC: /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/,
-  DOT: /^1[0-9a-zA-Z]{47}$/,
-  ETH: /^0x[a-fA-F0-9]{40}$/,
-  MATIC: /^0x[a-fA-F0-9]{40}$/,
-  SOL: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/,
-  TRX: /^T[a-zA-Z0-9]{33}$/,
-  BNB: /^0x[a-fA-F0-9]{40}$/,
-  AVAX: /^[XPC]-[a-zA-Z0-9]{41}$/,
-  GNO: /^0x[a-fA-F0-9]{40}$/,
-  ADA: /^addr1[0-9a-z]{58}$/,
-  ATOM: /^cosmos1[a-z0-9]{38}$/,
-};
-
-export const ADDRESS_CRYPTO_ENTITIES: Entity[] = filteredUniqueChains.map(
+export const ADDRESS_CRYPTO_ENTITIES: FileVariantEntity[] = chains.map(
   (chain) => ({
+    id: chain.symbol,
     color: chain.color,
-    icon: chain.symbol.toLowerCase(),
-    value: chain.symbol,
+    icon: `crypto/${chain.symbol.toLowerCase()}.webp`,
     label: chain.name,
-    validationRegex:
-      CRYPTO_ADDRESSES_REGEX[
-        chain.symbol as keyof typeof CRYPTO_ADDRESSES_REGEX
-      ],
+    shareUrl: chain.shareUrl,
   })
 );

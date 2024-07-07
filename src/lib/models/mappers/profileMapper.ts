@@ -15,30 +15,3 @@ export const mapperProfileToProfileDTO = (profile: Profile): ProfileDTO => {
     }),
   };
 };
-
-// JSON.stringify(mapperProfileToProfileDTO)
-
-// // Folder UI to Storage
-// export const mapperFolderToFolderDTO = (folders: Folder): FolderDTO => {
-//   return {
-//     id: folders.id,
-//     folderTypeId: folders.folderType.id,
-//     files: folders.files.map((file) => {
-//       return {
-//         file.id,
-
-//       }
-//     }),
-//   };
-// };
-
-// File mapper
-
-// export const mapperFileDtoToFolderFileModel = (
-//   fileDTO: FileDTO
-// ): FolderFile => {
-//   return {
-//     id: fileDTO.id,
-//     entity: file,
-//   };
-// };
