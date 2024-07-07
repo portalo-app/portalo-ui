@@ -4,6 +4,7 @@ import FolderListItem from '@components/folders/FolderItem';
 import ProfileHeader from '@components/profiles/ProfileHeader';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
+import { Separator } from '@core/ui/Separator';
 import { TypographyH3 } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { profilesState } from '@states/profiles.atom';
@@ -42,26 +43,31 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
 
   return (
     <div>
-      <ProfileHeader profile={profile!} />
-
-      <div className="flex justify-between mt-4 items-center">
-        <div className="flex items-center gap-2">
-          <Folder />
-          <TypographyH3>Your folders</TypographyH3>
-        </div>
-
-        <CreateButton disabled href="" />
+      <div className="px-2 pr-3">
+        <ProfileHeader profile={profile!} />
       </div>
 
-      <div className="*:block space-y-4 mt-4">
-        {profile?.folders.map((folder, index) => (
-          <Link
-            key={index}
-            href={`${ROUTES.APP_PROFILE}/${profileId}/${ROUTES.APP_FOLDER}/${folder.id}`}
-          >
-            <FolderListItem profile={profile} folder={folder} />
-          </Link>
-        ))}
+      <div className="border border-muted mt-4 rounded-lg">
+        <div className="flex justify-between items-center bg-muted/80 p-4 rounded-t-lg">
+          <div className="flex items-center gap-2">
+            <Folder />
+            <TypographyH3>Your folders</TypographyH3>
+          </div>
+
+          <CreateButton disabled href="" />
+        </div>
+
+        <div className="*:block space-y-2 mt-4 px-4">
+          {profile?.folders.map((folder, index) => (
+            <Link
+              key={index}
+              href={`${ROUTES.APP_PROFILE}/${profileId}/${ROUTES.APP_FOLDER}/${folder.id}`}
+            >
+              <FolderListItem profile={profile} folder={folder} />
+              {profile.folders.length - 1 !== index && <Separator />}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -40,7 +40,7 @@ const FolderListItem: React.FC<FolderListItemProps> = ({ profile, folder }) => {
           />
         </div>
 
-        <ChevronRight size={24} className="text-muted-foreground" />
+        <ChevronRight size={24} className="text-muted-foreground mr-2" />
       </div>
     </Link>
   );

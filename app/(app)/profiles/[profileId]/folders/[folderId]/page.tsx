@@ -12,7 +12,7 @@ import { FolderDTO } from '@models/dto/folder.dto';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { profilesState } from '@states/profiles.atom';
 import { motion } from 'framer-motion';
-import { Landmark } from 'lucide-react';
+import { MessagesSquare, Wallet } from 'lucide-react';
 import { NextPage } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -58,7 +58,7 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
 
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <Landmark />
+          {folderId === 'social' ? <MessagesSquare /> : <Wallet />}
           <TypographyH3>{folderType?.label} folder</TypographyH3>
         </div>
 

@@ -9,7 +9,7 @@ import {
 } from '@core/ui/Form';
 import { Input } from '@core/ui/Input';
 import { Separator } from '@core/ui/Separator';
-import { TypographyH2, TypographyMuted } from '@core/ui/Typography';
+import { TypographyH3, TypographyMuted } from '@core/ui/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateProfile from '@hooks/profiles/useCreateProfile';
 import useEditProfile from '@hooks/profiles/useEditProfile';
@@ -70,8 +70,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
     <div className="space-y-2">
       <div>
         <div className="flex gap-2 items-center">
-          <UserRound size={30} />
-          <TypographyH2 className="!p-0">Create Profile</TypographyH2>
+          <UserRound size={22} />
+          <TypographyH3 className="!p-0">Create Profile</TypographyH3>
         </div>
         <TypographyMuted className="mt-2">{description}</TypographyMuted>
       </div>
