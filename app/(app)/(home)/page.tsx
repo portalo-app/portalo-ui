@@ -6,7 +6,10 @@ import ProfileItem from '@components/profiles/ProfileItem';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
+import { Button } from '@core/ui/Button';
 import { Card } from '@core/ui/Card';
+import { Input } from '@core/ui/Input';
+import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { Separator } from '@core/ui/Separator';
 import { TypographyH5 } from '@core/ui/Typography';
 import { profilesState } from '@states/profiles.atom';
@@ -44,21 +47,28 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
 
   return (
     <div className="space-y-4">
-      <StoreWidget />
+      <ResponsiveDialog
+        title="Coming soon"
+        description="✨ Soon you'll be able to store ANYTHING ANYWHERE ✨"
+        trigger={<StoreWidget />}
+      >
+        <div className="space-y-4 flex flex-col justify-center">
+          <Input disabled placeholder="Input Anything!" />
+          <Button disabled>Store Anywhere</Button>
+        </div>
+      </ResponsiveDialog>
 
-      <Card>
+      <Card className="!mt-10">
         <div className="flex justify-between items-center py-2 px-4 bg-muted rounded-t">
           <div className="flex items-center gap-2 text-muted-foreground">
             <UserRound />
             <TypographyH5>{profilesTitle}</TypographyH5>
           </div>
 
-          {hasProfiles && (
-            <CreateButton href={ROUTES.APP_CREATE_PROFILE} title="Add" />
-          )}
+          {hasProfiles && <CreateButton href={ROUTES.APP_CREATE_PROFILE} />}
         </div>
 
-        <Separator className="border-t border-muted" />
+        <Separator className="border-t border-muted/80" />
 
         {hasProfiles ? (
           <div className="divide-y-2 *:block py-2 px-4">
@@ -67,7 +77,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
             ))}
           </div>
         ) : (
-          <div className="flex content-center justify-center mt-4">
+          <div className="flex content-center justify-center bg-muted rounded-b-xl">
             <State
               type="empty"
               label={emptyProfilesMessage}
@@ -87,9 +97,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
             <TypographyH5>{shortcutsTitle}</TypographyH5>
           </div>
 
-          {hasProfiles && (
-            <CreateButton href={ROUTES.APP_CREATE_PROFILE} title="Add" />
-          )}
+          {hasProfiles && <CreateButton href={'#'} disabled />}
         </div>
 
         <Separator className="border-t border-muted" />
@@ -101,7 +109,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
             ))}
           </div>
         ) : (
-          <div className="flex content-center justify-center mt-4">
+          <div className="flex content-center justify-center bg-muted rounded-b-xl">
             <State type="empty" label={emptyShortcutsMessage} />
           </div>
         )}

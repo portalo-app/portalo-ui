@@ -1,6 +1,7 @@
 import { Button } from '@core/ui/Button';
 import { Card } from '@core/ui/Card';
 import { TypographyMuted } from '@core/ui/Typography';
+import { motion } from 'framer-motion';
 import {
   AlertTriangle,
   CheckCircle,
@@ -43,7 +44,7 @@ const StateIcon: React.FC<{ type: StateType; size?: SizeType }> = ({
 
 const State: React.FC<StateProps> = ({ type, label, size, action }) => {
   return (
-    <Card className="border-2 border-muted w-full p-4 text-muted-foreground bg-muted/80">
+    <Card className="border-2 border-muted w-full p-4 text-muted-foreground">
       <div className="flex items-center gap-2">
         <StateIcon type={type} size={size || 36} />
 
@@ -51,9 +52,11 @@ const State: React.FC<StateProps> = ({ type, label, size, action }) => {
       </div>
 
       {action && (
-        <Button className="w-full mt-4" onClick={action.onClick}>
-          {action.label}
-        </Button>
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.95 }}>
+          <Button className="w-full mt-4" onClick={action.onClick}>
+            {action.label}
+          </Button>
+        </motion.div>
       )}
     </Card>
   );

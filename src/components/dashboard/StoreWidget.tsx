@@ -1,18 +1,21 @@
 import { Card } from '@core/ui/Card';
 import { TypographyH4, TypographyMuted } from '@core/ui/Typography';
+import { motion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 
 interface StoreWidgetProps {}
 
 const StoreWidget: React.FC<StoreWidgetProps> = () => {
   return (
-    <Card className="h-40 bg-muted flex flex-col justify-center items-center border-muted-foreground/20">
-      <Sparkles size={48} className="text-muted-foreground mb-2" />
+    <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.95 }}>
+      <Card className="h-40 bg-muted flex flex-col justify-center items-center border-primary/20 shadow-md shadow-primary/20 ">
+        <Sparkles size={48} className="text-muted-foreground mb-2" />
 
-      <TypographyH4>Press to store</TypographyH4>
+        <TypographyH4>Press to store</TypographyH4>
 
-      <TypographyMuted>Store anything anywhere</TypographyMuted>
-    </Card>
+        <TypographyMuted>Store anything anywhere</TypographyMuted>
+      </Card>
+    </motion.div>
   );
 };
 

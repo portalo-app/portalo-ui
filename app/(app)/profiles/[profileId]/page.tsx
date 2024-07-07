@@ -50,7 +50,7 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
           <TypographyH3>Your folders</TypographyH3>
         </div>
 
-        <CreateButton disabled title="Add Folder" href="" />
+        <CreateButton disabled href="" />
       </div>
 
       <div className="*:block space-y-4 mt-4">
