@@ -38,7 +38,7 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
 
   const folderType = useFolderType(folder?.folderTypeId);
 
-  if (!profileId || !profile || !folder) {
+  if (!profileId || !profile || !folder || !folderType) {
     router.push(ROUTES.APP);
     return;
   }

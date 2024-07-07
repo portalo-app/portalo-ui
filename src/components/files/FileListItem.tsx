@@ -15,17 +15,16 @@ import { FolderType } from '@models/business/folder/folderType';
 import { FileDTO } from '@models/dto/file.dto';
 import { TrashIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useMemo, useState } from 'react';
 import FileDetail from './FileDetail';
 
 interface FileListItemProps {
   profileId: string;
   folderId: string;
   file: FileDTO;
-  folderType?: FolderType;
+  folderType: FolderType;
 }
 
-// TODO: Complete the FileItem component
 const FileListItem: React.FC<FileListItemProps> = ({
   profileId,
   folderId,
@@ -36,11 +35,16 @@ const FileListItem: React.FC<FileListItemProps> = ({
   const router = useRouter();
   const { deleteFile } = useFile();
 
-  if (!folderType) return;
+  const entity = useMemo(
+    () =>
+      folderType.fileType.variants
+        .find((variant) => variant.id === file.data.variant)!
+        .availableEntities.find((entity) => entity.id === file.data.entity)!,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [file.data.entity]
+  );
 
-  const entity = folderType.fileType.variants
-    .find((variant) => variant.id === file.data.variant)!
-    .availableEntities.find((entity) => entity.id === file.data.entity)!;
+  if (!folderType || !entity) return;
 
   const keyData = folderType.fileType.getKeyData(file.data);
 
