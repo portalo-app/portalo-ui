@@ -1,9 +1,9 @@
 import DeleteModal from '@core/components/DeleteModal';
 import useDeleteProfile from '@hooks/profiles/useDeleteProfile';
-import { Profile } from '@models/profile';
+import { ProfileDTO } from '@models/dto/profile.dto';
 
 interface DeleteProfileModalProps {
-  profile: Profile;
+  profile: ProfileDTO;
   open: boolean;
   onClose: () => void;
 }

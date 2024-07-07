@@ -15,18 +15,15 @@ export const ROUTES = {
   APP_PRIVACY_POLICY: '/privacy-policy',
 } as const;
 
-export type ObjectValues<T> = T[keyof T];
-
-export type Routes = ObjectValues<typeof ROUTES>;
-export type RoutesKeys = keyof typeof ROUTES;
-
-export type route = {
+type ObjectValues<T> = T[keyof T];
+type Routes = ObjectValues<typeof ROUTES>;
+type Route = {
   title: string;
   url: Routes;
   readOnly: boolean;
 };
 
-export const ROUTES_LAYOUT: route[] = [
+export const ROUTES_LAYOUT: Route[] = [
   {
     title: 'Home',
     url: ROUTES.APP,

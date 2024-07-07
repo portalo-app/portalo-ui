@@ -1,7 +1,7 @@
 'use client';
 
 import StoreWidget from '@components/dashboard/StoreWidget';
-import FolderShortcut from '@components/folders/FolderShortcut';
+import FolderListItem from '@components/folders/FolderListItem';
 import ProfileItem from '@components/profiles/ProfileItem';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
@@ -12,7 +12,7 @@ import { TypographyH5 } from '@core/ui/Typography';
 import { profilesState } from '@states/profiles.atom';
 import { Layers2, UserRound } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, ReactElement } from 'react';
 import { useRecoilValue } from 'recoil';
 
 interface AppPageProps {}
@@ -46,68 +46,74 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
     <div className="space-y-4">
       <StoreWidget />
 
-      <Card>
-        <div className="flex justify-between items-center py-2 px-4 bg-muted rounded-t">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <UserRound />
-            <TypographyH5>{profilesTitle}</TypographyH5>
-          </div>
-
-          {hasProfiles && (
-            <CreateButton href={ROUTES.APP_CREATE_PROFILE} title="Add" />
-          )}
-        </div>
-
-        <Separator className="border-t border-muted" />
-
-        {hasProfiles ? (
-          <div className="divide-y-2 *:block py-2 px-4">
+      <HomeCard
+        title={profilesTitle}
+        icon={<UserRound />}
+        hasProfiles={hasProfiles}
+        listToShow={
+          <>
             {profiles.map((profile, index) => (
               <ProfileItem profile={profile} key={index} />
             ))}
-          </div>
-        ) : (
-          <div className="flex content-center justify-center mt-4">
-            <State
-              type="empty"
-              label={emptyProfilesMessage}
-              action={{
-                label: '+ Create Profile',
-                onClick: () => router.push(ROUTES.APP_CREATE_PROFILE),
-              }}
-            />
-          </div>
-        )}
-      </Card>
+          </>
+        }
+        stateComponent={
+          <State
+            type="empty"
+            label={emptyProfilesMessage}
+            action={{
+              label: '+ Create Profile',
+              onClick: () => router.push(ROUTES.APP_CREATE_PROFILE),
+            }}
+          />
+        }
+      />
 
-      <Card>
-        <div className="flex justify-between items-center py-2 px-4 bg-muted rounded-t">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Layers2 />
-            <TypographyH5>{shortcutsTitle}</TypographyH5>
-          </div>
-
-          {hasProfiles && (
-            <CreateButton href={ROUTES.APP_CREATE_PROFILE} title="Add" />
-          )}
-        </div>
-
-        <Separator className="border-t border-muted" />
-
-        {hasProfiles ? (
-          <div className="divide-y-2 *:block py-2 px-4">
+      <HomeCard
+        title={shortcutsTitle}
+        icon={<Layers2 />}
+        hasProfiles={hasProfiles}
+        listToShow={
+          <>
             {shortcuts.map(({ profile, folder }, index) => (
-              <FolderShortcut key={index} profile={profile} folder={folder} />
+              <FolderListItem key={index} profile={profile} folder={folder} />
             ))}
-          </div>
-        ) : (
-          <div className="flex content-center justify-center mt-4">
-            <State type="empty" label={emptyShortcutsMessage} />
-          </div>
-        )}
-      </Card>
+          </>
+        }
+        stateComponent={<State type="empty" label={emptyShortcutsMessage} />}
+      />
     </div>
   );
 };
 
+const HomeCard: FunctionComponent<{
+  title: string;
+  icon: ReactElement;
+  hasProfiles: boolean;
+  listToShow: ReactElement;
+  stateComponent: ReactElement;
+}> = ({ title, icon, hasProfiles, listToShow, stateComponent }) => (
+  <Card>
+    <div className="flex justify-between items-center py-2 px-4 bg-muted rounded-t">
+      <div className="flex items-center gap-2 text-muted-foreground">
+        {icon}
+        <TypographyH5>{title}</TypographyH5>
+      </div>
+
+      {hasProfiles && (
+        <CreateButton href={ROUTES.APP_CREATE_PROFILE} title="Add" />
+      )}
+    </div>
+
+    <Separator className="border-t border-muted" />
+
+    {hasProfiles ? (
+      <div className="divide-y-2 *:block py-2 px-4">{listToShow}</div>
+    ) : (
+      <div className="flex content-center justify-center mt-4">
+        {stateComponent}
+      </div>
+    )}
+  </Card>
+);
 export default AppPage;

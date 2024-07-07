@@ -1,14 +1,13 @@
 'use client';
 
-import FolderItem from '@components/folders/FolderItem';
+import FolderListItem from '@components/folders/FolderListItem';
 import ProfileHeader from '@components/profiles/ProfileHeader';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
-import { Card } from '@core/ui/Card';
 import { TypographyH3 } from '@core/ui/Typography';
-import { Profile } from '@models/profile';
+import { ProfileDTO } from '@models/dto/profile.dto';
 import { profilesState } from '@states/profiles.atom';
-import { Folder } from 'lucide-react';
+import { ChevronRight, Folder } from 'lucide-react';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -20,7 +19,7 @@ interface ProfilePageProps {
 }
 
 const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<ProfileDTO | null>(null);
   const profilesData = useRecoilValue(profilesState);
 
   const { profileId } = params;
@@ -60,9 +59,12 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
             key={index}
             href={`${ROUTES.APP_PROFILE}/${profileId}/${ROUTES.APP_FOLDER}/${folder.id}`}
           >
-            <Card className="relative p-2 px-4 border-muted-foreground/20 bg-muted hover:cursor-pointer">
-              <FolderItem profile={profile} folder={folder} />
-            </Card>
+            <FolderListItem profile={profile} folder={folder} />
+
+            <ChevronRight
+              size={24}
+              className="absolute top-[calc(50%-12px)] right-2"
+            />
           </Link>
         ))}
       </div>

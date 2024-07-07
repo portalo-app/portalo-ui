@@ -92,9 +92,6 @@ importers:
       cmdk:
         specifier: ^1.0.0
         version: 1.0.0(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      cryptocurrency-icons:
-        specifier: ^0.18.1
-        version: 0.18.1
       eslint:
         specifier: 8.39.0
         version: 8.39.0
@@ -119,9 +116,6 @@ importers:
       react:
         specifier: ^18.2.0
         version: 18.3.1
-      react-custom-social-icons:
-        specifier: ^1.0.9
-        version: 1.0.9(react@18.3.1)
       react-dom:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
@@ -131,9 +125,6 @@ importers:
       react-hook-form:
         specifier: ^7.43.9
         version: 7.51.5(react@18.3.1)
-      react-social-icons:
-        specifier: ^6.16.0
-        version: 6.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       recoil:
         specifier: ^0.7.7
         version: 0.7.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2616,9 +2607,6 @@ packages:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
 
-  cryptocurrency-icons@0.18.1:
-    resolution: {integrity: sha512-dvR5O8JOmav3559Yb0Igpkia+3vpt/aeNvMu5ZIVUG2Bzpq9wNcOJRIQas49XJrPjtZ98GAEn3aDQO+w7uhS2w==}
-
   css-select@5.1.0:
     resolution: {integrity: sha512-nwoRF1rvRRnnCqqY7updORDsuqKzqYJ28+oSMaJMMgOauh3fvwHqMS7EZpIPqK8GL+g9mKxF1vP/ZjSeNjEVHg==}
 
@@ -4129,11 +4117,6 @@ packages:
   randombytes@2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
 
-  react-custom-social-icons@1.0.9:
-    resolution: {integrity: sha512-wmKYj9grtYVSZWHvJFGLGM5NJqXs8mRXqLofpXNV1EyLm8jDvYoeSxExb3hbhaHRQy3BQfT4qnLTz9uBT8mhKA==}
-    peerDependencies:
-      react: '>=16'
-
   react-dom@18.3.1:
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
@@ -4177,12 +4160,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  react-social-icons@6.16.0:
-    resolution: {integrity: sha512-9mLDzPc85szYJeL0RB78PSdgBnCyexFD6rg6uyxQgwMgo3JaiuGLkxMmKVWBjoX+QW9bxq7VoKk6BGa7PYeJ1g==}
-    peerDependencies:
-      react: 15.x.x || 16.x.x || 17.x.x || 18.x.x
-      react-dom: 15.x.x || 16.x.x || 17.x.x || 18.x.x
 
   react-style-singleton@2.2.1:
     resolution: {integrity: sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==}
@@ -7721,8 +7698,6 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  cryptocurrency-icons@0.18.1: {}
-
   css-select@5.1.0:
     dependencies:
       boolbase: 1.0.0
@@ -9563,10 +9538,6 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
-  react-custom-social-icons@1.0.9(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-
   react-dom@18.3.1(react@18.3.1):
     dependencies:
       loose-envify: 1.4.0
@@ -9603,12 +9574,6 @@ snapshots:
       use-sidecar: 1.1.2(@types/react@18.3.1)(react@18.3.1)
     optionalDependencies:
       '@types/react': 18.3.1
-
-  react-social-icons@6.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@babel/runtime': 7.24.7
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   react-style-singleton@2.2.1(@types/react@18.3.1)(react@18.3.1):
     dependencies:
