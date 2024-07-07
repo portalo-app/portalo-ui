@@ -8,13 +8,11 @@ import State from '@core/components/State';
 import { TypographyH3 } from '@core/ui/Typography';
 import useFolderType from '@hooks/useFolderType';
 import { FileDTO } from '@models/dto/file.dto';
-import { FolderDTO } from '@models/dto/folder.dto';
-import { ProfileDTO } from '@models/dto/profile.dto';
 import { profilesState } from '@states/profiles.atom';
 import { Landmark } from 'lucide-react';
 import { NextPage } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 
 interface FolderDetailsProps {
@@ -23,33 +21,27 @@ interface FolderDetailsProps {
 
 const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
   const router = useRouter();
-  const [profile, setProfile] = useState<ProfileDTO | null>(null);
-  const [folder, setFolder] = useState<FolderDTO | null>(null);
   const pathName = usePathname();
 
   const profilesData = useRecoilValue(profilesState);
   const { folderId, profileId } = params;
 
+  const profile = useMemo(
+    () => profilesData.find((profile) => profile.id === profileId),
+    [profileId, profilesData]
+  );
+
+  const folder = useMemo(
+    () => profile?.folders.find((folder) => folder.id === folderId),
+    [folderId, profile]
+  );
+
   const folderType = useFolderType(folder?.folderTypeId);
 
-  useEffect(() => {
-    if (!profileId) return;
-
-    const selectedProfile = profilesData.find(
-      (profile) => profile.id === profileId
-    );
-    const selectedFolder = selectedProfile?.folders.find(
-      (folder) => folder.id === folderId
-    );
-
-    if (!selectedProfile || !selectedFolder) {
-      router.push(ROUTES.APP);
-      return;
-    }
-
-    setProfile(selectedProfile);
-    setFolder(selectedFolder);
-  }, [folderId, profileId, profilesData, router]);
+  if (profileId && !profile && !folder) {
+    router.push(ROUTES.APP);
+    return;
+  }
 
   return (
     <div className="space-y-4">
