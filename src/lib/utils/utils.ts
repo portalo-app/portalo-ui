@@ -13,3 +13,16 @@ export const extractRouteFromPathname = (pathname: string): string => {
   }
   return pathname;
 };
+
+export const isValidUrl = (url: string): boolean => {
+  try {
+    new URL(url);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const removeProtocolFromUrl = (url: string): string => {
+  return url.replace(/(^\w+:|^)\/\//, '');
+};

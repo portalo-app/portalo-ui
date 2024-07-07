@@ -74,9 +74,6 @@ const FileForm: React.FC<FileFormProps> = ({
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    const formValues = form.getValues();
-    console.log({ formValues });
-
     if (action === 'new') {
       createFile(profileId, folderId, data.variant, data.entity, {
         data,
