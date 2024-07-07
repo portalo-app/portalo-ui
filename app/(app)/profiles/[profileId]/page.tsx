@@ -1,6 +1,6 @@
 'use client';
 
-import FolderListItem from '@components/folders/FolderItem';
+import FolderListItem from '@components/folders/FolderListItem';
 import ProfileHeader from '@components/profiles/ProfileHeader';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';

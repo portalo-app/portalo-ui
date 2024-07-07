@@ -1,5 +1,5 @@
 import FileVariantEntityIcon from '@components/entities/FileVariantEntityIcon';
-import DataPointFormField from '@components/form/DataPointFormField';
+import DatapointFormField from '@components/files/form/DatapointFormField';
 import {
   Accordion,
   AccordionContent,
@@ -27,6 +27,7 @@ import {
 } from '@models/business/file/fileVariant';
 import { FolderType } from '@models/business/folder/folderType';
 import { FileDTO } from '@models/dto/file.dto';
+import { cn } from '@utils/utils';
 import { motion } from 'framer-motion';
 import { Pencil, Plus, SquareMousePointer } from 'lucide-react';
 import React from 'react';
@@ -75,9 +76,6 @@ const FileForm: React.FC<FileFormProps> = ({
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    const formValues = form.getValues();
-    console.log({ formValues });
-
     if (action === 'new') {
       createFile(profileId, folderId, data.variant, data.entity, {
         data,
@@ -105,7 +103,13 @@ const FileForm: React.FC<FileFormProps> = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Choose a variant</FormLabel>
-              <Tabs defaultValue={field.value}>
+              <Tabs
+                defaultValue={field.value}
+                onValueChange={(value: string) => {
+                  field.onChange(value);
+                  form.setValue('entity', '');
+                }}
+              >
                 <FormControl>
                   <TabsList className="w-full border border-muted rounded-full h-10 px-1 bg-muted/25">
                     {folderType.fileType.variants.map((variant) => (
@@ -113,10 +117,6 @@ const FileForm: React.FC<FileFormProps> = ({
                         key={variant.id}
                         value={variant.id}
                         className="flex-1 rounded-full"
-                        onClick={() => {
-                          field.onChange(variant.id);
-                          form.setValue('entity', '');
-                        }}
                       >
                         {variant.label}
                       </TabsTrigger>
@@ -138,9 +138,15 @@ const FileForm: React.FC<FileFormProps> = ({
               <FormMessage />
 
               <ResponsiveDialog
-                title=""
+                title={`Choose a ${getCurrentVariant()?.entityLabel}`}
                 trigger={
-                  <Card className="mt-2 p-2 space-y-2 bg-primary/20 border-0 border-muted rounded-full flex justify-center items-center">
+                  <Card
+                    className={cn(
+                      'mt-2 p-2 space-y-2 bg-primary/20 border-0 border-muted rounded-full flex justify-center items-center',
+                      form.control.getFieldState('entity').error &&
+                        'border border-red-900'
+                    )}
+                  >
                     {getCurrentVariantEntity() ? (
                       <div className="flex gap-2 items-center rounded-full">
                         <FileVariantEntityIcon
@@ -151,8 +157,7 @@ const FileForm: React.FC<FileFormProps> = ({
                     ) : (
                       <span className="flex align-center gap-2">
                         <SquareMousePointer className="text-primary " />
-                        Choose a{' '}
-                        {getCurrentVariant()?.entityLabel.toLocaleLowerCase()}
+                        Choose a {getCurrentVariant()?.entityLabel}
                       </span>
                     )}
                   </Card>
@@ -191,7 +196,7 @@ const FileForm: React.FC<FileFormProps> = ({
           )
           .sort((a, b) => a.order - b.order)
           .map((datapoint, index) => (
-            <DataPointFormField key={index} form={form} datapoint={datapoint} />
+            <DatapointFormField key={index} form={form} datapoint={datapoint} />
           ))}
 
         {[...folderType.fileType.datapoints].some((dataPoint) =>
@@ -214,7 +219,7 @@ const FileForm: React.FC<FileFormProps> = ({
                   )
                   .sort((a, b) => a.order - b.order)
                   .map((datapoint, index) => (
-                    <DataPointFormField
+                    <DatapointFormField
                       key={index}
                       form={form}
                       datapoint={datapoint}

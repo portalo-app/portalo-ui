@@ -4,12 +4,12 @@ import { Datapoint } from '@models/business/file/datapoint/datapoint';
 import { HTMLInputTypeAttribute } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
-interface dataPointFormFieldProps {
+interface DatapointFormFieldProps {
   form: UseFormReturn;
   datapoint: Datapoint;
 }
 
-const DataPointFormField: React.FC<dataPointFormFieldProps> = ({
+const DatapointFormField: React.FC<DatapointFormFieldProps> = ({
   form,
   datapoint: { id, name, placeholder, type },
 }) => {
@@ -44,4 +44,4 @@ const DataPointFormField: React.FC<dataPointFormFieldProps> = ({
   );
 };
 
-export default DataPointFormField;
+export default DatapointFormField;

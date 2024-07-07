@@ -5,61 +5,73 @@ const chains = [
     symbol: 'BTC',
     name: 'Bitcoin',
     color: '#f7931a',
+    shareUrl: 'https://btcscan.org/address/',
   },
   {
     symbol: 'ETH',
     name: 'Ethereum',
     color: '#627eea',
+    shareUrl: 'https://etherscan.io/address/',
   },
   {
     symbol: 'MATIC',
     name: 'Polygon',
     color: '#6f41d8',
+    shareUrl: 'https://polygonscan.com/address/',
   },
   {
     symbol: 'DOT',
     name: 'Polkadot',
     color: '#e6007a',
+    shareUrl: 'https://polkadot.subscan.io/account/',
   },
   {
     symbol: 'ALGO',
     name: 'Algorand',
     color: '#000000',
+    shareUrl: 'https://explorer.perawallet.app/address/',
   },
   {
     symbol: 'SOL',
     name: 'Solana',
     color: '#66f9a1',
+    shareUrl: 'https://solscan.io/account/',
   },
   {
     symbol: 'TRX',
     name: 'TRON',
     color: '#ef0027',
+    shareUrl: 'https://tronscan.org/#/address/',
   },
   {
-    symbol: 'BNB',
-    name: 'BNB Smart Chain',
+    symbol: 'BSC',
+    name: 'BSC',
     color: '#f3ba2f',
+    shareUrl: 'https://bscscan.com/address/',
   },
   {
     symbol: 'AVAX',
     name: 'Avalanche',
     color: '#e84142',
+    shareUrl: 'https://subnets.avax.network/c-chain/address/',
   },
   {
     symbol: 'GNO',
     name: 'Gnosis',
     color: '#00a6c4',
+    shareUrl: 'https://gnosisscan.io/address/',
   },
   {
     symbol: 'ADA',
     name: 'Cardano',
     color: '#0d1e30',
+    shareUrl: 'https://cardanoscan.io/address/',
   },
   {
     symbol: 'ATOM',
     name: 'Cosmos',
     color: '#2e3148',
+    shareUrl: 'https://www.mintscan.io/cosmos/address/',
   },
 ];
 
@@ -69,6 +81,6 @@ export const ADDRESS_CRYPTO_ENTITIES: FileVariantEntity[] = chains.map(
     color: chain.color,
     icon: `crypto/${chain.symbol.toLowerCase()}.webp`,
     label: chain.name,
-    shareUrl: '',
+    shareUrl: chain.shareUrl,
   })
 );

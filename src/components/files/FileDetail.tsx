@@ -8,10 +8,17 @@ import {
   AccordionTrigger,
 } from '@core/ui/Accordion';
 import { Button } from '@core/ui/Button';
-import { TypographyH5, TypographyMuted } from '@core/ui/Typography';
+import {
+  TypographyH5,
+  TypographyMuted,
+  TypographyP,
+} from '@core/ui/Typography';
 import { FileType } from '@models/business/file/fileType';
 import { FileDTO } from '@models/dto/file.dto';
+import { isValidUrl, removeProtocolFromUrl } from '@utils/utils';
 import { Pencil, Share2 } from 'lucide-react';
+import Link from 'next/link';
+import { useMemo } from 'react';
 
 interface FileDetailProps {
   file: FileDTO;
@@ -24,9 +31,10 @@ const FileDetail: React.FC<FileDetailProps> = ({
   fileType,
   navigateToEdit,
 }) => {
-  const { title, entity, qrInfo, extraDatapoints } = fileType.getDetailData(
-    file.data
-  );
+  const { title, entity, qrInfo, extraDatapoints } = useMemo(() => {
+    return fileType.getDetailData(file.data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [file.data]);
 
   if (!entity) return;
 
@@ -53,7 +61,17 @@ const FileDetail: React.FC<FileDetailProps> = ({
           className="rounded-3xl"
         />
 
-        <TypographyMuted className="break-words w-64">{qrInfo}</TypographyMuted>
+        <div className="flex w-full justify-center py-1">
+          {isValidUrl(qrInfo) ? (
+            <Link href={qrInfo} target="_blank">
+              <TypographyP className="text-blue-500 underline hover:text-blue-700 truncate w-64">
+                {removeProtocolFromUrl(qrInfo)}
+              </TypographyP>
+            </Link>
+          ) : (
+            <TypographyP className="break-words w-64">{qrInfo}</TypographyP>
+          )}
+        </div>
       </div>
 
       {extraDatapoints && extraDatapoints.length > 0 && (

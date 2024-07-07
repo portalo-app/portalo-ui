@@ -12,16 +12,9 @@ interface FolderListItemProps {
 }
 
 const FolderListItem: React.FC<FolderListItemProps> = ({ profile, folder }) => {
-  // TODO: Define an icon directory to better fetch the icon.
-  // const Icon = folder.type.icon as LucideIcon;
-
   const folderType = useFolderType(folder?.folderTypeId);
 
   if (!profile || !folder) return null;
-
-  // const filesLabel = `${folder.files.length} file${
-  //   folder.files.length > 1 || folder.files.length === 0 ? 's' : ''
-  // }`;
 
   return (
     <Link
