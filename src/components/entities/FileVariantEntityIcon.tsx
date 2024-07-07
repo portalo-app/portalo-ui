@@ -11,7 +11,7 @@ const FileVariantEntityIcon: React.FC<FileVariantEntityIconProps> = ({
   return (
     <Image
       src={`/assets/icons/${icon}`}
-      alt={`entity-icon-${id}`}
+      alt={`${id} logo`}
       width={35}
       height={35}
     />
