@@ -1,11 +1,13 @@
 'use client';
 
 import { ROUTES } from '@constants/routes.const';
-import { TypographyH1 } from '@core/ui/Typography';
+import { Separator } from '@core/ui/Separator';
+import { TypographyH2 } from '@core/ui/Typography';
 import useFolderType from '@hooks/useFolderType';
 import { FileDTO } from '@models/dto/file.dto';
 import { FolderDTO } from '@models/dto/folder.dto';
 import { profilesState } from '@states/profiles.atom';
+import { MessagesSquare, Wallet } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -65,25 +67,34 @@ const FileContainer: FC<FileContainerProps> = ({
   }, [profilesData, profileId, folderId, router, action, fileId]);
 
   return (
-    <div className="flex flex-col gap-6">
-      <TypographyH1 className="self-center capitalize flex items-center text-primary">
-        {folderId}
-      </TypographyH1>
+    <div className="flex flex-col">
+      <div className="flex items-center gap-2">
+        {folderType?.id === 'social' && folderType ? (
+          <MessagesSquare size={30} />
+        ) : (
+          <Wallet size={30} />
+        )}
+        <TypographyH2 className="!p-0 capitalize">{folderId}</TypographyH2>
+      </div>
 
-      {folder && folderType && (
-        <FileForm
-          profileId={profileId}
-          folderId={folderId}
-          folderType={folderType}
-          initialData={file}
-          onComplete={() =>
-            router.push(
-              `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}`
-            )
-          }
-          action={action}
-        />
-      )}
+      <Separator className="my-2" />
+
+      <div className="mt-2">
+        {folder && folderType && (
+          <FileForm
+            profileId={profileId}
+            folderId={folderId}
+            folderType={folderType}
+            initialData={file}
+            onComplete={() =>
+              router.push(
+                `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}`
+              )
+            }
+            action={action}
+          />
+        )}
+      </div>
     </div>
   );
 };

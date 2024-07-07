@@ -27,6 +27,7 @@ import {
 } from '@models/business/file/fileVariant';
 import { FolderType } from '@models/business/folder/folderType';
 import { FileDTO } from '@models/dto/file.dto';
+import { motion } from 'framer-motion';
 import { Pencil, Plus, SquareMousePointer } from 'lucide-react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -96,7 +97,7 @@ const FileForm: React.FC<FileFormProps> = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 h-[calc(75vh-2rem)]"
+        className="flex flex-col gap-4 mt-2"
       >
         <FormField
           control={form.control}
@@ -139,7 +140,7 @@ const FileForm: React.FC<FileFormProps> = ({
               <ResponsiveDialog
                 title=""
                 trigger={
-                  <Card className="mt-2 relative h-12 space-y-2 border-0 border-muted hover:cursor-pointer hover:bg-primary/10 rounded-full flex justify-center items-center">
+                  <Card className="mt-2 p-2 space-y-2 bg-primary/20 border-0 border-muted rounded-full flex justify-center items-center">
                     {getCurrentVariantEntity() ? (
                       <div className="flex gap-2 items-center rounded-full">
                         <FileVariantEntityIcon
@@ -226,19 +227,21 @@ const FileForm: React.FC<FileFormProps> = ({
           <></>
         )}
 
-        <Button type="submit" className="mt-auto uppercase flex gap-1">
-          {action === 'new' ? (
-            <>
-              <Plus />
-              Create
-            </>
-          ) : (
-            <>
-              <Pencil size={18} />
-              Save
-            </>
-          )}
-        </Button>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Button type="submit" className="uppercase flex gap-1 w-full mt-10">
+            {action === 'new' ? (
+              <>
+                <Plus />
+                Create
+              </>
+            ) : (
+              <>
+                <Pencil size={18} />
+                Save
+              </>
+            )}
+          </Button>
+        </motion.div>
       </form>
     </Form>
   );
