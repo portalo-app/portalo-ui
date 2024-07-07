@@ -18,6 +18,7 @@ import { FileDTO } from '@models/dto/file.dto';
 import { isValidUrl, removeProtocolFromUrl } from '@utils/utils';
 import { Pencil, Share2 } from 'lucide-react';
 import Link from 'next/link';
+import { useMemo } from 'react';
 
 interface FileDetailProps {
   file: FileDTO;
@@ -30,9 +31,10 @@ const FileDetail: React.FC<FileDetailProps> = ({
   fileType,
   navigateToEdit,
 }) => {
-  const { title, entity, qrInfo, extraDatapoints } = fileType.getDetailData(
-    file.data
-  );
+  const { title, entity, qrInfo, extraDatapoints } = useMemo(() => {
+    return fileType.getDetailData(file.data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [file.data]);
 
   if (!entity) return;
 
