@@ -7,7 +7,7 @@ import CreateButton from '@core/components/CreateButton';
 import { TypographyH3 } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { profilesState } from '@states/profiles.atom';
-import { ChevronRight, Folder } from 'lucide-react';
+import { Folder } from 'lucide-react';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -60,11 +60,6 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
             href={`${ROUTES.APP_PROFILE}/${profileId}/${ROUTES.APP_FOLDER}/${folder.id}`}
           >
             <FolderListItem profile={profile} folder={folder} />
-
-            <ChevronRight
-              size={24}
-              className="absolute top-[calc(50%-12px)] right-2"
-            />
           </Link>
         ))}
       </div>
