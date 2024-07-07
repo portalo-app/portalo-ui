@@ -1,7 +1,7 @@
 'use client';
 
 import StoreWidget from '@components/dashboard/StoreWidget';
-import FolderListItem from '@components/folders/FolderItem';
+import FolderListItem from '@components/folders/FolderListItem';
 import ProfileItem from '@components/profiles/ProfileItem';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';

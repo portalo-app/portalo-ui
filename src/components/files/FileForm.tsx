@@ -131,7 +131,7 @@ const FileForm: React.FC<FileFormProps> = ({
           render={({ field }) => (
             <FormItem>
               <ResponsiveDialog
-                title=""
+                title={`Choose a ${getCurrentVariant()?.entityLabel}`}
                 trigger={
                   <Card className="mt-2 relative h-12 space-y-2 border-0 border-muted hover:cursor-pointer hover:bg-primary/10 rounded-full flex justify-center items-center">
                     {getCurrentVariantEntity() ? (
@@ -144,8 +144,7 @@ const FileForm: React.FC<FileFormProps> = ({
                     ) : (
                       <span className="flex align-center gap-2">
                         <SquareMousePointer className="text-primary " />
-                        Choose a{' '}
-                        {getCurrentVariant()?.entityLabel.toLocaleLowerCase()}
+                        Choose a {getCurrentVariant()?.entityLabel}
                       </span>
                     )}
                   </Card>

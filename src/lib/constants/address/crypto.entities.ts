@@ -45,7 +45,7 @@ const chains = [
   },
   {
     symbol: 'BSC',
-    name: 'BNB Smart Chain',
+    name: 'BSC',
     color: '#f3ba2f',
     shareUrl: 'https://bscscan.com/address/',
   },
