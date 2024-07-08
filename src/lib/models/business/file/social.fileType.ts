@@ -48,6 +48,7 @@ export class SocialFileType implements FileType {
       title: fileData.username,
       entity,
       qrInfo: entity?.shareUrl + fileData.username,
+      link: entity?.shareUrl ? entity.shareUrl + fileData.username : undefined,
       extraDatapoints: [],
     };
   }
