@@ -12,9 +12,18 @@ const CreateButton: React.FC<CreateButtonProps & ButtonProps> = ({
   href,
   disabled,
 }) => {
+  const ButtonContainer = ({ children }: { children: React.ReactNode }) =>
+    disabled ? (
+      <div>{children}</div>
+    ) : (
+      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        {children}
+      </motion.div>
+    );
+
   return (
     <Link href={href} aria-disabled={disabled}>
-      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+      <ButtonContainer>
         <Button
           size="sm"
           className="rounded-full bg-primary "
@@ -22,7 +31,7 @@ const CreateButton: React.FC<CreateButtonProps & ButtonProps> = ({
         >
           <Plus size={16} />
         </Button>
-      </motion.div>
+      </ButtonContainer>
     </Link>
   );
 };

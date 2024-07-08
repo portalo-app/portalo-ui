@@ -44,7 +44,7 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
   return (
     <div>
       <div className="px-2 pr-3">
-        <ProfileHeader profile={profile!} />
+        <ProfileHeader profile={profile!} isProfilePage />
       </div>
 
       <div className="border border-muted mt-4 rounded-lg">

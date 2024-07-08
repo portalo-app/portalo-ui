@@ -9,9 +9,13 @@ import DeleteProfileModal from './DeleteProfileModal';
 
 interface ProfileHeaderProps {
   profile: ProfileDTO;
+  isProfilePage?: boolean;
 }
 
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profile }) => {
+const ProfileHeader: React.FC<ProfileHeaderProps> = ({
+  profile,
+  isProfilePage,
+}) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const deleteProfile = () => {
@@ -29,16 +33,18 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profile }) => {
           <Avvvatars value={profile?.name || ''} size={42} style="character" />
           <TypographyH3>{profile?.name}</TypographyH3>
         </div>
-        <motion.div whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.95 }}>
-          <Button
-            size="sm"
-            className="gap-1 bg-transparent text-destructive brightness-150 hover:bg-transparent hover:brightness-200 hover:text-destructive"
-            variant="ghost"
-            onClick={deleteProfile}
-          >
-            <Trash size={20} />
-          </Button>
-        </motion.div>
+        {isProfilePage && (
+          <motion.div whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.95 }}>
+            <Button
+              size="sm"
+              className="gap-1 bg-transparent text-destructive brightness-150 hover:bg-transparent hover:brightness-200 hover:text-destructive"
+              variant="ghost"
+              onClick={deleteProfile}
+            >
+              <Trash size={20} />
+            </Button>
+          </motion.div>
+        )}
       </div>
 
       {profile && (

@@ -107,7 +107,7 @@ const FileForm: React.FC<FileFormProps> = ({
                 defaultValue={field.value}
                 onValueChange={(value: string) => {
                   field.onChange(value);
-                  form.setValue('entity', '');
+                  form.setValue('entity', undefined);
                 }}
               >
                 <FormControl>
@@ -135,8 +135,6 @@ const FileForm: React.FC<FileFormProps> = ({
           name="entity"
           render={({ field }) => (
             <FormItem>
-              <FormMessage />
-
               <ResponsiveDialog
                 title={`Choose a ${getCurrentVariant()?.entityLabel}`}
                 trigger={
@@ -183,6 +181,7 @@ const FileForm: React.FC<FileFormProps> = ({
                   )}
                 </div>
               </ResponsiveDialog>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -232,7 +231,7 @@ const FileForm: React.FC<FileFormProps> = ({
           <></>
         )}
 
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
           <Button type="submit" className="uppercase flex gap-1 w-full mt-10">
             {action === 'new' ? (
               <>

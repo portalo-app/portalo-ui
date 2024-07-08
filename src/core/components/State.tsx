@@ -52,7 +52,7 @@ const State: React.FC<StateProps> = ({ type, label, size, action }) => {
       </div>
 
       {action && (
-        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.95 }}>
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
           <Button className="w-full mt-4" onClick={action.onClick}>
             {action.label}
           </Button>

@@ -94,7 +94,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
             )}
           />
 
-          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.95 }}>
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Button type="submit" className="!mt-6 w-full">
               {actionLabel}
             </Button>
