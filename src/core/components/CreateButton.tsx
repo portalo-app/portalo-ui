@@ -1,4 +1,5 @@
 import { Button, ButtonProps } from '@core/ui/Button';
+import { motion } from 'framer-motion';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 
@@ -9,23 +10,28 @@ interface CreateButtonProps {
 
 const CreateButton: React.FC<CreateButtonProps & ButtonProps> = ({
   href,
-  title,
   disabled,
 }) => {
-  const label = title || 'Create';
+  const ButtonContainer = ({ children }: { children: React.ReactNode }) =>
+    disabled ? (
+      <div>{children}</div>
+    ) : (
+      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        {children}
+      </motion.div>
+    );
 
   return (
     <Link href={href} aria-disabled={disabled}>
-      <Button
-        variant="ghost"
-        size="sm"
-        className="flex items-center text-secondary"
-        disabled={disabled}
-      >
-        <Plus size={16} className="mr-1" />
-
-        {label}
-      </Button>
+      <ButtonContainer>
+        <Button
+          size="sm"
+          className="rounded-full bg-primary "
+          disabled={disabled}
+        >
+          <Plus size={16} />
+        </Button>
+      </ButtonContainer>
     </Link>
   );
 };

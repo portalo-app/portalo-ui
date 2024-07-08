@@ -18,7 +18,7 @@ const UserSummary = () => {
   const emptyMessage = 'No profiles yet';
 
   return (
-    <div className="my-3 px-4">
+    <div className="mb-3 md:my-3 md:px-2 px-1">
       <div className="flex flex-row content-center gap-3 ">
         <Avvvatars value={profiles.toString()} size={48} style="shape" />
 

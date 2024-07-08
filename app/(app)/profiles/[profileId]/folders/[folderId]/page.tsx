@@ -9,7 +9,8 @@ import { TypographyH3 } from '@core/ui/Typography';
 import useFolderType from '@hooks/useFolderType';
 import { FileDTO } from '@models/dto/file.dto';
 import { profilesState } from '@states/profiles.atom';
-import { Landmark } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { MessagesSquare, Wallet } from 'lucide-react';
 import { NextPage } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
@@ -49,7 +50,7 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
 
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <Landmark />
+          {folderId === 'social' ? <MessagesSquare /> : <Wallet />}
           <TypographyH3>{folderType?.label} folder</TypographyH3>
         </div>
 
@@ -59,13 +60,23 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
       <div className="space-y-4">
         {folder?.files?.length ?? 0 > 0 ? (
           folder?.files.map((file: FileDTO, index: number) => (
-            <FileListItem
+            <motion.div
               key={index}
-              profileId={profileId}
-              folderId={folderId}
-              file={file}
-              folderType={folderType}
-            />
+              variants={{
+                open: { opacity: 1 },
+                closed: { opacity: 0 },
+              }}
+              initial="closed"
+              animate="open"
+              transition={{ delay: index * 0.2 }}
+            >
+              <FileListItem
+                profileId={profileId}
+                folderId={folderId}
+                file={file}
+                folderType={folderType}
+              />
+            </motion.div>
           ))
         ) : (
           <State

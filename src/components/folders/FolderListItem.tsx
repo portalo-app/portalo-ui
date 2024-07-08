@@ -2,7 +2,7 @@ import { ROUTES } from '@constants/routes.const';
 import useFolderType from '@hooks/useFolderType';
 import { FolderDTO } from '@models/dto/folder.dto';
 import { ProfileDTO } from '@models/dto/profile.dto';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, MessagesSquare, Wallet } from 'lucide-react';
 import Link from 'next/link';
 import FolderTitle from './FolderTitle';
 
@@ -20,16 +20,20 @@ const FolderListItem: React.FC<FolderListItemProps> = ({ profile, folder }) => {
     <Link
       href={`${ROUTES.APP_PROFILE}/${profile?.id}/${ROUTES.APP_FOLDER}/${folder?.id}`}
     >
-      <div className="py-4 relative">
-        <FolderTitle
-          profileName={profile.name}
-          folderTypeName={folderType?.label}
-        />
+      <div className="flex py-4 items-center justify-between">
+        <div className="flex gap-4 items-center">
+          {folder.id === 'social' ? (
+            <MessagesSquare size={35} className="text-muted-foreground" />
+          ) : (
+            <Wallet size={35} className="text-muted-foreground" />
+          )}
+          <FolderTitle
+            profileName={profile.name}
+            folderTypeName={folderType?.label}
+          />
+        </div>
 
-        <ChevronRight
-          size={24}
-          className="absolute top-[calc(50%-12px)] right-2 text-muted-foreground"
-        />
+        <ChevronRight size={24} className="text-muted-foreground mr-2" />
       </div>
     </Link>
   );

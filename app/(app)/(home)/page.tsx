@@ -6,7 +6,10 @@ import ProfileItem from '@components/profiles/ProfileItem';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
+import { Button } from '@core/ui/Button';
 import { Card } from '@core/ui/Card';
+import { Input } from '@core/ui/Input';
+import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { Separator } from '@core/ui/Separator';
 import { TypographyH5 } from '@core/ui/Typography';
 import { profilesState } from '@states/profiles.atom';
@@ -44,7 +47,16 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
 
   return (
     <div className="space-y-4">
-      <StoreWidget />
+      <ResponsiveDialog
+        title="Coming soon"
+        description="✨ Soon you'll be able to store ANYTHING ANYWHERE ✨"
+        trigger={<StoreWidget />}
+      >
+        <div className="space-y-4 flex flex-col justify-center">
+          <Input disabled placeholder="Input Anything!" />
+          <Button disabled>Store Anywhere</Button>
+        </div>
+      </ResponsiveDialog>
 
       <HomeCard
         title={profilesTitle}
@@ -93,7 +105,7 @@ const HomeCard: FunctionComponent<{
   listToShow: ReactElement;
   stateComponent: ReactElement;
 }> = ({ title, icon, hasProfiles, listToShow, stateComponent }) => (
-  <Card>
+  <Card className="!mt-10">
     <div className="flex justify-between items-center py-2 px-4 bg-muted rounded-t">
       <div className="flex items-center gap-2 text-muted-foreground">
         {icon}
@@ -105,12 +117,12 @@ const HomeCard: FunctionComponent<{
       )}
     </div>
 
-    <Separator className="border-t border-muted" />
+    <Separator className="border-t border-muted/80" />
 
     {hasProfiles ? (
       <div className="divide-y-2 *:block py-2 px-4">{listToShow}</div>
     ) : (
-      <div className="flex content-center justify-center mt-4">
+      <div className="flex content-center justify-center bg-muted rounded-b-xl">
         {stateComponent}
       </div>
     )}

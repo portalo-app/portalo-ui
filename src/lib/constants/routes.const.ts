@@ -35,7 +35,7 @@ export const ROUTES_LAYOUT: Route[] = [
     readOnly: true,
   },
   {
-    title: 'Profile',
+    title: 'Folders',
     url: ROUTES.APP_PROFILE,
     readOnly: true,
   },

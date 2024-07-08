@@ -102,15 +102,16 @@ export class AddressFileType implements FileType {
     return {
       title: fileData.name,
       entity,
-      qrInfo: entity?.shareUrl + fileData.address,
+      qrInfo: fileData.address,
+      link: entity?.shareUrl ? entity.shareUrl + fileData.address : undefined,
       extraDatapoints: [
         {
           label: 'Alias',
-          value: fileData.alias,
+          value: fileData.alias ?? '-',
         },
         {
           label: 'Notes',
-          value: fileData.notes,
+          value: fileData.notes ?? '-',
         },
       ],
     };

@@ -1,5 +1,3 @@
-import { QRCodeSVG } from 'qrcode.react';
-
 import FileVariantEntityIcon from '@components/entities/FileVariantEntityIcon';
 import {
   Accordion,
@@ -8,16 +6,12 @@ import {
   AccordionTrigger,
 } from '@core/ui/Accordion';
 import { Button } from '@core/ui/Button';
-import {
-  TypographyH5,
-  TypographyMuted,
-  TypographyP,
-} from '@core/ui/Typography';
+import { TypographyH5, TypographyMuted } from '@core/ui/Typography';
 import { FileType } from '@models/business/file/fileType';
 import { FileDTO } from '@models/dto/file.dto';
-import { isValidUrl, removeProtocolFromUrl } from '@utils/utils';
-import { Pencil, Share2 } from 'lucide-react';
-import Link from 'next/link';
+import { isValidUrl } from '@utils/utils';
+import { ExternalLink, Pencil, Share2 } from 'lucide-react';
+import { QRCodeSVG } from 'qrcode.react';
 import { useMemo } from 'react';
 
 interface FileDetailProps {
@@ -31,16 +25,26 @@ const FileDetail: React.FC<FileDetailProps> = ({
   fileType,
   navigateToEdit,
 }) => {
-  const { title, entity, qrInfo, extraDatapoints } = useMemo(() => {
+  const { title, entity, qrInfo, link, extraDatapoints } = useMemo(() => {
     return fileType.getDetailData(file.data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file.data]);
 
   if (!entity) return;
 
+  const navigateToExternalLink = (link: string) => {
+    window.open(link, '_blank');
+  };
+
+  const handleShare = () => {
+    navigator?.share({
+      text: qrInfo,
+    });
+  };
+
   return (
     <div className="text-center space-y-2 grid place-items-center">
-      <div className="px-4 border-2 border-primary p-2 rounded-xl">
+      <div className="px-4 border-2 border-muted p-2 rounded-xl">
         <TypographyH5>{title}</TypographyH5>
       </div>
 
@@ -60,18 +64,6 @@ const FileDetail: React.FC<FileDetailProps> = ({
           size={256}
           className="rounded-3xl"
         />
-
-        <div className="flex w-full justify-center py-1">
-          {isValidUrl(qrInfo) ? (
-            <Link href={qrInfo} target="_blank">
-              <TypographyP className="text-blue-500 underline hover:text-blue-700 truncate w-64">
-                {removeProtocolFromUrl(qrInfo)}
-              </TypographyP>
-            </Link>
-          ) : (
-            <TypographyP className="break-words w-64">{qrInfo}</TypographyP>
-          )}
-        </div>
       </div>
 
       {extraDatapoints && extraDatapoints.length > 0 && (
@@ -96,19 +88,32 @@ const FileDetail: React.FC<FileDetailProps> = ({
         </Accordion>
       )}
 
-      <div className="flex gap-2 w-full justify-center pb-3 pt-5">
-        <Button
-          className="gap-2 w-full"
-          variant="outline"
-          onClick={navigateToEdit}
-        >
+      <div className="flex flex-col gap-2 w-full justify-center pb-3 pt-5">
+        <Button className="gap-2 w-full" onClick={navigateToEdit}>
           <Pencil size={16} />
           Edit
         </Button>
-        <Button className="gap-2 w-full">
-          <Share2 size={16} />
-          Share
-        </Button>
+
+        <div className="flex gap-2 w-full justify-center">
+          <Button
+            className="gap-2 w-full"
+            variant="outline"
+            onClick={handleShare}
+          >
+            <Share2 size={16} />
+            Share
+          </Button>
+          {link && isValidUrl(link) && (
+            <Button
+              className="gap-2 w-full"
+              variant="outline"
+              onClick={() => navigateToExternalLink(link)}
+            >
+              Go to
+              <ExternalLink size={16} />
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

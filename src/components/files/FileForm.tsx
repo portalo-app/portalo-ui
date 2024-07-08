@@ -28,6 +28,7 @@ import {
 import { FolderType } from '@models/business/folder/folderType';
 import { FileDTO } from '@models/dto/file.dto';
 import { cn } from '@utils/utils';
+import { motion } from 'framer-motion';
 import { Pencil, Plus, SquareMousePointer } from 'lucide-react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -94,7 +95,7 @@ const FileForm: React.FC<FileFormProps> = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 h-[calc(75vh-2rem)]"
+        className="flex flex-col gap-4 mt-2"
       >
         <FormField
           control={form.control}
@@ -106,7 +107,7 @@ const FileForm: React.FC<FileFormProps> = ({
                 defaultValue={field.value}
                 onValueChange={(value: string) => {
                   field.onChange(value);
-                  form.setValue('entity', '');
+                  form.setValue('entity', undefined);
                 }}
               >
                 <FormControl>
@@ -134,14 +135,12 @@ const FileForm: React.FC<FileFormProps> = ({
           name="entity"
           render={({ field }) => (
             <FormItem>
-              <FormMessage />
-
               <ResponsiveDialog
                 title={`Choose a ${getCurrentVariant()?.entityLabel}`}
                 trigger={
                   <Card
                     className={cn(
-                      'mt-2 relative h-12 space-y-2 border-0 border-muted hover:cursor-pointer hover:bg-primary/10 rounded-full flex justify-center items-center',
+                      'mt-2 p-2 space-y-2 bg-primary/20 border-0 border-muted rounded-full flex justify-center items-center',
                       form.control.getFieldState('entity').error &&
                         'border border-red-900'
                     )}
@@ -182,6 +181,7 @@ const FileForm: React.FC<FileFormProps> = ({
                   )}
                 </div>
               </ResponsiveDialog>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -231,19 +231,21 @@ const FileForm: React.FC<FileFormProps> = ({
           <></>
         )}
 
-        <Button type="submit" className="mt-auto uppercase flex gap-1">
-          {action === 'new' ? (
-            <>
-              <Plus />
-              Create
-            </>
-          ) : (
-            <>
-              <Pencil size={18} />
-              Save
-            </>
-          )}
-        </Button>
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <Button type="submit" className="uppercase flex gap-1 w-full mt-10">
+            {action === 'new' ? (
+              <>
+                <Plus />
+                Create
+              </>
+            ) : (
+              <>
+                <Pencil size={18} />
+                Save
+              </>
+            )}
+          </Button>
+        </motion.div>
       </form>
     </Form>
   );

@@ -22,7 +22,3 @@ export const isValidUrl = (url: string): boolean => {
     return false;
   }
 };
-
-export const removeProtocolFromUrl = (url: string): string => {
-  return url.replace(/(^\w+:|^)\/\//, '');
-};
