@@ -76,9 +76,8 @@ const FileListItem: React.FC<FileListItemProps> = ({
               />
             </div>
 
-            <div className="text-left">
+            <div className="text-left truncate">
               <TypographyH5>{keyData.primary}</TypographyH5>
-
               <TypographyMutedXS>{keyData.secondary}</TypographyMutedXS>
             </div>
           </Card>
