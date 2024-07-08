@@ -1,11 +1,11 @@
 'use client';
 
 import { ROUTES } from '@constants/routes.const';
+import Icon from '@core/ui/Icon';
 import { Separator } from '@core/ui/Separator';
 import { TypographyH2 } from '@core/ui/Typography';
 import useFolderType from '@hooks/useFolderType';
 import { profilesState } from '@states/profiles.atom';
-import { MessagesSquare, Wallet } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { FC, useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -34,13 +34,15 @@ const FileContainer: FC<FileContainerProps> = ({
         ?.folders.find((folder) => folder.id === folderId),
     [profilesData, profileId, folderId]
   );
+
   const file = useMemo(
     () => folder?.files.find((file) => file.id === fileId),
     [folder, fileId]
   );
+
   const folderType = useFolderType(folder?.folderTypeId);
 
-  if (!profileId || !folder) {
+  if (!profileId || !folder || !folderType) {
     router.push(ROUTES.APP);
     return;
   }
@@ -55,11 +57,11 @@ const FileContainer: FC<FileContainerProps> = ({
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-2">
-        {folderType?.id === 'social' && folderType ? (
-          <MessagesSquare size={30} />
-        ) : (
-          <Wallet size={30} />
-        )}
+        <Icon
+          size={30}
+          name={folderType?.icon}
+          className="text-muted-foreground"
+        />
         <TypographyH2 className="!p-0 capitalize">{folderId}</TypographyH2>
       </div>
 

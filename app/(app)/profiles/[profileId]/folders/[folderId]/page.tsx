@@ -5,12 +5,12 @@ import ProfileHeader from '@components/profiles/ProfileHeader';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
+import Icon from '@core/ui/Icon';
 import { TypographyH3 } from '@core/ui/Typography';
 import useFolderType from '@hooks/useFolderType';
 import { FileDTO } from '@models/dto/file.dto';
 import { profilesState } from '@states/profiles.atom';
 import { motion } from 'framer-motion';
-import { MessagesSquare, Wallet } from 'lucide-react';
 import { NextPage } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
@@ -50,7 +50,7 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
 
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          {folderId === 'social' ? <MessagesSquare /> : <Wallet />}
+          <Icon name={folderType.icon} className="text-muted-foreground" />
           <TypographyH3>{folderType?.label} folder</TypographyH3>
         </div>
 
