@@ -31,19 +31,19 @@ export const profilesState = atom<ProfileDTO[]>({
             },
             {
               data: {
-                variant: 'social-media',
+                variant: 'media',
                 entity: 'x',
                 username: 'NeoPowerDigital',
               },
-              id: 'social_social-media_x',
+              id: 'social_media_x',
             },
             {
               data: {
-                variant: 'social-media',
+                variant: 'media',
                 entity: 'x',
                 username: 'LaMultisig',
               },
-              id: 'social_social-media_x_2',
+              id: 'social_media_x_2',
             },
           ],
         },
