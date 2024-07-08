@@ -10,8 +10,8 @@ export const SOCIAL_MESSAGING_VARIANT: FileVariant = {
 };
 
 export const SOCIAL_MEDIA_VARIANT: FileVariant = {
-  id: 'media',
-  label: 'Media',
-  entityLabel: 'Social Network',
+  id: 'social-media',
+  label: 'Social Media',
+  entityLabel: 'Social Media',
   availableEntities: MEDIA_ENTITIES,
 };
