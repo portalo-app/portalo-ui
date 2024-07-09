@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@core/ui/Accordion';
-import { Button } from '@core/ui/Button';
+import AnimatedButton from '@core/ui/AnimatedButton';
 import { Card } from '@core/ui/Card';
 import { DrawerClose } from '@core/ui/Drawer';
 import {
@@ -28,7 +28,6 @@ import {
 import { FolderType } from '@models/business/folder/folderType';
 import { FileDTO } from '@models/dto/file.dto';
 import { cn } from '@utils/utils';
-import { motion } from 'framer-motion';
 import { Pencil, Plus, SquareMousePointer } from 'lucide-react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -231,21 +230,22 @@ const FileForm: React.FC<FileFormProps> = ({
           <></>
         )}
 
-        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-          <Button type="submit" className="uppercase flex gap-1 w-full mt-10">
-            {action === 'new' ? (
-              <>
-                <Plus />
-                Create
-              </>
-            ) : (
-              <>
-                <Pencil size={18} />
-                Save
-              </>
-            )}
-          </Button>
-        </motion.div>
+        <AnimatedButton
+          type="submit"
+          className="uppercase flex gap-1 w-full mt-10"
+        >
+          {action === 'new' ? (
+            <>
+              <Plus />
+              Create
+            </>
+          ) : (
+            <>
+              <Pencil size={18} />
+              Save
+            </>
+          )}
+        </AnimatedButton>
       </form>
     </Form>
   );
