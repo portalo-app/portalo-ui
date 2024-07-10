@@ -1,4 +1,4 @@
-import { Button } from '@core/ui/Button';
+import AnimatedButton from '@core/ui/AnimatedButton';
 import {
   Form,
   FormControl,
@@ -14,7 +14,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateProfile from '@hooks/profiles/useCreateProfile';
 import useEditProfile from '@hooks/profiles/useEditProfile';
 import { ProfileDTO } from '@models/dto/profile.dto';
-import { motion } from 'framer-motion';
 import { UserRound } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -94,11 +93,9 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
             )}
           />
 
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button type="submit" className="!mt-6 w-full">
-              {actionLabel}
-            </Button>
-          </motion.div>
+          <AnimatedButton type="submit" className="!mt-6 w-full">
+            {actionLabel}
+          </AnimatedButton>
         </form>
       </Form>
     </div>
