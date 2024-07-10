@@ -1,5 +1,6 @@
 'use client';
 
+import { FILES_LIMIT } from '@constants/constants.const';
 import { ROUTES } from '@constants/routes.const';
 import Icon from '@core/ui/Icon';
 import { Separator } from '@core/ui/Separator';
@@ -34,6 +35,10 @@ const FileContainer: FC<FileContainerProps> = ({
         ?.folders.find((folder) => folder.id === folderId),
     [profilesData, profileId, folderId]
   );
+
+  if (folder && folder.files.length >= FILES_LIMIT) {
+    router.back();
+  }
 
   const file = useMemo(
     () => folder?.files.find((file) => file.id === fileId),
