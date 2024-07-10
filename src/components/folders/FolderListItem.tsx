@@ -1,8 +1,9 @@
 import { ROUTES } from '@constants/routes.const';
+import Icon from '@core/ui/Icon';
 import useFolderType from '@hooks/useFolderType';
 import { FolderDTO } from '@models/dto/folder.dto';
 import { ProfileDTO } from '@models/dto/profile.dto';
-import { ChevronRight, MessagesSquare, Wallet } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import FolderTitle from './FolderTitle';
 
@@ -14,7 +15,7 @@ interface FolderListItemProps {
 const FolderListItem: React.FC<FolderListItemProps> = ({ profile, folder }) => {
   const folderType = useFolderType(folder?.folderTypeId);
 
-  if (!profile || !folder) return null;
+  if (!profile || !folder || !folderType) return null;
 
   return (
     <Link
@@ -22,11 +23,11 @@ const FolderListItem: React.FC<FolderListItemProps> = ({ profile, folder }) => {
     >
       <div className="flex py-4 items-center justify-between">
         <div className="flex gap-4 items-center">
-          {folder.id === 'social' ? (
-            <MessagesSquare size={35} className="text-muted-foreground" />
-          ) : (
-            <Wallet size={35} className="text-muted-foreground" />
-          )}
+          <Icon
+            size={35}
+            name={folderType.icon}
+            className="text-muted-foreground"
+          />
           <FolderTitle
             profileName={profile.name}
             folderTypeName={folderType?.label}
