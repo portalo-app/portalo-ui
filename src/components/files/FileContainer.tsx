@@ -1,5 +1,6 @@
 'use client';
 
+import { FILES_PER_FOLDER_LIMIT } from '@constants/constants.const';
 import { ROUTES } from '@constants/routes.const';
 import Icon from '@core/ui/Icon';
 import { Separator } from '@core/ui/Separator';
@@ -25,6 +26,7 @@ const FileContainer: FC<FileContainerProps> = ({
   fileId,
 }) => {
   const profilesData = useRecoilValue(profilesState);
+  const selectedFolderRoute = `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}`;
   const router = useRouter();
 
   const folder = useMemo(
@@ -34,6 +36,14 @@ const FileContainer: FC<FileContainerProps> = ({
         ?.folders.find((folder) => folder.id === folderId),
     [profilesData, profileId, folderId]
   );
+
+  if (
+    action !== 'edit' &&
+    folder &&
+    folder.files.length >= FILES_PER_FOLDER_LIMIT
+  ) {
+    router.push(selectedFolderRoute);
+  }
 
   const file = useMemo(
     () => folder?.files.find((file) => file.id === fileId),
@@ -48,9 +58,7 @@ const FileContainer: FC<FileContainerProps> = ({
   }
 
   if (action === 'edit' && !file) {
-    router.push(
-      `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}`
-    );
+    router.push(selectedFolderRoute);
     return;
   }
 
@@ -74,11 +82,7 @@ const FileContainer: FC<FileContainerProps> = ({
             folderId={folderId}
             folderType={folderType}
             initialData={file}
-            onComplete={() =>
-              router.push(
-                `${ROUTES.APP_PROFILE}/${profileId}${ROUTES.APP_FOLDER}/${folderId}`
-              )
-            }
+            onComplete={() => router.push(selectedFolderRoute)}
             action={action}
           />
         )}
