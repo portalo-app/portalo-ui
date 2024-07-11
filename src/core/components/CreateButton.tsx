@@ -12,7 +12,6 @@ import Link from 'next/link';
 
 interface CreateButtonProps {
   href: string;
-  title?: string;
   disabledTooltip?: string;
 }
 

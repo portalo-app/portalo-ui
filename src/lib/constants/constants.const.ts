@@ -3,4 +3,4 @@ export const APP_SLOGAN = 'Take your private data everywhere';
 export const CONTACT_MAIL = 'contact@neopower.digital';
 export const ALERT_MESSAGE = 'This is an Alpha version';
 
-export const FILES_LIMIT = 5;
+export const FILES_PER_FOLDER_LIMIT = 5;
