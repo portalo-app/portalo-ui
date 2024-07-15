@@ -13,7 +13,9 @@ interface FolderListItemProps {
 }
 
 const FolderListItem: React.FC<FolderListItemProps> = ({ profile, folder }) => {
-  const folderType = useFolderType(folder?.folderTypeId);
+  const { getFolderType } = useFolderType();
+
+  const folderType = getFolderType(folder?.folderTypeId);
 
   if (!profile || !folder || !folderType) return null;
 

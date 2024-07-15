@@ -40,7 +40,11 @@ const FileContainer: FC<FileContainerProps> = ({
     [folder, fileId]
   );
 
-  const folderType = useFolderType(folder?.folderTypeId);
+  const { getFolderType } = useFolderType();
+
+  if (!folder) return;
+
+  const folderType = getFolderType(folder.folderTypeId);
 
   if (!profileId || !folder || !folderType) {
     router.push(ROUTES.APP);

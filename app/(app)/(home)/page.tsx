@@ -12,7 +12,9 @@ import { Input } from '@core/ui/Input';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { Separator } from '@core/ui/Separator';
 import { TypographyH5 } from '@core/ui/Typography';
+import { ShortcutDTO } from '@models/dto/shortcut.dto';
 import { profilesState } from '@states/profiles.atom';
+import { shortcutsState } from '@states/shortcuts.atom';
 import { Layers2, UserRound } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { FunctionComponent, ReactElement } from 'react';
@@ -22,20 +24,43 @@ interface AppPageProps {}
 
 const AppPage: FunctionComponent<AppPageProps> = () => {
   const router = useRouter();
+
   const profiles = useRecoilValue(profilesState);
 
-  const shortcuts = [
-    {
-      profile: profiles[0],
-      folder: profiles[0]?.folders[0],
-      icon: profiles[0]?.folders[0],
-    },
-    {
-      profile: profiles[0],
-      folder: profiles[0]?.folders[1],
-      icon: profiles[0]?.folders[1],
-    },
-  ];
+  const getShortcuts = useRecoilValue(shortcutsState);
+
+  const getShortcutFolders = () => {
+    if (getShortcuts.length === 0) return [];
+
+    const shortcutsArray = getShortcuts.flatMap((shortcut: ShortcutDTO) => {
+      const matchingProfile = profiles.find(
+        (profile) => profile.id === shortcut.profile
+      );
+      if (!matchingProfile || shortcut.folders.length === 0) {
+        return [];
+      }
+
+      return shortcut.folders.flatMap((shortcutId: string) => {
+        const matchingFolder = matchingProfile.folders.find(
+          (folder) => folder.id === shortcutId
+        );
+        if (!matchingFolder) {
+          return [];
+        }
+
+        return [
+          {
+            profile: matchingProfile,
+            folder: matchingFolder,
+          },
+        ];
+      });
+    });
+
+    return shortcutsArray;
+  };
+
+  const shortcuts = getShortcutFolders();
 
   const profilesTitle = 'Profiles';
   const emptyProfilesMessage = 'Create a Profile to get started!';
@@ -44,6 +69,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
   const emptyShortcutsMessage = 'Your folder shortcuts will be displayed here';
 
   const hasProfiles = profiles?.length > 0;
+  const hasShortcuts = shortcuts.length > 0;
 
   return (
     <div className="space-y-4">
@@ -58,10 +84,12 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
         </div>
       </ResponsiveDialog>
 
+      {/*  profiles */}
       <HomeCard
         title={profilesTitle}
         icon={<UserRound />}
-        hasProfiles={hasProfiles}
+        href={ROUTES.APP_CREATE_PROFILE}
+        hasData={hasProfiles}
         listToShow={
           <>
             {profiles.map((profile, index) => (
@@ -81,18 +109,33 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
         }
       />
 
+      {/* shortcuts */}
       <HomeCard
         title={shortcutsTitle}
         icon={<Layers2 />}
-        hasProfiles={hasProfiles}
+        hasData={hasShortcuts}
+        href={ROUTES.APP_SHORTCUTS}
         listToShow={
           <>
-            {shortcuts.map(({ profile, folder }, index) => (
-              <FolderListItem key={index} profile={profile} folder={folder} />
+            {shortcuts.map(({ profile, folder }: any) => (
+              <FolderListItem
+                key={profile.id}
+                profile={profile}
+                folder={folder}
+              />
             ))}
           </>
         }
-        stateComponent={<State type="empty" label={emptyShortcutsMessage} />}
+        stateComponent={
+          <State
+            type="empty"
+            label={emptyShortcutsMessage}
+            action={{
+              label: '+ Create Shortcut',
+              onClick: () => router.push(ROUTES.APP_SHORTCUTS),
+            }}
+          />
+        }
       />
     </div>
   );
@@ -101,10 +144,11 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
 const HomeCard: FunctionComponent<{
   title: string;
   icon: ReactElement;
-  hasProfiles: boolean;
+  hasData: boolean;
   listToShow: ReactElement;
   stateComponent: ReactElement;
-}> = ({ title, icon, hasProfiles, listToShow, stateComponent }) => (
+  href: string;
+}> = ({ title, icon, hasData, listToShow, stateComponent, href }) => (
   <Card className="!mt-10">
     <div className="flex justify-between items-center py-2 px-4 bg-muted rounded-t">
       <div className="flex items-center gap-2 text-muted-foreground">
@@ -112,14 +156,12 @@ const HomeCard: FunctionComponent<{
         <TypographyH5>{title}</TypographyH5>
       </div>
 
-      {hasProfiles && (
-        <CreateButton href={ROUTES.APP_CREATE_PROFILE} title="Add" />
-      )}
+      {hasData && <CreateButton href={href} title="Add" />}
     </div>
 
     <Separator className="border-t border-muted/80" />
 
-    {hasProfiles ? (
+    {hasData ? (
       <div className="divide-y-2 *:block py-2 px-4">{listToShow}</div>
     ) : (
       <div className="flex content-center justify-center bg-muted rounded-b-xl">
@@ -128,4 +170,5 @@ const HomeCard: FunctionComponent<{
     )}
   </Card>
 );
+
 export default AppPage;
