@@ -3,6 +3,7 @@
 import { Button } from '@core/ui/Button';
 import { TypographyLarge } from '@core/ui/Typography';
 import { cn } from '@utils/utils';
+import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -15,7 +16,12 @@ const FeatureHeader = ({ title }: FeatureHeaderProps) => {
 
   const isHome = title === 'Home';
   return (
-    <div className="flex items-center text-left md:h-[68px]">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ ease: 'easeInOut', duration: 0.5 }}
+      className="flex items-center text-left md:h-[68px]"
+    >
       {!isHome && (
         <Button variant="ghost" size="icon" onClick={() => router.back()}>
           <ArrowLeft />
@@ -23,7 +29,7 @@ const FeatureHeader = ({ title }: FeatureHeaderProps) => {
       )}
 
       <TypographyLarge className={cn(isHome && 'p-2')}>{title}</TypographyLarge>
-    </div>
+    </motion.div>
   );
 };
 
