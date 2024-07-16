@@ -2,6 +2,7 @@ import {
   ADDRESS_CRYPTO_VARIANT,
   ADDRESS_FIAT_VARIANT,
 } from '@constants/address/address.variants';
+import { CRYPTO_ADDRESS_REGEX } from '@constants/address/crypto.entities';
 import { FileDataDTO } from '@models/dto/file.dto';
 import { Datapoint } from './datapoint/datapoint';
 import { FileDetail } from './fileDetail';
@@ -28,6 +29,11 @@ export class AddressFileType implements FileType {
           {
             type: 'max',
             value: 100,
+          },
+          {
+            type: 'regex',
+            value: CRYPTO_ADDRESS_REGEX.ETH.source,
+            errorMessage: 'Invalid Ethereum address',
           },
         ],
       },
