@@ -29,7 +29,7 @@ import {
   FileVariant,
   FileVariantEntity,
 } from '@models/business/file/fileVariant';
-import { FolderType } from '@models/business/folder/folderType';
+import { FolderType, FolderTypeEnum } from '@models/business/folder/folderType';
 import { FileDTO } from '@models/dto/file.dto';
 import { cn } from '@utils/utils';
 import { Pencil, Plus, SquareMousePointer } from 'lucide-react';
@@ -71,40 +71,38 @@ const FileForm: React.FC<FileFormProps> = ({
     );
   };
 
+  // ToDo: Refactor, improve and delete updateRegexValidation.
+
   const updateRegexValidation = useCallback(
     () => {
+      if (folderType.id !== FolderTypeEnum.Address) return;
+
       const currentEntity = getCurrentVariantEntity();
+
+      if (!currentEntity) return;
+
       const regex = currentEntity
         ? CRYPTO_ADDRESS_REGEX[currentEntity.id as CryptoSymbol]
         : null;
-      if (regex) {
-        const updated = folderType.fileType.datapoints.map((datapoint) => {
-          if (datapoint.id === 'address') {
-            return {
-              ...datapoint,
-              validations: datapoint.validations?.map((validation) => {
-                if (validation.type === 'regex') {
-                  return {
-                    ...validation,
-                    value: regex.source,
-                  };
-                }
-                return validation;
-              }),
-            };
-          }
 
-          return datapoint;
-        });
+      if (!regex) return;
 
-        setUpdatedDatapoints(updated);
-      }
+      setUpdatedDatapoints(
+        folderType.fileType.datapoints.map((datapoint) => {
+          if (datapoint.id !== 'address') return datapoint;
+
+          return {
+            ...datapoint,
+            validations: datapoint.validations?.map((validation) => ({
+              ...validation,
+              value:
+                validation.type === 'regex' ? regex.source : validation.value,
+            })),
+          };
+        })
+      );
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      folderType.fileType.datapoints,
-      getCurrentVariantEntity,
-      CRYPTO_ADDRESS_REGEX,
-    ]
+    [getCurrentVariantEntity]
   );
 
   const formSchema = generateZodFileSchema(updatedDatapoints);
