@@ -85,6 +85,8 @@ export const ADDRESS_CRYPTO_ENTITIES: FileVariantEntity[] = chains.map(
   })
 );
 
+export type CryptoSymbol = keyof typeof CRYPTO_ADDRESS_REGEX;
+
 export const CRYPTO_ADDRESS_REGEX = {
   ALGO: /^([A-Za-z0-9]{58})$/,
   BTC: /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/,
