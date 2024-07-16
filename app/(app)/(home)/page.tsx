@@ -27,40 +27,7 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
 
   const profiles = useRecoilValue(profilesState);
 
-  const getShortcuts = useRecoilValue(shortcutsState);
-
-  const getShortcutFolders = () => {
-    if (getShortcuts.length === 0) return [];
-
-    const shortcutsArray = getShortcuts.flatMap((shortcut: ShortcutDTO) => {
-      const matchingProfile = profiles.find(
-        (profile) => profile.id === shortcut.profile
-      );
-      if (!matchingProfile || shortcut.folders.length === 0) {
-        return [];
-      }
-
-      return shortcut.folders.flatMap((shortcutId: string) => {
-        const matchingFolder = matchingProfile.folders.find(
-          (folder) => folder.id === shortcutId
-        );
-        if (!matchingFolder) {
-          return [];
-        }
-
-        return [
-          {
-            profile: matchingProfile,
-            folder: matchingFolder,
-          },
-        ];
-      });
-    });
-
-    return shortcutsArray;
-  };
-
-  const shortcuts = getShortcutFolders();
+  const shortcuts = useRecoilValue(shortcutsState);
 
   const profilesTitle = 'Profiles';
   const emptyProfilesMessage = 'Create a Profile to get started!';
@@ -117,13 +84,16 @@ const AppPage: FunctionComponent<AppPageProps> = () => {
         href={ROUTES.APP_SHORTCUTS}
         listToShow={
           <>
-            {shortcuts.map(({ profile, folder }: any) => (
-              <FolderListItem
-                key={profile.id}
-                profile={profile}
-                folder={folder}
-              />
-            ))}
+            {shortcuts.map(
+              ({ profileName, folderId, profileId }: ShortcutDTO) => (
+                <FolderListItem
+                  key={profileId}
+                  profileName={profileName}
+                  folderTypeId={folderId}
+                  profileId={profileId}
+                />
+              )
+            )}
           </>
         }
         stateComponent={

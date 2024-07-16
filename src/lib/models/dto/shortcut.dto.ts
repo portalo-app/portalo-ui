@@ -1,4 +1,5 @@
 export interface ShortcutDTO {
-  profile: string;
-  folders: string[];
+  profileId: string;
+  profileName: string;
+  folderId: string;
 }

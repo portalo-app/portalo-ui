@@ -28,36 +28,24 @@ const Shortcuts = () => {
   const { getFolderIcon } = useFolderType();
 
   const FormSchema = z.object({
-    profiles: z
-      .array(
-        z.object({
-          profile: z.string(),
-          folders: z.array(z.string()),
-        })
-      )
-      .nonempty(),
+    shortcuts: z.array(
+      z.object({
+        profileId: z.string(),
+        folderId: z.string(),
+        profileName: z.string(),
+      })
+    ),
   });
-
-  const findShortcutProfile = (profileId: string): string[] => {
-    const shortcut = shortcuts.find(
-      (shortcut: ShortcutDTO) => shortcut.profile === profileId
-    );
-
-    return shortcut ? shortcut.folders : [];
-  };
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      profiles: profiles.map((profile) => ({
-        profile: profile.id,
-        folders: findShortcutProfile(profile.id),
-      })),
+      shortcuts: shortcuts,
     },
   });
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    setShortcuts(data.profiles);
+    setShortcuts(data.shortcuts);
     router.push(ROUTES.APP);
   };
 
@@ -65,22 +53,25 @@ const Shortcuts = () => {
     profileId: string,
     folderId: string,
     checked: string | boolean,
-    field: ControllerRenderProps<FieldValues, 'profiles'>
+    profileName: string,
+    field: ControllerRenderProps<FieldValues, 'shortcuts'>
   ) => {
-    const updatedProfiles = field.value.map((item: ShortcutDTO) => {
-      if (item.profile === profileId) {
-        return {
-          ...item,
-          folders: checked
-            ? [...item.folders, folderId]
-            : item.folders.filter((folder: string) => {
-                return folder !== folderId;
-              }),
-        };
-      }
-      return item;
-    });
-    field.onChange(updatedProfiles);
+    let updatedShortcuts = field.value || [];
+
+    // add the new shortcut if checked, remove the shortcut if unchecked
+    checked
+      ? (updatedShortcuts = [
+          ...updatedShortcuts,
+          { profileId, folderId, profileName },
+        ])
+      : (updatedShortcuts = updatedShortcuts.filter(
+          (shortcut: ShortcutDTO) =>
+            !(
+              shortcut.profileId === profileId && shortcut.folderId === folderId
+            )
+        ));
+
+    field.onChange(updatedShortcuts);
   };
 
   const getIconFolder = (folderTypeId: string): IconType => {
@@ -110,7 +101,7 @@ const Shortcuts = () => {
                       {profile.folders.map((folder) => (
                         <FormField
                           key={folder.id}
-                          name="profiles"
+                          name="shortcuts"
                           render={({ field }) => {
                             return (
                               <FormItem
@@ -121,17 +112,19 @@ const Shortcuts = () => {
                                   <Checkbox
                                     className="w-6 h-6"
                                     id={folder.id}
-                                    checked={field.value
-                                      ?.find(
-                                        (field: any) =>
-                                          field.profile === profile.id
+                                    checked={
+                                      !!field.value?.find(
+                                        (shortcut: ShortcutDTO) =>
+                                          shortcut.profileId === profile.id &&
+                                          shortcut.folderId === folder.id
                                       )
-                                      .folders?.includes(folder.id)}
+                                    }
                                     onCheckedChange={(checked) => {
                                       handleCheckboxChange(
                                         profile.id,
                                         folder.id,
                                         checked,
+                                        profile.name,
                                         field
                                       );
                                     }}
