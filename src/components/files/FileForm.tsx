@@ -128,8 +128,6 @@ const FileForm: React.FC<FileFormProps> = ({
     updateRegexValidation();
   };
 
-  console.log(updatedDatapoints);
-
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     if (action === 'new') {
       createFile(profileId, folderId, data.variant, data.entity, {
@@ -150,9 +148,8 @@ const FileForm: React.FC<FileFormProps> = ({
   const watchedEntity = form.watch('entity');
 
   React.useEffect(() => {
-    if (watchedVariant || watchedEntity) {
-      updateRegexValidation();
-    }
+    updateRegexValidation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchedVariant, watchedEntity]);
 
   return (
