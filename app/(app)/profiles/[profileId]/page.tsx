@@ -63,7 +63,11 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
               key={index}
               href={`${ROUTES.APP_PROFILE}/${profileId}/${ROUTES.APP_FOLDER}/${folder.id}`}
             >
-              <FolderListItem profile={profile} folder={folder} />
+              <FolderListItem
+                profileName={profile.name}
+                folderTypeId={folder.folderTypeId}
+                profileId={profile.id}
+              />
               {profile.folders.length - 1 !== index && <Separator />}
             </Link>
           ))}

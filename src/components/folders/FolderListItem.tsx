@@ -1,25 +1,30 @@
 import { ROUTES } from '@constants/routes.const';
 import Icon from '@core/ui/Icon';
 import useFolderType from '@hooks/useFolderType';
-import { FolderDTO } from '@models/dto/folder.dto';
-import { ProfileDTO } from '@models/dto/profile.dto';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import FolderTitle from './FolderTitle';
 
 interface FolderListItemProps {
-  profile: ProfileDTO;
-  folder: FolderDTO;
+  profileName: string | undefined;
+  folderTypeId: string;
+  profileId: string;
 }
 
-const FolderListItem: React.FC<FolderListItemProps> = ({ profile, folder }) => {
-  const folderType = useFolderType(folder?.folderTypeId);
+const FolderListItem: React.FC<FolderListItemProps> = ({
+  profileName,
+  folderTypeId,
+  profileId,
+}) => {
+  const { getFolderType } = useFolderType();
 
-  if (!profile || !folder || !folderType) return null;
+  const folderType = getFolderType(folderTypeId);
+
+  if (!profileName) return;
 
   return (
     <Link
-      href={`${ROUTES.APP_PROFILE}/${profile?.id}/${ROUTES.APP_FOLDER}/${folder?.id}`}
+      href={`${ROUTES.APP_PROFILE}/${profileId}/${ROUTES.APP_FOLDER}/${folderTypeId}`}
     >
       <div className="flex py-4 items-center justify-between">
         <div className="flex gap-4 items-center">
@@ -29,7 +34,7 @@ const FolderListItem: React.FC<FolderListItemProps> = ({ profile, folder }) => {
             className="text-muted-foreground"
           />
           <FolderTitle
-            profileName={profile.name}
+            profileName={profileName}
             folderTypeName={folderType?.label}
           />
         </div>

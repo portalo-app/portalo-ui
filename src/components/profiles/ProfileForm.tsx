@@ -11,8 +11,7 @@ import { Input } from '@core/ui/Input';
 import { Separator } from '@core/ui/Separator';
 import { TypographyH3, TypographyMuted } from '@core/ui/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
-import useCreateProfile from '@hooks/profiles/useCreateProfile';
-import useEditProfile from '@hooks/profiles/useEditProfile';
+import useProfile from '@hooks/profiles/useProfile';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { UserRound } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -29,8 +28,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   profile,
   onComplete,
 }) => {
-  const createProfile = useCreateProfile();
-  const editProfile = useEditProfile();
+  const { createProfile, editProfile } = useProfile();
 
   const description = 'Create a profile to store folders inside.';
   const actionLabel = action === 'CREATE' ? '+ Create Profile' : 'Edit Profile';
