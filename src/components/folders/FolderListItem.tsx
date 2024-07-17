@@ -6,7 +6,7 @@ import Link from 'next/link';
 import FolderTitle from './FolderTitle';
 
 interface FolderListItemProps {
-  profileName: string;
+  profileName: string | undefined;
   folderTypeId: string;
   profileId: string;
 }
@@ -19,6 +19,8 @@ const FolderListItem: React.FC<FolderListItemProps> = ({
   const { getFolderType } = useFolderType();
 
   const folderType = getFolderType(folderTypeId);
+
+  if (!profileName) return;
 
   return (
     <Link

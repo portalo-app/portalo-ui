@@ -42,14 +42,12 @@ const FileContainer: FC<FileContainerProps> = ({
 
   const { getFolderType } = useFolderType();
 
-  if (!folder) return;
-
-  const folderType = getFolderType(folder.folderTypeId);
-
-  if (!profileId || !folder || !folderType) {
+  if (!profileId || !folder) {
     router.push(ROUTES.APP);
     return;
   }
+
+  const folderType = getFolderType(folder.folderTypeId);
 
   if (action === 'edit' && !file) {
     router.push(

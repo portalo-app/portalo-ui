@@ -39,14 +39,12 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
 
   const { getFolderType } = useFolderType();
 
-  if (!folder) return;
-
-  const folderType = getFolderType(folder.folderTypeId);
-
-  if (!profileId || !profile || !folder || !folderType) {
+  if (!profileId || !profile || !folder) {
     router.push(ROUTES.APP);
     return;
   }
+
+  const folderType = getFolderType(folder.folderTypeId);
 
   return (
     <div className="space-y-4">

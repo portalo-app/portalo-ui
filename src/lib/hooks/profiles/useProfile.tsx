@@ -1,5 +1,6 @@
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
 import { Profile } from '@models/business/profile';
+import { ProfileDTO } from '@models/dto/profile.dto';
 import { ShortcutDTO } from '@models/dto/shortcut.dto';
 import { mapperProfileToProfileDTO } from '@models/mappers/profileMapper';
 import { profilesState } from '@states/profiles.atom';
@@ -9,6 +10,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 type CreateProfile = (name: string) => void;
 type DeleteProfile = (id: string) => void;
 type EditProfile = (id: string, name: string) => void;
+type GetProfileById = (id: string) => ProfileDTO | undefined;
 
 /**
  * Custom hook to manage profiles.
@@ -69,7 +71,15 @@ const useProfile = () => {
     setProfiles(newProfiles);
   };
 
-  return { createProfile, deleteProfile, editProfile };
+  /**
+   * Retrieves a profile by ID.
+   * @param id - The ID of the profile to retrieve.
+   * @returns The profile with the specified ID, or undefined if not found.
+   */
+  const getProfileById: GetProfileById = (id: string) =>
+    profiles.find((profile) => profile.id === id);
+
+  return { createProfile, deleteProfile, editProfile, getProfileById };
 };
 
 export default useProfile;
