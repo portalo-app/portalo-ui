@@ -8,7 +8,7 @@ export interface Datapoint {
 }
 
 export interface DatapointValidation {
-  type: 'min' | 'max' | 'isOptional';
-  value: number | boolean;
+  type: 'min' | 'max' | 'regex' | 'isOptional';
+  value: number | string | boolean;
   errorMessage?: string;
 }
