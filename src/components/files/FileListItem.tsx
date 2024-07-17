@@ -64,25 +64,27 @@ const FileListItem: React.FC<FileListItemProps> = ({
       <ResponsiveDialog
         title=""
         trigger={
-          <Card className="relative p-4 space-y-2 border-muted-foreground/20 bg-muted hover:cursor-pointer">
-            <div className="flex items-center gap-2 w-100">
+          <Card className="relative grid grid-cols-[1fr_auto] p-4 space-y-2 border-muted-foreground/20 bg-muted hover:cursor-pointer">
+            <div className="flex flex-wrap items-center gap-2 w-full overflow-hidden">
               <FileVariantEntityIcon entity={entity} />
-
-              <TypographyMuted>{entity.label}</TypographyMuted>
-
-              <TrashIcon
-                className="w-4 h-4 ml-auto mr-1 hover:text-red-600"
-                onClick={handleDelete}
-              />
+              <TypographyMuted className="whitespace-nowrap">
+                {entity.label}
+              </TypographyMuted>
+              <div className="text-left w-full ">
+                <TypographyH5 className="overflow-hidden text-ellipsis whitespace-nowrap">
+                  {keyData.primary}
+                </TypographyH5>
+                <TypographyMutedXS className="overflow-hidden text-ellipsis whitespace-nowrap">
+                  {keyData.secondary}
+                </TypographyMutedXS>
+              </div>
             </div>
 
-            <div className="text-left ">
-              <TypographyH5 className="overflow-hidden text-ellipsis ">
-                {keyData.primary}
-              </TypographyH5>
-              <TypographyMutedXS className="overflow-hidden text-ellipsis">
-                {keyData.secondary}
-              </TypographyMutedXS>
+            <div className="flex justify-end items-center">
+              <TrashIcon
+                className="w-5 h-5 mb-1 hover:text-red-600"
+                onClick={handleDelete}
+              />
             </div>
           </Card>
         }
