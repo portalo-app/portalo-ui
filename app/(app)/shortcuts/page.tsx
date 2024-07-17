@@ -27,7 +27,7 @@ const Shortcuts = () => {
 
   const hasProfiles = profiles.length > 0;
 
-  !hasProfiles && router.push(ROUTES.APP);
+  !hasProfiles && router.replace(ROUTES.APP);
 
   const FormSchema = z.object({
     shortcuts: z.array(
@@ -46,11 +46,7 @@ const Shortcuts = () => {
   });
 
   const sortShortcuts = (shortcuts: ShortcutDTO[]) => {
-    return shortcuts.sort((a, b) => {
-      if (a.profileId < b.profileId) return -1;
-      if (a.profileId > b.profileId) return 1;
-      return 0;
-    });
+    return shortcuts.sort((a, b) => a.profileId.localeCompare(b.profileId));
   };
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
