@@ -34,7 +34,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         </div>
         {isProfilePage && (
           <AnimatedButton
-            className="gap-2 mr-4 md:mr-0 p-2 justify-center items-center border border-red-500 rounded-xl px-2 text-red-500 hover:bg-red-500 hover:text-white transition duration-300 "
+            className="gap-2 mr-4 md:mr-0 p-2 justify-center items-center md:border md:border-red-500 rounded-xl px-2 text-red-500 hover:bg-red-500 hover:text-white transition duration-300 "
             variant="ghost"
             onClick={deleteProfile}
           >
