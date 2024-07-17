@@ -76,10 +76,13 @@ const FileListItem: React.FC<FileListItemProps> = ({
               />
             </div>
 
-            <div className="text-left">
-              <TypographyH5>{keyData.primary}</TypographyH5>
-
-              <TypographyMutedXS>{keyData.secondary}</TypographyMutedXS>
+            <div className="text-left ">
+              <TypographyH5 className="overflow-hidden text-ellipsis ">
+                {keyData.primary}
+              </TypographyH5>
+              <TypographyMutedXS className="overflow-hidden text-ellipsis">
+                {keyData.secondary}
+              </TypographyMutedXS>
             </div>
           </Card>
         }

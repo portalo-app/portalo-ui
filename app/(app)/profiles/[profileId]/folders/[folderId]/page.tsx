@@ -2,6 +2,7 @@
 
 import FileListItem from '@components/files/FileListItem';
 import ProfileHeader from '@components/profiles/ProfileHeader';
+import { FILES_PER_FOLDER_LIMIT } from '@constants/constants.const';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
 import State from '@core/components/State';
@@ -56,7 +57,11 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
           <TypographyH3>{folderType?.label} folder</TypographyH3>
         </div>
 
-        <CreateButton href={`${pathName}/new`} />
+        <CreateButton
+          href={`${pathName}/new`}
+          disabled={folder.files.length >= FILES_PER_FOLDER_LIMIT}
+          disabledTooltip={`You have reached the free limit of ${FILES_PER_FOLDER_LIMIT} files in this folder`}
+        />
       </div>
 
       <div className="space-y-4">

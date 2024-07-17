@@ -14,6 +14,7 @@ import {
 
 import { Label } from '@core/ui/Label';
 import { cn } from '@utils/utils';
+import { motion } from 'framer-motion';
 
 const Form = FormProvider;
 
@@ -155,14 +156,20 @@ const FormMessage = React.forwardRef<
   }
 
   return (
-    <p
-      ref={ref}
-      id={formMessageId}
-      className={cn('text-sm font-medium text-destructive', className)}
-      {...props}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
     >
-      {body}
-    </p>
+      <p
+        ref={ref}
+        id={formMessageId}
+        className={cn('text-sm font-medium text-destructive', className)}
+        {...props}
+      >
+        {body}
+      </p>
+    </motion.div>
   );
 });
 FormMessage.displayName = 'FormMessage';
