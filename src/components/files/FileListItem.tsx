@@ -13,7 +13,7 @@ import {
 import useFile from '@hooks/files/useFile';
 import { FolderType } from '@models/business/folder/folderType';
 import { FileDTO } from '@models/dto/file.dto';
-import { TrashIcon } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { MouseEvent, useMemo, useState } from 'react';
 import FileDetail from './FileDetail';
@@ -81,7 +81,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
             </div>
 
             <div className="flex justify-end items-center">
-              <TrashIcon
+              <Trash2
                 className="w-5 h-5 mb-1 hover:text-red-600"
                 onClick={handleDelete}
               />
