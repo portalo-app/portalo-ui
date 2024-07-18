@@ -1,0 +1,22 @@
+# Changelog
+
+{{#each releases}}
+  {{#if href}}
+    ## [{{title}}]({{href}}){{#if tag}} - {{isoDate}}{{/if}}
+  {{else}}
+    ## {{title}}{{#if tag}} - {{isoDate}}{{/if}}
+  {{/if}}
+
+  {{#if summary}}
+    {{summary}}
+  {{/if}}
+
+  {{#if merges}}
+    ### Pull Requests Merged
+
+    {{#each merges}}
+      - {{#if commit.breaking}}**Breaking change:** {{/if}}{{message}} {{#if href}}[`#{{id}}`]({{href}}){{/if}}
+    {{/each}}
+  {{/if}}
+
+{{/each}}
