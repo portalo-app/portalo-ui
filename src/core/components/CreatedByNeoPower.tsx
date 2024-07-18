@@ -1,3 +1,5 @@
+'use client';
+
 import { EXTERNAL_LINKS } from '@constants/externalLinks.const';
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
 import Image from 'next/image';
