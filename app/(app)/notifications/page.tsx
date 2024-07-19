@@ -1,13 +1,8 @@
-import { TypographyLarge } from '@core/ui/Typography';
+import Notifications from '@components/notifications/Notificaton.server';
+import { NextPage } from 'next';
 
-const Notifications = () => {
-  return (
-    <div className="md:mt-4 ">
-      <TypographyLarge className="border-b p-2 text-center">
-        No notifications
-      </TypographyLarge>
-    </div>
-  );
+const NotificationsPage: NextPage = () => {
+  return <Notifications />;
 };
 
-export default Notifications;
+export default NotificationsPage;

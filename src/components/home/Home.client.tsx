@@ -13,7 +13,7 @@ import { Layers2, UserRound } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useRecoilValue } from 'recoil';
 
-const HomeClientContainer = () => {
+const HomeCardsList = () => {
   const router = useRouter();
 
   const profiles = useRecoilValue(profilesState);
@@ -96,4 +96,4 @@ const HomeClientContainer = () => {
   );
 };
 
-export default HomeClientContainer;
+export default HomeCardsList;
