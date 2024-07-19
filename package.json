@@ -44,6 +44,7 @@
     "cmdk": "^1.0.0",
     "eslint": "8.39.0",
     "eslint-config-next": "^14.0.4",
+    "ethers": "5.7.2",
     "framer-motion": "^11.2.13",
     "lucide-react": "^0.378.0",
     "next": "^14.0.4",
