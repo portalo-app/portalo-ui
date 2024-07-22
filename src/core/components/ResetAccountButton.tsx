@@ -4,6 +4,7 @@ import { ROUTES } from '@constants/routes.const';
 import { Button } from '@core/ui/Button';
 import { TypographyP } from '@core/ui/Typography';
 import { profilesState } from '@states/profiles.atom';
+import { shortcutsState } from '@states/shortcuts.atom';
 import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -13,6 +14,7 @@ import DeleteModal from './DeleteModal';
 const ResetAccountButton = () => {
   const [resetAccountModalOpen, setResetAccountModalOpen] = useState(false);
   const resetProfiles = useResetRecoilState(profilesState);
+  const resetShortcuts = useResetRecoilState(shortcutsState);
   const router = useRouter();
 
   const resetAccountLabel = 'Reset Account';
@@ -22,6 +24,7 @@ const ResetAccountButton = () => {
   const resetAccount = () => {
     router.push(ROUTES.APP);
     resetProfiles();
+    resetShortcuts();
 
     setResetAccountModalOpen(false);
   };
