@@ -1,5 +1,4 @@
 import { Card } from '@core/ui/Card';
-import { Separator } from '@core/ui/Separator';
 import { TypographyH5 } from '@core/ui/Typography';
 import { ReactElement } from 'react';
 import CreateButton from './CreateButton';
@@ -30,8 +29,6 @@ const HomeCard: React.FC<HomeCardProps> = ({
 
       {hasData && <CreateButton href={href} title="Add" />}
     </div>
-
-    <Separator className="border-t border-muted/80" />
 
     {hasData ? (
       <div className="divide-y-2 *:block py-2 px-4">{listToShow}</div>

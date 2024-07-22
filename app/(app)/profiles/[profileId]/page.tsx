@@ -48,7 +48,7 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
       </div>
 
       <div className="border border-muted mt-4 rounded-lg">
-        <div className="flex justify-between items-center bg-muted/80 p-4 rounded-t-lg">
+        <div className="flex justify-between items-center bg-muted p-4 rounded-t-lg">
           <div className="flex items-center gap-2">
             <Folder />
             <TypographyH3>Your folders</TypographyH3>
