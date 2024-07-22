@@ -1,7 +1,6 @@
-import { Button } from '@core/ui/Button';
+import AnimatedButton from '@core/ui/AnimatedButton';
 import { Card } from '@core/ui/Card';
 import { TypographyMuted } from '@core/ui/Typography';
-import { motion } from 'framer-motion';
 import {
   AlertTriangle,
   CheckCircle,
@@ -52,11 +51,9 @@ const State: React.FC<StateProps> = ({ type, label, size, action }) => {
       </div>
 
       {action && (
-        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-          <Button className="w-full mt-4" onClick={action.onClick}>
-            {action.label}
-          </Button>
-        </motion.div>
+        <AnimatedButton className="w-full mt-4" onClick={action.onClick}>
+          {action.label}
+        </AnimatedButton>
       )}
     </Card>
   );

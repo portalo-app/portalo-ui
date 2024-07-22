@@ -2,14 +2,20 @@ import { FolderType } from '@models/business/folder/folderType';
 import { folderTypesState } from '@states/folderTypes.atom';
 import { useRecoilValue } from 'recoil';
 
-const useFolderType = (
-  folderTypeId: string | undefined
-): FolderType | undefined => {
+const useFolderType = () => {
   const folderTypes = useRecoilValue(folderTypesState);
 
-  if (!folderTypeId) return;
+  const getFolderType = (folderTypeId: string): FolderType => {
+    return folderTypes.find((folderType) => folderType.id === folderTypeId)!;
+  };
 
-  return folderTypes.find((folderType) => folderType.id === folderTypeId)!;
+  const getFolderIcon = (folderTypeId: string) => {
+    const folderIcon = getFolderType(folderTypeId)?.icon;
+
+    return folderIcon;
+  };
+
+  return { getFolderType, getFolderIcon };
 };
 
 export default useFolderType;

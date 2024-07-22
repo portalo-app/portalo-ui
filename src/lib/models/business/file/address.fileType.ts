@@ -29,6 +29,11 @@ export class AddressFileType implements FileType {
             type: 'max',
             value: 100,
           },
+          {
+            type: 'regex',
+            value: '',
+            errorMessage: 'Invalid address',
+          },
         ],
       },
       {

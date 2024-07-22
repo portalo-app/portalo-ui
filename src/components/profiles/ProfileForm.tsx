@@ -1,4 +1,4 @@
-import { Button } from '@core/ui/Button';
+import AnimatedButton from '@core/ui/AnimatedButton';
 import {
   Form,
   FormControl,
@@ -11,10 +11,8 @@ import { Input } from '@core/ui/Input';
 import { Separator } from '@core/ui/Separator';
 import { TypographyH3, TypographyMuted } from '@core/ui/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
-import useCreateProfile from '@hooks/profiles/useCreateProfile';
-import useEditProfile from '@hooks/profiles/useEditProfile';
+import useProfile from '@hooks/profiles/useProfile';
 import { ProfileDTO } from '@models/dto/profile.dto';
-import { motion } from 'framer-motion';
 import { UserRound } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -30,8 +28,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   profile,
   onComplete,
 }) => {
-  const createProfile = useCreateProfile();
-  const editProfile = useEditProfile();
+  const { createProfile, editProfile } = useProfile();
 
   const description = 'Create a profile to store folders inside.';
   const actionLabel = action === 'CREATE' ? '+ Create Profile' : 'Edit Profile';
@@ -94,11 +91,9 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
             )}
           />
 
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button type="submit" className="!mt-6 w-full">
-              {actionLabel}
-            </Button>
-          </motion.div>
+          <AnimatedButton type="submit" className="!mt-6 w-full">
+            {actionLabel}
+          </AnimatedButton>
         </form>
       </Form>
     </div>

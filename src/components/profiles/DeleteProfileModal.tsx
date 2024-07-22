@@ -1,5 +1,5 @@
 import DeleteModal from '@core/components/DeleteModal';
-import useDeleteProfile from '@hooks/profiles/useDeleteProfile';
+import useProfile from '@hooks/profiles/useProfile';
 import { ProfileDTO } from '@models/dto/profile.dto';
 
 interface DeleteProfileModalProps {
@@ -13,7 +13,7 @@ const DeleteProfileModal: React.FC<DeleteProfileModalProps> = ({
   open,
   onClose,
 }) => {
-  const deleteProfile = useDeleteProfile();
+  const { deleteProfile } = useProfile();
 
   const deleteTitle = 'Delete Profile';
   const deleteMessage =

@@ -1,9 +1,8 @@
-import { Button } from '@core/ui/Button';
-import { TypographyH3 } from '@core/ui/Typography';
+import AnimatedButton from '@core/ui/AnimatedButton';
+import { TypographyH3, TypographyP } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import Avvvatars from 'avvvatars-react';
-import { motion } from 'framer-motion';
-import { Trash } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import DeleteProfileModal from './DeleteProfileModal';
 
@@ -34,16 +33,16 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           <TypographyH3>{profile?.name}</TypographyH3>
         </div>
         {isProfilePage && (
-          <motion.div whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.95 }}>
-            <Button
-              size="sm"
-              className="gap-1 bg-transparent text-destructive brightness-150 hover:bg-transparent hover:brightness-200 hover:text-destructive"
-              variant="ghost"
-              onClick={deleteProfile}
-            >
-              <Trash size={20} />
-            </Button>
-          </motion.div>
+          <AnimatedButton
+            className="gap-2 mr-4 md:mr-0 p-2 justify-center items-center md:border md:border-red-500 rounded-xl px-2 text-red-500 hover:bg-red-500 hover:text-white transition duration-300 "
+            variant="ghost"
+            onClick={deleteProfile}
+          >
+            <TypographyP className="hidden md:block">
+              Delete profile
+            </TypographyP>
+            <Trash2 size={20} />
+          </AnimatedButton>
         )}
       </div>
 

@@ -43,7 +43,7 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
 
   return (
     <div>
-      <div className="px-2 pr-3">
+      <div className="ml-4 md:ml-0">
         <ProfileHeader profile={profile!} isProfilePage />
       </div>
 
@@ -63,7 +63,11 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
               key={index}
               href={`${ROUTES.APP_PROFILE}/${profileId}/${ROUTES.APP_FOLDER}/${folder.id}`}
             >
-              <FolderListItem profile={profile} folder={folder} />
+              <FolderListItem
+                profileName={profile.name}
+                folderTypeId={folder.folderTypeId}
+                profileId={profile.id}
+              />
               {profile.folders.length - 1 !== index && <Separator />}
             </Link>
           ))}
