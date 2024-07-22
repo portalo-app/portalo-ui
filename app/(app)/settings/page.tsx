@@ -1,4 +1,4 @@
-import Settings from '@components/settings/Settings.server';
+import Settings from '@components/settings/Settings';
 import { NextPage } from 'next';
 
 const SettingsPage: NextPage = () => {

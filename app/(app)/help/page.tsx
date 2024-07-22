@@ -1,4 +1,4 @@
-import Help from '@components/help/Help.server';
+import Help from '@components/help/Help';
 import { NextPage } from 'next';
 
 interface HelpPageProps {}

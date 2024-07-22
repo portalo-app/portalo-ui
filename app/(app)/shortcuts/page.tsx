@@ -1,4 +1,4 @@
-import Shortcuts from '@components/shortcuts/Shortcuts.client';
+import Shortcuts from '@components/shortcuts/Shortcuts';
 import { NextPage } from 'next';
 
 const ShortcutsPage: NextPage = () => {

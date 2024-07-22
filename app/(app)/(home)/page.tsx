@@ -1,4 +1,4 @@
-import Home from '@components/home/HomeCardsList.server';
+import Home from '@components/home/Home';
 import { NextPage } from 'next';
 
 interface HomePageProps {}

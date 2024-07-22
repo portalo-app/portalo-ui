@@ -3,7 +3,7 @@ import { Button } from '@core/ui/Button';
 import { Input } from '@core/ui/Input';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { FC } from 'react';
-import HomeCardsList from './Home.client';
+import HomeCardsList from './HomeCardList';
 
 const Home: FC = () => {
   return (

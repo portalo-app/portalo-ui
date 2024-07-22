@@ -1,4 +1,4 @@
-import About from '@components/about/About.server';
+import About from '@components/about/About';
 import { NextPage } from 'next';
 
 const AboutPage: NextPage = () => {

@@ -1,4 +1,4 @@
-import AboutItems from '@components/about/AboutItems.client';
+import AboutItems from '@components/about/AboutItems';
 import AppLogo from '@components/layout/AppLogo';
 import CreatedByNeoPower from '@core/components/CreatedByNeoPower';
 import { Separator } from '@core/ui/Separator';
