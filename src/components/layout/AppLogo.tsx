@@ -1,3 +1,5 @@
+'use client';
+
 import { usePortaloTheme } from '@hooks/general/usePortaloTheme';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
