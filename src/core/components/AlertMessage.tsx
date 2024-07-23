@@ -8,7 +8,7 @@ interface AlertMessageProps {
 
 const AlertMessage: React.FC<AlertMessageProps> = ({ text }) => {
   return (
-    <div className="flex bg-primary/50 text-foreground p-1 justify-center items-center gap-1">
+    <div className="flex bg-primary/80 text-foreground p-1 justify-center items-center gap-1">
       <Info size={20} />
       <TypographySmall>{text}</TypographySmall>
     </div>

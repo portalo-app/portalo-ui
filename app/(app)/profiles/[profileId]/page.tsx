@@ -57,7 +57,7 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ params }) => {
           <CreateButton disabled href="" />
         </div>
 
-        <div className="*:block space-y-2 mt-4 px-4">
+        <div className="*:block space-y-2 px-4 bg-card rounded-b-lg">
           {profile?.folders.map((folder, index) => (
             <Link
               key={index}
