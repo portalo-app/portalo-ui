@@ -69,6 +69,19 @@ const useFile = () => {
             }
             break;
 
+          case 'regex': {
+            if (shapeField instanceof z.ZodString) {
+              shape[datapoint.id] = shapeField.regex(
+                new RegExp(validation.value as string),
+                {
+                  message:
+                    validation.errorMessage ?? `${datapoint.name} is not valid`,
+                }
+              );
+            }
+            break;
+          }
+
           case 'isOptional':
             shape[datapoint.id] = shapeField.optional();
             break;

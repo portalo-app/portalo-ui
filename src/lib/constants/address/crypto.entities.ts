@@ -73,7 +73,7 @@ const chains = [
     color: '#2e3148',
     shareUrl: 'https://www.mintscan.io/cosmos/address/',
   },
-];
+] as const;
 
 export const ADDRESS_CRYPTO_ENTITIES: FileVariantEntity[] = chains.map(
   (chain) => ({
@@ -84,3 +84,20 @@ export const ADDRESS_CRYPTO_ENTITIES: FileVariantEntity[] = chains.map(
     shareUrl: chain.shareUrl,
   })
 );
+
+export type CryptoSymbol = (typeof chains)[number]['symbol'];
+
+export const CRYPTO_ADDRESS_REGEX: { [key in CryptoSymbol]: RegExp } = {
+  ALGO: /^([A-Za-z0-9]{58})$/,
+  BTC: /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/,
+  DOT: /^1[0-9a-zA-Z]{47}$/,
+  ETH: /^0x[a-fA-F0-9]{40}$/,
+  MATIC: /^0x[a-fA-F0-9]{40}$/,
+  SOL: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/,
+  TRX: /^T[1-9A-HJ-NP-Za-km-z]{33}$/,
+  BSC: /^0x[a-fA-F0-9]{40}$/,
+  AVAX: /^(X-avax1)[0-9a-z]{38}$/,
+  GNO: /^0x[a-fA-F0-9]{40}$/,
+  ADA: /^([A-Za-z0-9]{58,})$/,
+  ATOM: /^(cosmos1)[0-9a-z]{38}$/,
+};

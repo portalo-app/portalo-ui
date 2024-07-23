@@ -16,12 +16,12 @@ import { usePathname, useRouter } from 'next/navigation';
 import { FC, useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 
-interface FolderDetailProps {
+interface FolderProps {
   profileId: string;
   folderId: string;
 }
 
-const FolderDetail: FC<FolderDetailProps> = ({ profileId, folderId }) => {
+const Folder: FC<FolderProps> = ({ profileId, folderId }) => {
   const router = useRouter();
   const pathName = usePathname();
 
@@ -99,4 +99,4 @@ const FolderDetail: FC<FolderDetailProps> = ({ profileId, folderId }) => {
   );
 };
 
-export default FolderDetail;
+export default Folder;

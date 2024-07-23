@@ -1,6 +1,10 @@
 import FileVariantEntityIcon from '@components/entities/FileVariantEntityIcon';
 import DatapointFormField from '@components/files/form/DatapointFormField';
 import {
+  CRYPTO_ADDRESS_REGEX,
+  CryptoSymbol,
+} from '@constants/address/crypto.entities';
+import {
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -25,11 +29,11 @@ import {
   FileVariant,
   FileVariantEntity,
 } from '@models/business/file/fileVariant';
-import { FolderType } from '@models/business/folder/folderType';
+import { FolderType, FolderTypeEnum } from '@models/business/folder/folderType';
 import { FileDTO } from '@models/dto/file.dto';
 import { cn } from '@utils/utils';
 import { Pencil, Plus, SquareMousePointer } from 'lucide-react';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -51,6 +55,9 @@ const FileForm: React.FC<FileFormProps> = ({
   initialData,
 }) => {
   const { generateZodFileSchema, createFile, editFile } = useFile();
+  const [updatedDatapoints, setUpdatedDatapoints] = useState(
+    folderType.fileType.datapoints
+  );
 
   const getCurrentVariant = (): FileVariant | undefined => {
     return folderType.fileType.variants.find(
@@ -64,7 +71,41 @@ const FileForm: React.FC<FileFormProps> = ({
     );
   };
 
-  const formSchema = generateZodFileSchema(folderType.fileType.datapoints);
+  // ToDo: Refactor, improve and delete updateRegexValidation.
+
+  const updateRegexValidation = useCallback(
+    () => {
+      if (folderType.id !== FolderTypeEnum.Address) return;
+
+      const currentEntity = getCurrentVariantEntity();
+
+      if (!currentEntity) return;
+
+      const regex = currentEntity
+        ? CRYPTO_ADDRESS_REGEX[currentEntity.id as CryptoSymbol]
+        : null;
+
+      if (!regex) return;
+
+      setUpdatedDatapoints(
+        folderType.fileType.datapoints.map((datapoint) => {
+          if (datapoint.id !== 'address') return datapoint;
+
+          return {
+            ...datapoint,
+            validations: datapoint.validations?.map((validation) => ({
+              ...validation,
+              value:
+                validation.type === 'regex' ? regex.source : validation.value,
+            })),
+          };
+        })
+      );
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [getCurrentVariantEntity]
+  );
+
+  const formSchema = generateZodFileSchema(updatedDatapoints);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -73,6 +114,17 @@ const FileForm: React.FC<FileFormProps> = ({
       variant: folderType.fileType.variants[0].id,
     },
   });
+
+  const handleVariantChange = (value: string) => {
+    form.setValue('variant', value);
+    form.setValue('entity', undefined);
+    updateRegexValidation();
+  };
+
+  const handleEntityChange = (value: string) => {
+    form.setValue('entity', value);
+    updateRegexValidation();
+  };
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     if (action === 'new') {
@@ -90,6 +142,14 @@ const FileForm: React.FC<FileFormProps> = ({
     onComplete && onComplete();
   };
 
+  const watchedVariant = form.watch('variant');
+  const watchedEntity = form.watch('entity');
+
+  React.useEffect(() => {
+    updateRegexValidation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchedVariant, watchedEntity]);
+
   return (
     <Form {...form}>
       <form
@@ -104,10 +164,7 @@ const FileForm: React.FC<FileFormProps> = ({
               <FormLabel>Choose a variant</FormLabel>
               <Tabs
                 defaultValue={field.value}
-                onValueChange={(value: string) => {
-                  field.onChange(value);
-                  form.setValue('entity', undefined);
-                }}
+                onValueChange={(value: string) => handleVariantChange(value)}
               >
                 <FormControl>
                   <TabsList className="w-full border border-muted rounded-full h-10 px-1 bg-muted/25">
@@ -132,7 +189,7 @@ const FileForm: React.FC<FileFormProps> = ({
         <FormField
           control={form.control}
           name="entity"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <ResponsiveDialog
                 title={`Choose a ${getCurrentVariant()?.entityLabel}`}
@@ -168,7 +225,9 @@ const FileForm: React.FC<FileFormProps> = ({
                         <Card
                           className={`cursor-pointer border-primary/20 h-24 hover:bg-primary/15
                       `}
-                          onClick={() => field.onChange(variantEntity.id)}
+                          onClick={() => {
+                            handleEntityChange(variantEntity.id);
+                          }}
                         >
                           <div className="flex flex-col gap-2 justify-center h-full items-center rounded-full ">
                             <FileVariantEntityIcon entity={variantEntity} />
