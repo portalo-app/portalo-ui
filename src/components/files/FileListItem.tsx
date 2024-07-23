@@ -64,7 +64,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
       <ResponsiveDialog
         title=""
         trigger={
-          <Card className="relative grid grid-cols-[1fr_auto] p-4 space-y-2 border-muted-foreground/20 bg-muted hover:cursor-pointer">
+          <Card className="relative grid grid-cols-[1fr_auto] p-4 space-y-2 border-muted-foreground/20 bg-card dark:bg-muted hover:cursor-pointer">
             <div className="flex flex-wrap items-center gap-2 w-full overflow-hidden">
               <FileVariantEntityIcon entity={entity} />
               <TypographyMuted className="whitespace-nowrap">
