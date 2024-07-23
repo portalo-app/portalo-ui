@@ -43,7 +43,26 @@ const useFileStorage = () => {
     )?.cid;
   };
 
-  return { saveEncryptedFolder, getCIDByFolderId };
+  const readEncryptedFolder = async (cid: string): Promise<FolderDTO> => {
+    const signedMessage = await signAuthenticationMessage();
+
+    const fileEncryptionKey = await lighthouse.fetchEncryptionKey(
+      cid,
+      account!,
+      signedMessage
+    );
+
+    const decrypted = await lighthouse.decryptFile(
+      cid,
+      fileEncryptionKey!.data!.key!
+    );
+
+    const folder = JSON.parse(await decrypted.text()) as FolderDTO;
+
+    return folder;
+  };
+
+  return { saveEncryptedFolder, getCIDByFolderId, readEncryptedFolder };
 };
 
 export default useFileStorage;

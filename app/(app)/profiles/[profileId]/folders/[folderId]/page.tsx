@@ -52,10 +52,11 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
     const fetchFolderCID = async () => {
       const cid = await getCIDByFolderId(profileId, folderId);
       setFolderCID(cid ?? null);
+      console.log(cid);
     };
 
     fetchFolderCID();
-  }, [profileId, folderId]);
+  }, [profileId, folderId, getCIDByFolderId]);
 
   if (!profileId || !profile || !folder) {
     router.push(ROUTES.APP);
