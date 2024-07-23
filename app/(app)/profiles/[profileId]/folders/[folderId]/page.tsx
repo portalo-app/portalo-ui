@@ -47,8 +47,7 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
   );
 
   const { getFolderType } = useFolderType();
-  const { saveEncryptedFolder, getCIDByFolderId, shareEncryptedFolder } =
-    useFileStorage();
+  const { saveEncryptedFolder, getCIDByFolderId } = useFileStorage();
 
   useEffect(() => {
     const fetchFolderCID = async () => {
