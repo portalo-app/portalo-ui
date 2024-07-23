@@ -23,7 +23,12 @@ const FeatureHeader = ({ title }: FeatureHeaderProps) => {
       className="flex items-center text-left md:h-[68px]"
     >
       {!isHome && (
-        <Button variant="ghost" size="icon" onClick={() => router.back()}>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => router.back()}
+          className="hover:bg-transparent"
+        >
           <ArrowLeft />
         </Button>
       )}

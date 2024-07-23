@@ -50,7 +50,7 @@ const FileDetail: React.FC<FileDetailProps> = ({
 
       <div className="px-4 space-y-2">
         <div className="relative top-7">
-          <div className="flex items-center justify-center gap-2 bg-secondary w-40 mx-auto rounded-full p-1">
+          <div className="flex items-center justify-center gap-2 bg-secondary border border-primary w-40 mx-auto rounded-full p-1">
             <FileVariantEntityIcon entity={entity} />
             <TypographyH5 className="text-primary">
               {entity?.label || ''}

@@ -88,7 +88,10 @@ const Shortcuts = () => {
           >
             <FormItem className="space-y-4">
               {profiles.map((profile) => (
-                <div key={profile.id} className="bg-muted p-4 rounded-lg">
+                <div
+                  key={profile.id}
+                  className="bg-card dark:bg-muted border p-4 rounded-lg"
+                >
                   <TypographyH4 className="pb-2">{profile.name}</TypographyH4>
                   <div>
                     {profile.folders.map((folder) => (
