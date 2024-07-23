@@ -1,6 +1,7 @@
 'use client';
 
 import FileListItem from '@components/files/FileListItem';
+import ShareFolder from '@components/folders/ShareFolder';
 import ProfileHeader from '@components/profiles/ProfileHeader';
 import { FILES_PER_FOLDER_LIMIT } from '@constants/constants.const';
 import { ROUTES } from '@constants/routes.const';
@@ -15,7 +16,7 @@ import { FileDTO } from '@models/dto/file.dto';
 import { profilesState } from '@states/profiles.atom';
 import { walletState } from '@states/wallet.atom';
 import { motion } from 'framer-motion';
-import { Check, Save, Share } from 'lucide-react';
+import { Check, Save } from 'lucide-react';
 import { NextPage } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
@@ -46,7 +47,8 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
   );
 
   const { getFolderType } = useFolderType();
-  const { saveEncryptedFolder, getCIDByFolderId } = useFileStorage();
+  const { saveEncryptedFolder, getCIDByFolderId, shareEncryptedFolder } =
+    useFileStorage();
 
   useEffect(() => {
     const fetchFolderCID = async () => {
@@ -89,11 +91,11 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
             icon={folderCID ? <Check size={16} /> : <Save size={16} />}
           />
 
-          <IconButton
-            disabled={!folderCID}
-            disabledTooltip="Please connect an account to share"
-            onClick={() => {}}
-            icon={<Share size={16} />}
+          <ShareFolder
+            profileId={profileId}
+            folderId={folderId}
+            folderCID={folderCID}
+            account={account}
           />
 
           <CreateButton

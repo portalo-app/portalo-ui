@@ -62,7 +62,28 @@ const useFileStorage = () => {
     return folder;
   };
 
-  return { saveEncryptedFolder, getCIDByFolderId, readEncryptedFolder };
+  const shareEncryptedFolder = async (
+    cid: string,
+    addressesToShare: string[]
+  ) => {
+    const signedMessage = await signAuthenticationMessage();
+
+    const shareResponse = await lighthouse.shareFile(
+      account!,
+      addressesToShare,
+      cid,
+      signedMessage
+    );
+
+    console.log(shareResponse);
+  };
+
+  return {
+    saveEncryptedFolder,
+    getCIDByFolderId,
+    readEncryptedFolder,
+    shareEncryptedFolder,
+  };
 };
 
 export default useFileStorage;
