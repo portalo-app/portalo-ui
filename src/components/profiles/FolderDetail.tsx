@@ -1,12 +1,12 @@
 'use client';
 
 import FileListItem from '@components/files/FileListItem';
+import SaveFolder from '@components/folders/SaveFolder';
 import ShareFolder from '@components/folders/ShareFolder';
 import ProfileHeader from '@components/profiles/ProfileHeader';
 import { FILES_PER_FOLDER_LIMIT } from '@constants/constants.const';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
-import IconButton from '@core/components/IconButton';
 import State from '@core/components/State';
 import Icon from '@core/ui/Icon';
 import { TypographyH3 } from '@core/ui/Typography';
@@ -16,7 +16,6 @@ import { FileDTO } from '@models/dto/file.dto';
 import { profilesState } from '@states/profiles.atom';
 import { walletState } from '@states/wallet.atom';
 import { motion } from 'framer-motion';
-import { Check, Save } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -46,17 +45,17 @@ const Folder: FC<FolderProps> = ({ profileId, folderId }) => {
   const [folderCID, setFolderCID] = useState<string | null>(null);
 
   const { getFolderType } = useFolderType();
-  const { saveEncryptedFolder, getCIDByFolderId } = useFileStorage();
+  const { getCIDByFolderId } = useFileStorage();
 
   useEffect(() => {
     const fetchFolderCID = async () => {
       const cid = await getCIDByFolderId(profileId, folderId);
       setFolderCID(cid ?? null);
-      console.log(cid);
     };
 
     fetchFolderCID();
-  }, [profileId, folderId, getCIDByFolderId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!profileId || !profile || !folder) {
     router.push(ROUTES.APP);
@@ -76,17 +75,12 @@ const Folder: FC<FolderProps> = ({ profileId, folderId }) => {
         </div>
 
         <div className="flex gap-4 items-center">
-          <IconButton
-            disabled={!account || !!folderCID}
-            disabledTooltip={
-              folderCID
-                ? 'Folder already saved'
-                : 'Please connect an account to save'
-            }
-            onClick={() => {
-              saveEncryptedFolder(profileId, folder);
-            }}
-            icon={folderCID ? <Check size={16} /> : <Save size={16} />}
+          <SaveFolder
+            folder={folder}
+            folderCID={folderCID}
+            onSave={(cid: string) => setFolderCID(cid)}
+            profileId={profileId}
+            accountConnected={!!account}
           />
 
           <ShareFolder

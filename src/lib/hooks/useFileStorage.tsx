@@ -30,7 +30,7 @@ const useFileStorage = () => {
       profileId + folder.id
     );
 
-    console.log(uploadResponse);
+    return uploadResponse.data.Hash;
   };
 
   const getCIDByFolderId = async (profileId: string, folderId: string) => {
