@@ -1,6 +1,7 @@
 'use client';
 
 import { ROUTES, ROUTES_LAYOUT } from '@constants/routes.const';
+import ConnectWallet from '@core/components/ConnectWallet';
 import {
   MEDIAQUERY_DESKTOP,
   useMediaQuery,
@@ -31,6 +32,8 @@ const Navbar: React.FC<NavbarProps> = () => {
       ) : (
         <FeatureHeader title={currentRoute?.title ?? ''} />
       )}
+
+      <ConnectWallet />
     </div>
   );
 };
