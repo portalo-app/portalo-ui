@@ -5,16 +5,20 @@ import ProfileHeader from '@components/profiles/ProfileHeader';
 import { FILES_PER_FOLDER_LIMIT } from '@constants/constants.const';
 import { ROUTES } from '@constants/routes.const';
 import CreateButton from '@core/components/CreateButton';
+import IconButton from '@core/components/IconButton';
 import State from '@core/components/State';
 import Icon from '@core/ui/Icon';
 import { TypographyH3 } from '@core/ui/Typography';
+import useFileStorage from '@hooks/useFileStorage';
 import useFolderType from '@hooks/useFolderType';
 import { FileDTO } from '@models/dto/file.dto';
 import { profilesState } from '@states/profiles.atom';
+import { walletState } from '@states/wallet.atom';
 import { motion } from 'framer-motion';
+import { Check, Save, Share } from 'lucide-react';
 import { NextPage } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 interface FolderDetailsProps {
@@ -26,6 +30,9 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
   const pathName = usePathname();
 
   const profilesData = useRecoilValue(profilesState);
+  const account = useRecoilValue(walletState);
+  const [folderCID, setFolderCID] = useState<string | null>(null);
+
   const { folderId, profileId } = params;
 
   const profile = useMemo(
@@ -39,6 +46,16 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
   );
 
   const { getFolderType } = useFolderType();
+  const { saveEncryptedFolder, getCIDByFolderId } = useFileStorage();
+
+  useEffect(() => {
+    const fetchFolderCID = async () => {
+      const cid = await getCIDByFolderId(profileId, folderId);
+      setFolderCID(cid ?? null);
+    };
+
+    fetchFolderCID();
+  }, [profileId, folderId]);
 
   if (!profileId || !profile || !folder) {
     router.push(ROUTES.APP);
@@ -57,15 +74,37 @@ const FolderDetail: NextPage<FolderDetailsProps> = ({ params }) => {
           <TypographyH3>{folderType?.label} folder</TypographyH3>
         </div>
 
-        <CreateButton
-          href={`${pathName}/new`}
-          disabled={folder.files.length >= FILES_PER_FOLDER_LIMIT}
-          disabledTooltip={`You have reached the free limit of ${FILES_PER_FOLDER_LIMIT} files in this folder`}
-        />
+        <div className="flex gap-4 items-center">
+          <IconButton
+            disabled={!account || !!folderCID}
+            disabledTooltip={
+              folderCID
+                ? 'Folder already saved'
+                : 'Please connect an account to save'
+            }
+            onClick={() => {
+              saveEncryptedFolder(profileId, folder);
+            }}
+            icon={folderCID ? <Check size={16} /> : <Save size={16} />}
+          />
+
+          <IconButton
+            disabled={!folderCID}
+            disabledTooltip="Please connect an account to share"
+            onClick={() => {}}
+            icon={<Share size={16} />}
+          />
+
+          <CreateButton
+            href={`${pathName}/new`}
+            disabled={folder.files.length >= FILES_PER_FOLDER_LIMIT}
+            disabledTooltip={`You have reached the free limit of ${FILES_PER_FOLDER_LIMIT} files in this folder`}
+          />
+        </div>
       </div>
 
       <div className="space-y-4">
-        {folder?.files?.length ?? 0 > 0 ? (
+        {(folder?.files?.length ?? 0 > 0) ? (
           folder?.files.map((file: FileDTO, index: number) => (
             <motion.div
               key={index}
