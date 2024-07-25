@@ -5,12 +5,10 @@ import {
   CarouselContent,
   CarouselDots,
   CarouselItem,
-  CarouselNextCustomOnboarding,
 } from '@core/ui/Carousel';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
-import { TypographyH3, TypographyP } from '@core/ui/Typography';
-import { LucideIcon, Share, User, Wallet } from 'lucide-react';
 import { FC, useState } from 'react';
+import Slide from './Slide';
 
 interface OnboardingProps {}
 
@@ -23,25 +21,25 @@ const Onboarding: FC<OnboardingProps> = () => {
     title: string;
     description: string;
     buttonLabel: string;
-    icon: LucideIcon;
+    image: string;
   }[] = [
     {
       title: 'Create a Profile',
       description: 'Begin your journey by creating a personalized profile',
       buttonLabel: 'Next',
-      icon: User,
+      image: '/assets/images/onboarding/profile.svg',
     },
     {
       title: 'Organize your data',
       description: 'Keep your information organized and easily accessible.',
       buttonLabel: 'Next',
-      icon: Wallet,
+      image: '/assets/images/onboarding/file.svg',
     },
     {
       title: 'Share with anyone',
       description: 'Easily share your data with anyone, anytime.',
       buttonLabel: 'Get Started!',
-      icon: Share,
+      image: '/assets/images/onboarding/share.svg',
     },
   ];
 
@@ -53,18 +51,18 @@ const Onboarding: FC<OnboardingProps> = () => {
   }
 
   return (
-    <div>
+    <>
       {showOnboarding && (
         <ResponsiveDialog title={onboardingTitle} isOnboarding={showOnboarding}>
           <Carousel>
-            <CarouselContent className="lg:w-[480px]">
+            <CarouselContent className="md:w-[480px]">
               {CarouselItems.map(
-                ({ title, description, icon, buttonLabel }, index) => (
+                ({ title, description, image, buttonLabel }, index) => (
                   <CarouselItem key={index}>
                     <Slide
                       title={title}
                       description={description}
-                      icon={icon}
+                      image={image}
                       buttonLabel={buttonLabel}
                     />
                   </CarouselItem>
@@ -75,33 +73,7 @@ const Onboarding: FC<OnboardingProps> = () => {
           </Carousel>
         </ResponsiveDialog>
       )}
-    </div>
-  );
-};
-
-interface SlideProps {
-  title: string;
-  description: string;
-  icon: any;
-  buttonLabel: string;
-}
-
-const Slide: FC<SlideProps> = ({
-  title,
-  description,
-  icon: Icon,
-  buttonLabel,
-}) => {
-  return (
-    <div className="flex flex-col space-y-6 items-center w-full mb-4 p-2">
-      <Icon size={80} />
-      <TypographyH3>{title}</TypographyH3>
-
-      <TypographyP>{description}</TypographyP>
-      <CarouselNextCustomOnboarding className="w-full">
-        {buttonLabel}
-      </CarouselNextCustomOnboarding>
-    </div>
+    </>
   );
 };
 

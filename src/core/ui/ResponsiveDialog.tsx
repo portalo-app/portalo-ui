@@ -4,7 +4,7 @@ import {
   MEDIAQUERY_DESKTOP,
   useMediaQuery,
 } from '@hooks/general/useMediaQuery';
-import { DialogClose, DialogDescription } from '@radix-ui/react-dialog';
+import { DialogDescription } from '@radix-ui/react-dialog';
 import { FC, ReactNode, useEffect, useState } from 'react';
 import { Button } from './Button';
 import {
@@ -47,7 +47,6 @@ const ResponsiveDialog: FC<ResponsiveDialogProps> = ({
 
   useEffect(() => {
     if (!trigger && isOnboarding) {
-      console.log('isOnboarding', isOnboarding);
       setOpen(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,19 +58,13 @@ const ResponsiveDialog: FC<ResponsiveDialogProps> = ({
         {trigger && <DialogTrigger className="w-full">{trigger}</DialogTrigger>}
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="flex justify-center">{title}</DialogTitle>
+            <DialogTitle className="text-center">{title}</DialogTitle>
             {description && (
               <DialogDescription>{description}</DialogDescription>
             )}
           </DialogHeader>
 
           {children}
-
-          {isOnboarding && closeButtonLabel && (
-            <DialogClose>
-              <Button>{closeButtonLabel}</Button>
-            </DialogClose>
-          )}
         </DialogContent>
       </Dialog>
     );
@@ -82,7 +75,7 @@ const ResponsiveDialog: FC<ResponsiveDialogProps> = ({
       {trigger && <DrawerTrigger className="w-full">{trigger}</DrawerTrigger>}
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>{title}</DrawerTitle>
+          <DrawerTitle className="text-center">{title}</DrawerTitle>
           {description && <DrawerDescription>{description}</DrawerDescription>}
         </DrawerHeader>
 

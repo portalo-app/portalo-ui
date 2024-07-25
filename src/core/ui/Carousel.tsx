@@ -320,7 +320,7 @@ const CarouselNextCustomOnboarding = React.forwardRef<
   if (!canScrollNext) {
     if (isDesktop)
       return (
-        <DialogClose className='w-full'>
+        <DialogClose className="w-full">
           <Button size={size} className={cn('w-full', className)}>
             {children}
           </Button>
@@ -360,6 +360,5 @@ export {
   CarouselNext,
   CarouselNextCustomOnboarding,
   CarouselPrevious,
-  type CarouselApi
+  type CarouselApi,
 };
-
