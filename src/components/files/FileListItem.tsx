@@ -23,6 +23,7 @@ interface FileListItemProps {
   folderId: string;
   file: FileDTO;
   folderType: FolderType;
+  readonly?: boolean;
 }
 
 const FileListItem: React.FC<FileListItemProps> = ({
@@ -30,6 +31,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
   folderId,
   file,
   folderType,
+  readonly,
 }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const router = useRouter();
@@ -80,12 +82,14 @@ const FileListItem: React.FC<FileListItemProps> = ({
               </div>
             </div>
 
-            <div className="flex justify-end items-center">
-              <Trash2
-                className="w-5 h-5 mb-1 hover:text-red-600"
-                onClick={handleDelete}
-              />
-            </div>
+            {!readonly && (
+              <div className="flex justify-end items-center">
+                <Trash2
+                  className="w-5 h-5 mb-1 hover:text-red-600"
+                  onClick={handleDelete}
+                />
+              </div>
+            )}
           </Card>
         }
       >
@@ -93,6 +97,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
           file={file}
           fileType={folderType.fileType}
           navigateToEdit={navigateToEdit}
+          readonly={readonly}
         />
       </ResponsiveDialog>
 

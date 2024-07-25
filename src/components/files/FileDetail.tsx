@@ -18,12 +18,14 @@ interface FileDetailProps {
   file: FileDTO;
   fileType: FileType;
   navigateToEdit: () => void;
+  readonly?: boolean;
 }
 
 const FileDetail: React.FC<FileDetailProps> = ({
   file,
   fileType,
   navigateToEdit,
+  readonly,
 }) => {
   const { title, entity, qrInfo, link, extraDatapoints } = useMemo(() => {
     return fileType.getDetailData(file.data);
@@ -89,20 +91,25 @@ const FileDetail: React.FC<FileDetailProps> = ({
       )}
 
       <div className="flex flex-col gap-2 w-full justify-center pb-3 pt-5">
-        <Button className="gap-2 w-full" onClick={navigateToEdit}>
-          <Pencil size={16} />
-          Edit
-        </Button>
+        {!readonly && (
+          <Button className="gap-2 w-full" onClick={navigateToEdit}>
+            <Pencil size={16} />
+            Edit
+          </Button>
+        )}
 
         <div className="flex gap-2 w-full justify-center">
-          <Button
-            className="gap-2 w-full"
-            variant="outline"
-            onClick={handleShare}
-          >
-            <Share2 size={16} />
-            Share
-          </Button>
+          {!readonly && (
+            <Button
+              className="gap-2 w-full"
+              variant="outline"
+              onClick={handleShare}
+            >
+              <Share2 size={16} />
+              Share
+            </Button>
+          )}
+
           {link && isValidUrl(link) && (
             <Button
               className="gap-2 w-full"
