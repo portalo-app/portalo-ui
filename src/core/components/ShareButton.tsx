@@ -14,12 +14,11 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
       process.env.NEXT_PUBLIC_PORTALO_RSA_KEY!
     );
 
-    const encryptedProfile = encodeURIComponent(
-      key.encrypt(JSON.stringify(profile), 'base64')
-    );
+    const JSONProfile = JSON.stringify(profile);
+    const encrypted = encodeURIComponent(key.encrypt(JSONProfile, 'base64'));
 
     navigator.clipboard.writeText(
-      `${window.location.origin}/profiles/share?profile=${encryptedProfile}`
+      `${window.location.origin}/profiles/share?profile=${encrypted}`
     );
   };
 
