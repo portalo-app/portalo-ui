@@ -11,7 +11,15 @@ interface ShareButtonProps {
 const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
   const shareProfile = async () => {
     const key = new NodeRSA().importKey(
-      process.env.NEXT_PUBLIC_PORTALO_RSA_KEY!
+      `-----BEGIN RSA PRIVATE KEY-----
+MIIBOgIBAAJBAJe54MqfdzVWbea9mdHwWcj+PJCe59nyRsUC2xghdvOuu1uPCEnJ
+MWRHYEmp+Iay2XEPZEGvwIbmS6Jo+acgpB0CAwEAAQJAIul6eCVJYNSKZVWrV0te
+3YjilsR5xQSilCKcF2lb3aYxpCZnh2IipH/QkPfkkE85whkQf6xiPniNApV51+fM
+YQIhAPyfzjO0TLWrukA51fpVsp4XOpn+78kOuo4+oWw33RwTAiEAmcDpyENLJnS9
+qKwi8JtpLVcRLlbnDBBdhcporsCV5Q8CICtpUsfzzdLSRdlPlwPDwkQEfd+EvbPx
+QgG7pYWxO9/dAiBjP/1pcc8UDu3S8PNI//k/9GE52Y0h43qLf+JdVCIujwIhAO/I
+mwdPQFw+nVLgFpWvGOdoSwv/m7Hfi1JEIpJ6JRFg
+-----END RSA PRIVATE KEY-----`
     );
 
     const JSONProfile = JSON.stringify(profile);
