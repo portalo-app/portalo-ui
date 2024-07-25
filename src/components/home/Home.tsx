@@ -1,5 +1,5 @@
 import StoreWidget from '@components/dashboard/StoreWidget';
-import OnboardingModal from '@components/onboarding/Onboarding';
+import Onboarding from '@components/onboarding/Onboarding';
 import { Button } from '@core/ui/Button';
 import { Input } from '@core/ui/Input';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
@@ -9,7 +9,7 @@ import HomeCardsList from './HomeCardList';
 const Home: FC = () => {
   return (
     <div className="space-y-4">
-      <OnboardingModal />
+      <Onboarding />
 
       <ResponsiveDialog
         title="Coming soon"
