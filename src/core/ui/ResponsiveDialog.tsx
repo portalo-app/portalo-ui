@@ -1,12 +1,11 @@
 'use client';
 
-import * as React from 'react';
-
 import {
   MEDIAQUERY_DESKTOP,
   useMediaQuery,
 } from '@hooks/general/useMediaQuery';
-import { DialogDescription } from '@radix-ui/react-dialog';
+import { DialogClose, DialogDescription } from '@radix-ui/react-dialog';
+import { FC, ReactNode, useEffect, useState } from 'react';
 import { Button } from './Button';
 import {
   Dialog,
@@ -28,36 +27,51 @@ import {
 
 interface ResponsiveDialogProps {
   title: string;
-  description?: string;
-  trigger: React.ReactNode;
-  children?: React.ReactNode;
   closeButtonLabel?: string;
+  description?: string;
+  trigger?: ReactNode;
+  children?: ReactNode;
+  isOnboarding?: boolean;
 }
 
-const ResponsiveDialog: React.FC<ResponsiveDialogProps> = ({
+const ResponsiveDialog: FC<ResponsiveDialogProps> = ({
   title,
   description,
   trigger,
   children,
   closeButtonLabel,
+  isOnboarding,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery(MEDIAQUERY_DESKTOP);
+
+  useEffect(() => {
+    if (!trigger && isOnboarding) {
+      console.log('isOnboarding', isOnboarding);
+      setOpen(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger className="w-full">{trigger}</DialogTrigger>
-
+        {trigger && <DialogTrigger className="w-full">{trigger}</DialogTrigger>}
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
+            <DialogTitle className="flex justify-center">{title}</DialogTitle>
             {description && (
               <DialogDescription>{description}</DialogDescription>
             )}
           </DialogHeader>
 
           {children}
+
+          {isOnboarding && closeButtonLabel && (
+            <DialogClose>
+              <Button>{closeButtonLabel}</Button>
+            </DialogClose>
+          )}
         </DialogContent>
       </Dialog>
     );
@@ -65,8 +79,7 @@ const ResponsiveDialog: React.FC<ResponsiveDialogProps> = ({
 
   return (
     <Drawer open={open} onOpenChange={setOpen} shouldScaleBackground>
-      <DrawerTrigger className="w-full">{trigger}</DrawerTrigger>
-
+      {trigger && <DrawerTrigger className="w-full">{trigger}</DrawerTrigger>}
       <DrawerContent>
         <DrawerHeader className="text-left">
           <DrawerTitle>{title}</DrawerTitle>
