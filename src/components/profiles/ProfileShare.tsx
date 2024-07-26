@@ -16,12 +16,11 @@ const ProfileShare: FC = () => {
   const searchParams = useSearchParams();
   const setSharedProfile = useSetRecoilState(sharedProfileState);
 
-  const compressedProfile = decodeURIComponent(searchParams.get('profile')!);
+  const decompressedProfile = lzString.decompressFromEncodedURIComponent(
+    searchParams.get('profile')!
+  );
 
-  const decompressed =
-    lzString.decompressFromEncodedURIComponent(compressedProfile);
-
-  const profile = JSON.parse(decompressed) as ProfileDTO;
+  const profile = JSON.parse(decompressedProfile) as ProfileDTO;
 
   setSharedProfile(profile);
 

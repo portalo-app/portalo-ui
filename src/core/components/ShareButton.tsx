@@ -2,6 +2,7 @@ import AnimatedButton from '@core/ui/AnimatedButton';
 import { Button } from '@core/ui/Button';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { TypographyH5 } from '@core/ui/Typography';
+import { useToast } from '@core/ui/use-toast';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { Clipboard, Share, Share2 } from 'lucide-react';
 import lzString from 'lz-string';
@@ -13,6 +14,8 @@ interface ShareButtonProps {
 }
 
 const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
+  const { toast } = useToast();
+
   const JSONProfile = JSON.stringify(profile);
   const compressed = lzString.compressToEncodedURIComponent(JSONProfile);
 
@@ -62,7 +65,13 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
           )}
           <AnimatedButton
             className="gap-2 w-full"
-            onClick={() => navigator.clipboard.writeText(shareUrl)}
+            onClick={() => {
+              navigator.clipboard.writeText(shareUrl);
+              toast({
+                title: 'Copied to clipboard',
+                description: 'The share link has been copied to your clipboard',
+              });
+            }}
           >
             Copy to Clipboard <Clipboard size={16} />
           </AnimatedButton>
