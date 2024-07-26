@@ -6,8 +6,8 @@ import { TypographyH3 } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { sharedProfileState } from '@states/sharedProfile.atom';
 import { Folder } from 'lucide-react';
+import lzString from 'lz-string';
 import { useSearchParams } from 'next/navigation';
-import NodeRSA from 'node-rsa';
 import { FC } from 'react';
 import { useSetRecoilState } from 'recoil';
 import ProfileHeader from './ProfileHeader';
@@ -16,19 +16,12 @@ const ProfileShare: FC = () => {
   const searchParams = useSearchParams();
   const setSharedProfile = useSetRecoilState(sharedProfileState);
 
-  const encryptedProfile = decodeURIComponent(searchParams.get('profile')!);
-  const key = new NodeRSA().importKey(`-----BEGIN RSA PRIVATE KEY-----
-    MIIBOgIBAAJBAJe54MqfdzVWbea9mdHwWcj+PJCe59nyRsUC2xghdvOuu1uPCEnJ
-    MWRHYEmp+Iay2XEPZEGvwIbmS6Jo+acgpB0CAwEAAQJAIul6eCVJYNSKZVWrV0te
-    3YjilsR5xQSilCKcF2lb3aYxpCZnh2IipH/QkPfkkE85whkQf6xiPniNApV51+fM
-    YQIhAPyfzjO0TLWrukA51fpVsp4XOpn+78kOuo4+oWw33RwTAiEAmcDpyENLJnS9
-    qKwi8JtpLVcRLlbnDBBdhcporsCV5Q8CICtpUsfzzdLSRdlPlwPDwkQEfd+EvbPx
-    QgG7pYWxO9/dAiBjP/1pcc8UDu3S8PNI//k/9GE52Y0h43qLf+JdVCIujwIhAO/I
-    mwdPQFw+nVLgFpWvGOdoSwv/m7Hfi1JEIpJ6JRFg
-    -----END RSA PRIVATE KEY-----`);
-  const profile = JSON.parse(
-    key.decrypt(encryptedProfile, 'utf8')
-  ) as ProfileDTO;
+  const compressedProfile = decodeURIComponent(searchParams.get('profile')!);
+
+  const decompressed =
+    lzString.decompressFromEncodedURIComponent(compressedProfile);
+
+  const profile = JSON.parse(decompressed) as ProfileDTO;
 
   setSharedProfile(profile);
 
