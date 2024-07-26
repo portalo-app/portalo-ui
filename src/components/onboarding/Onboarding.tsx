@@ -8,12 +8,14 @@ import {
   CarouselNextCustomOnboarding,
 } from '@core/ui/Carousel';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
-import { FC, useState } from 'react';
+import { FC, ReactNode, useEffect, useState } from 'react';
 import Slide from './Slide';
 
-interface OnboardingProps {}
+interface OnboardingProps {
+  trigger?: ReactNode;
+}
 
-const Onboarding: FC<OnboardingProps> = () => {
+const Onboarding: FC<OnboardingProps> = ({ trigger }) => {
   const [showOnboarding, setShowOnboarding] = useState(false);
 
   const CarouselItems: {
@@ -52,10 +54,20 @@ const Onboarding: FC<OnboardingProps> = () => {
     localStorage.setItem('portalo.onboarding', 'false');
   }
 
+  useEffect(() => {
+    if (trigger) {
+      setShowOnboarding(true);
+    }
+  }, [trigger]);
+
   return (
     <>
       {showOnboarding && (
-        <ResponsiveDialog title="" isOnboarding={showOnboarding}>
+        <ResponsiveDialog
+          title=""
+          isOnboarding={showOnboarding}
+          trigger={trigger}
+        >
           <Carousel>
             <CarouselContent className="md:w-[480px]">
               {CarouselItems.map(({ title, description, image }, index) => (
