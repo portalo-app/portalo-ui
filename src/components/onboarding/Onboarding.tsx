@@ -16,8 +16,6 @@ interface OnboardingProps {}
 const Onboarding: FC<OnboardingProps> = () => {
   const [showOnboarding, setShowOnboarding] = useState(false);
 
-  const onboardingTitle = 'Welcome to Portalo! 🎉 ';
-
   const CarouselItems: {
     title: string;
     description: string;
