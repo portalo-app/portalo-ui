@@ -5,6 +5,7 @@ import {
   CarouselContent,
   CarouselDots,
   CarouselItem,
+  CarouselNextCustomOnboarding,
 } from '@core/ui/Carousel';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { FC, useState } from 'react';
@@ -25,51 +26,54 @@ const Onboarding: FC<OnboardingProps> = () => {
   }[] = [
     {
       title: 'Create a Profile',
-      description: 'Begin your journey by creating a personalized profile',
+      description:
+        'With profiles you can easily organize your information and keep everything where it belongs.',
       buttonLabel: 'Next',
       image: '/assets/images/onboarding/profile.svg',
     },
     {
       title: 'Organize your data',
-      description: 'Keep your information organized and easily accessible.',
+      description:
+        'Use your profile folders to store your files. They will be organized by type like socials, addresses and more!',
       buttonLabel: 'Next',
       image: '/assets/images/onboarding/file.svg',
     },
     {
       title: 'Share with anyone',
-      description: 'Easily share your data with anyone, anytime.',
+      description:
+        'When you are ready you can securely share your data with anyone you want. Choose between QRs & links.',
       buttonLabel: 'Get Started!',
       image: '/assets/images/onboarding/share.svg',
     },
   ];
 
-  const isOnboardingInLocalStorage = localStorage.getItem('onboarding');
+  const isOnboardingInLocalStorage = localStorage.getItem('portalo.onboarding');
 
   if (!isOnboardingInLocalStorage) {
     setShowOnboarding(true);
-    localStorage.setItem('onboarding', 'false');
+    localStorage.setItem('portalo.onboarding', 'false');
   }
 
   return (
     <>
       {showOnboarding && (
-        <ResponsiveDialog title={onboardingTitle} isOnboarding={showOnboarding}>
+        <ResponsiveDialog title="" isOnboarding={showOnboarding}>
           <Carousel>
             <CarouselContent className="md:w-[480px]">
-              {CarouselItems.map(
-                ({ title, description, image, buttonLabel }, index) => (
-                  <CarouselItem key={index}>
-                    <Slide
-                      title={title}
-                      description={description}
-                      image={image}
-                      buttonLabel={buttonLabel}
-                    />
-                  </CarouselItem>
-                )
-              )}
+              {CarouselItems.map(({ title, description, image }, index) => (
+                <CarouselItem key={index}>
+                  <Slide
+                    title={title}
+                    description={description}
+                    image={image}
+                  />
+                </CarouselItem>
+              ))}
             </CarouselContent>
             <CarouselDots />
+            <CarouselNextCustomOnboarding className="w-full mt-4">
+              Next
+            </CarouselNextCustomOnboarding>
           </Carousel>
         </ResponsiveDialog>
       )}

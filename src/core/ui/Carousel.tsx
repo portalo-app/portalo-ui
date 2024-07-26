@@ -322,7 +322,7 @@ const CarouselNextCustomOnboarding = React.forwardRef<
       return (
         <DialogClose className="w-full">
           <Button size={size} className={cn('w-full', className)}>
-            {children}
+            Get Started!
           </Button>
         </DialogClose>
       );
@@ -330,7 +330,7 @@ const CarouselNextCustomOnboarding = React.forwardRef<
     return (
       <DrawerClose asChild>
         <Button size={size} className={cn('w-full', className)}>
-          {children}
+          Get Started!
         </Button>
       </DrawerClose>
     );
