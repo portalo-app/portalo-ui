@@ -45,7 +45,7 @@ export class SocialFileType implements FileType {
       ?.availableEntities.find((entity) => entity.id === fileData.entity);
 
     return {
-      title: fileData.username,
+      title: '@' + fileData.username,
       entity,
       qrInfo: entity?.shareUrl + fileData.username,
       link: entity?.shareUrl ? entity.shareUrl + fileData.username : undefined,
