@@ -42,8 +42,14 @@ const Onboarding: FC<OnboardingProps> = ({ trigger }) => {
       title: 'Share with anyone',
       description:
         'When you are ready you can securely share your data with anyone you want. Choose between QRs & links.',
-      buttonLabel: 'Get Started!',
+      buttonLabel: 'Next',
       image: '/assets/images/onboarding/share.svg',
+    },
+    {
+      title: 'Start your journey!',
+      description: 'Setup your first profile and get started using Portalo',
+      buttonLabel: 'Get Started!',
+      image: '/assets/images/onboarding/get-started.svg',
     },
   ];
 
