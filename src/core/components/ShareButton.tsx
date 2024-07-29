@@ -63,7 +63,7 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
               variant="outline"
               onClick={() =>
                 navigator?.share({
-                  text: profile.name,
+                  text: `👛️ Portalo: ${profile.name}'s profile`,
                   url: shareUrl,
                 })
               }
