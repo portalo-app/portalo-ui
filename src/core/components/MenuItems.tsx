@@ -21,7 +21,7 @@ const menuItems = [
   },
   {
     label: 'Profiles',
-    href: ROUTES.APP_CREATE_PROFILE,
+    href: ROUTES.APP_PROFILE,
     icon: <User />,
   },
   {
