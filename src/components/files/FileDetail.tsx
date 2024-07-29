@@ -1,6 +1,7 @@
 'use client';
 
 import FileVariantEntityIcon from '@components/entities/FileVariantEntityIcon';
+import CopyButton from '@core/components/CopyButton';
 import {
   Accordion,
   AccordionContent,
@@ -17,23 +18,23 @@ import {
 import { FileType } from '@models/business/file/fileType';
 import { FileDTO } from '@models/dto/file.dto';
 import { isValidUrl } from '@utils/utils';
-import { Check, Copy, FilePen, Globe, Share } from 'lucide-react';
+import { FilePen, Globe, Share } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 interface FileDetailProps {
   file: FileDTO;
   fileType: FileType;
   navigateToEdit: () => void;
+  readonly?: boolean;
 }
 
 const FileDetail: React.FC<FileDetailProps> = ({
   file,
   fileType,
   navigateToEdit,
+  readonly,
 }) => {
-  const [isCopying, setIsCopying] = useState(false);
-
   const { title, entity, qrInfo, link, extraDatapoints } = useMemo(() => {
     return fileType.getDetailData(file.data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,16 +52,6 @@ const FileDetail: React.FC<FileDetailProps> = ({
     });
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(qrInfo);
-
-    setIsCopying(true);
-
-    setTimeout(() => {
-      setIsCopying(false);
-    }, 2000);
-  };
-
   return (
     <div className="space-y-2 pb-2">
       {/* TOOLBAR */}
@@ -75,10 +66,12 @@ const FileDetail: React.FC<FileDetailProps> = ({
           </div>
         </div>
 
-        <Button className="gap-2" variant="link" onClick={navigateToEdit}>
-          <FilePen size={16} />
-          Edit
-        </Button>
+        {!readonly && (
+          <Button className="gap-2" variant="link" onClick={navigateToEdit}>
+            <FilePen size={16} />
+            Edit
+          </Button>
+        )}
       </div>
 
       <Separator />
@@ -124,19 +117,7 @@ const FileDetail: React.FC<FileDetailProps> = ({
       {/* ACTIONS */}
       <div className="w-full flex flex-col gap-2">
         <div className="flex gap-2 items-center *:w-full *:flex-1">
-          <Button onClick={handleCopy} variant="outline">
-            {isCopying ? (
-              <>
-                <Check size={16} className="mr-2" />
-                Copied!
-              </>
-            ) : (
-              <>
-                <Copy size={16} className="mr-2" />
-                Copy
-              </>
-            )}
-          </Button>
+          <CopyButton text={qrInfo} />
 
           {link && isValidUrl(link) && (
             <Button

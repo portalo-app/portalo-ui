@@ -9,12 +9,14 @@ interface FolderListItemProps {
   profileName: string | undefined;
   folderTypeId: string;
   profileId: string;
+  readonly?: boolean;
 }
 
 const FolderListItem: React.FC<FolderListItemProps> = ({
   profileName,
   folderTypeId,
   profileId,
+  readonly,
 }) => {
   const { getFolderType } = useFolderType();
 
@@ -24,7 +26,11 @@ const FolderListItem: React.FC<FolderListItemProps> = ({
 
   return (
     <Link
-      href={`${ROUTES.APP_PROFILE}/${profileId}/${ROUTES.APP_FOLDER}/${folderTypeId}`}
+      href={
+        readonly
+          ? `${ROUTES.APP_PROFILE}/${ROUTES.APP_FOLDER}/share/${folderTypeId}`
+          : `${ROUTES.APP_PROFILE}/${profileId}/${ROUTES.APP_FOLDER}/${folderTypeId}`
+      }
     >
       <div className="flex py-4 items-center justify-between">
         <div className="flex gap-4 items-center">

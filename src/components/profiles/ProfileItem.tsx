@@ -32,7 +32,7 @@ const ProfileItem: React.FC<ProfileItemProps> = ({ profile }) => {
 
         <ChevronRight
           size={24}
-          className="absolute top-[calc(50%-12px)] right-2 text-secondary"
+          className="absolute top-[calc(50%-12px)] right-2 text-muted-foreground"
         />
       </div>
     </Link>
