@@ -1,3 +1,5 @@
+'use client';
+
 import { usePortaloTheme } from '@hooks/general/usePortaloTheme';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -19,7 +21,7 @@ const AppLogo: React.FC<AppLogoProps> = ({ width, height }) => {
     <motion.div
       initial={{ x: -20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      transition={{ ease: 'easeOut', duration: 0.5 }}
+      transition={{ ease: 'easeOut', duration: 0.2 }}
     >
       <Image
         priority

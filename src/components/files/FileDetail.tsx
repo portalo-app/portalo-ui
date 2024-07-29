@@ -1,3 +1,5 @@
+'use client';
+
 import FileVariantEntityIcon from '@components/entities/FileVariantEntityIcon';
 import {
   Accordion,
@@ -6,13 +8,18 @@ import {
   AccordionTrigger,
 } from '@core/ui/Accordion';
 import { Button } from '@core/ui/Button';
-import { TypographyH5, TypographyMuted } from '@core/ui/Typography';
+import { Separator } from '@core/ui/Separator';
+import {
+  TypographyH4,
+  TypographyMuted,
+  TypographyMutedXS,
+} from '@core/ui/Typography';
 import { FileType } from '@models/business/file/fileType';
 import { FileDTO } from '@models/dto/file.dto';
 import { isValidUrl } from '@utils/utils';
-import { ExternalLink, Pencil, Share2 } from 'lucide-react';
+import { Check, Copy, FilePen, Globe, Share } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 interface FileDetailProps {
   file: FileDTO;
@@ -25,6 +32,8 @@ const FileDetail: React.FC<FileDetailProps> = ({
   fileType,
   navigateToEdit,
 }) => {
+  const [isCopying, setIsCopying] = useState(false);
+
   const { title, entity, qrInfo, link, extraDatapoints } = useMemo(() => {
     return fileType.getDetailData(file.data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,43 +51,67 @@ const FileDetail: React.FC<FileDetailProps> = ({
     });
   };
 
-  return (
-    <div className="text-center space-y-2 grid place-items-center">
-      <div className="px-4 border-2 border-muted p-2 rounded-xl">
-        <TypographyH5>{title}</TypographyH5>
-      </div>
+  const handleCopy = () => {
+    navigator.clipboard.writeText(qrInfo);
 
-      <div className="px-4 space-y-2">
-        <div className="relative top-7">
-          <div className="flex items-center justify-center gap-2 bg-secondary border border-primary w-40 mx-auto rounded-full p-1">
-            <FileVariantEntityIcon entity={entity} />
-            <TypographyH5 className="text-primary">
-              {entity?.label || ''}
-            </TypographyH5>
+    setIsCopying(true);
+
+    setTimeout(() => {
+      setIsCopying(false);
+    }, 2000);
+  };
+
+  return (
+    <div className="space-y-2 pb-2">
+      {/* TOOLBAR */}
+      <div className="flex space-between items-center p-2 rounded">
+        <div className="flex items-center gap-2">
+          <FileVariantEntityIcon entity={entity} size={42} />
+
+          <div className="text-left">
+            <TypographyH4>{entity?.label || ''}</TypographyH4>
+
+            <TypographyMuted>{title || ''}</TypographyMuted>
           </div>
         </div>
 
+        <Button className="gap-2" variant="link" onClick={navigateToEdit}>
+          <FilePen size={16} />
+          Edit
+        </Button>
+      </div>
+
+      <Separator />
+
+      {/* QR CODE */}
+      <div className="py-6 space-y-2 w-full">
         <QRCodeSVG
           includeMargin
           value={qrInfo}
           size={256}
-          className="rounded-3xl"
+          className="rounded-md mx-auto border-2"
         />
+
+        <TypographyMutedXS className="text-center break-words">
+          {qrInfo}
+        </TypographyMutedXS>
       </div>
 
+      {/* MORE INFO */}
       {extraDatapoints && extraDatapoints.length > 0 && (
-        <Accordion type="single" collapsible className="w-full px-4 pt-4">
+        <Accordion type="single" collapsible className="w-full pb-4">
           <AccordionItem value="item-1">
             <AccordionTrigger className="py-1">
-              <TypographyMuted>More info</TypographyMuted>
+              <TypographyMuted>See more info</TypographyMuted>
             </AccordionTrigger>
+
             <AccordionContent className="flex justify-start flex-col py-1">
               {extraDatapoints.map((datapoint) => (
                 <div key={datapoint.label} className="flex gap-2 my-1">
                   <TypographyMuted className="font-bold">
                     {datapoint.label}:
                   </TypographyMuted>
-                  <TypographyMuted className="grow truncate text-left">
+                  <TypographyMuted className="break-words text-left">
                     {datapoint.value}
                   </TypographyMuted>
                 </div>
@@ -88,32 +121,38 @@ const FileDetail: React.FC<FileDetailProps> = ({
         </Accordion>
       )}
 
-      <div className="flex flex-col gap-2 w-full justify-center pb-3 pt-5">
-        <Button className="gap-2 w-full" onClick={navigateToEdit}>
-          <Pencil size={16} />
-          Edit
-        </Button>
-
-        <div className="flex gap-2 w-full justify-center">
-          <Button
-            className="gap-2 w-full"
-            variant="outline"
-            onClick={handleShare}
-          >
-            <Share2 size={16} />
-            Share
+      {/* ACTIONS */}
+      <div className="w-full flex flex-col gap-2">
+        <div className="flex gap-2 items-center *:w-full *:flex-1">
+          <Button onClick={handleCopy} variant="outline">
+            {isCopying ? (
+              <>
+                <Check size={16} className="mr-2" />
+                Copied!
+              </>
+            ) : (
+              <>
+                <Copy size={16} className="mr-2" />
+                Copy
+              </>
+            )}
           </Button>
+
           {link && isValidUrl(link) && (
             <Button
-              className="gap-2 w-full"
-              variant="outline"
               onClick={() => navigateToExternalLink(link)}
+              variant="outline"
             >
-              Go to
-              <ExternalLink size={16} />
+              <Globe size={16} className="mr-2" />
+              Open in {entity?.label}
             </Button>
           )}
         </div>
+
+        <Button onClick={handleShare}>
+          <Share size={16} className="mr-2" />
+          Share
+        </Button>
       </div>
     </div>
   );

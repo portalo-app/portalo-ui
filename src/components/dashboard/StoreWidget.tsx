@@ -1,3 +1,5 @@
+'use client';
+
 import { Card } from '@core/ui/Card';
 import { TypographyH4, TypographyMuted } from '@core/ui/Typography';
 import { motion } from 'framer-motion';
