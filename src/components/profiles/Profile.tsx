@@ -37,8 +37,8 @@ const Profile: FC<ProfileProps> = ({ profileId }) => {
         <ProfileHeader profile={profile!} isProfilePage />
       </div>
 
-      <div className="border border-muted mt-4 rounded-lg">
-        <div className="flex justify-between items-center bg-muted/80 p-4 rounded-t-lg">
+      <div className="border mt-4 rounded-lg">
+        <div className="flex justify-between items-center bg-muted p-4 rounded-t-lg">
           <div className="flex items-center gap-2">
             <Folder />
             <TypographyH3>Your folders</TypographyH3>
@@ -47,7 +47,7 @@ const Profile: FC<ProfileProps> = ({ profileId }) => {
           <CreateButton disabled href="" />
         </div>
 
-        <div className="*:block space-y-2 mt-4 px-4">
+        <div className="*:block space-y-2 px-4 bg-card rounded-b-lg">
           {profile?.folders.map((folder, index) => (
             <Link
               key={index}

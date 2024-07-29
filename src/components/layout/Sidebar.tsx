@@ -11,8 +11,8 @@ interface SidebarProps {}
 
 const Sidebar: React.FC<SidebarProps> = () => {
   return (
-    <aside className="w-72 sticky left-0 top-0  h-screen flex flex-col border-r border-muted">
-      <div className="w-72 bg-muted border-r border-muted-foreground/10 ">
+    <aside className="w-72 sticky left-0 top-0  h-screen flex flex-col border-r border-border">
+      <div className="w-72 bg-muted border-r dark:border-muted-foreground/10 border-border">
         <UserSummary />
       </div>
 
