@@ -37,7 +37,7 @@ const Profile: FC<ProfileProps> = ({ profileId }) => {
         <ProfileHeader profile={profile!} isProfilePage />
       </div>
 
-      <div className="border border-muted mt-4 rounded-lg">
+      <div className="border mt-4 rounded-lg">
         <div className="flex justify-between items-center bg-muted p-4 rounded-t-lg">
           <div className="flex items-center gap-2">
             <Folder />
