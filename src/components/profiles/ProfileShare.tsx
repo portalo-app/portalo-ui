@@ -40,17 +40,23 @@ const ProfileShare: FC = () => {
         </div>
 
         <div className="*:block space-y-2 mt-4 px-4">
-          {profile?.folders.map((folder, index) => (
-            <>
-              <FolderListItem
-                profileName={profile.name}
-                folderTypeId={folder.folderTypeId}
-                profileId={profile.id}
-                readonly
-              />
-              {profile.folders.length - 1 !== index && <Separator />}
-            </>
-          ))}
+          {profile.folders.length > 0 ? (
+            profile?.folders.map((folder, index) => (
+              <>
+                <FolderListItem
+                  profileName={profile.name}
+                  folderTypeId={folder.folderTypeId}
+                  profileId={profile.id}
+                  readonly
+                />
+                {profile.folders.length - 1 !== index && <Separator />}
+              </>
+            ))
+          ) : (
+            <div className="text-center text-muted-foreground p-4 pb-6">
+              No folders found
+            </div>
+          )}
         </div>
       </div>
 

@@ -67,7 +67,7 @@ const FolderShare: FC<{ folderId: string }> = ({ folderId }) => {
             </motion.div>
           ))
         ) : (
-          <div className="flex justify-center items-center h-64">
+          <div className="flex justify-center items-center h-36">
             <TypographyH3>No files in this folder</TypographyH3>
           </div>
         )}
