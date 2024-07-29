@@ -6,7 +6,6 @@ import Root from '@components/layout/Root';
 import Sidebar from '@components/layout/Sidebar';
 import { ALERT_MESSAGE } from '@constants/constants.const';
 import AlertMessage from '@core/components/AlertMessage';
-import { Toaster } from '@core/ui/Toaster';
 
 import {
   MEDIAQUERY_DESKTOP,
@@ -50,8 +49,6 @@ export default function AppLayout({ children }: LayoutProps) {
           </div>
         </main>
       </motion.div>
-
-      <Toaster />
 
       {!isDesktop ? <MobileBottomNavbar /> : null}
     </Root>

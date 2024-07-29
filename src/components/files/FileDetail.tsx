@@ -1,6 +1,7 @@
 'use client';
 
 import FileVariantEntityIcon from '@components/entities/FileVariantEntityIcon';
+import CopyButton from '@core/components/CopyButton';
 import {
   Accordion,
   AccordionContent,
@@ -17,9 +18,9 @@ import {
 import { FileType } from '@models/business/file/fileType';
 import { FileDTO } from '@models/dto/file.dto';
 import { isValidUrl } from '@utils/utils';
-import { Check, Copy, FilePen, Globe, Share } from 'lucide-react';
+import { FilePen, Globe, Share } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 interface FileDetailProps {
   file: FileDTO;
@@ -34,8 +35,6 @@ const FileDetail: React.FC<FileDetailProps> = ({
   navigateToEdit,
   readonly,
 }) => {
-  const [isCopying, setIsCopying] = useState(false);
-
   const { title, entity, qrInfo, link, extraDatapoints } = useMemo(() => {
     return fileType.getDetailData(file.data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,16 +50,6 @@ const FileDetail: React.FC<FileDetailProps> = ({
     navigator?.share({
       text: qrInfo,
     });
-  };
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(qrInfo);
-
-    setIsCopying(true);
-
-    setTimeout(() => {
-      setIsCopying(false);
-    }, 2000);
   };
 
   return (
@@ -128,19 +117,7 @@ const FileDetail: React.FC<FileDetailProps> = ({
       {/* ACTIONS */}
       <div className="w-full flex flex-col gap-2">
         <div className="flex gap-2 items-center *:w-full *:flex-1">
-          <Button onClick={handleCopy} variant="outline">
-            {isCopying ? (
-              <>
-                <Check size={16} className="mr-2" />
-                Copied!
-              </>
-            ) : (
-              <>
-                <Copy size={16} className="mr-2" />
-                Copy
-              </>
-            )}
-          </Button>
+          <CopyButton text={qrInfo} />
 
           {link && isValidUrl(link) && (
             <Button

@@ -1,21 +1,19 @@
-import AnimatedButton from '@core/ui/AnimatedButton';
 import { Button } from '@core/ui/Button';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
-import { TypographyH5 } from '@core/ui/Typography';
-import { useToast } from '@core/ui/use-toast';
+import { TypographyH4 } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
-import { Clipboard, Share, Share2 } from 'lucide-react';
+import Avvvatars from 'avvvatars-react';
+import { Share, Share2 } from 'lucide-react';
 import lzString from 'lz-string';
 import { QRCodeSVG } from 'qrcode.react';
 import { FC } from 'react';
+import CopyButton from './CopyButton';
 
 interface ShareButtonProps {
   profile: ProfileDTO;
 }
 
 const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
-  const { toast } = useToast();
-
   const JSONProfile = JSON.stringify(profile);
   const compressed = lzString.compressToEncodedURIComponent(JSONProfile);
 
@@ -33,12 +31,19 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
         </Button>
       }
     >
-      <div className="text-center space-y-2 grid place-items-center mt-5">
-        <div className="px-4 border-2 border-muted p-2 rounded-xl">
-          <TypographyH5>{profile.name}&apos;s profile</TypographyH5>
+      <div className="text-center space-y-2 grid place-items-center">
+        <div className="flex justify-center items-center rounded w-full">
+          {/* TOOLBAR */}
+          <div className="flex items-center gap-2">
+            <Avvvatars value={profile.name} size={42} />
+
+            <TypographyH4 className="text-left">
+              {profile.name}&apos;s profile
+            </TypographyH4>
+          </div>
         </div>
 
-        <div className="px-4 space-y-2">
+        <div className="px-4 pt-2 space-y-2">
           <QRCodeSVG
             includeMargin
             value={shareUrl}
@@ -63,18 +68,7 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
               Share
             </Button>
           )}
-          <AnimatedButton
-            className="gap-2 w-full"
-            onClick={() => {
-              navigator.clipboard.writeText(shareUrl);
-              toast({
-                title: 'Copied to clipboard',
-                description: 'The share link has been copied to your clipboard',
-              });
-            }}
-          >
-            Copy to Clipboard <Clipboard size={16} />
-          </AnimatedButton>
+          <CopyButton text={shareUrl} />
         </div>
       </div>
     </ResponsiveDialog>
