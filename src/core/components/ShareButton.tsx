@@ -29,7 +29,7 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
       trigger={
         <Button
           variant="outline"
-          className="flex gap-2 border-primary hover:bg-primary/30 text-secondary"
+          className="flex gap-2 border-primary hover:bg-primary/30 text-secondary rounded-xl"
         >
           Share <Share size={16} />
         </Button>
