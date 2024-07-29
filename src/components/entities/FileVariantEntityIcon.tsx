@@ -3,17 +3,19 @@ import Image from 'next/image';
 
 interface FileVariantEntityIconProps {
   entity: FileVariantEntity;
+  size?: number;
 }
 
 const FileVariantEntityIcon: React.FC<FileVariantEntityIconProps> = ({
   entity: { icon, id },
+  size = 35,
 }) => {
   return (
     <Image
       src={`/assets/icons/${icon}`}
       alt={`${id} logo`}
-      width={35}
-      height={35}
+      width={size}
+      height={size}
     />
   );
 };

@@ -264,7 +264,7 @@ const FileForm: React.FC<FileFormProps> = ({
           <Accordion type="single" collapsible>
             <AccordionItem value="item" className="border-0">
               <AccordionTrigger className="text-primary cursor-pointer flex items-center justify-center w-full gap-2">
-                Other fields
+                Add more info
               </AccordionTrigger>
 
               <AccordionContent className="py-2 flex flex-col gap-4">
