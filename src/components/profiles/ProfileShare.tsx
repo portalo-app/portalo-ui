@@ -1,6 +1,7 @@
 'use client';
 
 import FolderListItem from '@components/folders/FolderListItem';
+import PortaloCTA from '@core/components/PortaloCTA';
 import { Separator } from '@core/ui/Separator';
 import { TypographyH3 } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
@@ -52,6 +53,8 @@ const ProfileShare: FC = () => {
           ))}
         </div>
       </div>
+
+      <PortaloCTA />
     </div>
   );
 };
