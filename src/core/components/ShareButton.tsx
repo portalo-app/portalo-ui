@@ -47,12 +47,12 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
           </div>
         </div>
 
-        <div className="px-4 pt-2 space-y-2">
+        <div className="px-4 pt-2 space-y-2 w-full">
           <QRCodeSVG
             includeMargin
             value={shareUrl}
-            size={256}
-            className="rounded-3xl"
+            size={512}
+            className="w-full h-fit rounded-3xl"
           />
         </div>
 
