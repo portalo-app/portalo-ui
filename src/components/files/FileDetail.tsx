@@ -55,6 +55,7 @@ const FileDetail: React.FC<FileDetailProps> = ({
     navigator.clipboard.writeText(qrInfo);
 
     setIsCopying(true);
+
     setTimeout(() => {
       setIsCopying(false);
     }, 2000);
