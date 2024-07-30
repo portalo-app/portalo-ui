@@ -37,7 +37,7 @@ const MobileBottomNavbar = () => {
       id: 'profiles',
       name: 'Profiles',
       icon: User,
-      url: ROUTES.APP_CREATE_PROFILE,
+      url: ROUTES.APP_PROFILE,
     },
     {
       id: 'cta',
