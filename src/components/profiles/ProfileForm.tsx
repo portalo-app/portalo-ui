@@ -16,6 +16,7 @@ import { ProfileDTO } from '@models/dto/profile.dto';
 import { UserRound } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import NewProfileInformation from './NewProfileInformation';
 
 interface ProfileFormProps {
   action: 'CREATE' | 'EDIT';
@@ -76,20 +77,29 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
       <Separator />
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
               <FormItem className="mt-6">
-                <FormLabel>{nameLabel}</FormLabel>
+                <FormLabel className="flex items-center gap-1">
+                  <UserRound size={16} />
+                  {nameLabel}
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="profile..." {...field} />
+                  <Input
+                    placeholder="profile..."
+                    className="rounded-xl"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
+          <NewProfileInformation />
 
           <AnimatedButton type="submit" className="!mt-6 w-full">
             {actionLabel}
