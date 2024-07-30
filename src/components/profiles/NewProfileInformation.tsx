@@ -1,4 +1,5 @@
 import Icon, { IconType } from '@core/ui/Icon';
+import { Separator } from '@core/ui/Separator';
 import { TypographyMutedXS, TypographyXS } from '@core/ui/Typography';
 import { CircleHelp, Notebook } from 'lucide-react';
 import { FC } from 'react';
@@ -11,19 +12,22 @@ const NewProfileInformation: FC<NewProfileInformationProps> = () => {
   const profileIncludesText =
     'Your new profile will include the following folders by default:';
 
+  const socialDescription = 'Store your social networks';
+  const addressDescription = 'Store your bank and crypto addresses';
+
   const DefaultTemplateFolders: {
     name: string;
-    files: number;
+    description: string;
     icon: IconType;
   }[] = [
     {
       name: 'Social',
-      files: 0,
+      description: socialDescription,
       icon: 'MessagesSquare',
     },
     {
       name: 'Address',
-      files: 0,
+      description: addressDescription,
       icon: 'Wallet',
     },
   ];
@@ -35,28 +39,31 @@ const NewProfileInformation: FC<NewProfileInformationProps> = () => {
         <TypographyMutedXS>{questionText}</TypographyMutedXS>
       </div>
 
-      <div className="border p-4 rounded-2xl">
+      <Separator />
+
+      <div className="mt-2">
         <div className="flex items-center mb-4 gap-2">
-          <Notebook size={34} className="" />
+          <Notebook size={30} className="text-muted-foreground" />
           <div>
-            <TypographyXS className="">Folders</TypographyXS>
-            <TypographyMutedXS className="text-muted-foreground">
-              Template
-            </TypographyMutedXS>
+            <TypographyMutedXS>Folders</TypographyMutedXS>
+            <TypographyMutedXS>Template</TypographyMutedXS>
           </div>
         </div>
 
-        <TypographyMutedXS className="flex items-center gap-1 pl-2">
+        <TypographyMutedXS className="flex items-center gap-1">
           {profileIncludesText}
         </TypographyMutedXS>
-        <div className="space-y-2 mt-2">
-          {DefaultTemplateFolders.map(({ name, files, icon }, index) => (
-            <DefaultTemplateFolderCard
-              name={name}
-              files={files}
-              icon={icon}
-              key={index}
-            />
+        <div className="mt-2">
+          {DefaultTemplateFolders.map(({ name, icon, description }, index) => (
+            <>
+              <DefaultTemplateFolderCard
+                name={name}
+                description={description}
+                icon={icon}
+                key={index}
+              />
+              {DefaultTemplateFolders.length - 1 !== index && <Separator />}
+            </>
           ))}
         </div>
       </div>
@@ -66,22 +73,22 @@ const NewProfileInformation: FC<NewProfileInformationProps> = () => {
 
 interface DefaultTemplateFolderCardProps {
   name: string;
-  files: number;
+  description: string;
   icon: IconType;
 }
 
 const DefaultTemplateFolderCard: React.FC<DefaultTemplateFolderCardProps> = ({
   name,
-  files,
+  description,
   icon,
 }) => {
   return (
-    <div className="border p-2  rounded-2xl">
+    <div className="py-2 rounded-2xl">
       <div className="flex gap-2 items-center">
         <Icon name={icon} size={26} />
         <div className="flex flex-col">
           <TypographyXS>{name}</TypographyXS>
-          <TypographyMutedXS>{files} files</TypographyMutedXS>
+          <TypographyMutedXS>{description}</TypographyMutedXS>
         </div>
       </div>
     </div>
