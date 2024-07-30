@@ -87,7 +87,7 @@ module.exports = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'page-transition': 'page-transition 0.8s ease-in-out',
+        'page-transition': 'page-transition 0.2s ease-in-out',
       },
     },
   },
