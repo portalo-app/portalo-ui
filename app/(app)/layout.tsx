@@ -12,7 +12,6 @@ import {
   useMediaQuery,
 } from '@hooks/general/useMediaQuery';
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
-import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 
 interface LayoutProps {
@@ -33,12 +32,7 @@ export default function AppLayout({ children }: LayoutProps) {
     <Root>
       {ALERT_MESSAGE && <AlertMessage text={ALERT_MESSAGE} />}
 
-      <motion.div
-        className="flex w-full h-screen"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.2 }}
-      >
+      <div className="flex w-full h-screen">
         {isDesktop && <Sidebar />}
 
         <main className="flex flex-col w-full h-screen overflow-auto">
@@ -48,7 +42,7 @@ export default function AppLayout({ children }: LayoutProps) {
             {children}
           </div>
         </main>
-      </motion.div>
+      </div>
 
       {!isDesktop ? <MobileBottomNavbar /> : null}
     </Root>
