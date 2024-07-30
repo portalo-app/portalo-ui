@@ -1,4 +1,3 @@
-import AboutItems from '@components/about/AboutItems';
 import AppLogo from '@components/layout/AppLogo';
 import CreatedByNeoPower from '@core/components/CreatedByNeoPower';
 import { Separator } from '@core/ui/Separator';
@@ -7,7 +6,7 @@ import { FC } from 'react';
 
 const About: FC = () => {
   return (
-    <div>
+    <div className="flex flex-col justify-between h-[80vh]">
       <div className="flex flex-col items-center justify-center text-center">
         <AppLogo width={200} height={30} />
 
@@ -16,13 +15,15 @@ const About: FC = () => {
         </TypographyMuted>
       </div>
 
-      <Separator className="mt-4" />
+      {/* <Separator className="mt-4" />
 
-      <AboutItems />
+      <AboutItems /> */}
 
-      <Separator className="mb-4" />
+      <div>
+        <Separator className="mb-4" />
 
-      <CreatedByNeoPower />
+        <CreatedByNeoPower />
+      </div>
     </div>
   );
 };
