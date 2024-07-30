@@ -71,6 +71,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
           <UserRound size={22} />
           <TypographyH3 className="!p-0">Create Profile</TypographyH3>
         </div>
+
         <TypographyMuted className="mt-2">{description}</TypographyMuted>
       </div>
 
@@ -87,9 +88,10 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
                   <UserRound size={16} />
                   {nameLabel}
                 </FormLabel>
+
                 <FormControl>
                   <Input
-                    placeholder="profile..."
+                    placeholder="John Doe"
                     className="rounded-xl"
                     {...field}
                   />
