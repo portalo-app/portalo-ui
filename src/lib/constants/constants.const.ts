@@ -1,5 +1,6 @@
-export const APP_TITLE = 'Portalo | Store and share your data';
-export const APP_SLOGAN = 'Take your private data everywhere';
+export const APP_TITLE = 'Portalo - Store your files & Organize your life';
+export const APP_SLOGAN =
+  'All-in-one solution to securely store, organize and share your personal information';
 export const CONTACT_MAIL = 'contact@neopower.digital';
 export const ALERT_MESSAGE = 'This is an Alpha version';
 
