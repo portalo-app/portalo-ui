@@ -1,7 +1,7 @@
-import ProfilesPage from '@components/profiles/ProfilesPage';
+import ProfileWidget from '@components/profiles/ProfileWidget';
 
 const Page = () => {
-  return <ProfilesPage />;
+  return <ProfileWidget />;
 };
 
 export default Page;

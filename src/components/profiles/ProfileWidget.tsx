@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import { useRecoilValue } from 'recoil';
 import ProfileItem from './ProfileItem';
 
-const ProfilesPage = () => {
+const ProfileWidget = () => {
   const router = useRouter();
 
   const profiles = useRecoilValue(profilesState);
@@ -45,5 +45,4 @@ const ProfilesPage = () => {
     />
   );
 };
-
-export default ProfilesPage;
+export default ProfileWidget;

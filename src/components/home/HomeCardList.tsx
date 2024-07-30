@@ -1,7 +1,7 @@
 'use client';
 
 import FolderListItem from '@components/folders/FolderListItem';
-import ProfileItem from '@components/profiles/ProfileItem';
+import ProfileWidget from '@components/profiles/ProfileWidget';
 import { ROUTES } from '@constants/routes.const';
 import HomeCard from '@core/components/HomeCard';
 import State from '@core/components/State';
@@ -9,7 +9,7 @@ import useProfile from '@hooks/profiles/useProfile';
 import { ShortcutDTO } from '@models/dto/shortcut.dto';
 import { profilesState } from '@states/profiles.atom';
 import { shortcutsState } from '@states/shortcuts.atom';
-import { Layers2, UserRound } from 'lucide-react';
+import { Layers2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useRecoilValue } from 'recoil';
 
@@ -22,9 +22,6 @@ const HomeCardsList = () => {
 
   const { getProfileById } = useProfile();
 
-  const profilesTitle = 'Profiles';
-  const emptyProfilesMessage = 'Create a Profile to get started!';
-
   const shortcutsTitle = 'Shortcuts';
   const emptyShortcutsMessage = 'Your folder shortcuts will be displayed here';
 
@@ -33,29 +30,7 @@ const HomeCardsList = () => {
 
   return (
     <>
-      <HomeCard
-        title={profilesTitle}
-        icon={<UserRound />}
-        href={ROUTES.APP_CREATE_PROFILE}
-        hasData={hasProfiles}
-        listToShow={
-          <>
-            {profiles.map((profile, index) => (
-              <ProfileItem profile={profile} key={index} />
-            ))}
-          </>
-        }
-        stateComponent={
-          <State
-            type="empty"
-            label={emptyProfilesMessage}
-            action={{
-              label: '+ Create Profile',
-              onClick: () => router.push(ROUTES.APP_CREATE_PROFILE),
-            }}
-          />
-        }
-      />
+      <ProfileWidget />
 
       <HomeCard
         title={shortcutsTitle}
