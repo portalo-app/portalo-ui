@@ -33,7 +33,7 @@
   "shortcuts": [
     {
       "name": "Create Profile",
-      "url": "/profile/new",
+      "url": "/profiles/new",
       "description": "Create a profile",
       "icons": [
         {
