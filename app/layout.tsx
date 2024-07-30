@@ -8,7 +8,7 @@ import Script from 'next/script';
 export const metadata: Metadata = {
   title: APP_TITLE,
   description: APP_SLOGAN,
-  manifest: '/manifest.json',
+  manifest: 'app/manifest.json',
   category: 'website',
   generator: 'Next.js',
 };
