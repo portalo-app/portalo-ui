@@ -1,6 +1,6 @@
 import { Button } from '@core/ui/Button';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
-import { TypographyH4 } from '@core/ui/Typography';
+import { TypographyH4, TypographyP } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import Avvvatars from 'avvvatars-react';
 import { Share, Share2 } from 'lucide-react';
@@ -29,9 +29,10 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
       trigger={
         <Button
           variant="outline"
-          className="flex gap-2 border-primary hover:bg-primary/30 text-secondary rounded-xl"
+          className="flex gap-2 border-primary hover:bg-primary hover:text-foreground text-primary rounded-xl"
         >
-          Share <Share size={16} />
+          <TypographyP className="hidden md:block">Share</TypographyP>
+          <Share size={16} />
         </Button>
       }
     >

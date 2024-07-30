@@ -24,10 +24,11 @@ const HomeCard: React.FC<HomeCardProps> = ({
     <div className="flex justify-between items-center py-2 px-4 bg-muted rounded-t-md">
       <div className="flex items-center gap-2 text-muted-foreground">
         {icon}
+
         <TypographyH5>{title}</TypographyH5>
       </div>
 
-      {hasData && <CreateButton href={href} title="Add" />}
+      {hasData && href && <CreateButton href={href} title="Add" />}
     </div>
 
     {hasData ? (
