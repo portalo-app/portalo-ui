@@ -3,7 +3,7 @@
 import { ROUTES } from '@constants/routes.const';
 import { TypographyXS } from '@core/ui/Typography';
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
-import { Bell, Home, Menu, Plus, User } from 'lucide-react';
+import { Bell, Home, Menu, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -37,14 +37,14 @@ const MobileBottomNavbar = () => {
       id: 'profiles',
       name: 'Profiles',
       icon: User,
-      url: ROUTES.APP_CREATE_PROFILE,
+      url: ROUTES.APP_PROFILE,
     },
     {
       id: 'cta',
       name: 'CTA',
       icon: Portalo,
       isCTA: true,
-      url: ROUTES.APP_CREATE_PROFILE,
+      url: ROUTES.APP,
     },
     {
       id: 'notification',
@@ -70,7 +70,7 @@ const MobileBottomNavbar = () => {
               href={url}
               className="relative bottom-2 grid h-14 w-14 place-items-center rounded-full bg-primary"
             >
-              <Plus size={40} />
+              <Icon />
             </Link>
           ) : (
             <Link

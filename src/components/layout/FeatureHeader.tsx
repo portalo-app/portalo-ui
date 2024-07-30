@@ -19,11 +19,16 @@ const FeatureHeader = ({ title }: FeatureHeaderProps) => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ ease: 'easeInOut', duration: 0.5 }}
+      transition={{ ease: 'easeInOut', duration: 0.2 }}
       className="flex items-center text-left md:h-[68px]"
     >
       {!isHome && (
-        <Button variant="ghost" size="icon" onClick={() => router.back()}>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => router.back()}
+          className="hover:bg-transparent"
+        >
           <ArrowLeft />
         </Button>
       )}
