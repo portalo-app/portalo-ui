@@ -9,6 +9,7 @@ export interface FileVariantEntity {
   id: string;
   color: string;
   icon: string;
+  iconIsUrl?: boolean;
   label: string;
   shareUrl: string;
 }

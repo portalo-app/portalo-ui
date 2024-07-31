@@ -24,7 +24,7 @@ export class BookmarkFileType implements FileType {
           },
           {
             type: 'max',
-            value: 100,
+            value: 2000,
           },
           {
             type: 'regex',

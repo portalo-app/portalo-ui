@@ -5,6 +5,7 @@ const withMDX = require('@next/mdx')();
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   reactStrictMode: true,
+  images: { domains: ['img.icons8.com'] },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
