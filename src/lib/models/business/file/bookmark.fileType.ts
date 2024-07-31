@@ -72,7 +72,7 @@ export class BookmarkFileType implements FileType {
   }
 
   getKeyData(fileData: FileDataDTO): { primary: string; secondary: string } {
-    return { primary: fileData.name, secondary: fileData.address };
+    return { primary: fileData.title, secondary: '' };
   }
 
   getDetailData(fileData: FileDataDTO): FileDetail {
@@ -81,20 +81,11 @@ export class BookmarkFileType implements FileType {
       ?.availableEntities.find((entity) => entity.id === fileData.entity);
 
     return {
-      title: fileData.name,
+      title: fileData.title,
       entity,
-      qrInfo: fileData.address,
-      link: entity?.shareUrl ? entity.shareUrl + fileData.address : undefined,
-      extraDatapoints: [
-        {
-          label: 'Alias',
-          value: fileData.alias ?? '-',
-        },
-        {
-          label: 'Notes',
-          value: fileData.notes ?? '-',
-        },
-      ],
+      qrInfo: fileData.url,
+      link: fileData.url,
+      extraDatapoints: [],
     };
   }
 }
