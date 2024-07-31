@@ -11,4 +11,5 @@ export interface FolderType {
 export enum FolderTypeEnum {
   Social = 'social',
   Address = 'address',
+  Bookmark = 'bookmark',
 }
