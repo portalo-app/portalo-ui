@@ -11,7 +11,7 @@ export class SocialFolderType implements FolderType {
 
   constructor() {
     this.id = FolderTypeEnum.Social;
-    this.label = 'Social';
+    this.label = 'Socials';
     this.fileType = new SocialFileType();
     this.icon = 'MessagesSquare';
   }

@@ -35,17 +35,17 @@ export const DEFAULT_FOLDERS_INFORMATION: {
   icon: IconType;
 }[] = [
   {
-    name: 'Social',
+    name: 'Socials',
     description: 'Store your social networks',
     icon: 'MessagesSquare',
   },
   {
-    name: 'Address',
+    name: 'Addresses',
     description: 'Store your bank and crypto addresses',
     icon: 'Wallet',
   },
   {
-    name: 'Bookmark',
+    name: 'Bookmarks',
     description: 'Store your favorite websites',
     icon: 'Link',
   },
