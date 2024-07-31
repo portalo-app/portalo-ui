@@ -156,35 +156,37 @@ const FileForm: React.FC<FileFormProps> = ({
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-4 mt-2"
       >
-        <FormField
-          control={form.control}
-          name="variant"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Choose a variant</FormLabel>
-              <Tabs
-                defaultValue={field.value}
-                onValueChange={(value: string) => handleVariantChange(value)}
-              >
-                <FormControl>
-                  <TabsList className="w-full border border-muted rounded-full h-10 px-1 bg-muted/25">
-                    {folderType.fileType.variants.map((variant) => (
-                      <TabsTrigger
-                        key={variant.id}
-                        value={variant.id}
-                        className="flex-1 rounded-full"
-                      >
-                        {variant.label}
-                      </TabsTrigger>
-                    ))}
-                  </TabsList>
-                </FormControl>
+        {folderType.fileType.variants.length > 1 && (
+          <FormField
+            control={form.control}
+            name="variant"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Choose a variant</FormLabel>
+                <Tabs
+                  defaultValue={field.value}
+                  onValueChange={(value: string) => handleVariantChange(value)}
+                >
+                  <FormControl>
+                    <TabsList className="w-full border border-muted rounded-full h-10 px-1 bg-muted/25">
+                      {folderType.fileType.variants.map((variant) => (
+                        <TabsTrigger
+                          key={variant.id}
+                          value={variant.id}
+                          className="flex-1 rounded-full"
+                        >
+                          {variant.label}
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
+                  </FormControl>
 
-                <FormMessage />
-              </Tabs>
-            </FormItem>
-          )}
-        />
+                  <FormMessage />
+                </Tabs>
+              </FormItem>
+            )}
+          />
+        )}
 
         <FormField
           control={form.control}
