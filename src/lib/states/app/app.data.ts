@@ -45,7 +45,7 @@ export const DEFAULT_FOLDERS_INFORMATION: {
     icon: 'Wallet',
   },
   {
-    name: 'Bookmarks',
+    name: 'Bookmark',
     description: 'Store your favorite websites',
     icon: 'Link',
   },
