@@ -11,7 +11,7 @@ export class AddressFolderType implements FolderType {
 
   constructor() {
     this.id = FolderTypeEnum.Address;
-    this.label = 'Address';
+    this.label = 'Addresses';
     this.fileType = new AddressFileType();
     this.icon = 'Wallet';
   }

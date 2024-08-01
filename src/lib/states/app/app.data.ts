@@ -1,4 +1,6 @@
+import { IconType } from '@core/ui/Icon';
 import { AddressFolderType } from '@models/business/folder/address.folderType';
+import { BookmarkFolderType } from '@models/business/folder/bookmarks.folderType';
 import { Folder } from '@models/business/folder/folder';
 import { FolderTypeEnum } from '@models/business/folder/folderType';
 import { SocialFolderType } from '@models/business/folder/social.folderType';
@@ -15,7 +17,36 @@ const EMPTY_ADDRESS_FOLDER: Folder = {
   files: [],
 };
 
+const EMPTY_BOOKMARK_FOLDER: Folder = {
+  id: FolderTypeEnum.Bookmark,
+  folderType: new BookmarkFolderType(),
+  files: [],
+};
+
 export const DEFAULT_FOLDERS: Folder[] = [
   EMPTY_SOCIAL_FOLDER,
   EMPTY_ADDRESS_FOLDER,
+  EMPTY_BOOKMARK_FOLDER,
+] as const;
+
+export const DEFAULT_FOLDERS_INFORMATION: {
+  name: string;
+  description: string;
+  icon: IconType;
+}[] = [
+  {
+    name: 'Socials',
+    description: 'Store your social networks',
+    icon: 'MessagesSquare',
+  },
+  {
+    name: 'Addresses',
+    description: 'Store your bank and crypto addresses',
+    icon: 'Wallet',
+  },
+  {
+    name: 'Bookmarks',
+    description: 'Store your favorite websites',
+    icon: 'Link',
+  },
 ];
