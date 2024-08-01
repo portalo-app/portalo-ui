@@ -11,6 +11,12 @@ import {
 import { Button } from '@core/ui/Button';
 import { Separator } from '@core/ui/Separator';
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@core/ui/Tooltip';
+import {
   TypographyH4,
   TypographyMuted,
   TypographyMutedXS,
@@ -77,7 +83,7 @@ const FileDetail: React.FC<FileDetailProps> = ({
       <Separator />
 
       {/* QR CODE */}
-      <div className="py-6 space-y-2 w-full">
+      <div className="py-6 space-y-2 w-full flex flex-col items-center">
         <QRCodeSVG
           includeMargin
           value={qrInfo}
@@ -85,9 +91,18 @@ const FileDetail: React.FC<FileDetailProps> = ({
           className="rounded-md mx-auto border-2"
         />
 
-        <TypographyMutedXS className="text-center break-words">
-          {qrInfo}
-        </TypographyMutedXS>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger className="w-5/6 flex justify-center">
+              <TypographyMutedXS className="text-nowrap text-center overflow-hidden text-ellipsis max-w-[50ch]">
+                {qrInfo}
+              </TypographyMutedXS>
+            </TooltipTrigger>
+            <TooltipContent className="text-wrap max-w-[100ch]">
+              {qrInfo}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       {/* MORE INFO */}
