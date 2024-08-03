@@ -44,7 +44,7 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
               </Button>
             </TooltipTrigger>
             <TooltipContent className="text-wrap max-w-[100ch]">
-              esto es un tooltip
+              Share Profile
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
