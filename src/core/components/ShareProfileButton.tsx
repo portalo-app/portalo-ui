@@ -1,9 +1,15 @@
 import { Button } from '@core/ui/Button';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
-import { TypographyH4, TypographyP } from '@core/ui/Typography';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@core/ui/Tooltip';
+import { TypographyH4 } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import Avvvatars from 'avvvatars-react';
-import { Share, Share2 } from 'lucide-react';
+import { Share2 } from 'lucide-react';
 import lzString from 'lz-string';
 import { QRCodeSVG } from 'qrcode.react';
 import { FC } from 'react';
@@ -27,13 +33,21 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
     <ResponsiveDialog
       title="Share Profile"
       trigger={
-        <Button
-          variant="outline"
-          className="flex gap-2 border-primary hover:bg-primary hover:text-foreground text-primary rounded-xl"
-        >
-          <TypographyP className="hidden md:block">Share</TypographyP>
-          <Share size={16} />
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger className="w-full">
+              <Button
+                variant="outline"
+                className="flex gap-2 rounded-xl w-full"
+              >
+                <Share2 size={20} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent className="text-wrap max-w-[100ch]">
+              Share Profile
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       }
     >
       <div className="text-center space-y-2 grid place-items-center">

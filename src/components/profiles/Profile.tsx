@@ -41,7 +41,7 @@ const Profile: FC<ProfileProps> = ({ profileId }) => {
         <div className="flex justify-between items-center bg-muted p-4 rounded-t-lg">
           <div className="flex items-center gap-2">
             <Folder />
-            <TypographyH3>Your folders</TypographyH3>
+            <TypographyH3>Your folder</TypographyH3>
           </div>
 
           <CreateButton disabled href="" />
