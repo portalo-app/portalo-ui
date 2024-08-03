@@ -1,5 +1,6 @@
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
 import { Profile } from '@models/business/profile';
+import { User } from '@models/business/user';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { ShortcutDTO } from '@models/dto/shortcut.dto';
 import { mapperProfileToProfileDTO } from '@models/mappers/profileMapper';
@@ -11,6 +12,7 @@ type CreateProfile = (name: string) => void;
 type DeleteProfile = (id: string) => void;
 type EditProfile = (id: string, name: string) => void;
 type GetProfileById = (id: string) => ProfileDTO | undefined;
+type GetProfilesByUser = (user: User) => ProfileDTO[] | undefined;
 
 /**
  * Custom hook to manage profiles.
@@ -79,7 +81,17 @@ const useProfile = () => {
   const getProfileById: GetProfileById = (id: string) =>
     profiles.find((profile) => profile.id === id);
 
-  return { createProfile, deleteProfile, editProfile, getProfileById };
+  const getProfilesByUser: GetProfilesByUser = (user: User): ProfileDTO[] => {
+    return profiles.filter((profile) => profile.id === user.id);
+  };
+
+  return {
+    createProfile,
+    deleteProfile,
+    editProfile,
+    getProfileById,
+    getProfilesByUser,
+  };
 };
 
 export default useProfile;
