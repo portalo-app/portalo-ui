@@ -11,7 +11,7 @@ import {
 } from '@core/ui/Tooltip';
 import { TypographyH3, TypographyP } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
-import { CloudUpload, Folder } from 'lucide-react';
+import { CloudUpload, Folder, Info } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
 import ConnectWallet from './ConnectWallet';
@@ -50,35 +50,43 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
       }
     >
       <div className="border mt-4 rounded-lg">
-        <div className="flex justify-between items-center bg-muted p-4 rounded-t-lg">
+        <div className="flex items-center bg-muted p-4 rounded-t-lg">
           <div className="flex items-center gap-2">
             <Folder />
             <TypographyH3>Folders you will save</TypographyH3>
           </div>
         </div>
-        <div className="*:block space-y-2 px-4 bg-card rounded-b-lg">
+        <div className="space-y-2 px-4 bg-card rounded-b-lg">
           {hasFiles ? (
-            filteredProfiles.map((folder, index) => (
-              <Link
-                key={index}
-                href={`${ROUTES.APP_PROFILE}/${
-                  profile.id
-                }/${ROUTES.APP_FOLDER}/${folder.id}`}
-              >
-                <FolderListItem
-                  profileName={profile.name}
-                  folderTypeId={folder.folderTypeId}
-                  profileId={profile.id}
-                />
-                {profile.folders.length - 1 !== index && <Separator />}
-              </Link>
-            ))
+            <>
+              {filteredProfiles.map((folder, index) => (
+                <Link
+                  key={index}
+                  href={`${ROUTES.APP_PROFILE}/${profile.id}/${ROUTES.APP_FOLDER}/${folder.id}`}
+                >
+                  <FolderListItem
+                    profileName={profile.name}
+                    folderTypeId={folder.folderTypeId}
+                    profileId={profile.id}
+                  />
+                  {profile.folders.length - 1 !== index && <Separator />}
+                </Link>
+                /* TO DO: Add how many files have each folder */
+              ))}
+              <div className="flex justify-center py-4">
+                <ConnectWallet />
+              </div>
+            </>
           ) : (
-            <TypographyP>This profile doesnt have files</TypographyP>
+            <div className="flex justify-center items-center gap-4">
+              <Info />
+              <TypographyP className="pb-2 mb-4">
+                This profile doesn&apos;t have files
+              </TypographyP>
+            </div>
           )}
         </div>
       </div>
-      <ConnectWallet />
     </ResponsiveDialog>
   );
 };
