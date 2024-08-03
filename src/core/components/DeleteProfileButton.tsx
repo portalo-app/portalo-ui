@@ -39,7 +39,7 @@ const DeleteProfileButton: FC<DeleteProfileButtonProps> = ({ profile }) => {
             </AnimatedButton>
           </TooltipTrigger>
           <TooltipContent className="text-wrap max-w-[100ch]">
-            esto es un tooltip
+            Delete Profile
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

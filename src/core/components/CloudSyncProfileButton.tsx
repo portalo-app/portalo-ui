@@ -42,8 +42,9 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
                 <CloudUpload size={20} />
               </Button>
             </TooltipTrigger>
+
             <TooltipContent className="text-wrap max-w-[100ch]">
-              esto es un tooltip
+              Upload Profile
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
