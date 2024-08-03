@@ -10,7 +10,7 @@ import {
   TypographyMuted,
 } from '@core/ui/Typography';
 import useProfile from '@hooks/profiles/useProfile';
-import { Info, KeyRound, Trash2, Users } from 'lucide-react'; // Assuming you have installed the lucide package
+import { Info, KeyRound, Trash2, Users } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import ProfileHeader from './ProfileHeader';
 
