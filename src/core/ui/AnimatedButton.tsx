@@ -11,7 +11,11 @@ const AnimatedButton: React.FC<AnimatedButtonProps> = ({
   ...props
 }) => {
   return (
-    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+    <motion.div
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className="w-full"
+    >
       <Button {...props}>{children}</Button>
     </motion.div>
   );

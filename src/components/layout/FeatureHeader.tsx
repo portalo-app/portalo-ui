@@ -32,7 +32,6 @@ const FeatureHeader = ({ title }: FeatureHeaderProps) => {
           <ArrowLeft />
         </Button>
       )}
-
       <TypographyLarge className={cn(isHome && 'p-2')}>{title}</TypographyLarge>
     </motion.div>
   );

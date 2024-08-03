@@ -3,20 +3,15 @@ import { Card } from '@core/ui/Card';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@core/ui/Tab';
 import {
-  TypographyH4,
-  TypographyMutedXS,
-  TypographyP,
-} from '@core/ui/Typography';
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@core/ui/Tooltip';
+import { TypographyH4, TypographyMutedXS } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import Avvvatars from 'avvvatars-react';
-import {
-  Cloud,
-  HardDrive,
-  Share,
-  Share2,
-  TriangleAlert,
-  Users,
-} from 'lucide-react';
+import { Cloud, HardDrive, Share2, TriangleAlert, Users } from 'lucide-react';
 import lzString from 'lz-string';
 import { QRCodeSVG } from 'qrcode.react';
 import { FC, useState } from 'react';
@@ -70,13 +65,21 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
     <ResponsiveDialog
       title=""
       trigger={
-        <Button
-          variant="outline"
-          className="flex gap-2 border-primary hover:bg-primary hover:text-foreground text-primary rounded-xl"
-        >
-          <TypographyP className="hidden md:block">Share</TypographyP>
-          <Share size={16} />
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger className="w-full">
+              <Button
+                variant="outline"
+                className="flex gap-2 rounded-xl w-full"
+              >
+                <Share2 size={20} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent className="text-wrap max-w-[100ch]">
+              Share Profile
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       }
     >
       <div className="text-center space-y-2 grid place-items-center">
