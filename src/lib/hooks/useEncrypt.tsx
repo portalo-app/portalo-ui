@@ -1,3 +1,4 @@
+'use client';
 import {
   Cipher,
   Decipher,
@@ -5,6 +6,7 @@ import {
   createDecipheriv,
   randomBytes,
 } from 'crypto';
+import { ethers } from 'ethers';
 import * as forge from 'node-forge';
 
 type SymmetricEncryptedData = {
@@ -13,14 +15,14 @@ type SymmetricEncryptedData = {
 };
 
 type EncryptHook = {
-  encryptAsymmetric: (
-    message: string,
-    publicKey: forge.pki.rsa.PublicKey
-  ) => string;
+  // encryptAsymmetric: (
+  //   message: string,
+  //   publicKey: forge.pki.rsa.PublicKey
+  // ) => null;
   decryptAsymmetric: (
     encryptedMessage: string,
     privateKey: forge.pki.rsa.PrivateKey
-  ) => string;
+  ) => Promise<string | null>;
   encryptSymmetric: (message: string) => SymmetricEncryptedData;
   decryptSymmetric: (encryptedMessage: string, ivHex: string) => string;
 };
@@ -31,22 +33,33 @@ const useEncrypt = (): EncryptHook => {
   const iv = randomBytes(16); // Vector de inicialización
 
   // Asymmetric Encryption
-  const encryptAsymmetric = (
-    message: string,
-    publicKey: forge.pki.rsa.PublicKey
-  ): string => {
-    const encryptedMessage = publicKey.encrypt(message, 'RSA-OAEP');
-    return forge.util.encode64(encryptedMessage);
-  };
+  // const encryptAsymmetric = () => {};
 
-  // Asymmetric Decryption
-  const decryptAsymmetric = (
-    encryptedMessage: string,
-    privateKey: forge.pki.rsa.PrivateKey
-  ): string => {
-    const decodedMessage = forge.util.decode64(encryptedMessage);
-    const decryptedMessage = privateKey.decrypt(decodedMessage, 'RSA-OAEP');
-    return decryptedMessage;
+  const decryptAsymmetric = async (
+    encryptedMessage: string
+  ): Promise<string | null> => {
+    if ((window as any).ethereum) {
+      const provider = new ethers.providers.Web3Provider(
+        (window as any).ethereum
+      );
+      // const accounts = await provider.send('eth_requestAccounts', []);
+      const signer = provider.getSigner();
+      const address = await signer.getAddress();
+
+      const decodedMessage = forge.util.decode64(encryptedMessage);
+
+      try {
+        const decryptedMessage = await provider.send('eth_decrypt', [
+          decodedMessage,
+          address,
+        ]);
+        return decryptedMessage;
+      } catch (error) {
+        console.error('Error al desencriptar el mensaje:', error);
+        return null;
+      }
+    }
+    return null;
   };
 
   // Symmetric Encryption
@@ -73,7 +86,7 @@ const useEncrypt = (): EncryptHook => {
   };
 
   return {
-    encryptAsymmetric,
+    // encryptAsymmetric,
     decryptAsymmetric,
     encryptSymmetric,
     decryptSymmetric,
