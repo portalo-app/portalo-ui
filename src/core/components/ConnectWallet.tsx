@@ -1,6 +1,7 @@
 import { Button } from '@core/ui/Button';
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
+import StoreProfileButton from './StoreProfileButton';
 
 declare global {
   interface Window {
@@ -8,7 +9,11 @@ declare global {
   }
 }
 
-const ConnectWallet: React.FC = () => {
+interface ConnectWalletProps {
+  onConnect: () => void;
+}
+
+const ConnectWallet: React.FC<ConnectWalletProps> = ({ onConnect }) => {
   const [account, setAccount] = useState<string | null>(null);
 
   const connectToMetaMask = async () => {
@@ -54,6 +59,7 @@ const ConnectWallet: React.FC = () => {
           }
         }
       }
+      onConnect();
     } else {
       alert('MetaMask is not installed');
     }
@@ -61,18 +67,15 @@ const ConnectWallet: React.FC = () => {
 
   useEffect(() => {
     if (account) {
+      onConnect();
     }
-  }, [account]);
-
-  const disconnectWallet = () => {
-    setAccount(null);
-  };
+  }, [account, onConnect]);
 
   return (
     <div className="p-4">
       {account ? (
         <div className="flex justify-center items-center gap-4">
-          <Button onClick={disconnectWallet}>Disconnect</Button>
+          <StoreProfileButton />
         </div>
       ) : (
         <Button onClick={connectToMetaMask}>Connect to MetaMask</Button>
