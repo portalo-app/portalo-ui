@@ -9,11 +9,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@core/ui/Tooltip';
-import { TypographyH3 } from '@core/ui/Typography';
+import { TypographyH3, TypographyP } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { CloudUpload, Folder } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
+import ConnectWallet from './ConnectWallet';
 
 interface CloudSyncProfileButtonProps {
   profile: ProfileDTO;
@@ -22,6 +23,11 @@ interface CloudSyncProfileButtonProps {
 const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
   profile,
 }) => {
+  const filteredProfiles = profile?.folders.filter(
+    (folder) => folder.files.length > 0
+  );
+  const hasFiles = filteredProfiles.length > 0;
+
   return (
     <ResponsiveDialog
       title="Secure Profile Storage"
@@ -51,23 +57,28 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
           </div>
         </div>
         <div className="*:block space-y-2 px-4 bg-card rounded-b-lg">
-          {profile?.folders.map((folder, index) => (
-            <Link
-              key={index}
-              href={`${ROUTES.APP_PROFILE}/${
-                profile.id
-              }/${ROUTES.APP_FOLDER}/${folder.id}`}
-            >
-              <FolderListItem
-                profileName={profile.name}
-                folderTypeId={folder.folderTypeId}
-                profileId={profile.id}
-              />
-              {profile.folders.length - 1 !== index && <Separator />}
-            </Link>
-          ))}
+          {hasFiles ? (
+            filteredProfiles.map((folder, index) => (
+              <Link
+                key={index}
+                href={`${ROUTES.APP_PROFILE}/${
+                  profile.id
+                }/${ROUTES.APP_FOLDER}/${folder.id}`}
+              >
+                <FolderListItem
+                  profileName={profile.name}
+                  folderTypeId={folder.folderTypeId}
+                  profileId={profile.id}
+                />
+                {profile.folders.length - 1 !== index && <Separator />}
+              </Link>
+            ))
+          ) : (
+            <TypographyP>This profile doesnt have files</TypographyP>
+          )}
         </div>
       </div>
+      <ConnectWallet />
     </ResponsiveDialog>
   );
 };
