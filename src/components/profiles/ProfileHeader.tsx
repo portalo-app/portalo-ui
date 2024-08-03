@@ -25,7 +25,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         </div>
         {isProfilePage && !readonly && (
           <div className="flex gap-2 mt-4">
-            <CloudSyncProfileButton />
+            <CloudSyncProfileButton profile={profile} />
 
             <ShareButton profile={profile} />
 

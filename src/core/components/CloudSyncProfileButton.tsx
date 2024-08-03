@@ -1,21 +1,30 @@
+import FolderListItem from '@components/folders/FolderListItem';
+import { ROUTES } from '@constants/routes.const';
 import { Button } from '@core/ui/Button';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
+import { Separator } from '@core/ui/Separator';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@core/ui/Tooltip';
-import { TypographyP } from '@core/ui/Typography';
-import { CloudUpload } from 'lucide-react';
+import { TypographyH3 } from '@core/ui/Typography';
+import { ProfileDTO } from '@models/dto/profile.dto';
+import { CloudUpload, Folder } from 'lucide-react';
+import Link from 'next/link';
 import { FC } from 'react';
 
-interface CloudSyncProfileButtonProps {}
+interface CloudSyncProfileButtonProps {
+  profile: ProfileDTO;
+}
 
-const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = () => {
+const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
+  profile,
+}) => {
   return (
     <ResponsiveDialog
-      title="Cloud Sync"
+      title="Secure Profile Storage"
       trigger={
         <TooltipProvider>
           <Tooltip>
@@ -34,11 +43,29 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = () => {
         </TooltipProvider>
       }
     >
-      <div className="text-center space-y-2 grid place-items-center">
-        <div className="flex justify-center items-center rounded w-full">
-          <TypographyP className="text-left">
-            Sync your data with the cloud
-          </TypographyP>
+      <div className="border mt-4 rounded-lg">
+        <div className="flex justify-between items-center bg-muted p-4 rounded-t-lg">
+          <div className="flex items-center gap-2">
+            <Folder />
+            <TypographyH3>Folders you will save</TypographyH3>
+          </div>
+        </div>
+        <div className="*:block space-y-2 px-4 bg-card rounded-b-lg">
+          {profile?.folders.map((folder, index) => (
+            <Link
+              key={index}
+              href={`${ROUTES.APP_PROFILE}/${
+                profile.id
+              }/${ROUTES.APP_FOLDER}/${folder.id}`}
+            >
+              <FolderListItem
+                profileName={profile.name}
+                folderTypeId={folder.folderTypeId}
+                profileId={profile.id}
+              />
+              {profile.folders.length - 1 !== index && <Separator />}
+            </Link>
+          ))}
         </div>
       </div>
     </ResponsiveDialog>
