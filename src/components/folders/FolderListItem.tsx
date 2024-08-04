@@ -10,6 +10,7 @@ interface FolderListItemProps {
   folderTypeId: string;
   profileId: string;
   readonly?: boolean;
+  isLink?: boolean;
 }
 
 const FolderListItem: React.FC<FolderListItemProps> = ({
@@ -17,6 +18,7 @@ const FolderListItem: React.FC<FolderListItemProps> = ({
   folderTypeId,
   profileId,
   readonly,
+  isLink = true,
 }) => {
   const { getFolderType } = useFolderType();
 
@@ -45,7 +47,9 @@ const FolderListItem: React.FC<FolderListItemProps> = ({
           />
         </div>
 
-        <ChevronRight size={24} className="text-muted-foreground mr-2" />
+        {isLink && (
+          <ChevronRight size={24} className="text-muted-foreground mr-2" />
+        )}
       </div>
     </Link>
   );
