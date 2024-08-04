@@ -20,6 +20,7 @@ interface ProfileHeaderProps {
   readonly?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ManageAccessButton: React.FC<{ profile: ProfileDTO }> = ({ profile }) => {
   const router = useRouter();
 
@@ -60,7 +61,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           <div className="flex gap-2 mt-4">
             <CloudSyncProfileButton profile={profile} />
 
-            <ManageAccessButton profile={profile} />
+            {/* <ManageAccessButton profile={profile} /> */}
 
             <ShareButton profile={profile} />
 
