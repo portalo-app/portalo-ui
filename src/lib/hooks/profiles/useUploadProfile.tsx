@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import useEncrypt from '@hooks/useEncrypt';
 import useZk from '@hooks/useZk';
 import { ProfileDTO } from '@models/dto/profile.dto';
@@ -61,7 +62,7 @@ const useCloudProfile = () => {
     });
   };
 
-  const useShareProfile = async (profileId: string) => {
+  const shareProfile = async (profileId: string) => {
     const { data } = useReadContract({
       abi: abi as unknown as Abi,
       address: contract as `0x${string}`,
@@ -100,7 +101,7 @@ const useCloudProfile = () => {
     return profile;
   };
 
-  return { uploadProfile, useShareProfile, useDecryptProfile };
+  return { uploadProfile, shareProfile, useDecryptProfile };
 };
 
 export default useCloudProfile;

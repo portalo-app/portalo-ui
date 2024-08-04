@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@core/ui/Button';
 import { Card } from '@core/ui/Card';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
@@ -9,12 +11,17 @@ import {
   TooltipTrigger,
 } from '@core/ui/Tooltip';
 import { TypographyH4, TypographyMutedXS } from '@core/ui/Typography';
+import useEncrypt from '@hooks/useEncrypt';
 import { ProfileDTO } from '@models/dto/profile.dto';
+import { ZkProfile } from '@models/zk/zkProfile.model';
 import Avvvatars from 'avvvatars-react';
 import { Cloud, HardDrive, Share2, TriangleAlert, Users } from 'lucide-react';
 import lzString from 'lz-string';
 import { QRCodeSVG } from 'qrcode.react';
 import { FC, useState } from 'react';
+import { Abi } from 'viem';
+import { useAccount, useReadContract, useSignMessage } from 'wagmi';
+import abi from '../../lib/contracts/portalo_contract_abi.json';
 import CopyButton from './CopyButton';
 
 interface ShareButtonProps {
@@ -22,8 +29,22 @@ interface ShareButtonProps {
   title?: string;
 }
 
+const contract = process.env.NEXT_PUBLIC_PORTALO_CONTRACT_ADDRESS;
+
 const ShareButton: FC<ShareButtonProps> = ({ profile, title }) => {
+  const { decryptSymmetric } = useEncrypt();
+  const { signMessageAsync } = useSignMessage();
+  const { connector, address } = useAccount();
+
   const [selectedTab, setSelectedTab] = useState('cloud');
+  const [cloudURL, setCloudUrl] = useState('');
+
+  const { data } = useReadContract({
+    abi: abi as unknown as Abi,
+    address: contract as `0x${string}`,
+    functionName: 'getProfileById',
+    args: [profile.id],
+  });
 
   const profileToShare = {
     ...profile,
@@ -38,20 +59,27 @@ const ShareButton: FC<ShareButtonProps> = ({ profile, title }) => {
   // TODO: Model 'OFFLINE' or 'CLOUD'
   const profileStatus = 'OFFLINE';
 
-  // TODO: Set the correct and UNIQUE profile ID
-  const cloudURL = `${window.location.origin}/profiles/share?id=${profile.id}`;
-
   // TODO: Implement
   const goToManageAccess = () => {
     // router.push(`/profiles/${profile.id}/manage-access`);
   };
 
-  // TODO: Implement
-  const shareProfile = () => {
-    // navigator?.share({
-    //   text: `Portalo profile: ${profile.name}`,
-    //   url: shareUrl,
-    // });
+  const getUrl = async () => {
+    const signature = await signMessageAsync({
+      account: address,
+      message: (data as ZkProfile).nonce,
+      connector,
+    });
+
+    // desencriṕtar la key
+    const key = await decryptSymmetric(
+      (data as ZkProfile).profileEncryptionKey,
+      signature
+    );
+
+    setCloudUrl(
+      `${window.location.origin}/profiles/share?id=${(data as ZkProfile).profileId}&key=${key}`
+    );
   };
 
   // TODO: Implement
@@ -73,6 +101,7 @@ const ShareButton: FC<ShareButtonProps> = ({ profile, title }) => {
               <Button
                 variant="outline"
                 className="flex gap-2 rounded-xl w-full"
+                onClick={getUrl}
               >
                 <Share2 size={20} />
                 {title}
@@ -134,7 +163,9 @@ const ShareButton: FC<ShareButtonProps> = ({ profile, title }) => {
                 className="w-full h-fit rounded-3xl"
               />
 
-              <TypographyMutedXS>{cloudURL}</TypographyMutedXS>
+              <TypographyMutedXS className="max-w-[50ch] overflow-hidden text-nowrap text-ellipsis">
+                {cloudURL}
+              </TypographyMutedXS>
             </div>
           </TabsContent>
 
@@ -154,7 +185,7 @@ const ShareButton: FC<ShareButtonProps> = ({ profile, title }) => {
           <div className="flex *:flex-1 gap-2">
             <CopyButton text={cloudURL} />
 
-            <Button variant="outline" className="gap-2" onClick={shareProfile}>
+            <Button variant="outline" className="gap-2">
               <Share2 />
               Share
             </Button>
