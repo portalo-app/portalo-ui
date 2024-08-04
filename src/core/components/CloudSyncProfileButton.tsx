@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import FolderListItem from '@components/folders/FolderListItem';
-import { ROUTES } from '@constants/routes.const';
 import { Button } from '@core/ui/Button';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { Separator } from '@core/ui/Separator';
@@ -9,55 +9,95 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@core/ui/Tooltip';
-import { TypographyH3, TypographyP } from '@core/ui/Typography';
+import { TypographyH3, TypographyMuted } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
-import { motion } from 'framer-motion';
-import { CircleCheckBig, CloudUpload, Folder, Info } from 'lucide-react';
-import Link from 'next/link';
-import { FC, useEffect, useState } from 'react';
+import {
+  Check,
+  CircleX,
+  CloudUpload,
+  LoaderCircle,
+  Share2,
+} from 'lucide-react';
+import { FC, useState } from 'react';
 import ConnectWallet from './ConnectWallet';
 
 interface CloudSyncProfileButtonProps {
   profile: ProfileDTO;
 }
 
+enum TX_STATUS {
+  IDLE = 'IDLE',
+  LOADING = 'LOADING',
+  SUCCESS = 'SUCCESS',
+  FAILURE = 'FAILURE',
+}
+
+const UploadPreview: FC<{ profile: ProfileDTO }> = ({ profile }) => {
+  return (
+    <div>
+      <TypographyMuted>
+        Folders included in your profile {profile.name}
+      </TypographyMuted>
+
+      {profile?.folders.map((folder, index) => (
+        <div key={index}>
+          <FolderListItem
+            profileName={profile.name}
+            folderTypeId={folder.folderTypeId}
+            profileId={profile.id}
+            isLink={false}
+          />
+          {profile.folders.length - 1 !== index && <Separator />}
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
   profile,
 }) => {
-  const filteredProfiles = profile?.folders.filter(
+  const foldersWithFiles = profile?.folders.filter(
     (folder) => folder.files.length > 0
   );
-  const hasFiles = filteredProfiles.length > 0;
+  const hasFiles = foldersWithFiles.length > 0;
 
   const [showStoreProfile, setShowStoreProfile] = useState(false);
-  const [showAnimation, setShowAnimation] = useState(false);
-  const [animationCompleted, setAnimationCompleted] = useState(false);
-  const [title, setTitle] = useState('Secure Profile Storage');
+  const [actionState, setActionState] = useState<TX_STATUS>(TX_STATUS.IDLE);
+  const [storeCompleted, setAnimationCompleted] = useState(false);
+  const [wallet, setWallet] = useState<string | null>(null);
 
+  // TODO: Implement connect wallet
   const handleConnectWallet = () => {
     setShowStoreProfile(true);
   };
 
-  const handleStoreProfileClick = () => {
-    setShowAnimation(true);
+  // TODO: Implement store action
+  const handleUploadProfile = () => {
+    setActionState(TX_STATUS.LOADING);
     setAnimationCompleted(false);
-    setTitle('Saving your data');
+
     setTimeout(() => {
-      setShowAnimation(false);
+      setActionState(TX_STATUS.SUCCESS);
       setAnimationCompleted(true);
-      setTitle('Profile Saved Correctly');
     }, 3000);
   };
 
-  useEffect(() => {
-    if (!showAnimation && !animationCompleted) {
-      setTitle('Secure Profile Storage');
-    }
-  }, [showAnimation, animationCompleted]);
+  // TODO: Implement clsing
+  const handleDone = () => {
+    setActionState(TX_STATUS.IDLE);
+    setAnimationCompleted(false);
+    setShowStoreProfile(false);
+  };
+
+  // TODO: Implement navigating to share screen
+  const handleShare = () => {
+    console.log('Share');
+  };
 
   return (
     <ResponsiveDialog
-      title={title}
+      title=""
       trigger={
         <TooltipProvider>
           <Tooltip>
@@ -77,71 +117,61 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
         </TooltipProvider>
       }
     >
-      <div className="mt-4 rounded-lg bg-background dark:bg-background">
-        <div className="space-y-2 px-4 rounded-b-lg ">
-          {showAnimation ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="p-4 flex justify-center"
-            >
-              <motion.div
-                className="loader"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-              >
-                <div className="w-44 h-44 border-4 border-dashed border-t-transparent border-violet-500 rounded-full"></div>
-              </motion.div>
-            </motion.div>
-          ) : animationCompleted ? (
-            <div className="flex flex-col items-center gap-4 my-10 bg-background dark:bg-background">
-              <CircleCheckBig className="text-green-500 w-44 h-44" />
-              <Button>Share</Button>
-              <Button>Done</Button>
-            </div>
-          ) : hasFiles ? (
-            <>
-              <div className="flex items-center bg-muted p-4 rounded-t-lg">
-                <div className="flex items-center gap-2">
-                  <Folder />
-                  <TypographyH3>Folders you will save</TypographyH3>
-                </div>
-              </div>
-              {filteredProfiles.map((folder, index) => (
-                <Link
-                  key={index}
-                  href={`${ROUTES.APP_PROFILE}/${profile.id}/${ROUTES.APP_FOLDER}/${folder.id}`}
-                >
-                  <FolderListItem
-                    profileName={profile.name}
-                    folderTypeId={folder.folderTypeId}
-                    profileId={profile.id}
-                  />
-                  {profile.folders.length - 1 !== index && <Separator />}
-                </Link>
-                /* TO DO: Add how many files have each folder */
-              ))}
-              <div className="flex justify-center py-4">
-                {showStoreProfile ? (
-                  <Button onClick={handleStoreProfileClick}>
-                    Store Profile
-                  </Button>
-                ) : (
-                  <ConnectWallet onConnect={handleConnectWallet} />
-                )}
-              </div>
-            </>
-          ) : (
-            <div className="flex justify-center items-center gap-4">
-              <Info />
-              <TypographyP className="pb-2 mb-4">
-                This profile doesn&apos;t have files
-              </TypographyP>
-            </div>
-          )}
+      <TypographyH3>Upload to Cloud</TypographyH3>
+
+      {actionState === TX_STATUS.IDLE && <UploadPreview profile={profile} />}
+
+      {actionState === TX_STATUS.LOADING && (
+        <div className="text-center grid place-items-center py-4">
+          <LoaderCircle className="animate-spin w-24 h-24 text-muted-foreground" />
+          <TypographyH3>
+            Please sign the transaction to upload your profile to the cloud
+          </TypographyH3>
         </div>
-      </div>
+      )}
+
+      {actionState === TX_STATUS.SUCCESS && (
+        <div className="text-center grid place-items-center py-4">
+          <Check className="w-24 h-24 text-green-600" />
+
+          <TypographyH3>Your profile was uploaded successfully</TypographyH3>
+        </div>
+      )}
+
+      {actionState === TX_STATUS.FAILURE && (
+        <div className="text-center grid place-items-center py-4">
+          <CircleX className="w-24 h-24 text-red-600" />
+
+          <TypographyH3>An error occurred, please try again later</TypographyH3>
+        </div>
+      )}
+
+      {[TX_STATUS.IDLE, TX_STATUS.LOADING].includes(actionState) && (
+        <Button
+          className="gap-2"
+          onClick={handleUploadProfile}
+          disabled={actionState === TX_STATUS.LOADING}
+        >
+          <CloudUpload />
+          Store Profile
+        </Button>
+      )}
+
+      <ConnectWallet onConnect={handleConnectWallet} />
+
+      {actionState === TX_STATUS.SUCCESS && storeCompleted && (
+        <div className="flex flex-col gap-2 *:gap-2">
+          <Button variant="outline">
+            <Share2 />
+            Share
+          </Button>
+
+          <Button>
+            <Check />
+            Done
+          </Button>
+        </div>
+      )}
     </ResponsiveDialog>
   );
 };

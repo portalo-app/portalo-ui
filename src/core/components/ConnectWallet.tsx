@@ -1,7 +1,7 @@
 import { Button } from '@core/ui/Button';
 import { ethers } from 'ethers';
+import { Unplug } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import StoreProfileButton from './StoreProfileButton';
 
 declare global {
   interface Window {
@@ -72,15 +72,12 @@ const ConnectWallet: React.FC<ConnectWalletProps> = ({ onConnect }) => {
   }, [account, onConnect]);
 
   return (
-    <div className="p-4">
-      {account ? (
-        <div className="flex justify-center items-center gap-4">
-          <StoreProfileButton />
-        </div>
-      ) : (
-        <Button onClick={connectToMetaMask}>Connect to MetaMask</Button>
-      )}
-    </div>
+    !account && (
+      <Button className="w-full gap-2" onClick={connectToMetaMask}>
+        <Unplug />
+        Connect to MetaMask
+      </Button>
+    )
   );
 };
 
