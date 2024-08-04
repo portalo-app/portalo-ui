@@ -78,7 +78,7 @@ const ShareButton: FC<ShareButtonProps> = ({ profile, title }) => {
     );
 
     setCloudUrl(
-      `${window.location.origin}/profiles/share?id=${(data as ZkProfile).profileId}&key=${key}`
+      `${window.location.origin}/profiles/cloudshare?id=${(data as ZkProfile).profileId}&key=${key}`
     );
   };
 
