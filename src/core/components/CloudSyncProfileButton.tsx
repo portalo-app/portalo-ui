@@ -14,6 +14,7 @@ import { ProfileDTO } from '@models/dto/profile.dto';
 import { CloudUpload, Folder } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
+import ConnectWallet from './ConnectWallet';
 
 interface CloudSyncProfileButtonProps {
   profile: ProfileDTO;
@@ -77,6 +78,7 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
             <TypographyP>This profile doesnt have files</TypographyP>
           )}
         </div>
+        <ConnectWallet />
       </div>
     </ResponsiveDialog>
   );
