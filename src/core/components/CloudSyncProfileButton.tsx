@@ -13,6 +13,7 @@ import { TypographyH3, TypographyMuted } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { Check, CircleX, CloudUpload, LoaderCircle } from 'lucide-react';
 import { FC, useState } from 'react';
+import { useAccount } from 'wagmi';
 import ConnectWallet from './ConnectWallet';
 import ShareButton from './ShareProfileButton';
 
@@ -61,6 +62,7 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
   const [actionState, setActionState] = useState<TX_STATUS>(TX_STATUS.IDLE);
   const [storeCompleted, setAnimationCompleted] = useState(false);
   const [wallet, setWallet] = useState<string | null>(null);
+  const { isConnected } = useAccount();
 
   const handleConnectWallet = () => {
     setShowStoreProfile(true);
@@ -136,18 +138,19 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
         </div>
       )}
 
-      {[TX_STATUS.IDLE, TX_STATUS.LOADING].includes(actionState) && (
-        <Button
-          className="gap-2"
-          onClick={handleUploadProfile}
-          disabled={actionState === TX_STATUS.LOADING}
-        >
-          <CloudUpload />
-          Store Profile
-        </Button>
-      )}
+      {[TX_STATUS.IDLE, TX_STATUS.LOADING].includes(actionState) &&
+        isConnected && (
+          <Button
+            className="gap-2"
+            onClick={handleUploadProfile}
+            disabled={actionState === TX_STATUS.LOADING}
+          >
+            <CloudUpload />
+            Store Profile
+          </Button>
+        )}
 
-      <ConnectWallet onConnect={handleConnectWallet} />
+      {!isConnected && <ConnectWallet onConnect={handleConnectWallet} />}
 
       {actionState === TX_STATUS.SUCCESS && storeCompleted && (
         <div className="flex flex-col gap-2 *:gap-2">
