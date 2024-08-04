@@ -29,6 +29,7 @@ const ShareButton: FC<ShareButtonProps> = ({ profile, title }) => {
     ...profile,
     folders: profile.folders.filter((folder) => folder.files.length > 0),
   };
+
   const JSONProfile = JSON.stringify(profileToShare);
   const compressed = lzString.compressToEncodedURIComponent(JSONProfile);
 

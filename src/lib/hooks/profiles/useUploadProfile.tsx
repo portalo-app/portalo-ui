@@ -3,12 +3,17 @@ import useZk from '@hooks/useZk';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { ZkProfile } from '@models/zk/zkProfile.model';
 import { Abi } from 'viem';
-import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
+import {
+  useAccount,
+  useReadContract,
+  useSignMessage,
+  useWriteContract,
+} from 'wagmi';
 import abi from '../../contracts/portalo_contract_abi.json';
 
 const contract = process.env.NEXT_PUBLIC_PORTALO_CONTRACT_ADDRESS;
 
-const useUploadProfile = () => {
+const useCloudProfile = () => {
   const { writeContractAsync } = useWriteContract();
   const { generateProof } = useZk();
   const { encryptSymmetric, decryptSymmetric } = useEncrypt();
@@ -56,7 +61,46 @@ const useUploadProfile = () => {
     });
   };
 
-  return { uploadProfile };
+  const useShareProfile = async (profileId: string) => {
+    const { data } = useReadContract({
+      abi: abi as unknown as Abi,
+      address: contract as `0x${string}`,
+      functionName: 'getProfileById',
+      args: [profileId],
+    });
+
+    // agarrar el nonce y con eso generar la signature
+    const signature = await signMessageAsync({
+      account: address,
+      message: (data as ZkProfile).nonce,
+      connector,
+    });
+
+    // desencriṕtar la key
+    const key = await decryptSymmetric(
+      (data as ZkProfile).profileEncryptionKey,
+      signature
+    );
+
+    return `${window.location.origin}/profiles/share?id=${(data as ZkProfile).profileId}&key=${key}`;
+  };
+
+  const useDecryptProfile = async (profileId: string, key: string) => {
+    const { data } = useReadContract({
+      abi: abi as unknown as Abi,
+      address: contract as `0x${string}`,
+      functionName: 'getProfileById',
+      args: [profileId],
+    });
+
+    const profile: ProfileDTO = JSON.parse(
+      (await decryptSymmetric((data as ZkProfile).encryptedData, key))!
+    );
+
+    return profile;
+  };
+
+  return { uploadProfile, useShareProfile, useDecryptProfile };
 };
 
-export default useUploadProfile;
+export default useCloudProfile;
