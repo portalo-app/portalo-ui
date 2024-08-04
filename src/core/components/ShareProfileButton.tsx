@@ -19,9 +19,10 @@ import CopyButton from './CopyButton';
 
 interface ShareButtonProps {
   profile: ProfileDTO;
+  title?: string;
 }
 
-const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
+const ShareButton: FC<ShareButtonProps> = ({ profile, title }) => {
   const [selectedTab, setSelectedTab] = useState('cloud');
 
   const profileToShare = {
@@ -63,7 +64,7 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
 
   return (
     <ResponsiveDialog
-      title=""
+      title={''}
       trigger={
         <TooltipProvider>
           <Tooltip>
@@ -73,6 +74,7 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
                 className="flex gap-2 rounded-xl w-full"
               >
                 <Share2 size={20} />
+                {title}
               </Button>
             </TooltipTrigger>
             <TooltipContent className="text-wrap max-w-[100ch]">
@@ -158,7 +160,7 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
           </div>
 
           {selectedTab === 'cloud' && (
-            <Button className="gap-2" onClick={goToManageAccess}>
+            <Button className="gap-2" onClick={goToManageAccess} disabled>
               <Users />
               Manage Access
             </Button>

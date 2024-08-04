@@ -11,15 +11,10 @@ import {
 } from '@core/ui/Tooltip';
 import { TypographyH3, TypographyMuted } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
-import {
-  Check,
-  CircleX,
-  CloudUpload,
-  LoaderCircle,
-  Share2,
-} from 'lucide-react';
+import { Check, CircleX, CloudUpload, LoaderCircle } from 'lucide-react';
 import { FC, useState } from 'react';
 import ConnectWallet from './ConnectWallet';
+import ShareButton from './ShareProfileButton';
 
 interface CloudSyncProfileButtonProps {
   profile: ProfileDTO;
@@ -67,7 +62,6 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
   const [storeCompleted, setAnimationCompleted] = useState(false);
   const [wallet, setWallet] = useState<string | null>(null);
 
-  // TODO: Implement connect wallet
   const handleConnectWallet = () => {
     setShowStoreProfile(true);
   };
@@ -75,6 +69,7 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
   // TODO: Implement store action
   const handleUploadProfile = () => {
     setActionState(TX_STATUS.LOADING);
+
     setAnimationCompleted(false);
 
     setTimeout(() => {
@@ -88,11 +83,6 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
     setActionState(TX_STATUS.IDLE);
     setAnimationCompleted(false);
     setShowStoreProfile(false);
-  };
-
-  // TODO: Implement navigating to share screen
-  const handleShare = () => {
-    console.log('Share');
   };
 
   return (
@@ -161,10 +151,7 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
 
       {actionState === TX_STATUS.SUCCESS && storeCompleted && (
         <div className="flex flex-col gap-2 *:gap-2">
-          <Button variant="outline">
-            <Share2 />
-            Share
-          </Button>
+          <ShareButton profile={profile} title="Share" />
 
           <Button>
             <Check />

@@ -1,13 +1,24 @@
 import { Button } from '@core/ui/Button';
 import { FC } from 'react';
-import { useConnect } from 'wagmi';
+import { useAccount, useConnect } from 'wagmi';
 import { injected } from 'wagmi/connectors';
 
-const ConnectWallet: FC = () => {
+interface ConnectWalletProps {
+  onConnect: () => void;
+}
+
+const ConnectWallet: FC<ConnectWalletProps> = ({ onConnect }) => {
   const { connect } = useConnect();
+  const { isConnected } = useAccount();
+
+  isConnected && onConnect();
 
   return (
-    <Button onClick={() => connect({ connector: injected() })}>Connect</Button>
+    !isConnected && (
+      <Button onClick={() => connect({ connector: injected() })}>
+        Connect
+      </Button>
+    )
   );
 };
 
