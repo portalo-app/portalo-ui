@@ -72,16 +72,14 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
   };
 
   // TODO: Implement store action
-  const handleUploadProfile = () => {
+  const handleUploadProfile = async () => {
     setActionState(TX_STATUS.LOADING);
 
     setAnimationCompleted(false);
-    uploadProfile(profile);
+    await uploadProfile(profile);
 
-    setTimeout(() => {
-      setActionState(TX_STATUS.SUCCESS);
-      setAnimationCompleted(true);
-    }, 3000);
+    setActionState(TX_STATUS.SUCCESS);
+    setAnimationCompleted(true);
   };
 
   // TODO: Implement clsing
