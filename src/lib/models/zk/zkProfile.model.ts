@@ -42,8 +42,8 @@ export class ZkProfile {
   }
 
   public static async getProfileSignature(nonce: string) {
-    const provider = new ethers.providers.JsonRpcProvider();
-    const signer = provider.getSigner();
+    const provider = new ethers.JsonRpcProvider();
+    const signer = await provider.getSigner();
 
     const signature = await signer.signMessage(nonce);
     return signature;
@@ -54,6 +54,6 @@ export class ZkProfile {
   }
 
   public static getNonce(): string {
-    return bufferToHex(Buffer.from(ethers.utils.randomBytes(8)));
+    return bufferToHex(Buffer.from(ethers.randomBytes(8)));
   }
 }
