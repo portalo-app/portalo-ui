@@ -86,7 +86,7 @@ const useCloudProfile = () => {
     return `${window.location.origin}/profiles/share?id=${(data as ZkProfile).profileId}&key=${key}`;
   };
 
-  const useDecryptProfile = async (profileId: string, key: string) => {
+  const useDecryptProfile = async (profileId: string) => {
     const { data } = useReadContract({
       abi: abi as unknown as Abi,
       address: contract as `0x${string}`,
@@ -94,8 +94,19 @@ const useCloudProfile = () => {
       args: [profileId],
     });
 
+    const signature = await signMessageAsync({
+      account: address,
+      message: (data as ZkProfile).nonce,
+      connector,
+    });
+
+    const key = await decryptSymmetric(
+      (data as ZkProfile).profileEncryptionKey,
+      signature
+    );
+
     const profile: ProfileDTO = JSON.parse(
-      (await decryptSymmetric((data as ZkProfile).encryptedData, key))!
+      (await decryptSymmetric((data as ZkProfile).encryptedData, key!))!
     );
 
     return profile;
