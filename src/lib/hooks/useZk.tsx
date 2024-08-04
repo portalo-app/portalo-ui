@@ -35,14 +35,11 @@ const useZk = () => {
     };
 
     const { witness } = await noir.execute(input as any);
-    console.log({ witness });
 
     const proof = await backend.generateProof(witness);
-    console.log({ proof });
 
     const proofHash = bufferToHex(Buffer.from(proof.proof));
-    console.log({ proofHash });
-    console.log(proof.publicInputs);
+
     return { proof: proofHash, publicInputs: proof.publicInputs };
   };
 

@@ -1,8 +1,8 @@
+import useEncrypt from '@hooks/useEncrypt';
 import useZk from '@hooks/useZk';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { ZkProfile } from '@models/zk/zkProfile.model';
 import { Abi } from 'viem';
-import { sepolia } from 'viem/chains';
 import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import abi from '../../contracts/portalo_contract_abi.json';
 
@@ -11,7 +11,7 @@ const contract = process.env.NEXT_PUBLIC_PORTALO_CONTRACT_ADDRESS;
 const useUploadProfile = () => {
   const { writeContractAsync } = useWriteContract();
   const { generateProof } = useZk();
-  // const { encryptSymmetric } = useEncrypt();
+  const { encryptSymmetric, decryptSymmetric } = useEncrypt();
   const { signMessageAsync } = useSignMessage();
   const { connector, address } = useAccount();
 
@@ -23,9 +23,16 @@ const useUploadProfile = () => {
       connector,
     });
 
-    // const key = ZkProfile.generateEncryptionKey(signature, profile.id, nonce);
-    const encryptedKey = 'test'; // encryptAsymmetric(key);
-    const encryptedData = 'test'; // encryptSymmetric(profile.key, key);
+    const key = ZkProfile.generateEncryptionKey(signature, profile.id, nonce);
+    const encryptedKey = (await encryptSymmetric(key, signature)) || ''; // encryptAsymmetric(key);
+    const encryptedData =
+      (await encryptSymmetric(JSON.stringify(profile), key)) || ''; // encryptSymmetric(profile.key, key);
+
+    const decryptedKey = await decryptSymmetric(encryptedKey, signature);
+    console.log({ decryptedKey });
+
+    const decryptedData = await decryptSymmetric(encryptedData, key);
+    console.log({ decryptedData });
 
     const { proof, publicInputs } = await generateProof(
       signature,
@@ -41,15 +48,12 @@ const useUploadProfile = () => {
       false
     );
 
-    const result = await writeContractAsync({
+    await writeContractAsync({
       abi: abi as unknown as Abi,
       address: contract as `0x${string}`,
       functionName: 'saveProfile',
       args: [zkProfile, proof, publicInputs, false],
-      chain: sepolia,
     });
-
-    console.log({ result });
   };
 
   return { uploadProfile };
