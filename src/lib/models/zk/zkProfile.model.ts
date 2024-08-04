@@ -41,19 +41,11 @@ export class ZkProfile {
     return bufferToHex(key);
   }
 
-  public static async getProfileSignature(nonce: string) {
-    const provider = new ethers.JsonRpcProvider();
-    const signer = await provider.getSigner();
-
-    const signature = await signer.signMessage(nonce);
-    return signature;
-  }
-
   public static hashKey(key: string): string {
     return bufferToHex(sha256(Buffer.from(key)));
   }
 
   public static getNonce(): string {
-    return bufferToHex(Buffer.from(ethers.randomBytes(8)));
+    return bufferToHex(Buffer.from(ethers.randomBytes(8))).substring(0, 8);
   }
 }

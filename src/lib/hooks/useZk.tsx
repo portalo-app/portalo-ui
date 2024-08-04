@@ -3,7 +3,7 @@ import {
   CompiledCircuit,
 } from '@noir-lang/backend_barretenberg';
 import { Noir } from '@noir-lang/noir_js';
-import { sha256 } from 'ethereumjs-util';
+import { bufferToHex, sha256 } from 'ethereumjs-util';
 import circuit from '../circuits/portalo_auth_circuit.json';
 
 const useZk = () => {
@@ -38,12 +38,12 @@ const useZk = () => {
     console.log({ witness });
 
     const proof = await backend.generateProof(witness);
+    console.log({ proof });
 
-    const isValid = await backend.verifyProof(proof);
-
-    console.log({ isValid });
-
-    return { proof, publicInputs };
+    const proofHash = bufferToHex(Buffer.from(proof.proof));
+    console.log({ proofHash });
+    console.log(proof.publicInputs);
+    return { proof: proofHash, publicInputs: proof.publicInputs };
   };
 
   return { generateProof };

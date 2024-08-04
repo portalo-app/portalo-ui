@@ -10,6 +10,7 @@ import {
   TooltipTrigger,
 } from '@core/ui/Tooltip';
 import { TypographyH3, TypographyMuted } from '@core/ui/Typography';
+import useUploadProfile from '@hooks/profiles/useUploadProfile';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { Check, CircleX, CloudUpload, LoaderCircle } from 'lucide-react';
 import { FC, useState } from 'react';
@@ -62,6 +63,8 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
   const [storeCompleted, setAnimationCompleted] = useState(false);
   const [wallet, setWallet] = useState<string | null>(null);
 
+  const { uploadProfile } = useUploadProfile();
+
   const handleConnectWallet = () => {
     setShowStoreProfile(true);
   };
@@ -71,6 +74,7 @@ const CloudSyncProfileButton: FC<CloudSyncProfileButtonProps> = ({
     setActionState(TX_STATUS.LOADING);
 
     setAnimationCompleted(false);
+    uploadProfile(profile);
 
     setTimeout(() => {
       setActionState(TX_STATUS.SUCCESS);

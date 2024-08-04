@@ -8,7 +8,7 @@ export class Profile {
 
   constructor(name: string) {
     this.name = name;
-    this.id = Date.now().toString();
+    this.id = Date.now().toString().substring(0, 8);
     this.folders = DEFAULT_FOLDERS;
   }
 }
