@@ -17,6 +17,8 @@ export const viewport: Viewport = {
   themeColor: '#8B5CF6',
   width: 'device-width',
   initialScale: 1,
+  userScalable: false,
+  maximumScale: 1,
 };
 
 const fontSans = FontSans({
