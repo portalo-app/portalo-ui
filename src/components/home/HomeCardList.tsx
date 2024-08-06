@@ -2,6 +2,7 @@
 
 import FolderListItem from '@components/folders/FolderListItem';
 import ProfileWidget from '@components/profiles/ProfileWidget';
+import Recommendations from '@components/profiles/Recommendations';
 import { ROUTES } from '@constants/routes.const';
 import HomeCard from '@core/components/HomeCard';
 import State from '@core/components/State';
@@ -67,6 +68,8 @@ const HomeCardsList = () => {
           )
         }
       />
+
+      <Recommendations />
     </>
   );
 };
