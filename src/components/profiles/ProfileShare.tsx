@@ -26,7 +26,7 @@ const ProfileShare: FC = () => {
         lzString.decompressFromEncodedURIComponent(searchParams.get('profile')!)
       ) as ProfileDTO);
 
-  if (!recommendation) setSharedProfile(profile);
+  setSharedProfile(profile);
 
   return (
     <div>

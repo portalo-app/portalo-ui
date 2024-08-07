@@ -87,7 +87,7 @@ const CRECIMIENTO_PROFILE: ProfileDTO = {
             entity: 'x',
             username: 'crecimientoar',
           },
-          id: 'social_social-media_x_1722988795042',
+          id: 'social_social-media_x',
         },
         {
           data: {
@@ -95,7 +95,7 @@ const CRECIMIENTO_PROFILE: ProfileDTO = {
             entity: 'instagram',
             username: 'crecimiento.build',
           },
-          id: 'social_social-media_instagram_1722988806840',
+          id: 'social_social-media_instagram',
         },
         {
           data: {
@@ -103,7 +103,16 @@ const CRECIMIENTO_PROFILE: ProfileDTO = {
             entity: 'linkedin',
             username: 'crecimientobuild',
           },
-          id: 'social_social-media_linkedin_1722988864485',
+          id: 'social_social-media_linkedin',
+        },
+
+        {
+          data: {
+            variant: 'messaging',
+            entity: 'warpcast',
+            username: 'crecimiento',
+          },
+          id: 'social_messaging_warpcast',
         },
       ],
     },
