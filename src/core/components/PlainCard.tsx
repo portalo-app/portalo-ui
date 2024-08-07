@@ -3,26 +3,28 @@ import { Separator } from '@core/ui/Separator';
 import { TypographyH5 } from '@core/ui/Typography';
 import { FC, ReactElement } from 'react';
 
-interface PlainCardWithSeparatorProps {
+interface PlainCardProps {
   content: ReactElement;
   title: string;
   titleIcon: ReactElement;
   ctaTitle?: string;
   ctaIcon?: ReactElement;
   onCtaClick?: () => void;
+  hideSeparator?: boolean;
 }
 
-const PlainCardWithSeparator: FC<PlainCardWithSeparatorProps> = ({
+const PlainCard: FC<PlainCardProps> = ({
   content,
   title,
   titleIcon,
   ctaTitle,
   ctaIcon,
   onCtaClick,
+  hideSeparator,
 }) => {
   return (
     <div className="space-y-2">
-      <Separator />
+      {hideSeparator ? <></> : <Separator />}
 
       <div className="mx-2 flex justify-between items-center w-full">
         <TypographyH5 className="flex items-center gap-2">
@@ -47,4 +49,4 @@ const PlainCardWithSeparator: FC<PlainCardWithSeparatorProps> = ({
   );
 };
 
-export default PlainCardWithSeparator;
+export default PlainCard;

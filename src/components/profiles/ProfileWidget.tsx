@@ -1,7 +1,7 @@
 'use client';
 
 import { ROUTES } from '@constants/routes.const';
-import PlainCardWithSeparator from '@core/components/PlainCardWithSeparator';
+import PlainCardWithSeparator from '@core/components/PlainCard';
 import State from '@core/components/State';
 import { Carousel, CarouselContent, CarouselItem } from '@core/ui/Carousel';
 import { profilesState } from '@states/profiles.atom';
@@ -24,6 +24,7 @@ const ProfileWidget = () => {
     <PlainCardWithSeparator
       title={profilesTitle}
       titleIcon={<UserRound />}
+      hideSeparator
       ctaTitle="Create Profile"
       ctaIcon={<ChevronRight />}
       onCtaClick={() => router.push(ROUTES.APP_CREATE_PROFILE)}

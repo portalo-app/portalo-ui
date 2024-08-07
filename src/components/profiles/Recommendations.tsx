@@ -3,7 +3,7 @@
 import { RECOMMENDED_PROFILES } from '@constants/recommendations.const';
 import { ROUTES } from '@constants/routes.const';
 import AvatarCard from '@core/components/AvatarCard';
-import PlainCardWithSeparator from '@core/components/PlainCardWithSeparator';
+import PlainCardWithSeparator from '@core/components/PlainCard';
 import { Carousel, CarouselContent, CarouselItem } from '@core/ui/Carousel';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { sharedProfileState } from '@states/sharedProfile.atom';

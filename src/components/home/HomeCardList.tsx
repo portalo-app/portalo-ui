@@ -4,7 +4,7 @@ import FolderListItem from '@components/folders/FolderListItem';
 import ProfileWidget from '@components/profiles/ProfileWidget';
 import Recommendations from '@components/profiles/Recommendations';
 import { ROUTES } from '@constants/routes.const';
-import PlainCardWithSeparator from '@core/components/PlainCardWithSeparator';
+import PlainCardWithSeparator from '@core/components/PlainCard';
 import State from '@core/components/State';
 import useProfile from '@hooks/profiles/useProfile';
 import { ShortcutDTO } from '@models/dto/shortcut.dto';

@@ -1,8 +1,4 @@
-import StoreWidget from '@components/dashboard/StoreWidget';
 import Onboarding from '@components/onboarding/Onboarding';
-import { Button } from '@core/ui/Button';
-import { Input } from '@core/ui/Input';
-import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { FC } from 'react';
 import HomeCardsList from './HomeCardList';
 
@@ -11,7 +7,7 @@ const Home: FC = () => {
     <div className="space-y-6">
       <Onboarding />
 
-      <ResponsiveDialog
+      {/* <ResponsiveDialog
         title="Coming soon"
         description="✨ Soon you'll be able to store ANYTHING ANYWHERE ✨"
         trigger={<StoreWidget />}
@@ -20,7 +16,7 @@ const Home: FC = () => {
           <Input disabled placeholder="Input Anything!" />
           <Button disabled>Store Anywhere</Button>
         </div>
-      </ResponsiveDialog>
+      </ResponsiveDialog> */}
 
       <HomeCardsList />
     </div>
