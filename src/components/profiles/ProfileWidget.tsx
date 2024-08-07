@@ -3,6 +3,7 @@
 import { ROUTES } from '@constants/routes.const';
 import PlainCardWithSeparator from '@core/components/PlainCardWithSeparator';
 import State from '@core/components/State';
+import { Carousel, CarouselContent, CarouselItem } from '@core/ui/Carousel';
 import { profilesState } from '@states/profiles.atom';
 import { ChevronRight, UserRound } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -29,9 +30,15 @@ const ProfileWidget = () => {
       content={
         hasProfiles ? (
           <>
-            {profiles.map((profile, index) => (
-              <ProfileItem profile={profile} key={index} />
-            ))}
+            <Carousel>
+              <CarouselContent>
+                {profiles.map((profile, index) => (
+                  <CarouselItem className="basis-4/9" key={index}>
+                    <ProfileItem profile={profile} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </>
         ) : (
           <State
