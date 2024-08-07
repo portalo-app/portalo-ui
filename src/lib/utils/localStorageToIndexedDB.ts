@@ -1,3 +1,7 @@
+import {
+  CLIENT_STORAGE_PROFILES,
+  CLIENT_STORAGE_SHORTCUTS,
+} from '@constants/constants.const';
 import localforage from 'localforage';
 
 localforage.config({
@@ -9,17 +13,31 @@ localforage.config({
   driver: [localforage.INDEXEDDB, localforage.WEBSQL, localforage.LOCALSTORAGE], // Preferred storage drivers in order
 });
 
-export const localStorageToIndexedDB = (storage: string) => {
-  const data = localStorage.getItem(storage);
+export const localStorageToIndexedDB = () => {
+  const profile = localStorage.getItem(CLIENT_STORAGE_PROFILES);
+  const shortcuts = localStorage.getItem(CLIENT_STORAGE_SHORTCUTS);
 
-  if (!data) return;
+  const localstorageData = [
+    {
+      key: CLIENT_STORAGE_PROFILES,
+      value: profile,
+    },
+    {
+      key: CLIENT_STORAGE_SHORTCUTS,
+      value: shortcuts,
+    },
+  ];
 
-  localforage
-    .setItem(storage, data)
-    .then(() => {
-      localStorage.removeItem(storage);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  localstorageData.forEach(({ key, value }) => {
+    if (!value) return;
+
+    localforage
+      .setItem(key, value)
+      .then(() => {
+        localStorage.removeItem(key);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  });
 };

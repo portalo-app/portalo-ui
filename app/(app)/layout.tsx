@@ -26,9 +26,7 @@ export default function AppLayout({ children }: LayoutProps) {
 
   useEffect(() => {
     initializeGA();
-    localStorageToIndexedDB('portalo.profiles');
-    localStorageToIndexedDB('portalo.shortcuts');
-
+    localStorageToIndexedDB();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
