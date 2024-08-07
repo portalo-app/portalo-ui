@@ -12,11 +12,11 @@ const NEOPOWER_PROFILE: ProfileDTO = {
       files: [
         {
           data: {
-            variant: 'messaging',
-            entity: 'telegram',
-            username: '@briansasbon',
+            variant: 'social-media',
+            entity: 'x',
+            username: 'NeoPowerDigital',
           },
-          id: 'social_messaging_telegram',
+          id: 'social_media_x',
         },
         {
           data: {
@@ -29,16 +29,32 @@ const NEOPOWER_PROFILE: ProfileDTO = {
         {
           data: {
             variant: 'social-media',
-            entity: 'x',
-            username: 'NeoPowerDigital',
+            entity: 'company_linkedin',
+            username: 'neopowerdigital',
           },
-          id: 'social_media_x',
+          id: 'social_social-media_linkedin',
+        },
+        {
+          data: {
+            variant: 'messaging',
+            entity: 'telegram',
+            username: '@briansasbon',
+          },
+          id: 'social_messaging_telegram',
         },
         {
           data: {
             variant: 'social-media',
             entity: 'x',
-            username: 'LaMultisig',
+            username: 'argiefy',
+          },
+          id: 'social_media_x_2',
+        },
+        {
+          data: {
+            variant: 'social-media',
+            entity: 'x',
+            username: 'portaloapp',
           },
           id: 'social_media_x_2',
         },
@@ -65,6 +81,39 @@ const NEOPOWER_PROFILE: ProfileDTO = {
             name: 'NeoPower Polygon wallet',
           },
           id: 'address_crypto_MATIC',
+        },
+      ],
+    },
+    {
+      id: 'bookmark',
+      folderTypeId: 'bookmark',
+      files: [
+        {
+          data: {
+            variant: 'bookmark',
+            entity: 'web',
+            url: 'https://neopower.digital/',
+            title: 'Argiefy',
+          },
+          id: 'bookmark_bookmark_web_1',
+        },
+        {
+          data: {
+            variant: 'bookmark',
+            entity: 'web',
+            url: 'https://argiefy.com/',
+            title: 'Argiefy',
+          },
+          id: 'bookmark_bookmark_web_1',
+        },
+        {
+          data: {
+            variant: 'bookmark',
+            entity: 'web',
+            url: 'https://portalo.xyz/',
+            title: 'Portalo',
+          },
+          id: 'bookmark_bookmark_web_1',
         },
       ],
     },
