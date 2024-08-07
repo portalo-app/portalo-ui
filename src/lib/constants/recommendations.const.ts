@@ -28,7 +28,7 @@ const NEOPOWER_PROFILE: ProfileDTO = {
         },
         {
           data: {
-            variant: 'media',
+            variant: 'social-media',
             entity: 'x',
             username: 'NeoPowerDigital',
           },
@@ -36,7 +36,7 @@ const NEOPOWER_PROFILE: ProfileDTO = {
         },
         {
           data: {
-            variant: 'media',
+            variant: 'social-media',
             entity: 'x',
             username: 'LaMultisig',
           },
