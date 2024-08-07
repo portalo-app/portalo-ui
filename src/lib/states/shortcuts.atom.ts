@@ -1,6 +1,6 @@
 import { CLIENT_STORAGE_SHORTCUTS } from '@constants/constants.const';
 import { atom } from 'recoil';
-import { clientStorageEffect } from './localStorageEffect.util';
+import { clientStorageEffect } from './clientStorageEffect.util';
 
 export const shortcutsState = atom({
   key: 'shortcutsState',

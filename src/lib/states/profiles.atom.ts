@@ -1,7 +1,7 @@
 import { CLIENT_STORAGE_PROFILES } from '@constants/constants.const';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { atom } from 'recoil';
-import { clientStorageEffect } from './localStorageEffect.util';
+import { clientStorageEffect } from './clientStorageEffect.util';
 
 export const profilesState = atom<ProfileDTO[]>({
   key: 'profilesState',
