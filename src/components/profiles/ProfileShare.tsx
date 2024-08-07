@@ -10,20 +10,21 @@ import { Folder } from 'lucide-react';
 import lzString from 'lz-string';
 import { useSearchParams } from 'next/navigation';
 import { FC } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import ProfileHeader from './ProfileHeader';
 
 const ProfileShare: FC = () => {
   const searchParams = useSearchParams();
-  const setSharedProfile = useSetRecoilState(sharedProfileState);
+  const [sharedProfile, setSharedProfile] = useRecoilState(sharedProfileState);
+  const isRecommendation = searchParams.has('recommendation');
 
-  const decompressedProfile = lzString.decompressFromEncodedURIComponent(
-    searchParams.get('profile')!
-  );
+  const profile = isRecommendation
+    ? sharedProfile
+    : (JSON.parse(
+        lzString.decompressFromEncodedURIComponent(searchParams.get('profile')!)
+      ) as ProfileDTO);
 
-  const profile = JSON.parse(decompressedProfile) as ProfileDTO;
-
-  setSharedProfile(profile);
+  if (!isRecommendation) setSharedProfile(profile);
 
   return (
     <div>

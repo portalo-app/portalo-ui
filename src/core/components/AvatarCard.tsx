@@ -23,7 +23,7 @@ const AvatarCard: FC<AvatarCardProps> = ({
   return (
     <Card
       className={cn(
-        'flex gap-2 rounded-xl max-w-full items-center px-2 py-3 ',
+        'flex gap-3 rounded-xl max-w-full items-center px-2 py-3 ',
         className
       )}
       onClick={onClick}

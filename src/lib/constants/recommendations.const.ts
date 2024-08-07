@@ -71,4 +71,99 @@ const NEOPOWER_PROFILE: ProfileDTO = {
   ],
 };
 
-export const RECOMMENDED_PROFILES = [NEOPOWER_PROFILE];
+const CRECIMIENTO_PROFILE: ProfileDTO = {
+  id: '1722988733319',
+  name: 'Crecimiento',
+  icon: '/assets/icons/profiles/crecimiento.svg',
+  description: `A movement transforming Argentina into the world's first crypto nation`,
+  folders: [
+    {
+      id: 'social',
+      folderTypeId: 'social',
+      files: [
+        {
+          data: {
+            variant: 'social-media',
+            entity: 'x',
+            username: 'crecimientoar',
+          },
+          id: 'social_social-media_x_1722988795042',
+        },
+        {
+          data: {
+            variant: 'social-media',
+            entity: 'instagram',
+            username: 'crecimiento.build',
+          },
+          id: 'social_social-media_instagram_1722988806840',
+        },
+        {
+          data: {
+            variant: 'social-media',
+            entity: 'linkedin',
+            username: 'crecimientobuild',
+          },
+          id: 'social_social-media_linkedin_1722988864485',
+        },
+      ],
+    },
+    {
+      id: 'address',
+      folderTypeId: 'address',
+      files: [],
+    },
+    {
+      id: 'bookmark',
+      folderTypeId: 'bookmark',
+      files: [
+        {
+          data: {
+            variant: 'bookmark',
+            entity: 'web',
+            url: 'https://www.aleph.crecimiento.build/',
+            title: 'Aleph Landing',
+          },
+          id: 'bookmark_bookmark_web_1722988950016',
+        },
+        {
+          data: {
+            variant: 'bookmark',
+            entity: 'events',
+            url: 'https://aleph.sola.day/',
+            title: 'Aleph Social Layer',
+          },
+          id: 'bookmark_bookmark_events_1722988991759',
+        },
+        {
+          data: {
+            variant: 'bookmark',
+            entity: 'documents',
+            url: 'https://docs.google.com/presentation/d/1jBVM1RkcswT6hedSpNqtatH4Ky-PvIsKPCvvAFOnA6U/edit#slide=id.g2157829634c_2_29',
+            title: 'Welcome Guide',
+          },
+          id: 'bookmark_bookmark_documents_1722989015234',
+        },
+        {
+          data: {
+            variant: 'bookmark',
+            entity: 'documents',
+            url: 'https://docs.google.com/presentation/d/1LyanXVdKJHfq95qvSSxJwQIgS5mCfIUi8SuY3vAkznQ/edit#slide=id.g21ba7f15b38_24_143',
+            title: 'Guía de Bienvenida',
+          },
+          id: 'bookmark_bookmark_documents_1722989049008',
+        },
+        {
+          data: {
+            variant: 'bookmark',
+            entity: 'news',
+            url: 'https://estoescrecimiento.substack.com/',
+            title: "Crecimiento's Blog",
+          },
+          id: 'bookmark_bookmark_news_1722989130749',
+        },
+      ],
+    },
+  ],
+};
+
+export const RECOMMENDED_PROFILES = [CRECIMIENTO_PROFILE, NEOPOWER_PROFILE];
