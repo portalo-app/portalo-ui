@@ -31,7 +31,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
   return (
     <>
-      <div className="flex justify-between items-center py-4   rounded-md">
+      <div className="flex justify-between items-center py-4 rounded-md">
         <div className="flex gap-3 items-center">
           {profile.icon ? (
             <Image

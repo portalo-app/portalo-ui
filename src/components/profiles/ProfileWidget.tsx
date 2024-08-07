@@ -23,7 +23,7 @@ const ProfileWidget = () => {
 
   return (
     <PlainCard
-      title={<TypographyH5> profilesTitle</TypographyH5>}
+      title={<TypographyH5> {profilesTitle}</TypographyH5>}
       titleIcon={<UserRound />}
       hideSeparator
       ctaTitle="Add Profile"

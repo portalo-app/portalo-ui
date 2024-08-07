@@ -35,12 +35,12 @@ const FolderShare: FC<{ folderId: string }> = ({ folderId }) => {
   const folderType = getFolderType(folder.folderTypeId);
 
   return (
-    <div className="space-y-4">
+    <div>
       <ProfileHeader profile={profile!} />
 
       <PlainCard
         title={
-          <TypographyH4 className="pb-0">{`${folderType?.label} folder`}</TypographyH4>
+          <TypographyH4 className="py-3">{`${folderType?.label} folder`}</TypographyH4>
         }
         titleIcon={
           <Icon
