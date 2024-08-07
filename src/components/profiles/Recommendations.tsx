@@ -24,7 +24,7 @@ const Recommendations: FC<unknown> = () => {
       ctaIcon={<ChevronRight />}
       content={
         <Carousel>
-          <CarouselContent className=" ">
+          <CarouselContent>
             {RECOMMENDED_PROFILES.map((profile: ProfileDTO, index: number) => (
               <CarouselItem className="basis-4/5 lg:basis-2/3 " key={index}>
                 <AvatarCard
