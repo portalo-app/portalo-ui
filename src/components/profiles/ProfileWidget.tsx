@@ -31,17 +31,15 @@ const ProfileWidget = () => {
       onCtaClick={() => router.push(ROUTES.APP_CREATE_PROFILE)}
       content={
         hasProfiles ? (
-          <>
-            <Carousel>
-              <CarouselContent>
-                {profiles.map((profile, index) => (
-                  <CarouselItem className="basis-4/9" key={index}>
-                    <ProfileItem profile={profile} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
-          </>
+          <Carousel>
+            <CarouselContent>
+              {profiles.map((profile, index) => (
+                <CarouselItem className="basis-4/9" key={index}>
+                  <ProfileItem profile={profile} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         ) : (
           <State
             type="empty"
