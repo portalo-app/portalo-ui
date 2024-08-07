@@ -1,10 +1,10 @@
 'use client';
 
 import { ROUTES } from '@constants/routes.const';
-import HomeCard from '@core/components/HomeCard';
+import PlainCardWithSeparator from '@core/components/PlainCardWithSeparator';
 import State from '@core/components/State';
 import { profilesState } from '@states/profiles.atom';
-import { UserRound } from 'lucide-react';
+import { ChevronRight, UserRound } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useRecoilValue } from 'recoil';
 import ProfileItem from './ProfileItem';
@@ -20,27 +20,29 @@ const ProfileWidget = () => {
   const emptyProfilesMessage = 'Create a Profile to get started!';
 
   return (
-    <HomeCard
+    <PlainCardWithSeparator
       title={profilesTitle}
-      icon={<UserRound />}
-      href={ROUTES.APP_CREATE_PROFILE}
-      hasData={hasProfiles}
-      listToShow={
-        <>
-          {profiles.map((profile, index) => (
-            <ProfileItem profile={profile} key={index} />
-          ))}
-        </>
-      }
-      stateComponent={
-        <State
-          type="empty"
-          label={emptyProfilesMessage}
-          action={{
-            label: '+ Create Profile',
-            onClick: () => router.push(ROUTES.APP_CREATE_PROFILE),
-          }}
-        />
+      titleIcon={<UserRound />}
+      ctaTitle="Create Profile"
+      ctaIcon={<ChevronRight />}
+      onCtaClick={() => router.push(ROUTES.APP_CREATE_PROFILE)}
+      content={
+        hasProfiles ? (
+          <>
+            {profiles.map((profile, index) => (
+              <ProfileItem profile={profile} key={index} />
+            ))}
+          </>
+        ) : (
+          <State
+            type="empty"
+            label={emptyProfilesMessage}
+            action={{
+              label: 'Create Profile',
+              onClick: () => router.push(ROUTES.APP_CREATE_PROFILE),
+            }}
+          />
+        )
       }
     />
   );

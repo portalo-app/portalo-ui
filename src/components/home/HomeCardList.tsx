@@ -4,13 +4,13 @@ import FolderListItem from '@components/folders/FolderListItem';
 import ProfileWidget from '@components/profiles/ProfileWidget';
 import Recommendations from '@components/profiles/Recommendations';
 import { ROUTES } from '@constants/routes.const';
-import HomeCard from '@core/components/HomeCard';
+import PlainCardWithSeparator from '@core/components/PlainCardWithSeparator';
 import State from '@core/components/State';
 import useProfile from '@hooks/profiles/useProfile';
 import { ShortcutDTO } from '@models/dto/shortcut.dto';
 import { profilesState } from '@states/profiles.atom';
 import { shortcutsState } from '@states/shortcuts.atom';
-import { Layers2 } from 'lucide-react';
+import { ChevronRight, Layers2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useRecoilValue } from 'recoil';
 
@@ -33,25 +33,25 @@ const HomeCardsList = () => {
     <>
       <ProfileWidget />
 
-      <HomeCard
+      <PlainCardWithSeparator
         title={shortcutsTitle}
-        icon={<Layers2 />}
-        hasData={hasShortcuts}
-        href={ROUTES.APP_SHORTCUTS}
-        listToShow={
-          <>
-            {shortcuts.map(({ folderId, profileId }: ShortcutDTO) => (
-              <FolderListItem
-                key={profileId + folderId}
-                profileName={getProfileById(profileId)?.name}
-                folderTypeId={folderId}
-                profileId={profileId}
-              />
-            ))}
-          </>
-        }
-        stateComponent={
-          hasProfiles ? (
+        titleIcon={<Layers2 />}
+        ctaTitle="Create Shortcut"
+        ctaIcon={<ChevronRight />}
+        onCtaClick={() => router.push(ROUTES.APP_SHORTCUTS)}
+        content={
+          hasShortcuts ? (
+            <>
+              {shortcuts.map(({ folderId, profileId }: ShortcutDTO) => (
+                <FolderListItem
+                  key={profileId + folderId}
+                  profileName={getProfileById(profileId)?.name}
+                  folderTypeId={folderId}
+                  profileId={profileId}
+                />
+              ))}
+            </>
+          ) : hasProfiles ? (
             <State
               type="empty"
               label={emptyShortcutsMessage}
