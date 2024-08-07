@@ -1,9 +1,10 @@
 'use client';
 
 import { ROUTES } from '@constants/routes.const';
-import PlainCardWithSeparator from '@core/components/PlainCard';
+import PlainCard from '@core/components/PlainCard';
 import State from '@core/components/State';
 import { Carousel, CarouselContent, CarouselItem } from '@core/ui/Carousel';
+import { TypographyH5 } from '@core/ui/Typography';
 import { profilesState } from '@states/profiles.atom';
 import { Plus, UserRound } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -21,8 +22,8 @@ const ProfileWidget = () => {
   const emptyProfilesMessage = 'Create a Profile to get started!';
 
   return (
-    <PlainCardWithSeparator
-      title={profilesTitle}
+    <PlainCard
+      title={<TypographyH5> profilesTitle</TypographyH5>}
       titleIcon={<UserRound />}
       hideSeparator
       ctaTitle="Add Profile"

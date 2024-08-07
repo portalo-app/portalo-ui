@@ -1,11 +1,10 @@
 import { Button } from '@core/ui/Button';
 import { Separator } from '@core/ui/Separator';
-import { TypographyH5 } from '@core/ui/Typography';
 import { FC, ReactElement } from 'react';
 
 interface PlainCardProps {
   content: ReactElement;
-  title: string;
+  title: ReactElement;
   titleIcon: ReactElement;
   ctaTitle?: string;
   ctaIcon?: ReactElement;
@@ -27,9 +26,9 @@ const PlainCard: FC<PlainCardProps> = ({
       {hideSeparator ? <></> : <Separator />}
 
       <div className="mr-2 flex justify-between items-center w-full">
-        <TypographyH5 className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
           {titleIcon} {title}
-        </TypographyH5>
+        </div>
 
         {ctaTitle ? (
           <Button

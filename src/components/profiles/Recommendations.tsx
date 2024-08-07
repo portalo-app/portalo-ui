@@ -3,8 +3,9 @@
 import { RECOMMENDED_PROFILES } from '@constants/recommendations.const';
 import { ROUTES } from '@constants/routes.const';
 import AvatarCard from '@core/components/AvatarCard';
-import PlainCardWithSeparator from '@core/components/PlainCard';
+import PlainCard from '@core/components/PlainCard';
 import { Carousel, CarouselContent, CarouselItem } from '@core/ui/Carousel';
+import { TypographyH5 } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { sharedProfileState } from '@states/sharedProfile.atom';
 import { ThumbsUp } from 'lucide-react';
@@ -17,8 +18,8 @@ const Recommendations: FC<unknown> = () => {
   const setSharedProfile = useSetRecoilState(sharedProfileState);
 
   return (
-    <PlainCardWithSeparator
-      title="Recommendations"
+    <PlainCard
+      title={<TypographyH5>Recommendations</TypographyH5>}
       titleIcon={<ThumbsUp size={20} />}
       content={
         <Carousel>
