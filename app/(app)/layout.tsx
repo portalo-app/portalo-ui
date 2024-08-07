@@ -12,6 +12,7 @@ import {
   useMediaQuery,
 } from '@hooks/general/useMediaQuery';
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
+import { localStorageToIndexedDB } from '@utils/localStorageToIndexedDB';
 import { useEffect } from 'react';
 
 interface LayoutProps {
@@ -25,6 +26,7 @@ export default function AppLayout({ children }: LayoutProps) {
 
   useEffect(() => {
     initializeGA();
+    localStorageToIndexedDB();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
