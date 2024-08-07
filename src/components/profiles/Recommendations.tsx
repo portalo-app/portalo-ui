@@ -7,15 +7,12 @@ import PlainCard from '@core/components/PlainCard';
 import { Carousel, CarouselContent, CarouselItem } from '@core/ui/Carousel';
 import { TypographyH5 } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
-import { sharedProfileState } from '@states/sharedProfile.atom';
 import { ThumbsUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
-import { useSetRecoilState } from 'recoil';
 
 const Recommendations: FC<unknown> = () => {
   const router = useRouter();
-  const setSharedProfile = useSetRecoilState(sharedProfileState);
 
   return (
     <PlainCard
