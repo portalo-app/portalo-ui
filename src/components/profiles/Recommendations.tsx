@@ -22,12 +22,12 @@ const Recommendations: FC<unknown> = () => {
         <Carousel>
           <CarouselContent>
             {RECOMMENDED_PROFILES.map((profile: ProfileDTO, index: number) => (
-              <CarouselItem className="basis-4/5 lg:basis-2/3 " key={index}>
+              <CarouselItem className="basis-4/5 lg:basis-2/3" key={index}>
                 <AvatarCard
                   title={profile.name}
                   description={profile.description || ''}
                   iconUrl={profile.icon}
-                  className="h-full"
+                  className="h-full cursor-pointer"
                   onClick={() => {
                     router.push(
                       `${ROUTES.APP_PROFILE}/share?recommendation=${profile.id}`

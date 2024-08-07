@@ -100,7 +100,7 @@ const CRECIMIENTO_PROFILE: ProfileDTO = {
         {
           data: {
             variant: 'social-media',
-            entity: 'linkedin',
+            entity: 'company_linkedin',
             username: 'crecimientobuild',
           },
           id: 'social_social-media_linkedin',

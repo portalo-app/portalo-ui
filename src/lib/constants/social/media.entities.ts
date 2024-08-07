@@ -2,10 +2,16 @@ import { FileVariantEntity } from '@models/business/file/fileVariant';
 
 const socialMediaApplications = [
   {
-    id: 'linkedin',
-    label: 'LinkedIn',
+    id: 'personal_linkedin',
+    label: 'Personal LinkedIn',
     color: '#0077b5',
     shareUrl: 'https://www.linkedin.com/in/',
+  },
+  {
+    id: 'company_linkedin',
+    label: 'Company LinkedIn',
+    color: '#0077b5',
+    shareUrl: 'https://www.linkedin.com/company/',
   },
   {
     id: 'facebook',

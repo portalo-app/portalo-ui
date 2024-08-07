@@ -140,7 +140,7 @@ const FileDetail: React.FC<FileDetailProps> = ({
               variant="outline"
             >
               <Globe size={16} className="mr-2" />
-              Open in {entity?.label}
+              Open
             </Button>
           )}
         </div>
