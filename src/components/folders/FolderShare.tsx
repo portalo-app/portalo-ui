@@ -15,6 +15,15 @@ import { useRouter } from 'next/navigation';
 import { FC, useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 
+const animationConfig = {
+  variants: {
+    open: { opacity: 1 },
+    closed: { opacity: 0 },
+  },
+  initial: 'closed',
+  animate: 'open',
+};
+
 const FolderShare: FC<{ folderId: string }> = ({ folderId }) => {
   const router = useRouter();
 
@@ -55,12 +64,7 @@ const FolderShare: FC<{ folderId: string }> = ({ folderId }) => {
               folder?.files.map((file: FileDTO, index: number) => (
                 <motion.div
                   key={index}
-                  variants={{
-                    open: { opacity: 1 },
-                    closed: { opacity: 0 },
-                  }}
-                  initial="closed"
-                  animate="open"
+                  {...animationConfig}
                   transition={{ delay: index * 0.2 }}
                 >
                   <FileListItem
@@ -81,7 +85,12 @@ const FolderShare: FC<{ folderId: string }> = ({ folderId }) => {
         }
       />
 
-      <PortaloCTA />
+      <motion.div
+        {...animationConfig}
+        transition={{ delay: folder.files.length * 0.2 }}
+      >
+        <PortaloCTA />
+      </motion.div>
     </div>
   );
 };
