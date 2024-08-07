@@ -10,7 +10,7 @@ import useProfile from '@hooks/profiles/useProfile';
 import { ShortcutDTO } from '@models/dto/shortcut.dto';
 import { profilesState } from '@states/profiles.atom';
 import { shortcutsState } from '@states/shortcuts.atom';
-import { ChevronRight, Layers2 } from 'lucide-react';
+import { Layers2, Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useRecoilValue } from 'recoil';
 
@@ -36,8 +36,8 @@ const HomeCardsList = () => {
       <PlainCardWithSeparator
         title={shortcutsTitle}
         titleIcon={<Layers2 />}
-        ctaTitle="Create Shortcut"
-        ctaIcon={<ChevronRight />}
+        ctaTitle="Add Shortcut"
+        ctaIcon={<Plus />}
         onCtaClick={() => router.push(ROUTES.APP_SHORTCUTS)}
         content={
           hasShortcuts ? (

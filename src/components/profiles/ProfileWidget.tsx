@@ -5,7 +5,7 @@ import PlainCardWithSeparator from '@core/components/PlainCard';
 import State from '@core/components/State';
 import { Carousel, CarouselContent, CarouselItem } from '@core/ui/Carousel';
 import { profilesState } from '@states/profiles.atom';
-import { ChevronRight, UserRound } from 'lucide-react';
+import { Plus, UserRound } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useRecoilValue } from 'recoil';
 import ProfileItem from './ProfileItem';
@@ -25,8 +25,8 @@ const ProfileWidget = () => {
       title={profilesTitle}
       titleIcon={<UserRound />}
       hideSeparator
-      ctaTitle="Create Profile"
-      ctaIcon={<ChevronRight />}
+      ctaTitle="Add Profile"
+      ctaIcon={<Plus />}
       onCtaClick={() => router.push(ROUTES.APP_CREATE_PROFILE)}
       content={
         hasProfiles ? (

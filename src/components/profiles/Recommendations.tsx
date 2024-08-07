@@ -7,7 +7,7 @@ import PlainCardWithSeparator from '@core/components/PlainCard';
 import { Carousel, CarouselContent, CarouselItem } from '@core/ui/Carousel';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { sharedProfileState } from '@states/sharedProfile.atom';
-import { ChevronRight, ThumbsUp } from 'lucide-react';
+import { ThumbsUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { useSetRecoilState } from 'recoil';
@@ -20,8 +20,6 @@ const Recommendations: FC<unknown> = () => {
     <PlainCardWithSeparator
       title="Recommendations"
       titleIcon={<ThumbsUp size={20} />}
-      ctaTitle="View All"
-      ctaIcon={<ChevronRight />}
       content={
         <Carousel>
           <CarouselContent>

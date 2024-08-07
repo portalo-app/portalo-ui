@@ -26,7 +26,7 @@ const PlainCard: FC<PlainCardProps> = ({
     <div className="space-y-2">
       {hideSeparator ? <></> : <Separator />}
 
-      <div className="mx-2 flex justify-between items-center w-full">
+      <div className="mr-2 flex justify-between items-center w-full">
         <TypographyH5 className="flex items-center gap-2">
           {titleIcon} {title}
         </TypographyH5>
