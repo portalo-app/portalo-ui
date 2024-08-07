@@ -1,6 +1,7 @@
 'use client';
 
 import FolderListItem from '@components/folders/FolderListItem';
+import { RECOMMENDED_PROFILES } from '@constants/recommendations.const';
 import PlainCard from '@core/components/PlainCard';
 import PortaloCTA from '@core/components/PortaloCTA';
 import { Separator } from '@core/ui/Separator';
@@ -11,21 +12,21 @@ import { Folder } from 'lucide-react';
 import lzString from 'lz-string';
 import { useSearchParams } from 'next/navigation';
 import { FC } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import ProfileHeader from './ProfileHeader';
 
 const ProfileShare: FC = () => {
   const searchParams = useSearchParams();
-  const [sharedProfile, setSharedProfile] = useRecoilState(sharedProfileState);
-  const isRecommendation = searchParams.has('recommendation');
+  const setSharedProfile = useSetRecoilState(sharedProfileState);
+  const recommendation = searchParams.get('recommendation');
 
-  const profile = isRecommendation
-    ? sharedProfile
+  const profile = recommendation
+    ? RECOMMENDED_PROFILES.find((profile) => profile.id === recommendation)!
     : (JSON.parse(
         lzString.decompressFromEncodedURIComponent(searchParams.get('profile')!)
       ) as ProfileDTO);
 
-  if (!isRecommendation) setSharedProfile(profile);
+  if (!recommendation) setSharedProfile(profile);
 
   return (
     <div>

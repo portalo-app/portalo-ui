@@ -72,7 +72,7 @@ const NEOPOWER_PROFILE: ProfileDTO = {
 };
 
 const CRECIMIENTO_PROFILE: ProfileDTO = {
-  id: '1722988733319',
+  id: 'crecimiento',
   name: 'Crecimiento',
   icon: '/assets/icons/profiles/crecimiento.svg',
   description: `A movement transforming Argentina into the world's first crypto nation`,

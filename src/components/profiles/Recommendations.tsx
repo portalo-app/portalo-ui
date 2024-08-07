@@ -32,8 +32,9 @@ const Recommendations: FC<unknown> = () => {
                   iconUrl={profile.icon}
                   className="h-full"
                   onClick={() => {
-                    setSharedProfile(profile);
-                    router.push(`${ROUTES.APP_PROFILE}/share?recommendation`);
+                    router.push(
+                      `${ROUTES.APP_PROFILE}/share?recommendation=${profile.id}`
+                    );
                   }}
                 />
               </CarouselItem>
