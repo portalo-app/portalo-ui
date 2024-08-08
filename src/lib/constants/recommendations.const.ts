@@ -61,30 +61,6 @@ const NEOPOWER_PROFILE: ProfileDTO = {
       ],
     },
     {
-      id: 'address',
-      folderTypeId: 'address',
-      files: [
-        {
-          data: {
-            variant: 'crypto',
-            entity: 'ATOM',
-            address: 'cosmos1ct4d6m6av7w25ygcrtnx00r2ezrklh9rgc3wmk',
-            name: 'NeoPower Cosmos wallet',
-          },
-          id: 'address_crypto_ATOM',
-        },
-        {
-          data: {
-            variant: 'crypto',
-            entity: 'MATIC',
-            address: '0x39bcd81c6db7f3672a1a0e8e08e3c3a5d93d03ff',
-            name: 'NeoPower Polygon wallet',
-          },
-          id: 'address_crypto_MATIC',
-        },
-      ],
-    },
-    {
       id: 'bookmark',
       folderTypeId: 'bookmark',
       files: [
