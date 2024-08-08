@@ -13,7 +13,7 @@ import {
   useMediaQuery,
 } from '@hooks/general/useMediaQuery';
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
-import { indexeddbToLocalstorage } from '@utils/localStorageToIndexedDB';
+import { indexeddbToLocalstorage } from '@utils/indexeddbToLocalStorage';
 import { useEffect } from 'react';
 
 interface LayoutProps {
