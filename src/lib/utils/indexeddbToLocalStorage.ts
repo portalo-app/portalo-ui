@@ -13,11 +13,11 @@ localforage.config({
   driver: [localforage.INDEXEDDB, localforage.WEBSQL, localforage.LOCALSTORAGE], // Preferred storage drivers in order
 });
 
-export const localStorageToIndexedDB = () => {
-  const profile = localStorage.getItem(CLIENT_STORAGE_PROFILES);
-  const shortcuts = localStorage.getItem(CLIENT_STORAGE_SHORTCUTS);
+export const indexeddbToLocalstorage = async () => {
+  const profile = await localforage.getItem(CLIENT_STORAGE_PROFILES);
+  const shortcuts = await localforage.getItem(CLIENT_STORAGE_SHORTCUTS);
 
-  const localstorageData = [
+  const localforageData = [
     {
       key: CLIENT_STORAGE_PROFILES,
       value: profile,
@@ -28,16 +28,13 @@ export const localStorageToIndexedDB = () => {
     },
   ];
 
-  localstorageData.forEach(({ key, value }) => {
-    if (!value) return;
+  localforageData.forEach(({ key, value }) => {
+    const stringifiedValue = JSON.stringify(value);
 
-    localforage
-      .setItem(key, value)
-      .then(() => {
-        localStorage.removeItem(key);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    if (!stringifiedValue || stringifiedValue === 'null') return;
+
+    localStorage.setItem(key, stringifiedValue);
+
+    localforage.removeItem(key);
   });
 };
