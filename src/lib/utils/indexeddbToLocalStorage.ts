@@ -33,13 +33,6 @@ export const indexeddbToLocalstorage = () => {
 
     localStorage.setItem(key, JSON.stringify(value));
 
-    localforage
-      .removeItem(key)
-      .then(() => {
-        console.log('Key is cleared!');
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    localforage.removeItem(key);
   });
 };
