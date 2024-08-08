@@ -3,21 +3,21 @@
 import { ROUTES } from '@constants/routes.const';
 import { TypographyXS } from '@core/ui/Typography';
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
-import { Bell, Home, Menu, User } from 'lucide-react';
-import Image from 'next/image';
+import { Bell, Home, Menu, Plus, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const Portalo = () => {
-  return (
-    <Image
-      src="/assets/images/portalo_icon.svg"
-      alt="Portalo"
-      width={48}
-      height={48}
-    />
-  );
-};
+// I leave this commented since it will be used in 0.2.0 version
+// const Portalo = () => {
+//   return (
+//     <Image
+//       src="/assets/images/portalo_icon.svg"
+//       alt="Portalo"
+//       width={48}
+//       height={48}
+//     />
+//   );
+// };
 
 const MobileBottomNavbar = () => {
   const pathname = usePathname();
@@ -42,9 +42,9 @@ const MobileBottomNavbar = () => {
     {
       id: 'cta',
       name: 'CTA',
-      icon: Portalo,
+      icon: Plus,
       isCTA: true,
-      url: ROUTES.APP,
+      url: ROUTES.APP_CREATE_PROFILE,
     },
     {
       id: 'notification',

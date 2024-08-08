@@ -4,17 +4,29 @@ import { APP_TITLE, CONTACT_MAIL } from '@constants/constants.const';
 import { EXTERNAL_LINKS } from '@constants/externalLinks.const';
 import { Button } from '@core/ui/Button';
 import { TypographyP } from '@core/ui/Typography';
+import { useToast } from '@core/ui/use-toast';
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
 import { Mail, Share2, Twitter } from 'lucide-react';
 
 const SocialList = () => {
   const { trackShareAppClicked, trackTwitterClicked } = useAnalytics();
+  const { toast } = useToast();
 
   const handleShare = () => {
     trackShareAppClicked();
-    navigator?.share({
-      text: APP_TITLE,
-      url: EXTERNAL_LINKS.PORTALO_URL,
+
+    if (navigator?.share) {
+      navigator?.share({
+        text: APP_TITLE,
+        url: EXTERNAL_LINKS.PORTALO_URL,
+      });
+      return;
+    }
+
+    navigator.clipboard.writeText(EXTERNAL_LINKS.PORTALO_URL);
+    toast({
+      title: 'Link copied!',
+      description: 'Share the app with your friends!',
     });
   };
 

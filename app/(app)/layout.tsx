@@ -6,12 +6,14 @@ import Root from '@components/layout/Root';
 import Sidebar from '@components/layout/Sidebar';
 import { ALERT_MESSAGE } from '@constants/constants.const';
 import AlertMessage from '@core/components/AlertMessage';
+import { Toaster } from '@core/ui/Toaster';
 
 import {
   MEDIAQUERY_DESKTOP,
   useMediaQuery,
 } from '@hooks/general/useMediaQuery';
 import useAnalytics from '@hooks/googleAnalytics/useAnalytics';
+import { localStorageToIndexedDB } from '@utils/localStorageToIndexedDB';
 import { useEffect } from 'react';
 
 interface LayoutProps {
@@ -25,6 +27,7 @@ export default function AppLayout({ children }: LayoutProps) {
 
   useEffect(() => {
     initializeGA();
+    localStorageToIndexedDB();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -38,10 +41,12 @@ export default function AppLayout({ children }: LayoutProps) {
         <main className="flex flex-col w-full h-screen overflow-auto">
           <Navbar />
 
-          <div className="mt-6 self-center md:w-112 lg:w-152 w-full px-6 md:px-0 pb-20">
+          <div className="mt-6 self-center md:w-112 lg:w-152 w-full px-3 md:px-0 pb-20">
             {children}
           </div>
         </main>
+
+        <Toaster />
       </div>
 
       {!isDesktop ? <MobileBottomNavbar /> : null}

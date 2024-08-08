@@ -13,7 +13,15 @@ const FileVariantEntityIcon: React.FC<FileVariantEntityIconProps> = ({
   const iconPrefix = iconIsUrl ? '' : '/assets/icons/';
   const iconURL = `${iconPrefix}${icon}`;
 
-  return <Image src={iconURL} alt={`${id} logo`} width={size} height={size} />;
+  return (
+    <Image
+      className="rounded-full"
+      src={iconURL}
+      alt={`${id} logo`}
+      width={size}
+      height={size}
+    />
+  );
 };
 
 export default FileVariantEntityIcon;

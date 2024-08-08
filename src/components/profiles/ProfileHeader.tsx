@@ -4,6 +4,7 @@ import { TypographyH3, TypographyP } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import Avvvatars from 'avvvatars-react';
 import { Trash2 } from 'lucide-react';
+import Image from 'next/image';
 import { useState } from 'react';
 import DeleteProfileModal from './DeleteProfileModal';
 
@@ -30,10 +31,25 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
   return (
     <>
-      <div className="flex justify-between items-center py-4   rounded-md">
+      <div className="flex justify-between items-center py-4 rounded-md">
         <div className="flex gap-3 items-center">
-          <Avvvatars value={profile?.name || ''} size={42} style="character" />
-          <TypographyH3>{profile?.name}</TypographyH3>
+          {profile.icon ? (
+            <Image
+              src={profile.icon}
+              alt={`${profile.name} logo`}
+              width={48}
+              height={48}
+            />
+          ) : (
+            <Avvvatars
+              value={profile?.name || ''}
+              size={48}
+              style="character"
+            />
+          )}
+          <TypographyH3 className="break-words max-w-[12ch] text-wrap">
+            {profile?.name}
+          </TypographyH3>
         </div>
         {isProfilePage && !readonly && (
           <div className="flex gap-4">
@@ -44,7 +60,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
               variant="ghost"
               onClick={deleteProfile}
             >
-              <TypographyP className="hidden md:block">
+              <TypographyP className="hidden lg:block">
                 Delete profile
               </TypographyP>
               <Trash2 size={20} />

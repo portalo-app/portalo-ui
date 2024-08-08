@@ -31,6 +31,12 @@ const messagingApplications = [
     color: '#d14836',
     shareUrl: 'mailto:',
   },
+  {
+    id: 'warpcast',
+    label: 'Warpcast',
+    color: '#5b0090',
+    shareUrl: 'https://warpcast.com/',
+  },
 ];
 
 export const MESSAGING_ENTITIES: FileVariantEntity[] =
