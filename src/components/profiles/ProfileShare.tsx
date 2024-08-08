@@ -1,9 +1,11 @@
 'use client';
 
 import FolderListItem from '@components/folders/FolderListItem';
+import { RECOMMENDED_PROFILES } from '@constants/recommendations.const';
+import PlainCard from '@core/components/PlainCard';
 import PortaloCTA from '@core/components/PortaloCTA';
 import { Separator } from '@core/ui/Separator';
-import { TypographyH3 } from '@core/ui/Typography';
+import { TypographyH4 } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { sharedProfileState } from '@states/sharedProfile.atom';
 import { Folder } from 'lucide-react';
@@ -16,49 +18,47 @@ import ProfileHeader from './ProfileHeader';
 const ProfileShare: FC = () => {
   const searchParams = useSearchParams();
   const setSharedProfile = useSetRecoilState(sharedProfileState);
+  const recommendation = searchParams.get('recommendation');
 
-  const decompressedProfile = lzString.decompressFromEncodedURIComponent(
-    searchParams.get('profile')!
-  );
-
-  const profile = JSON.parse(decompressedProfile) as ProfileDTO;
+  const profile = recommendation
+    ? RECOMMENDED_PROFILES.find((profile) => profile.id === recommendation)!
+    : (JSON.parse(
+        lzString.decompressFromEncodedURIComponent(searchParams.get('profile')!)
+      ) as ProfileDTO);
 
   setSharedProfile(profile);
 
   return (
     <div>
-      <div className="ml-4 md:ml-0">
-        <ProfileHeader profile={profile} isProfilePage readonly />
-      </div>
+      <ProfileHeader profile={profile} isProfilePage readonly />
 
-      <div className="border border-muted mt-4 rounded-lg">
-        <div className="flex justify-between items-center bg-muted/80 p-4 rounded-t-lg">
-          <div className="flex items-center gap-2">
-            <Folder />
-            <TypographyH3>Folders</TypographyH3>
-          </div>
-        </div>
-
-        <div className="*:block space-y-2 mt-4 px-4">
-          {profile.folders.length > 0 ? (
-            profile?.folders.map((folder, index) => (
-              <>
-                <FolderListItem
-                  profileName={profile.name}
-                  folderTypeId={folder.folderTypeId}
-                  profileId={profile.id}
-                  readonly
-                />
-                {profile.folders.length - 1 !== index && <Separator />}
-              </>
-            ))
+      <PlainCard
+        title={<TypographyH4 className="py-3">Folders</TypographyH4>}
+        titleIcon={<Folder />}
+        content={
+          profile.folders.length > 0 ? (
+            <>
+              {profile?.folders
+                .filter((folder) => folder.files.length > 0)
+                .map((folder, index) => (
+                  <>
+                    <FolderListItem
+                      profileName={profile.name}
+                      folderTypeId={folder.folderTypeId}
+                      profileId={profile.id}
+                      readonly
+                    />
+                    {profile.folders.length - 1 !== index && <Separator />}
+                  </>
+                ))}
+            </>
           ) : (
             <div className="text-center text-muted-foreground p-4 pb-6">
               No folders found
             </div>
-          )}
-        </div>
-      </div>
+          )
+        }
+      />
 
       <PortaloCTA />
     </div>

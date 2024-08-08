@@ -350,6 +350,21 @@ const CarouselNextCustomOnboarding = React.forwardRef<
   );
 });
 
+const FullWidthCarousel = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> &
+    CarouselProps & { carouselContentClassName?: string }
+>(({ children, className, carouselContentClassName, ...props }, ref) => {
+  return (
+    <Carousel ref={ref} className={cn('-mx-3', className)} {...props}>
+      <CarouselContent className={cn('-mx-3 px-3', carouselContentClassName)}>
+        {children}
+      </CarouselContent>
+    </Carousel>
+  );
+});
+FullWidthCarousel.displayName = 'FullWidthCarousel';
+
 CarouselNextCustomOnboarding.displayName = 'CarouselNextCustomOnboarding';
 
 export {
@@ -360,5 +375,6 @@ export {
   CarouselNext,
   CarouselNextCustomOnboarding,
   CarouselPrevious,
+  FullWidthCarousel,
   type CarouselApi,
 };

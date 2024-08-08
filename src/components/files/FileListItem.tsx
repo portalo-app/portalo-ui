@@ -11,6 +11,7 @@ import {
   TypographyMutedXS,
 } from '@core/ui/Typography';
 import useFile from '@hooks/files/useFile';
+import { FileVariantEntity } from '@models/business/file/fileVariant';
 import { FolderType } from '@models/business/folder/folderType';
 import { FileDTO } from '@models/dto/file.dto';
 import { Trash2 } from 'lucide-react';
@@ -37,11 +38,13 @@ const FileListItem: React.FC<FileListItemProps> = ({
   const router = useRouter();
   const { deleteFile } = useFile();
 
-  const entity = useMemo(
+  const entity: FileVariantEntity = useMemo(
     () =>
       folderType.fileType.variants
-        .find((variant) => variant.id === file.data.variant)!
-        .availableEntities.find((entity) => entity.id === file.data.entity)!,
+        .find((variant) => variant.id === file.data.variant)
+        ?.availableEntities?.find(
+          (entity: FileVariantEntity) => entity.id === file.data.entity
+        ) || ({} as FileVariantEntity),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [file.data.entity]
   );

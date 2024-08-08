@@ -25,8 +25,8 @@ export const TypographyH2: React.FC<TypographyProps> = ({
 }) => (
   <h2
     className={cn(
-      className,
-      'scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0'
+      'scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0',
+      className
     )}
   >
     {children}
@@ -67,8 +67,8 @@ export const TypographyH5: React.FC<TypographyProps> = ({
 }) => (
   <h5
     className={cn(
-      className,
-      'scroll-m-20 text-lg font-semibold tracking-tight'
+      'scroll-m-20 text-lg font-semibold tracking-tight',
+      className
     )}
   >
     {children}

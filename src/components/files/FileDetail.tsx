@@ -53,9 +53,10 @@ const FileDetail: React.FC<FileDetailProps> = ({
   };
 
   const handleShare = () => {
-    navigator?.share({
-      text: qrInfo,
-    });
+    navigator?.share &&
+      navigator.share({
+        text: qrInfo,
+      });
   };
 
   return (
@@ -140,15 +141,17 @@ const FileDetail: React.FC<FileDetailProps> = ({
               variant="outline"
             >
               <Globe size={16} className="mr-2" />
-              Open in {entity?.label}
+              Open
             </Button>
           )}
         </div>
 
-        <Button onClick={handleShare}>
-          <Share size={16} className="mr-2" />
-          Share
-        </Button>
+        {!!navigator?.share && (
+          <Button onClick={handleShare}>
+            <Share size={16} className="mr-2" />
+            Share
+          </Button>
+        )}
       </div>
     </div>
   );

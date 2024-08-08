@@ -1,13 +1,7 @@
 import AnimatedButton from '@core/ui/AnimatedButton';
 import { Card } from '@core/ui/Card';
 import { TypographyMuted } from '@core/ui/Typography';
-import {
-  AlertTriangle,
-  CheckCircle,
-  Info,
-  Search,
-  XCircle,
-} from 'lucide-react';
+import { AlertTriangle, CheckCircle, Inbox, Info, XCircle } from 'lucide-react';
 
 type StateType = 'success' | 'info' | 'warning' | 'error' | 'empty';
 type SizeType = number;
@@ -31,7 +25,7 @@ const StateIcon: React.FC<{ type: StateType; size?: SizeType }> = ({
     case 'info':
       return <Info size={size} />;
     case 'empty':
-      return <Search size={size} />;
+      return <Inbox size={size} />;
     case 'warning':
       return <AlertTriangle size={size} />;
     case 'error':
@@ -43,7 +37,7 @@ const StateIcon: React.FC<{ type: StateType; size?: SizeType }> = ({
 
 const State: React.FC<StateProps> = ({ type, label, size, action }) => {
   return (
-    <Card className="border-2 border-muted w-full p-4 text-muted-foreground">
+    <Card className="border-0 w-full p-2 text-muted-foreground">
       <div className="flex items-center gap-2">
         <StateIcon type={type} size={size || 36} />
 

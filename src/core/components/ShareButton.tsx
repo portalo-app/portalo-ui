@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@core/ui/Button';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { TypographyH4, TypographyP } from '@core/ui/Typography';
@@ -31,7 +33,7 @@ const ShareButton: FC<ShareButtonProps> = ({ profile }) => {
           variant="outline"
           className="flex gap-2 border-primary hover:bg-primary hover:text-foreground text-primary rounded-xl"
         >
-          <TypographyP className="hidden md:block">Share</TypographyP>
+          <TypographyP className="hidden lg:block">Share</TypographyP>
           <Share size={16} />
         </Button>
       }

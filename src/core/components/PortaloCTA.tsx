@@ -1,12 +1,24 @@
-const PortaloCTA = () => (
-  <div className="flex justify-center mt-8">
-    <span className="text-muted-foreground text-center">
-      <a href="/" className="text-primary font-semibold underline mr-2">
+'use client';
+
+import { ROUTES } from '@constants/routes.const';
+import { Button } from '@core/ui/Button';
+import { TypographyMuted } from '@core/ui/Typography';
+import { useRouter } from 'next/navigation';
+
+const PortaloCTA = () => {
+  const router = useRouter();
+
+  return (
+    <div className="space-y-2">
+      <Button className="w-full" onClick={() => router.push(ROUTES.APP)}>
         Create your own profile
-      </a>
-      and start storing anything anywhere
-    </span>
-  </div>
-);
+      </Button>
+
+      <TypographyMuted className="text-center">
+        and start your journey with Portalo 🚀️
+      </TypographyMuted>
+    </div>
+  );
+};
 
 export default PortaloCTA;

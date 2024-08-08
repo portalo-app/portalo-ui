@@ -1,8 +1,9 @@
 import { ROUTES } from '@constants/routes.const';
+import { Card } from '@core/ui/Card';
 import { TypographyH5, TypographyMuted } from '@core/ui/Typography';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import Avvvatars from 'avvvatars-react';
-import { ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface ProfileItemProps {
@@ -17,24 +18,23 @@ const ProfileItem: React.FC<ProfileItemProps> = ({ profile }) => {
 
   return (
     <Link href={`${ROUTES.APP_PROFILE}/${id}`}>
-      <div className="relative py-4">
-        <div className="flex items-center gap-4">
-          <Avvvatars value={name} size={36} style="character" />
+      <Card className="flex flex-col items-center w-36 h-fit py-3 px-5 bg-muted/25">
+        {profile.icon ? (
+          <Image
+            src={profile.icon}
+            alt={`${name} logo`}
+            width={46}
+            height={46}
+          />
+        ) : (
+          <Avvvatars value={name} size={46} style="character" />
+        )}
 
-          <div>
-            <TypographyH5>{name}</TypographyH5>
-
-            <TypographyMuted className="text-primary">
-              {countLabel}
-            </TypographyMuted>
-          </div>
-        </div>
-
-        <ChevronRight
-          size={24}
-          className="absolute top-[calc(50%-12px)] right-2 text-muted-foreground"
-        />
-      </div>
+        <TypographyH5 className="max-w-[10ch] overflow-hidden text-ellipsis text-nowrap">
+          {name}
+        </TypographyH5>
+        <TypographyMuted className="text-primary">{countLabel}</TypographyMuted>
+      </Card>
     </Link>
   );
 };
