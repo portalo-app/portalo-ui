@@ -28,11 +28,14 @@ export const indexeddbToLocalstorage = async () => {
     },
   ];
 
+  console.log('IndexedDB to LocalStorage', localforageData);
   localforageData.forEach(({ key, value }) => {
-    if (!value || Object.keys(value).length) return;
+    const stringifiedValue = JSON.stringify(value);
 
-    localStorage.setItem(key, JSON.stringify(value));
+    if (!stringifiedValue || stringifiedValue === 'null') return;
 
-    localforage.removeItem(key);
+    localStorage.setItem(key, stringifiedValue);
+
+    // localforage.removeItem(key);
   });
 };
