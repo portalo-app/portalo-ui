@@ -25,7 +25,7 @@ const PlainCard: FC<PlainCardProps> = ({
     <div className="space-y-2">
       {hideSeparator ? <></> : <Separator />}
 
-      <div className="mr-2 flex justify-between items-center w-full">
+      <div className="flex justify-between items-center w-full">
         <div className="flex items-center gap-2">
           {titleIcon} {title}
         </div>
@@ -33,7 +33,7 @@ const PlainCard: FC<PlainCardProps> = ({
         {ctaTitle ? (
           <Button
             variant="ghost"
-            className="text-muted-foreground flex gap-2 items-center"
+            className="text-muted-foreground flex gap-2 items-center p-0 hover:bg-transparent"
             onClick={onCtaClick}
           >
             {ctaTitle} {ctaIcon}
