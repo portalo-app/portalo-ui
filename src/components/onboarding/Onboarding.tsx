@@ -9,7 +9,6 @@ import {
   CarouselNextCustomOnboarding,
 } from '@core/ui/Carousel';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
-import localforage from 'localforage';
 import { FC, ReactNode, useEffect, useState } from 'react';
 import Slide from './Slide';
 
@@ -55,15 +54,12 @@ const Onboarding: FC<OnboardingProps> = ({ trigger }) => {
     },
   ];
 
-  localforage
-    .getItem(CLIENT_STORAGE_ONBOARDING)
-    .then((value) => {
-      if (!value) {
-        setShowOnboarding(true);
-        localforage.setItem(CLIENT_STORAGE_ONBOARDING, 'false');
-      }
-    })
-    .catch((err) => console.error(err));
+  const isOnboardingInLocalStorage = localStorage.getItem('portalo.onboarding');
+
+  if (!isOnboardingInLocalStorage) {
+    setShowOnboarding(true);
+    localStorage.setItem(CLIENT_STORAGE_ONBOARDING, 'false');
+  }
 
   useEffect(() => {
     if (trigger) {
