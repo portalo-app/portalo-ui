@@ -88,6 +88,7 @@ const FolderShare: FC<{ folderId: string }> = ({ folderId }) => {
       <motion.div
         {...animationConfig}
         transition={{ delay: folder.files.length * 0.2 }}
+        className="pt-1"
       >
         <PortaloCTA />
       </motion.div>

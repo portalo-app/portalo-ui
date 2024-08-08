@@ -60,7 +60,9 @@ const ProfileShare: FC = () => {
         }
       />
 
-      <PortaloCTA />
+      <div className="pt-4">
+        <PortaloCTA />
+      </div>
     </div>
   );
 };
