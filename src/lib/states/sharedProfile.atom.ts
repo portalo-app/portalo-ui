@@ -1,8 +1,9 @@
+import { CLIENT_STORAGE_SHARED_PROFILE } from '@constants/constants.const';
 import { ProfileDTO } from '@models/dto/profile.dto';
 import { atom } from 'recoil';
-import { localStorageEffect } from './localStorageEffect.util';
+import { clientStorageEffect } from './clientStorageEffect.util';
 
 export const sharedProfileState = atom<ProfileDTO>({
   key: 'sharedProfileState',
-  effects: [localStorageEffect('portalo.sharedProfile')],
+  effects: [clientStorageEffect(CLIENT_STORAGE_SHARED_PROFILE)],
 });
