@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@core/ui/Button';
 import ResponsiveDialog from '@core/ui/ResponsiveDialog';
 import { TypographyH4, TypographyP } from '@core/ui/Typography';
