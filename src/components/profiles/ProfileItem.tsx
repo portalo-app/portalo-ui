@@ -30,7 +30,9 @@ const ProfileItem: React.FC<ProfileItemProps> = ({ profile }) => {
           <Avvvatars value={name} size={46} style="character" />
         )}
 
-        <TypographyH5>{name}</TypographyH5>
+        <TypographyH5 className="max-w-[10ch] overflow-hidden text-ellipsis text-nowrap">
+          {name}
+        </TypographyH5>
         <TypographyMuted className="text-primary">{countLabel}</TypographyMuted>
       </Card>
     </Link>

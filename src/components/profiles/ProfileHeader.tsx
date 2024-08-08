@@ -47,7 +47,9 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
               style="character"
             />
           )}
-          <TypographyH3>{profile?.name}</TypographyH3>
+          <TypographyH3 className="break-words max-w-[12ch] text-wrap">
+            {profile?.name}
+          </TypographyH3>
         </div>
         {isProfilePage && !readonly && (
           <div className="flex gap-4">
@@ -58,7 +60,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
               variant="ghost"
               onClick={deleteProfile}
             >
-              <TypographyP className="hidden md:block">
+              <TypographyP className="hidden lg:block">
                 Delete profile
               </TypographyP>
               <Trash2 size={20} />
