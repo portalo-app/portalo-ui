@@ -13,9 +13,9 @@ localforage.config({
   driver: [localforage.INDEXEDDB, localforage.WEBSQL, localforage.LOCALSTORAGE], // Preferred storage drivers in order
 });
 
-export const indexeddbToLocalstorage = () => {
-  const profile = localforage.getItem(CLIENT_STORAGE_PROFILES);
-  const shortcuts = localforage.getItem(CLIENT_STORAGE_SHORTCUTS);
+export const indexeddbToLocalstorage = async () => {
+  const profile = await localforage.getItem(CLIENT_STORAGE_PROFILES);
+  const shortcuts = await localforage.getItem(CLIENT_STORAGE_SHORTCUTS);
 
   const localforageData = [
     {
@@ -29,7 +29,7 @@ export const indexeddbToLocalstorage = () => {
   ];
 
   localforageData.forEach(({ key, value }) => {
-    if (!value) return;
+    if (!value || Object.keys(value).length) return;
 
     localStorage.setItem(key, JSON.stringify(value));
 
