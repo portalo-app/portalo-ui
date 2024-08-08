@@ -3,7 +3,7 @@
 import { ROUTES } from '@constants/routes.const';
 import PlainCard from '@core/components/PlainCard';
 import State from '@core/components/State';
-import { Carousel, CarouselContent, CarouselItem } from '@core/ui/Carousel';
+import { CarouselItem, FullWidthCarousel } from '@core/ui/Carousel';
 import { TypographyH5 } from '@core/ui/Typography';
 import { profilesState } from '@states/profiles.atom';
 import { Plus, UserRound } from 'lucide-react';
@@ -31,15 +31,13 @@ const ProfileWidget = () => {
       onCtaClick={() => router.push(ROUTES.APP_CREATE_PROFILE)}
       content={
         hasProfiles ? (
-          <Carousel>
-            <CarouselContent>
-              {profiles.map((profile, index) => (
-                <CarouselItem className="basis-4/9" key={index}>
-                  <ProfileItem profile={profile} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+          <FullWidthCarousel>
+            {profiles.map((profile, index) => (
+              <CarouselItem className="basis-4/9" key={index}>
+                <ProfileItem profile={profile} />
+              </CarouselItem>
+            ))}
+          </FullWidthCarousel>
         ) : (
           <State
             type="empty"
