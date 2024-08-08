@@ -28,7 +28,6 @@ export const indexeddbToLocalstorage = async () => {
     },
   ];
 
-  console.log('IndexedDB to LocalStorage', localforageData);
   localforageData.forEach(({ key, value }) => {
     const stringifiedValue = JSON.stringify(value);
 
@@ -36,6 +35,6 @@ export const indexeddbToLocalstorage = async () => {
 
     localStorage.setItem(key, stringifiedValue);
 
-    // localforage.removeItem(key);
+    localforage.removeItem(key);
   });
 };
