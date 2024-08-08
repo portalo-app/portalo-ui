@@ -64,7 +64,7 @@ const HomeCardsList = () => {
           ) : (
             <State
               type="empty"
-              label="You should create a profile before configuring shortcuts!"
+              label="Create a profile to configure shortcuts"
             />
           )
         }

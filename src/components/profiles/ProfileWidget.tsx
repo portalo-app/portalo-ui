@@ -19,7 +19,7 @@ const ProfileWidget = () => {
   const hasProfiles = profiles?.length > 0;
 
   const profilesTitle = 'Profiles';
-  const emptyProfilesMessage = 'Create a Profile to get started!';
+  const emptyProfilesMessage = 'Create a Profile to start your journey';
 
   return (
     <PlainCard
@@ -39,14 +39,7 @@ const ProfileWidget = () => {
             ))}
           </FullWidthCarousel>
         ) : (
-          <State
-            type="empty"
-            label={emptyProfilesMessage}
-            action={{
-              label: 'Create Profile',
-              onClick: () => router.push(ROUTES.APP_CREATE_PROFILE),
-            }}
-          />
+          <State type="empty" label={emptyProfilesMessage} />
         )
       }
     />
